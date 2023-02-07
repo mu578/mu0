@@ -30,7 +30,7 @@ typedef mu0_tchar8_t * mu0_vtchar8_t;
 typedef mu0_uchar8_t * mu0_vuchar8_t;
 typedef mu0_schar8_t * mu0_vschar8_t;
 
-typedef mu0_vchar8_t   mu0_string8_t;
+typedef mu0_vtchar8_t  mu0_string8_t;
 typedef mu0_vuchar8_t  mu0_binary8_t;
 
 MU0_END_CDECL
