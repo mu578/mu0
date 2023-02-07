@@ -49,12 +49,12 @@ typedef long double             mu0_fpex_t;
 #		if !__is_identifier(_Float128)
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1
-			__extension__
+			__mu0_extension__
 			typedef _Float128      mu0_fp128_t;
 #		elif !__is_identifier(__float128)
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1
-			__extension__
+			__mu0_extension__
 			typedef __float128     mu0_fp128_t;
 #		endif
 #	endif
@@ -72,12 +72,12 @@ typedef float                   mu0_fp32_t;
 #		if !__is_identifier(_Float16)
 #			undef  MU0_HAVE_FLOAT16
 #			define MU0_HAVE_FLOAT16 1
-			__extension__
+			__mu0_extension__
 			typedef _Float16       mu0_fp16_t;
 #		elif !__is_identifier(__fp16)
 #			undef  MU0_HAVE_FLOAT16
 #			define MU0_HAVE_FLOAT16 1
-			__extension__
+			__mu0_extension__
 			typedef __fp16         mu0_fp16_t;
 #		endif
 #	endif

@@ -28,7 +28,6 @@
 
 MU0_BEGIN_CDECL
 
-#include <stddef.h>
 #include <stdint.h>
 #include <inttypes.h>
 
@@ -38,17 +37,17 @@ typedef   intmax_t                      mu0_sintmax_t;
 
 #	if MU0_USE_INT128
 #	if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ > 8)
-__extension__
+__mu0_extension__
 typedef unsigned __int128               mu0_uint128_t;
-__extension__
+__mu0_extension__
 typedef __int128                        mu0_sint128_t;
 #	elif defined(__clang__) && defined(__is_identifier)
 #		if !__is_identifier(__int128_t)
 #			undef  MU0_HAVE_INT128
 #			define MU0_HAVE_INT128 1
-			__extension__
+			__mu0_extension__
 			typedef __uint128_t            mu0_uint128_t;
-			__extension__
+			__mu0_extension__
 			typedef __int128_t             mu0_sint128_t;
 #		else
 			typedef uint64_t               mu0_uint128_t;
