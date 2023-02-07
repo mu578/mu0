@@ -59,7 +59,7 @@ if (((defined(__GNUC__) && __GNUC__ >= 4) || (defined(__clang__) || defined(__ll
 #	undef  MU0_HAVE_GENERIC
 #	undef  __mu0_generic__
 #	define MU0_HAVE_GENERIC 0
-if defined(__STDC__) || defined(__STDC_VERSION__)
+if defined(__STDC__) && defined(__STDC_VERSION__)
 #		if (__STDC__ == 1 && __STDC_VERSION__ >= 201112L)
 #			undef  MU0_HAVE_GENERIC
 #			define MU0_HAVE_GENERIC 1
