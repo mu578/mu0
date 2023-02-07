@@ -149,7 +149,7 @@
 #		endif
 #	endif
 
-#	define ____mu0_static___inline__ __mu0_static__ __mu0_inline_always__
+#	define __mu0_static_inline__ __mu0_static__ __mu0_inline_always__
 
 #	undef MU0_HAVE_OVERLOAD
 #	undef __mu0_overload__
