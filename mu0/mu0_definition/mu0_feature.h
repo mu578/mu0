@@ -20,7 +20,7 @@
 
 #	undef  MU0_HAVE_TYPEOF
 #	undef  __mu0_typeof__
-#	undef  __mu0_istypeof__
+#	undef  __mu0_isoftype__
 #	define MU0_HAVE_TYPEOF 0
 #	if (                             \
 		   defined(__GNUC__)          \
@@ -36,29 +36,29 @@
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__(__x)        __typeof__((__x) + 0)
-#		define __mu0_istypeof__(_Tp, x)   _Generic((__x), _Tp : 1, default: 0)
+#		define __mu0_isoftype__(_Tp, x)   _Generic((__x), _Tp : 1, default: 0)
 #	endif
 #	if ((defined(__GNUC__) && (__GNUC__ + 0 >= 3)) || (defined(__clang__) || defined(__llvm__)))
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__(__x)        __typeof__((__x) + 0)
-#		define __mu0_istypeof__(_Tp, __x) ((__builtin_types_compatible_p(type1, __mu0_typeof__(__x))) ? 1 : 0)
+#		define __mu0_isoftype__(_Tp, __x) ((__builtin_types_compatible_p(type1, __mu0_typeof__(__x))) ? 1 : 0)
 #	elif MU0_HAVE_C23
 #		undef  MU0_HAVE_TYPEOF 
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__(__x)        typeof((__x) + 0)
-#		define __mu0_istypeof__(_Tp, x)   _Generic((__x), _Tp : 1, default: 0)
+#		define __mu0_isoftype__(_Tp, x)   _Generic((__x), _Tp : 1, default: 0)
 #	endif
 
 #	undef  MU0_HAVE_SIZEOF
 #	undef  __mu0_sizeof__
-#	undef  __mu0_issizeof__
+#	undef  __mu0_isofsize__
 #	define MU0_HAVE_SIZEOF 0
 #	if 1
 #		undef  MU0_HAVE_SIZEOF
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_sizeof__(__x)        sizeof(__x)
-#		define __mu0_issizeof__(_Tp, __x) (((__mu0_sizeof__(_Tp) == __mu0_sizeof__(__x))) ? 1 : 0)
+#		define __mu0_isofsize__(_Tp, __x) (((__mu0_sizeof__(_Tp) == __mu0_sizeof__(__x))) ? 1 : 0)
 #	endif
 
 #	undef  MU0_HAVE_EXTENSION

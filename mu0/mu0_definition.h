@@ -56,16 +56,16 @@ MU0_BEGIN_CDECL
 		);                                         \
 	})
 #	else
-#	define mu0_min(__a, __b)       (((__a) < (__b)) ? (__a) : (__b))
-#	define mu0_max(__a, __b)       (((__a) > (__b)) ? (__a) : (__b))
+#	define mu0_min(__a, __b)        (((__a) < (__b)) ? (__a) : (__b))
+#	define mu0_max(__a, __b)        (((__a) > (__b)) ? (__a) : (__b))
 #	endif
 
-#	define mu0_scope_begin         do     {
-#	define mu0_scope_end           break; } while (0)
+#	define mu0_scope_begin          do     {
+#	define mu0_scope_end            break; } while (0)
 
-#	define mu0_nullptr             NULL
-#	define mu0_is_nullptr(__x)     ((__x) == NULL ? 1 : 0)
-#	define mu0_not_nullptr(__x)    ((__x) != NULL ? 1 : 0)
+#	define mu0_nullptr              NULL
+#	define mu0_is_nullptr(__x)      ((__x) == NULL ? 1 : 0)
+#	define mu0_not_nullptr(__x)     ((__x) != NULL ? 1 : 0)
 
 #	define mu0_cast(_Tp, __x)       (_Tp)(__x)
 #	define mu0_const_cast(_Tp, __x) (const _Tp)(__x)
