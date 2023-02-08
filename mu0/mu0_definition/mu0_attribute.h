@@ -26,7 +26,7 @@
 #	if 1
 #		undef  MU0_HAVE_VOLATILE
 #		define MU0_HAVE_VOLATILE 1
-#		define __mu0_volatile__ volatile
+#		define __mu0_volatile__  volatile
 #	else
 #		define __mu0_volatile__ 
 #	endif
@@ -36,8 +36,8 @@
 #	define MU0_HAVE_STATIC 0
 #	if 1
 #		undef  MU0_HAVE_STATIC
-#		define MU0_HAVE_STATIC 1
-#		define __mu0_static__   static
+#		define MU0_HAVE_STATIC   1
+#		define __mu0_static__    static
 #	else
 #		define __mu0_static__ 
 #	endif
@@ -47,8 +47,8 @@
 #	define MU0_HAVE_INLINE 0
 #	if 1
 #		undef  MU0_HAVE_INLINE
-#		define MU0_HAVE_INLINE 1
-#		define __mu0_inline__   inline
+#		define MU0_HAVE_INLINE   1
+#		define __mu0_inline__    inline
 #	else
 #		define __mu0_inline__
 #	endif
