@@ -18,24 +18,6 @@
 #ifndef MU0_COMPILER_H
 #define MU0_COMPILER_H 1
 
-#	undef  MU0_HAVE_CC_CLANG
-#	define MU0_HAVE_CC_CLANG 0
-#	if defined(__clang__)
-#	if defined(__is_identifier) && defined(__has_builtin)
-#		undef  MU0_HAVE_CC_CLANG
-#		define MU0_HAVE_CC_CLANG 1
-#	endif
-#	endif
-
-#	undef  MU0_HAVE_CC_GNUC
-#	define MU0_HAVE_CC_GNUC 0
-#	if (defined(__GNUC__) && defined(__GNUC_MINOR__)) && !defined(__clang__)
-#	if __GNUC__ + 0 > 4 || (__GNUC__ + 0 >= 4 && __GNUC_MINOR__ > 8)
-#		undef  MU0_HAVE_CC_GNUC
-#		define MU0_HAVE_CC_GNUC  1
-#	endif
-#	endif
-
 #	undef  MU0_HAVE_CC_MSVC
 #	define MU0_HAVE_CC_MSVC 0
 #	if defined(_MSC_VER)
@@ -59,6 +41,24 @@
 #		ifdef __GNUC__
 #		undef  MU0_HAVE_CC_GICC
 #		define MU0_HAVE_CC_GICC  1
+#	endif
+#	endif
+
+#	undef  MU0_HAVE_CC_CLANG
+#	define MU0_HAVE_CC_CLANG 0
+#	if defined(__clang__)
+#	if defined(__is_identifier) && defined(__has_builtin)
+#		undef  MU0_HAVE_CC_CLANG
+#		define MU0_HAVE_CC_CLANG 1
+#	endif
+#	endif
+
+#	undef  MU0_HAVE_CC_GNUC
+#	define MU0_HAVE_CC_GNUC 0
+#	if (defined(__GNUC__) && defined(__GNUC_MINOR__)) && !MU0_HAVE_CC_ICC
+#	if __GNUC__ + 0 > 4 || (__GNUC__ + 0 >= 4 && __GNUC_MINOR__ > 8)
+#		undef  MU0_HAVE_CC_GNUC
+#		define MU0_HAVE_CC_GNUC  1
 #	endif
 #	endif
 

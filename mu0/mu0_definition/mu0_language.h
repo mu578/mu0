@@ -15,8 +15,16 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
+#include <mu0/mu0_definition/mu0_compiler.h>
+
 #ifndef MU0_LANGUAGE_H
 #define MU0_LANGUAGE_H 1
+
+#	ifdef __cplusplus
+#		ifndef __STDC__
+#			define __STDC__ 1
+#		endif
+#	endif
 
 #	undef  MU0_HAVE_CPP98
 #	undef  MU0_HAVE_CPP03
@@ -70,10 +78,10 @@
 #	define MU0_HAVE_C11 0
 #	define MU0_HAVE_C17 0
 #	define MU0_HAVE_C23 0
-#	if defined(__STDC__) || defined(__STDC_VERSION__)
+#	if defined(__STDC__) && defined(__STDC_VERSION__)
 #		undef  MU0_HAVE_C89
 #		define MU0_HAVE_C891
-#		if defined(__STDC_VERSION__)
+#		if __STDC__ == 1
 #			undef  MU0_HAVE_C90
 #			define MU0_HAVE_C90    1
 #			if (__STDC_VERSION__ >= 199409L)

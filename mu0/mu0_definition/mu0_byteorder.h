@@ -15,6 +15,8 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
+#include <mu0/mu0_definition/mu0_compiler.h>
+
 #ifndef MU0_BYTEORDER_H
 #define MU0_BYTEORDER_H 1
 
@@ -39,7 +41,7 @@
 #			define __mu0_order_leen__      __ORDER_LITTLE_ENDIAN__
 #			define __mu0_order_been__      __ORDER_BIG_ENDIAN__
 #		endif
-#	elif defined(_MSC_VER)
+#	elif MU0_HAVE_CC_MSVC
 #		if defined(_M_PPC) || defined(_M_ALPHA)
 #			undef  MU0_HAVE_BYTEORDER
 #			define MU0_HAVE_BYTEORDER      1
@@ -59,13 +61,7 @@
 #			define __mu0_order_leen__      __ORDER_LITTLE_ENDIAN__
 #			define __mu0_order_been__      __ORDER_BIG_ENDIAN__
 #		endif
-#	elif (                           \
-			defined(__INTEL_COMPILER)  \
-				|| defined(__ECC)       \
-				|| defined(__ICL)       \
-				|| defined(__ICC)       \
-				|| defined(ICC_VERSION) \
-		)
+#	elif MU0_HAVE_CC_ICC
 #		undef  MU0_HAVE_BYTEORDER
 #		define MU0_HAVE_BYTEORDER         1
 #		ifndef __BYTE_ORDER__

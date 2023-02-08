@@ -15,6 +15,8 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
+#include <mu0/mu0_definition/mu0_compiler.h>
+
 #ifndef MU0_ATTRIBUTE_H
 #define MU0_ATTRIBUTE_H 1
 
@@ -55,11 +57,11 @@
 #	undef  __mu0_inline_always__
 #	define MU0_HAVE_INLINE_ALWAYS 0
 #	if 1
-#		if defined(_MSC_VER)
+#		if MU0_HAVE_CC_MSVC
 #			undef  MU0_HAVE_INLINE_ALWAYS
 #			define MU0_HAVE_INLINE_ALWAYS 1
 #			define __mu0_inline_always__ __forceinline
-#		elif (((defined(__GNUC__) && __GNUC__ + 0 >= 4) || (defined(__clang__) || defined(__llvm__))))
+#		elif MU0_HAVE_CC_GNUC || MU0_HAVE_CC_CLANG
 #			undef  MU0_HAVE_INLINE_ALWAYS
 #			define MU0_HAVE_INLINE_ALWAYS 1
 #			define __mu0_inline_always__  __inline__ __attribute__((always_inline))
@@ -74,11 +76,11 @@
 #	undef  __mu0_inline_never__
 #	define MU0_HAVE_INLINE_NEVER 0
 #	if 1
-#		if defined(_MSC_VER)
+#		if MU0_HAVE_CC_MSVC
 #			undef  MU0_HAVE_INLINE_NEVER
 #			define MU0_HAVE_INLINE_NEVER 1
 #			define __mu0_inline_never__ __declspec(noinline)
-#		elif (((defined(__GNUC__) && __GNUC__ + 0 >= 4) || (defined(__clang__) || defined(__llvm__))))
+#		elif MU0_HAVE_CC_GNUC || MU0_HAVE_CC_CLANG
 #			undef  MU0_HAVE_INLINE_NEVER
 #			define MU0_HAVE_INLINE_NEVER 1
 #			define __mu0_inline_never__  __attribute__((noinline))

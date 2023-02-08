@@ -29,6 +29,7 @@
 MU0_BEGIN_CDECL
 
 #include <stdint.h>
+#include <stdbool.h>
 #include <inttypes.h>
 
 typedef   ptrdiff_t                     mu0_ptrdiff_t;

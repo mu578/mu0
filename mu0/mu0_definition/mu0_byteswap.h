@@ -15,6 +15,9 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
+#include <mu0/mu0_definition/mu0_byteorder.h>
+#include <mu0/mu0_definition/mu0_platform.h>
+
 #ifndef MU0_BYTESWAP_H
 #define MU0_BYTESWAP_H 1
 
@@ -23,13 +26,13 @@
 #	undef  __mu0_bswap_32__
 #	undef  __mu0_bswap_64__
 #	define MU0_HAVE_BYTESWAP 0
-#	if (defined(__GNUC__) && defined(__GNUC_MINOR__)) && !defined(__clang__)
+#	if MU0_HAVE_CC_GNUC
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
 #		define __mu0_bswap_16__(__x)    __builtin_bswap16(__x)
 #		define __mu0_bswap_32__(__x)    __builtin_bswap32(__x)
 #		define __mu0_bswap_64__(__x)    __builtin_bswap64(__x)
-#	elif defined(__clang__)
+#	elif MU0_HAVE_CC_CLANG
 #		if (__has_builtin(__builtin_bswap64))
 #			undef  MU0_HAVE_BYTESWAP
 #			define MU0_HAVE_BYTESWAP     1
@@ -40,7 +43,7 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
-#	if defined(_MSC_VER)
+#	if MU0_HAVE_CC_MSVC
 #		include <stdlib.h>
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
@@ -51,13 +54,7 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
-#	if (                             \
-			defined(__INTEL_COMPILER)  \
-				|| defined(__ECC)       \
-				|| defined(__ICL)       \
-				|| defined(__ICC)       \
-				|| defined(ICC_VERSION) \
-		)
+#	if MU0_HAVE_CC_ICC
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
 #		define __mu0_bswap_16__(__x)    _bswap16(__x)
@@ -67,7 +64,7 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
-#	if defined(__APPLE__)
+#	if MU0_HAVE_MACOSX || MU0_HAVE_IOS
 #		include <libkern/OSByteOrder.h>
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
@@ -78,7 +75,7 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
-#	if defined(__sun) || defined(sun)
+#	if MU0_HAVE_SOLARIS
 #		include <sys/byteorder.h>
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
@@ -89,7 +86,7 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
-#	if defined(__FreeBSD__)
+#	if MU0_HAVE_FREEBSD
 #		include <sys/endian.h>
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
@@ -100,7 +97,7 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
-#	if defined(__OpenBSD__)
+#	if MU0_HAVE_OPENBSD
 #		include <sys/types.h>
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
@@ -111,7 +108,7 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
-#	if defined(__NetBSD__)
+#	if MU0_HAVE_NETBSD
 #		include <sys/types.h>
 #		include <machine/bswap.h>
 #		undef  MU0_HAVE_BYTESWAP
@@ -123,7 +120,7 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
-#	if defined(__linux__)
+#	if MU0_HAVE_ANDROID || MU0_HAVE_LINUX
 #		include <byteswap.h>
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
