@@ -35,13 +35,13 @@ typedef   ptrdiff_t                     mu0_ptrdiff_t;
 typedef   uintmax_t                     mu0_uintmax_t;
 typedef   intmax_t                      mu0_sintmax_t;
 
-#	if MU0_USE_INT128
-#	if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ > 8)
+#	if   MU0_USE_INT128
+#	if   MU0_HAVE_CC_GNUC
 __mu0_extension__
 typedef unsigned __int128               mu0_uint128_t;
 __mu0_extension__
 typedef __int128                        mu0_sint128_t;
-#	elif defined(__clang__) && defined(__is_identifier)
+#	elif MU0_HAVE_CC_CLANG
 #		if !__is_identifier(__int128_t)
 #			undef  MU0_HAVE_INT128
 #			define MU0_HAVE_INT128 1

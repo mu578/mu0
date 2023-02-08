@@ -26,14 +26,15 @@
 #		define MU0_END_CDECL
 #	endif
 
+MU0_BEGIN_CDECL
+
 #include <mu0/mu0_definition/mu0_attribute.h>
+#include <mu0/mu0_definition/mu0_byteorder.h>
 #include <mu0/mu0_definition/mu0_compiler.h>
 #include <mu0/mu0_definition/mu0_feature.h>
 #include <mu0/mu0_definition/mu0_language.h>
 
 #include <stddef.h>
-
-MU0_BEGIN_CDECL
 
 #	if MU0_HAVE_TYPEOF && MU0_HAVE_EXTENSION
 #	define mu0_min(__a, __b)                      \

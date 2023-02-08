@@ -22,7 +22,23 @@
 #	undef  __mu0_typeof__
 #	undef  __mu0_istypeof__
 #	define MU0_HAVE_TYPEOF 0
-#	if ((defined(__GNUC__) && (__GNUC__ + 0 >= 3)) || defined(__clang__))
+#	if (                             \
+		   defined(__GNUC__)          \
+		&& (                          \
+			defined(__INTEL_COMPILER)  \
+				|| defined(__ECC)       \
+				|| defined(__ICL)       \
+				|| defined(__ICC)       \
+				|| defined(ICC_VERSION) \
+			)                          \
+		)
+#	if (__STDC_VERSION__ >= 201112L)
+#		undef  MU0_HAVE_TYPEOF
+#		define MU0_HAVE_TYPEOF 1
+#		define __mu0_typeof__(__x)      __typeof__((__x) + 0)
+#		define __mu0_istypeof__(_Tp, x) _Generic((__x), _Tp : 1, default: 0)
+#	endif
+#	if ((defined(__GNUC__) && (__GNUC__ + 0 >= 3)) || (defined(__clang__) || defined(__llvm__)))
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF 1
 #		define __mu0_typeof__(__x)        __typeof__((__x) + 0)
@@ -48,7 +64,7 @@
 #	undef  MU0_HAVE_EXTENSION
 #	undef  __mu0_extension__
 #	define MU0_HAVE_EXTENSION 0
-if (((defined(__GNUC__) && __GNUC__ >= 4) || (defined(__clang__) || defined(__llvm__))))
+if (((defined(__GNUC__) && __GNUC__ + 0 >= 4) || (defined(__clang__) || defined(__llvm__))))
 #		undef  MU0_HAVE_EXTENSION
 #		define MU0_HAVE_EXTENSION 1
 #		define __mu0_extension__ __extension__
