@@ -39,6 +39,7 @@
 #	define MU0_HAVE_CPP14 0
 #	define MU0_HAVE_CPP17 0
 #	define MU0_HAVE_CPP20 0
+
 #	ifdef __cplusplus
 #		undef  MU0_HAVE_CPP98
 #		define MU0_HAVE_CPP98    1

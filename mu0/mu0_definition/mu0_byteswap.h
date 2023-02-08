@@ -64,7 +64,7 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
-#	if MU0_HAVE_MACOSX || MU0_HAVE_IOS
+#	if MU0_HAVE_DARWIN
 #		include <libkern/OSByteOrder.h>
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
@@ -98,7 +98,9 @@
 
 #	if !MU0_HAVE_BYTESWAP
 #	if MU0_HAVE_OPENBSD
+#		include <sys/endian.h>
 #		include <sys/types.h>
+#		include <endian.h>
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
 #		define __mu0_bswap_16__(__x)    swap16(__x)
@@ -120,7 +122,19 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
+#	if MU0_HAVE_DRAGONFLYBSD
+#		include <sys/endian.h>
+#		undef  MU0_HAVE_BYTESWAP
+#		define MU0_HAVE_BYTESWAP        1
+#		define __mu0_bswap_16__(__x)    bswap16(__x)
+#		define __mu0_bswap_32__(__x)    bswap32(__x)
+#		define __mu0_bswap_64__(__x)    bswap32(__x)
+#	endif
+#	endif
+
+#	if !MU0_HAVE_BYTESWAP
 #	if MU0_HAVE_ANDROID || MU0_HAVE_LINUX
+#		include <endian.h>
 #		include <byteswap.h>
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
