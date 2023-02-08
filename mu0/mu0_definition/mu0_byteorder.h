@@ -59,12 +59,12 @@
 #			define __mu0_order_leen__      __ORDER_LITTLE_ENDIAN__
 #			define __mu0_order_been__      __ORDER_BIG_ENDIAN__
 #		endif
-#	elif (                             \
-			   defined(__INTEL_COMPILER) \
-			|| defined(__ECC)            \
-			|| defined(__ICL)            \
-			|| defined(__ICC)            \
-			|| defined(ICC_VERSION)      \
+#	elif (                           \
+			defined(__INTEL_COMPILER)  \
+				|| defined(__ECC)       \
+				|| defined(__ICL)       \
+				|| defined(__ICC)       \
+				|| defined(ICC_VERSION) \
 		)
 #		undef  MU0_HAVE_BYTEORDER
 #		define MU0_HAVE_BYTEORDER         1

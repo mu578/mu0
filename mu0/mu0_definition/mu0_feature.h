@@ -34,20 +34,20 @@
 		)
 #	if (__STDC_VERSION__ >= 201112L)
 #		undef  MU0_HAVE_TYPEOF
-#		define MU0_HAVE_TYPEOF 1
-#		define __mu0_typeof__(__x)      __typeof__((__x) + 0)
-#		define __mu0_istypeof__(_Tp, x) _Generic((__x), _Tp : 1, default: 0)
+#		define MU0_HAVE_TYPEOF            1
+#		define __mu0_typeof__(__x)        __typeof__((__x) + 0)
+#		define __mu0_istypeof__(_Tp, x)   _Generic((__x), _Tp : 1, default: 0)
 #	endif
 #	if ((defined(__GNUC__) && (__GNUC__ + 0 >= 3)) || (defined(__clang__) || defined(__llvm__)))
 #		undef  MU0_HAVE_TYPEOF
-#		define MU0_HAVE_TYPEOF 1
+#		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__(__x)        __typeof__((__x) + 0)
 #		define __mu0_istypeof__(_Tp, __x) ((__builtin_types_compatible_p(type1, __mu0_typeof__(__x))) ? 1 : 0)
 #	elif MU0_HAVE_C23
 #		undef  MU0_HAVE_TYPEOF 
-#		define MU0_HAVE_TYPEOF 1
-#		define __mu0_typeof__(__x)      typeof((__x) + 0)
-#		define __mu0_istypeof__(_Tp, x) _Generic((__x), _Tp : 1, default: 0)
+#		define MU0_HAVE_TYPEOF            1
+#		define __mu0_typeof__(__x)        typeof((__x) + 0)
+#		define __mu0_istypeof__(_Tp, x)   _Generic((__x), _Tp : 1, default: 0)
 #	endif
 
 #	undef  MU0_HAVE_SIZEOF
@@ -56,7 +56,7 @@
 #	define MU0_HAVE_SIZEOF 0
 #	if 1
 #		undef  MU0_HAVE_SIZEOF
-#		define MU0_HAVE_TYPEOF 1
+#		define MU0_HAVE_TYPEOF            1
 #		define __mu0_sizeof__(__x)        sizeof(__x)
 #		define __mu0_issizeof__(_Tp, __x) (((__mu0_sizeof__(_Tp) == __mu0_sizeof__(__x))) ? 1 : 0)
 #	endif
@@ -67,7 +67,7 @@
 if (((defined(__GNUC__) && __GNUC__ + 0 >= 4) || (defined(__clang__) || defined(__llvm__))))
 #		undef  MU0_HAVE_EXTENSION
 #		define MU0_HAVE_EXTENSION 1
-#		define __mu0_extension__ __extension__
+#		define __mu0_extension__  __extension__
 #	else
 #		define __mu0_extension__
 #	endif
@@ -79,7 +79,7 @@ if defined(__STDC__) && defined(__STDC_VERSION__)
 #		if (__STDC__ == 1 && __STDC_VERSION__ >= 201112L)
 #			undef  MU0_HAVE_GENERIC
 #			define MU0_HAVE_GENERIC 1
-#			define __mu0_generic__ _Generic
+#			define __mu0_generic__  _Generic
 #		else
 #			define __mu0_generic__
 #		endif

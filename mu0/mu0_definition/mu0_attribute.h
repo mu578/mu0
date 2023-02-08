@@ -62,9 +62,9 @@
 #		elif (((defined(__GNUC__) && __GNUC__ + 0 >= 4) || (defined(__clang__) || defined(__llvm__))))
 #			undef  MU0_HAVE_INLINE_ALWAYS
 #			define MU0_HAVE_INLINE_ALWAYS 1
-#			define __mu0_inline_always__ __inline__ __attribute__((always_inline))
+#			define __mu0_inline_always__  __inline__ __attribute__((always_inline))
 #		else
-#			define __mu0_inline_always__ __mu0_inline__
+#			define __mu0_inline_always__  __mu0_inline__
 #		endif
 #	else
 #		define __mu0_inline_always__ __mu0_inline__
@@ -81,7 +81,7 @@
 #		elif (((defined(__GNUC__) && __GNUC__ + 0 >= 4) || (defined(__clang__) || defined(__llvm__))))
 #			undef  MU0_HAVE_INLINE_NEVER
 #			define MU0_HAVE_INLINE_NEVER 1
-#			define __mu0_inline_never__ __attribute__((noinline))
+#			define __mu0_inline_never__  __attribute__((noinline))
 #		else
 #			define __mu0_inline_never__
 #		endif

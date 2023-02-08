@@ -33,7 +33,7 @@
 #	define MU0_HAVE_CPP20 0
 #	ifdef __cplusplus
 #		undef  MU0_HAVE_CPP98
-#		define MU0_HAVE_CPP98 1
+#		define MU0_HAVE_CPP98    1
 #		if __cplusplus >= 199711L
 #			undef  MU0_HAVE_CPP03
 #			define MU0_HAVE_CPP03 1
@@ -63,19 +63,19 @@
 #	undef  MU0_HAVE_C11
 #	undef  MU0_HAVE_C17
 #	undef  MU0_HAVE_C23
-#	define MU0_HAVE_C89   1
-#	define MU0_HAVE_C90   0
-#	define MU0_HAVE_C95   0
-#	define MU0_HAVE_C99   0
-#	define MU0_HAVE_C11   0
-#	define MU0_HAVE_C17   0
-#	define MU0_HAVE_C23   0
+#	define MU0_HAVE_C89 0
+#	define MU0_HAVE_C90 0
+#	define MU0_HAVE_C95 0
+#	define MU0_HAVE_C99 0
+#	define MU0_HAVE_C11 0
+#	define MU0_HAVE_C17 0
+#	define MU0_HAVE_C23 0
 #	if defined(__STDC__) || defined(__STDC_VERSION__)
 #		undef  MU0_HAVE_C89
-#		define MU0_HAVE_C89 1
+#		define MU0_HAVE_C891
 #		if defined(__STDC_VERSION__)
 #			undef  MU0_HAVE_C90
-#			define MU0_HAVE_C90 1
+#			define MU0_HAVE_C90    1
 #			if (__STDC_VERSION__ >= 199409L)
 #				undef  MU0_HAVE_C95
 #				define MU0_HAVE_C95 1
@@ -103,7 +103,7 @@
 #	if !MU0_HAVE_C11 && !MU0_HAVE_CPP11
 #	if !defined(_MSC_VER)
 #		if !defined(__STDC_FORMAT_MACROS)
-#			define __STDC_FORMAT_MACROS 1
+#			define __STDC_FORMAT_MACROS   1
 #		endif
 #		if !defined(__STDC_CONSTANT_MACROS)
 #			define __STDC_CONSTANT_MACROS 1
