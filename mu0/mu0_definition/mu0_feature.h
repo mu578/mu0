@@ -57,7 +57,7 @@ MU0_BEGIN_CDECL
 #	undef  MU0_HAVE_EXTENSION
 #	undef  __mu0_extension__
 #	define MU0_HAVE_EXTENSION 0
-if MU0_HAVE_CC_GNUC || MU0_HAVE_CC_CLANG
+#	if MU0_HAVE_CC_GNUC || MU0_HAVE_CC_CLANG
 #		undef  MU0_HAVE_EXTENSION
 #		define MU0_HAVE_EXTENSION 1
 #		define __mu0_extension__  __extension__
@@ -68,7 +68,7 @@ if MU0_HAVE_CC_GNUC || MU0_HAVE_CC_CLANG
 #	undef  MU0_HAVE_GENERIC
 #	undef  __mu0_generic__
 #	define MU0_HAVE_GENERIC 0
-if MU0_HAVE_C11
+#	if MU0_HAVE_C11
 #		undef  MU0_HAVE_GENERIC
 #		define MU0_HAVE_GENERIC 1
 #		define __mu0_generic__  _Generic

@@ -108,7 +108,6 @@ MU0_BEGIN_CDECL
 #				define MU0_HAVE_C23 1
 #			endif
 #		endif
-#		endif
 #	endif
 
 #	if !MU0_HAVE_C11 && !MU0_HAVE_CPP11

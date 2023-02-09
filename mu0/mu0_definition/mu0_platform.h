@@ -46,15 +46,15 @@ MU0_BEGIN_CDECL
 #	define MU0_HAVE_ANDROID         0
 #	define MU0_HAVE_LINUX           0
 
-if defined(__APPLE__) && defined(__MACH__)
-#		if TARGET_OS_IPHONE
-#			undef  MU0_HAVE_DARWIN    0
-#			undef  MU0_HAVE_IOS       0
+#	if defined(__APPLE__) && defined(__MACH__)
+#		if defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE
+#			undef  MU0_HAVE_DARWIN
+#			undef  MU0_HAVE_IOS
 #			define MU0_HAVE_DARWIN    1
 #			define MU0_HAVE_IOS       1
 #		else
-#			undef  MU0_HAVE_DARWIN    0
-#			undef  MU0_HAVE_MACOSX    0
+#			undef  MU0_HAVE_DARWIN
+#			undef  MU0_HAVE_MACOSX
 #			define MU0_HAVE_DARWIN    1
 #			define MU0_HAVE_MACOSX    1
 #		endif
@@ -220,10 +220,10 @@ if defined(__APPLE__) && defined(__MACH__)
 	|| defined(__ARM_ARCH_6ZK__)          \
 	|| defined(__ARM_ARCH_6T2__)          \
 	|| (defined(__TARGET_ARCH_ARM) && (   \
-			__TARGET_ARCH_ARM = 6           \
+			__TARGET_ARCH_ARM == 6          \
 	))                                    \
 	|| (defined(_M_ARM) && (              \
-			_M_ARM            = 6           \
+			_M_ARM            == 6          \
 	))
 #		undef  MU0_HAVE_ARCH
 #		undef  MU0_HAVE_ARM32
@@ -248,10 +248,10 @@ if defined(__APPLE__) && defined(__MACH__)
 	|| defined(__ARM_ARCH_7S__)         \
 	|| defined(_M_ARM_ARMV7VE)          \
 	|| (defined(__TARGET_ARCH_ARM) && ( \
-			__TARGET_ARCH_ARM = 7         \
+			__TARGET_ARCH_ARM == 7        \
 	))                                  \
 	|| (defined(_M_ARM) && (            \
-			_M_ARM            = 7         \
+			_M_ARM            == 7        \
 	))
 #		undef  MU0_HAVE_ARCH
 #		undef  MU0_HAVE_ARMTB
