@@ -15,8 +15,12 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
+#include <mu0/mu0_definition/mu0_compiler.h>
+
 #ifndef MU0_PLATFORM_H
 #define MU0_PLATFORM_H 1
+
+MU0_BEGIN_CDECL
 
 #	undef  MU0_HAVE_DARWIN
 #	undef  MU0_HAVE_MACOSX
@@ -85,6 +89,9 @@ if defined(__APPLE__) && defined(__MACH__)
 #		define MU0_HAVE_LINUX        1
 #	endif
 
+#	undef  MU0_HAVE_ARCH
+#	define MU0_HAVE_ARCH      0
+
 #	undef  MU0_HAVE_X86
 #	undef  MU0_HAVE_X64
 #	undef  MU0_HAVE_IA32
@@ -131,7 +138,9 @@ if defined(__APPLE__) && defined(__MACH__)
 	|| defined(__INTEL__)     \
 	|| defined(_M_I286)       \
 	|| defined(_386)
+#		undef  MU0_HAVE_ARCH
 #		undef  MU0_HAVE_X86
+#		define MU0_HAVE_ARCH  1
 #		define MU0_HAVE_X86   1
 #	endif
 
@@ -139,8 +148,10 @@ if defined(__APPLE__) && defined(__MACH__)
 	  (defined(_M_X64) && !defined(_M_ARM64EC)) \
 	|| defined(__X86_64__)                      \
 	|| defined(__x86_64__)
+#		undef  MU0_HAVE_ARCH
 #		undef  MU0_HAVE_X86
 #		undef  MU0_HAVE_X64
+#		define MU0_HAVE_ARCH  1
 #		define MU0_HAVE_X86   0
 #		define MU0_HAVE_X64   1
 #	endif
@@ -152,10 +163,12 @@ if defined(__APPLE__) && defined(__MACH__)
 	|| (defined(_M_X64) && !defined(_M_ARM64EC)) \
 	|| defined(__X86_64__)                       \
 	|| defined(__x86_64__)
+#		undef  MU0_HAVE_ARCH
 #		undef  MU0_HAVE_X86
 #		undef  MU0_HAVE_X64
 #		undef  MU0_HAVE_IA32
 #		undef  MU0_HAVE_AMD64
+#		define MU0_HAVE_ARCH  1
 #		define MU0_HAVE_X86   0
 #		define MU0_HAVE_X64   1
 #		define MU0_HAVE_IA32  1
@@ -169,11 +182,13 @@ if defined(__APPLE__) && defined(__MACH__)
 	|| defined(__IA64__)    \
 	|| defined(__ia64)      \
 	|| defined(_M_IA64)
+#		undef  MU0_HAVE_ARCH
 #		undef  MU0_HAVE_X86
 #		undef  MU0_HAVE_X64
 #		undef  MU0_HAVE_IA32
 #		undef  MU0_HAVE_IA64
 #		undef  MU0_HAVE_AMD64
+#		define MU0_HAVE_ARCH  1
 #		define MU0_HAVE_X86   0
 #		define MU0_HAVE_X64   1
 #		define MU0_HAVE_IA32  0
@@ -190,8 +205,10 @@ if defined(__APPLE__) && defined(__MACH__)
 	&& !defined(__aarch64__) \
 	&& !defined(__arm64__)   \
 	&& !defined(_M_ARM64)    \
-	&& !defined(_M_ARM64EC)  \
+	&& !defined(_M_ARM64EC)
+#		undef  MU0_HAVE_ARCH
 #		undef  MU0_HAVE_ARM32
+#		define MU0_HAVE_ARCH  1
 #		define MU0_HAVE_ARM32 1
 #	endif
 
@@ -208,8 +225,10 @@ if defined(__APPLE__) && defined(__MACH__)
 	|| (defined(_M_ARM) && (              \
 			_M_ARM            = 6           \
 	))
+#		undef  MU0_HAVE_ARCH
 #		undef  MU0_HAVE_ARM32
 #		undef  MU0_HAVE_ARMV6
+#		define MU0_HAVE_ARCH  1
 #		define MU0_HAVE_ARM32 1
 #		define MU0_HAVE_ARMV6 1
 #		if                                 \
@@ -234,10 +253,12 @@ if defined(__APPLE__) && defined(__MACH__)
 	|| (defined(_M_ARM) && (            \
 			_M_ARM            = 7         \
 	))
+#		undef  MU0_HAVE_ARCH
 #		undef  MU0_HAVE_ARMTB
 #		undef  MU0_HAVE_ARM32
 #		undef  MU0_HAVE_ARMV6
 #		undef  MU0_HAVE_ARMV7
+#		define MU0_HAVE_ARCH  1
 #		define MU0_HAVE_ARMTB 0
 #		define MU0_HAVE_ARM32 1
 #		define MU0_HAVE_ARMV7 0
@@ -249,17 +270,25 @@ if defined(__APPLE__) && defined(__MACH__)
 	|| defined(__arm64__)   \
 	|| defined(_M_ARM64)    \
 	|| defined(_M_ARM64EC)
+#		undef  MU0_HAVE_ARCH
 #		undef  MU0_HAVE_ARMTB
 #		undef  MU0_HAVE_ARM32
 #		undef  MU0_HAVE_ARMV6
 #		undef  MU0_HAVE_ARMV7
 #		undef  MU0_HAVE_ARM64
+#		define MU0_HAVE_ARCH  1
 #		define MU0_HAVE_ARMTB 0
 #		define MU0_HAVE_ARM32 0
 #		define MU0_HAVE_ARMV6 0
 #		define MU0_HAVE_ARMV7 0
 #		define MU0_HAVE_ARM64 1
 #	endif
+
+#	if !MU0_HAVE_ARCH
+#		error mu0_platform.h
+#	endif
+
+MU0_END_CDECL
 
 #endif /* !MU0_PLATFORM_H */
 

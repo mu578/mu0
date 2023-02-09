@@ -26,11 +26,11 @@
 #	define MU0_USE_INT128  1
 #	define MU0_HAVE_INT128 0
 
-MU0_BEGIN_CDECL
+#	include <stdint.h>
+#	include <stdbool.h>
+#	include <inttypes.h>
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <inttypes.h>
+MU0_BEGIN_CDECL
 
 typedef   ptrdiff_t                     mu0_ptrdiff_t;
 typedef   uintmax_t                     mu0_uintmax_t;

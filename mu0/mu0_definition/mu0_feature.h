@@ -20,6 +20,8 @@
 #ifndef MU0_FEATURE_H
 #define MU0_FEATURE_H 1
 
+MU0_BEGIN_CDECL
+
 #	undef  MU0_HAVE_TYPEOF
 #	undef  __mu0_typeof__
 #	undef  __mu0_isoftype__
@@ -73,6 +75,8 @@ if MU0_HAVE_C11
 #	else
 #		define __mu0_generic__
 #	endif
+
+MU0_END_CDECL
 
 #endif /* !MU0_FEATURE_H */
 

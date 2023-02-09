@@ -21,6 +21,8 @@
 #ifndef MU0_BYTESWAP_H
 #define MU0_BYTESWAP_H 1
 
+MU0_BEGIN_CDECL
+
 #	undef  MU0_HAVE_BYTESWAP
 #	undef  __mu0_bswap_16__
 #	undef  __mu0_bswap_32__
@@ -43,6 +45,18 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
+#	if MU0_HAVE_CC_ICC
+#		undef  MU0_HAVE_BYTESWAP
+#		define MU0_HAVE_BYTESWAP        1
+#		define __mu0_bswap_16__(__x)    _bswap16(__x)
+#		define __mu0_bswap_32__(__x)    _bswap(__x)
+#		define __mu0_bswap_64__(__x)    _bswap64(__x)
+#	endif
+#	endif
+
+MU0_END_CDECL
+
+#	if !MU0_HAVE_BYTESWAP
 #	if MU0_HAVE_CC_MSVC
 #		include <stdlib.h>
 #		undef  MU0_HAVE_BYTESWAP
@@ -50,16 +64,6 @@
 #		define __mu0_bswap_16__(__x)    _byteswap_ushort(__x)
 #		define __mu0_bswap_32__(__x)    _byteswap_ulong(__x)
 #		define __mu0_bswap_64__(__x)    _byteswap_uint64(__x)
-#	endif
-#	endif
-
-#	if !MU0_HAVE_BYTESWAP
-#	if MU0_HAVE_CC_ICC
-#		undef  MU0_HAVE_BYTESWAP
-#		define MU0_HAVE_BYTESWAP        1
-#		define __mu0_bswap_16__(__x)    _bswap16(__x)
-#		define __mu0_bswap_32__(__x)    _bswap(__x)
-#		define __mu0_bswap_64__(__x)    _bswap64(__x)
 #	endif
 #	endif
 
@@ -144,8 +148,10 @@
 #	endif
 #	endif
 
+MU0_BEGIN_CDECL
+
 #	if MU0_HAVE_BYTESWAP
-#	if   __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#	if   __MU0_BYTE_ORDER__ == __MU0_ORDER_LEEN__
 #		define __mu0_htobe16__(__x)     __mu0_bswap_16__(__x)
 #		define __mu0_htole16__(__x)     (__x)
 #		define __mu0_be16toh__(__x)     __mu0_bswap_16__(__x)
@@ -158,7 +164,7 @@
 #		define __mu0_htole64__(__x)     (__x)
 #		define __mu0_be64toh__(__x)     __mu0_bswap_64__(__x)
 #		define __mu0_le64toh__(__x)     (__x)
-#	elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+#	elif __MU0_BYTE_ORDER__ == __MU0_ORDER_BEEN__
 #		define __mu0_htobe16__(__x)     (__x)
 #		define __mu0_htole16__(__x)     __mu0_bswap_16__(__x)
 #		define __mu0_be16toh__(__x)     (__x)
@@ -173,6 +179,12 @@
 #		define __mu0_le64toh__(__x)     __mu0_bswap_64__(__x)
 #	endif
 #	endif
+
+#	if !MU0_HAVE_BYTESWAP
+#		error mu0_byteswap.h
+#	endif
+
+MU0_END_CDECL
 
 #endif /* !MU0_BYTESWAP_H */
 

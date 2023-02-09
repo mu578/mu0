@@ -23,29 +23,41 @@
 #	undef  MU0_USE_FLOAT128
 #	undef  MU0_HAVE_FLOAT128
 
+#	undef  MU0_USE_FLOAT64
+#	undef  MU0_HAVE_FLOAT64
+
+#	undef  MU0_USE_FLOAT32
+#	undef  MU0_HAVE_FLOAT32
+
 #	undef  MU0_USE_FLOAT16
 #	undef  MU0_HAVE_FLOAT16
 
 #	define MU0_USE_FLOAT128  1
 #	define MU0_HAVE_FLOAT128 0
 
+#	define MU0_USE_FLOAT64   1
+#	define MU0_HAVE_FLOAT64  0
+
+#	define MU0_USE_FLOAT32   1
+#	define MU0_HAVE_FLOAT32  0
+
 #	define MU0_USE_FLOAT16   1
 #	define MU0_HAVE_FLOAT16  0
 
-#	if MU0_USE_FLOAT16
+#	if MU0_USE_FLOAT128 || MU0_USE_FLOAT64 || MU0_USE_FLOAT32 || MU0_USE_FLOAT16
 #		undef  __STDC_WANT_IEC_60559_TYPES_EXT__
 #		define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
 #	endif
 
-#include <float.h>
-#include <math.h>
+#	include <float.h>
+#	include <math.h>
 
 MU0_BEGIN_CDECL
 
 typedef long double             mu0_fpex_t;
 
 #	if MU0_USE_FLOAT128
-#	if MU0_HAVE_CC_CLANG
+#	if   MU0_HAVE_CC_CLANG
 #		if !__is_identifier(_Float128)
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1
@@ -57,6 +69,14 @@ typedef long double             mu0_fpex_t;
 			__mu0_extension__
 			typedef __float128     mu0_fp128_t;
 #		endif
+#	elif MU0_HAVE_CC_GNUC
+#		if ((defined(__STDC_IEC_60559_TYPES__) || defined(__STDC_IEC_559__)) && defined(FLT128_MAX))
+#			undef  MU0_HAVE_FLOAT128
+#			define MU0_HAVE_FLOAT128 1
+			__mu0_extension__
+			typedef _Float128      mu0_fp128_t;
+#		endif
+#	endif
 #	endif
 #	endif
 
@@ -64,11 +84,49 @@ typedef long double             mu0_fpex_t;
 typedef long double             mu0_fp128_t;
 #	endif
 
+#	if MU0_USE_FLOAT64
+#	if   MU0_HAVE_CC_CLANG
+#		if !__is_identifier(_Float64)
+#			undef  MU0_HAVE_FLOAT64
+#			define MU0_HAVE_FLOAT64 1
+			__mu0_extension__
+			typedef _Float64       mu0_fp64_t;;
+#		endif
+#	elif MU0_HAVE_CC_GNUC
+#			undef  MU0_HAVE_FLOAT64
+#			define MU0_HAVE_FLOAT64 1
+		__mu0_extension__
+		typedef _Float64          mu0_fp64_t;
+#	endif
+#	endif
+#	endif
+
+#	if !MU0_HAVE_FLOAT64
 typedef double                  mu0_fp64_t;
+#	endif
+
+#	if MU0_USE_FLOAT32
+#	if   MU0_HAVE_CC_CLANG
+#		if !__is_identifier(_Float32)
+#			undef  MU0_HAVE_FLOAT32
+#			define MU0_HAVE_FLOAT32 1
+			__mu0_extension__
+			typedef _Float32       mu0_fp32_t;
+#		endif
+#	elif MU0_HAVE_CC_GNUC
+#			undef  MU0_HAVE_FLOAT32
+#			define MU0_HAVE_FLOAT32 1
+		__mu0_extension__
+		typedef _Float32          mu0_fp32_t;
+#	endif
+#	endif
+
+#	if !MU0_HAVE_FLOAT32
 typedef float                   mu0_fp32_t;
+#	endif
 
 #	if MU0_USE_FLOAT16
-#	if MU0_HAVE_CC_CLANG
+#	if   MU0_HAVE_CC_CLANG
 #		if !__is_identifier(_Float16)
 #			undef  MU0_HAVE_FLOAT16
 #			define MU0_HAVE_FLOAT16 1
@@ -80,6 +138,11 @@ typedef float                   mu0_fp32_t;
 			__mu0_extension__
 			typedef __fp16         mu0_fp16_t;
 #		endif
+#	elif MU0_HAVE_CC_GNUC && MU0_HAVE_ARM64
+#		undef  MU0_HAVE_FLOAT16
+#		define MU0_HAVE_FLOAT16 1
+		__mu0_extension__
+		typedef _Float16          mu0_fp16_t;
 #	endif
 #	endif
 

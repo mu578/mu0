@@ -20,6 +20,8 @@
 #ifndef MU0_LANGUAGE_H
 #define MU0_LANGUAGE_H 1
 
+MU0_BEGIN_CDECL
+
 #	ifdef __cplusplus
 #		ifndef __STDC__
 #			define __STDC__ 1
@@ -119,6 +121,8 @@
 #		endif
 #	endif
 #	endif
+
+MU0_END_CDECL
 
 #endif /* !MU0_LANGUAGE_H */
 

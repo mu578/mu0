@@ -18,23 +18,17 @@
 #ifndef MU0_DEFINITION_H
 #define MU0_DEFINITION_H 1
 
-#	ifdef __cplusplus
-#		define MU0_BEGIN_CDECL extern "C" {
-#		define MU0_END_CDECL   }
-#	else
-#		define MU0_BEGIN_CDECL
-#		define MU0_END_CDECL
-#	endif
+#	include <mu0/mu0_definition/mu0_attribute.h>
+#	include <mu0/mu0_definition/mu0_byteorder.h>
+#	include <mu0/mu0_definition/mu0_byteswap.h>
+#	include <mu0/mu0_definition/mu0_compiler.h>
+#	include <mu0/mu0_definition/mu0_feature.h>
+#	include <mu0/mu0_definition/mu0_language.h>
+#	include <mu0/mu0_definition/mu0_platform.h>
+
+#	include <stddef.h>
 
 MU0_BEGIN_CDECL
-
-#include <mu0/mu0_definition/mu0_attribute.h>
-#include <mu0/mu0_definition/mu0_byteorder.h>
-#include <mu0/mu0_definition/mu0_compiler.h>
-#include <mu0/mu0_definition/mu0_feature.h>
-#include <mu0/mu0_definition/mu0_language.h>
-
-#include <stddef.h>
 
 #	if MU0_HAVE_TYPEOF && MU0_HAVE_EXTENSION
 #	define mu0_min(__a, __b)                      \

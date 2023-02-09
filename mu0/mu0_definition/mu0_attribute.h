@@ -20,6 +20,8 @@
 #ifndef MU0_ATTRIBUTE_H
 #define MU0_ATTRIBUTE_H 1
 
+MU0_BEGIN_CDECL
+
 #	undef  MU0_HAVE_VOLATILE
 #	undef  __mu0_volatile__
 #	define MU0_HAVE_VOLATILE 0
@@ -116,6 +118,8 @@
 #	else
 #		define __mu0_overload__
 #	endif
+
+MU0_END_CDECL
 
 #endif /* !MU0_ATTRIBUTE_H */
 
