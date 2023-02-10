@@ -62,7 +62,7 @@ MU0_BEGIN_CDECL
 #		undef  MU0_HAVE_WINDOWS      0
 #		define MU0_HAVE_WINDOWS      1
 #	elif                 \
-		defined(__sun)    \
+	   defined(__sun)    \
 	|| defined(sun)      \
 	|| defined(__sun__)  \
 	|| defined(__SVR4)   \
@@ -115,7 +115,7 @@ MU0_BEGIN_CDECL
 #	define MU0_HAVE_ARM64    0
 
 #	if                        \
-		defined(i386)          \
+	   defined(i386)          \
 	|| defined(__i386)        \
 	|| defined(__i386__)      \
 	|| defined(__i486__)      \
@@ -157,7 +157,7 @@ MU0_BEGIN_CDECL
 #	endif
 
 #	if                                           \
-		defined(__amd64__)                        \
+	   defined(__amd64__)                        \
 	|| defined(__amd64)                          \
 	|| defined(_M_AMD64)                         \
 	|| (defined(_M_X64) && !defined(_M_ARM64EC)) \
@@ -176,7 +176,7 @@ MU0_BEGIN_CDECL
 #	endif
 
 #	if                      \
-		defined(__ia64__)    \
+	   defined(__ia64__)    \
 	|| defined(__itanium__) \
 	|| defined(_IA64)       \
 	|| defined(__IA64__)    \
@@ -197,7 +197,7 @@ MU0_BEGIN_CDECL
 #	endif
 
 #	if                       \
-		defined(__arm__)      \
+	   defined(__arm__)      \
 	|| defined(ARM)          \
 	|| defined(_M_ARM)       \
 	|| defined(_M_ARMT)      \
@@ -213,7 +213,7 @@ MU0_BEGIN_CDECL
 #	endif
 
 #	if                                    \
-		defined(__ARM_ARCH_6__)            \
+	   defined(__ARM_ARCH_6__)            \
 	|| defined(__ARM_ARCH_6J__)           \
 	|| defined(__ARM_ARCH_6K__)           \
 	|| defined(__ARM_ARCH_6Z__)           \
@@ -232,7 +232,7 @@ MU0_BEGIN_CDECL
 #		define MU0_HAVE_ARM32 1
 #		define MU0_HAVE_ARMV6 1
 #		if                                 \
-				defined(__thumb__)           \
+			   defined(__thumb__)           \
 			|| defined(__TARGET_ARCH_THUMB) \
 			|| defined(_M_ARMT)
 #			undef  MU0_HAVE_ARMTB
@@ -241,7 +241,7 @@ MU0_BEGIN_CDECL
 #	endif
 
 #	if                                  \
-		defined(__ARM_ARCH_7__)          \
+	   defined(__ARM_ARCH_7__)          \
 	|| defined(__ARM_ARCH_7A__)         \
 	|| defined(__ARM_ARCH_7R__)         \
 	|| defined(__ARM_ARCH_7M__)         \

@@ -44,13 +44,12 @@ MU0_BEGIN_CDECL
 #	define MU0_HAVE_CC_ICC   0
 #	undef  MU0_HAVE_CC_GICC
 #	define MU0_HAVE_CC_GICC  0
-#	if (                             \
-			defined(__INTEL_COMPILER)  \
-				|| defined(__ECC)       \
-				|| defined(__ICL)       \
-				|| defined(__ICC)       \
-				|| defined(ICC_VERSION) \
-		)
+#	if                           \
+	   defined(__INTEL_COMPILER) \
+	|| defined(__ECC)            \
+	|| defined(__ICL)            \
+	|| defined(__ICC)            \
+	|| defined(ICC_VERSION)
 #		undef  MU0_HAVE_COMPILER
 #		undef  MU0_HAVE_CC_ICC
 #		define MU0_HAVE_COMPILER 1

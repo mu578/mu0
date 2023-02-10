@@ -187,6 +187,18 @@ typedef   mu0_fp16_t *          mu0_vfp16_t;
 #	define mu0_vfp16(__x)        mu0_cast(mu0_vfp16_t, __x)
 #	define mu0_const_vfp16(__x)  mu0_const_cast(mu0_vfp16_t, __x)
 
+#	if MU0_HAVE_TYPEOF
+#	define mu0_is_floating_point(__x)        \
+	((                                       \
+		   __mu0_isoftype__(mu0_fp128_t, __x) \
+		|| __mu0_isoftype__(mu0_fp64_t , __x) \
+		|| __mu0_isoftype__(mu0_fp32_t , __x) \
+		|| __mu0_isoftype__(mu0_fp16_t , __x) \
+	) ? 1 : 0)
+#	else
+#	define mu0_is_floating_point(__x) (1)
+#	endif
+
 MU0_END_CDECL
 
 #endif /* !MU0_FLOATING_H */

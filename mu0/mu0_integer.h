@@ -165,6 +165,28 @@ typedef   mu0_sint8_t  *                mu0_vsint8_t;
 #	define mu0_vsint8(__x)               mu0_cast(mu0_vsint8_t, __x)
 #	define mu0_const_vsint8(__x)         mu0_const_cast(mu0_vsint8_t, __x)
 
+#	if MU0_HAVE_TYPEOF
+#	define mu0_is_sinteger(__x)                \
+	((                                         \
+		   __mu0_isoftype__(m0_sint64_t  , __x) \
+		|| __mu0_isoftype__(m0_sint32_t  , __x) \
+		|| __mu0_isoftype__(m0_sint16_t  , __x) \
+		|| __mu0_isoftype__(m0_sint8_t   , __x) \
+		|| __mu0_isoftype__(mu0_ptrdiff_t, __x) \
+	) ? 1 : 0)
+
+#	define mu0_is_uinteger(__x)              \
+	((                                       \
+		   __mu0_isoftype__(m0_uint64_t, __x) \
+		|| __mu0_isoftype__(m0_uint32_t, __x) \
+		|| __mu0_isoftype__(m0_uint16_t, __x) \
+		|| __mu0_isoftype__(m0_uint8_t , __x) \
+	) ? 1 : 0)
+#	else
+#	define mu0_is_sinteger(__x) (1)
+#	define mu0_is_uinteger(__x) (1)
+#	endif
+
 MU0_END_CDECL
 
 #endif /* !MU0_INTEGER_H */
