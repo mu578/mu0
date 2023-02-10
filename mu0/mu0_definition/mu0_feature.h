@@ -68,7 +68,7 @@ MU0_BEGIN_CDECL
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__             typeof
-#		define __mu0_kindof__(__x)        __mu0_typeof__((__x) + 0)
+#		define __mu0_kindof__(__x)        typeof_unequal(__x)
 #		define __mu0_isoftype__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x)) ? 1 : 0)
 #		define __mu0_isofkind__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x) || __mu0_typeof__(_Tp) == __mu0_kindof__(__x))  ? 1 : 0)
 #	endif

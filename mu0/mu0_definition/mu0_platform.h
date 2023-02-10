@@ -265,11 +265,19 @@ MU0_BEGIN_CDECL
 #		define MU0_HAVE_ARMV7 1
 #	endif
 
-#	if                      \
-	   defined(__aarch64__) \
-	|| defined(__arm64__)   \
-	|| defined(_M_ARM64)    \
-	|| defined(_M_ARM64EC)
+#	if                                  \
+	   defined(__aarch64__)             \
+	|| defined(__arm64__)               \
+	|| defined(__ARM_ARCH_8__)          \
+	|| defined(__ARM_ARCH_8A__)         \
+	|| defined(_M_ARM64)                \
+	|| defined(_M_ARM64EC)              \
+	|| (defined(__TARGET_ARCH_ARM) && ( \
+			__TARGET_ARCH_ARM == 8        \
+	))                                  \
+	|| (defined(_M_ARM) && (            \
+			_M_ARM            == 8        \
+	))
 #		undef  MU0_HAVE_ARCH
 #		undef  MU0_HAVE_ARMTB
 #		undef  MU0_HAVE_ARM32

@@ -79,6 +79,9 @@ MU0_BEGIN_CDECL
 #		undef  MU0_HAVE_CC_GNUC
 #		define MU0_HAVE_COMPILER 1
 #		define MU0_HAVE_CC_GNUC  1
+#		ifndef __has_builtin
+#			define __has_builtin(x) 0
+#		endif
 #	endif
 #	endif
 
