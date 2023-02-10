@@ -52,7 +52,7 @@ MU0_BEGIN_CDECL
 #	endif
 #endif
 
-#	if   __CC_ARM
+#	if MU0_HAVE_CC_ARMCC
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		define __m0_sync_cpu_yield__()       __yield()
@@ -139,6 +139,5 @@ MU0_BEGIN_CDECL
 #	endif
 
 MU0_END_CDECL
-
 
 #endif /* !MU0_COMPILER_H */

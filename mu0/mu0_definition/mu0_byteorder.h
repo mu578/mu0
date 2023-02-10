@@ -43,6 +43,21 @@ MU0_BEGIN_CDECL
 #			define __MU0_ORDER_LEEN__      __ORDER_LITTLE_ENDIAN__
 #			define __MU0_ORDER_BEEN__      __ORDER_BIG_ENDIAN__
 #		endif
+#	elif MU0_HAVE_CC_ARMCC
+#		undef  MU0_HAVE_BYTEORDER
+#		define MU0_HAVE_BYTEORDER         1
+#		ifndef __BYTE_ORDER__
+#			define __ORDER_LITTLE_ENDIAN__ (1234)
+#			define __ORDER_BIG_ENDIAN__    (4321)
+#			if defined(__ARM_BIG_ENDIAN)
+#				define __BYTE_ORDER__       __ORDER_BIG_ENDIAN__
+#			else
+#				define __BYTE_ORDER__       __ORDER_LITTLE_ENDIAN__
+#			endif
+#		endif
+#		define __MU0_BYTE_ORDER__         __BYTE_ORDER__
+#		define __MU0_ORDER_LEEN__         __ORDER_LITTLE_ENDIAN__
+#		define __MU0_ORDER_BEEN__         __ORDER_BIG_ENDIAN__
 #	elif MU0_HAVE_CC_MSVC
 #		if defined(_M_PPC) || defined(_M_ALPHA)
 #			undef  MU0_HAVE_BYTEORDER

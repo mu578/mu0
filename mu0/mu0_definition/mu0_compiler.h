@@ -60,6 +60,16 @@ MU0_BEGIN_CDECL
 #	endif
 #	endif
 
+#	undef  MU0_HAVE_CC_ARMCC
+#	define MU0_HAVE_CC_ARMCC 0
+#	if defined(__CC_ARM) && defined(__ARMCC_VERSION) && (__ARMCC_VERSION > 5000000)
+#		undef  MU0_HAVE_COMPILER
+#		undef  MU0_HAVE_CC_ARMCC
+#		define MU0_HAVE_COMPILER 1
+#		define MU0_HAVE_CC_ARMCC 1
+#	endif
+
+#	if !MU0_HAVE_COMPILER
 #	undef  MU0_HAVE_CC_CLANG
 #	define MU0_HAVE_CC_CLANG 0
 #	if defined(__clang__)
@@ -70,10 +80,12 @@ MU0_BEGIN_CDECL
 #		define MU0_HAVE_CC_CLANG 1
 #	endif
 #	endif
+#	endif
 
+#	if !MU0_HAVE_COMPILER
 #	undef  MU0_HAVE_CC_GNUC
 #	define MU0_HAVE_CC_GNUC  0
-#	if (defined(__GNUC__) && defined(__GNUC_MINOR__)) && !MU0_HAVE_CC_ICC
+#	if (defined(__GNUC__) && defined(__GNUC_MINOR__))
 #	if __GNUC__ + 0 > 4 || (__GNUC__ + 0 >= 4 && __GNUC_MINOR__ > 8)
 #		undef  MU0_HAVE_COMPILER
 #		undef  MU0_HAVE_CC_GNUC
@@ -82,6 +94,7 @@ MU0_BEGIN_CDECL
 #		ifndef __has_builtin
 #			define __has_builtin(x) 0
 #		endif
+#	endif
 #	endif
 #	endif
 

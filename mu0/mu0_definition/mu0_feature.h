@@ -58,7 +58,7 @@ MU0_BEGIN_CDECL
 #		define __mu0_kindof__(__x)        __mu0_typeof__((__x) + 0)
 #		define __mu0_isoftype__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
 #		define __mu0_isofkind__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
-#	elif MU0_HAVE_CC_GNUC || MU0_HAVE_CC_CLANG
+#	elif MU0_HAVE_CC_GNUC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCC
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__             __typeof__
