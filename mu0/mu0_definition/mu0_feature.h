@@ -50,6 +50,7 @@ MU0_BEGIN_CDECL
 #	undef  __mu0_isoftype__
 #	undef  __mu0_isofkind__
 #	define MU0_HAVE_TYPEOF 0
+
 #	if MU0_HAVE_CC_GICC && MU0_HAVE_C11
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
@@ -72,6 +73,20 @@ MU0_BEGIN_CDECL
 #		define __mu0_isoftype__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x)) ? 1 : 0)
 #		define __mu0_isofkind__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x) || __mu0_typeof__(_Tp) == __mu0_kindof__(__x))  ? 1 : 0)
 #	endif
+
+MU0_END_CDECL
+
+#	if !MU0_HAVE_TYPEOF && MU0_HAVE_CPP11
+#		include <type_traits>
+#		undef  MU0_HAVE_TYPEOF
+#		define MU0_HAVE_TYPEOF            1
+#		define __mu0_typeof__             ::std::remove_reference<decltype(__x)>::type
+#		define __mu0_kindof__(__x)        ::std::decay<decltype(__x)>::type
+#		define __mu0_isoftype__(_Tp, x)   ((::std::is_same<_Tp , __mu0_typeof__(__x) >::value == true) ? 1 : 0)
+#		define __mu0_isofkind__(_Tp, x)   ((::std::is_same<_Tp , __mu0_typeof__(__x) >::value == true || ::std::is_same<_Tp , __mu0_kindof__(__x) >::value == true) ? 1 : 0)
+#	endif
+
+MU0_BEGIN_CDECL
 
 #	undef  MU0_HAVE_SIZEOF
 #	undef  __mu0_sizeof__

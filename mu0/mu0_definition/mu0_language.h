@@ -43,6 +43,17 @@ MU0_BEGIN_CDECL
 #	define MU0_HAVE_CPP20 0
 
 #	ifdef __cplusplus
+
+#		undef  __stdmuc__
+#		undef  __stdmucpp__
+#		undef  __stdmuc_version__
+#		undef  __stdmucpp_version__
+
+#		define  __stdmuc__          0
+#		define  __stdmucpp__        1
+#		define __stdmuc_version__   0L
+#		define __stdmucpp_version__ 202302L
+
 #		undef  MU0_HAVE_CPP98
 #		define MU0_HAVE_CPP98    1
 #		if __cplusplus >= 199711L
@@ -81,7 +92,18 @@ MU0_BEGIN_CDECL
 #	define MU0_HAVE_C11 0
 #	define MU0_HAVE_C17 0
 #	define MU0_HAVE_C23 0
+
 #	if defined(__STDC__) && defined(__STDC_VERSION__)
+#		undef  __stdmuc__
+#		undef  __stdmucpp__
+#		undef  __stdmuc_version__
+#		undef  __stdmucpp_version__
+
+#		define  __stdmuc__          1
+#		define  __stdmucpp__        0
+#		define __stdmuc_version__   202302L
+#		define __stdmucpp_version__ 0L
+
 #		undef  MU0_HAVE_C89
 #		define MU0_HAVE_C891
 #		if __STDC__ == 1
