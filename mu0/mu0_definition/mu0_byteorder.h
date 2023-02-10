@@ -58,7 +58,7 @@ MU0_BEGIN_CDECL
 #		define __MU0_BYTE_ORDER__         __BYTE_ORDER__
 #		define __MU0_ORDER_LEEN__         __ORDER_LITTLE_ENDIAN__
 #		define __MU0_ORDER_BEEN__         __ORDER_BIG_ENDIAN__
-#	elif MU0_HAVE_CC_MSVC
+#	elif MU0_HAVE_CC_MSVCC
 #		if defined(_M_PPC) || defined(_M_ALPHA)
 #			undef  MU0_HAVE_BYTEORDER
 #			define MU0_HAVE_BYTEORDER      1
@@ -78,7 +78,7 @@ MU0_BEGIN_CDECL
 #			define __MU0_ORDER_LEEN__      __ORDER_LITTLE_ENDIAN__
 #			define __MU0_ORDER_BEEN__      __ORDER_BIG_ENDIAN__
 #		endif
-#	elif MU0_HAVE_CC_ICC
+#	elif MU0_HAVE_CC_ITLCC
 #		undef  MU0_HAVE_BYTEORDER
 #		define MU0_HAVE_BYTEORDER         1
 #		ifndef __BYTE_ORDER__

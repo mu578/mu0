@@ -59,11 +59,11 @@ MU0_BEGIN_CDECL
 #	undef  __mu0_inline_always__
 #	define MU0_HAVE_INLINE_ALWAYS 0
 #	if 1
-#		if MU0_HAVE_CC_MSVC
+#		if MU0_HAVE_CC_MSVCC
 #			undef  MU0_HAVE_INLINE_ALWAYS
 #			define MU0_HAVE_INLINE_ALWAYS 1
 #			define __mu0_inline_always__ __forceinline
-#		elif MU0_HAVE_CC_GNUC || MU0_HAVE_CC_CLANG
+#		elif MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC
 #			undef  MU0_HAVE_INLINE_ALWAYS
 #			define MU0_HAVE_INLINE_ALWAYS 1
 #			define __mu0_inline_always__  __inline__ __attribute__((always_inline))
@@ -78,11 +78,11 @@ MU0_BEGIN_CDECL
 #	undef  __mu0_inline_never__
 #	define MU0_HAVE_INLINE_NEVER 0
 #	if 1
-#		if MU0_HAVE_CC_MSVC
+#		if MU0_HAVE_CC_MSVCC
 #			undef  MU0_HAVE_INLINE_NEVER
 #			define MU0_HAVE_INLINE_NEVER 1
 #			define __mu0_inline_never__ __declspec(noinline)
-#		elif MU0_HAVE_CC_GNUC || MU0_HAVE_CC_CLANG
+#		elif MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC
 #			undef  MU0_HAVE_INLINE_NEVER
 #			define MU0_HAVE_INLINE_NEVER 1
 #			define __mu0_inline_never__  __attribute__((noinline))

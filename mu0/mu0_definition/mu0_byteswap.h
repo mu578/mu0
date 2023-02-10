@@ -28,7 +28,7 @@ MU0_BEGIN_CDECL
 #	undef  __mu0_bswap_32__
 #	undef  __mu0_bswap_64__
 #	define MU0_HAVE_BYTESWAP 0
-#	if MU0_HAVE_CC_GNUC
+#	if MU0_HAVE_CC_ARMCC
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
 #		define __mu0_bswap_16__(__x)    __builtin_bswap16(__x)
@@ -42,10 +42,16 @@ MU0_BEGIN_CDECL
 #			define __mu0_bswap_32__(__x) __builtin_bswap32(__x)
 #			define __mu0_bswap_64__(__x) __builtin_bswap64(__x)
 #		endif
+#	elif MU0_HAVE_CC_GNUCC
+#		undef  MU0_HAVE_BYTESWAP
+#		define MU0_HAVE_BYTESWAP        1
+#		define __mu0_bswap_16__(__x)    __builtin_bswap16(__x)
+#		define __mu0_bswap_32__(__x)    __builtin_bswap32(__x)
+#		define __mu0_bswap_64__(__x)    __builtin_bswap64(__x)
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
-#	if MU0_HAVE_CC_ICC
+#	if MU0_HAVE_CC_ITLCC
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
 #		define __mu0_bswap_16__(__x)    _bswap16(__x)
@@ -57,7 +63,7 @@ MU0_BEGIN_CDECL
 MU0_END_CDECL
 
 #	if !MU0_HAVE_BYTESWAP
-#	if MU0_HAVE_CC_MSVC
+#	if MU0_HAVE_CC_MSVCC
 #		include <stdlib.h>
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1

@@ -15,6 +15,15 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
+//#! CC_MSVCC v1929   or later (prefer clang, fuzzy support for fun)
+//#! CC_ITLCC unknown or later (prefer clang, fuzzy support for fun)
+//#!
+//#! CC_CLANG v6.0 or later
+//#!    - XCode v6.1 or later
+//#!    - Visual studio clang-v16.2 or later
+//#! CC_ARMCC v5.0 or later
+//#! CC_GNUCC v4.8 or later
+
 #ifndef MU0_COMPILER_H
 #define MU0_COMPILER_H 1
 
@@ -31,19 +40,19 @@ MU0_BEGIN_CDECL
 #	undef  MU0_HAVE_COMPILER
 #	define MU0_HAVE_COMPILER 0
 
-#	undef  MU0_HAVE_CC_MSVC
-#	define MU0_HAVE_CC_MSVC  0
-#	if defined(_MSC_VER)
+#	undef  MU0_HAVE_CC_MSVCC
+#	define MU0_HAVE_CC_MSVCC 0
+#	if defined(_MSC_VER) && (_MSC_VER >= 1929)
 #		undef  MU0_HAVE_COMPILER
-#		undef  MU0_HAVE_CC_MSVC
+#		undef  MU0_HAVE_CC_MSVCC
 #		define MU0_HAVE_COMPILER 1
-#		define MU0_HAVE_CC_MSVC  1
+#		define MU0_HAVE_CC_MSVCC  1
 #	endif
 
-#	undef  MU0_HAVE_CC_ICC
-#	define MU0_HAVE_CC_ICC   0
-#	undef  MU0_HAVE_CC_GICC
-#	define MU0_HAVE_CC_GICC  0
+#	undef  MU0_HAVE_CC_ITLCC
+#	define MU0_HAVE_CC_ITLCC 0
+#	undef  MU0_HAVE_CC_ITLGC
+#	define MU0_HAVE_CC_ITLGC 0
 #	if                           \
 	   defined(__INTEL_COMPILER) \
 	|| defined(__ECC)            \
@@ -51,12 +60,12 @@ MU0_BEGIN_CDECL
 	|| defined(__ICC)            \
 	|| defined(ICC_VERSION)
 #		undef  MU0_HAVE_COMPILER
-#		undef  MU0_HAVE_CC_ICC
+#		undef  MU0_HAVE_CC_ITLCC
 #		define MU0_HAVE_COMPILER 1
-#		define MU0_HAVE_CC_ICC   1
+#		define MU0_HAVE_CC_ITLCC 1
 #		ifdef __GNUC__
-#		undef  MU0_HAVE_CC_GICC
-#		define MU0_HAVE_CC_GICC  1
+#		undef  MU0_HAVE_CC_ITLGC
+#		define MU0_HAVE_CC_ITLGC 1
 #	endif
 #	endif
 
@@ -83,14 +92,14 @@ MU0_BEGIN_CDECL
 #	endif
 
 #	if !MU0_HAVE_COMPILER
-#	undef  MU0_HAVE_CC_GNUC
-#	define MU0_HAVE_CC_GNUC  0
+#	undef  MU0_HAVE_CC_GNUCC
+#	define MU0_HAVE_CC_GNUCC  0
 #	if (defined(__GNUC__) && defined(__GNUC_MINOR__))
 #	if __GNUC__ + 0 > 4 || (__GNUC__ + 0 >= 4 && __GNUC_MINOR__ > 8)
 #		undef  MU0_HAVE_COMPILER
-#		undef  MU0_HAVE_CC_GNUC
+#		undef  MU0_HAVE_CC_GNUCC
 #		define MU0_HAVE_COMPILER 1
-#		define MU0_HAVE_CC_GNUC  1
+#		define MU0_HAVE_CC_GNUCC 1
 #		ifndef __has_builtin
 #			define __has_builtin(x) 0
 #		endif

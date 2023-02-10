@@ -69,7 +69,7 @@ typedef long double             mu0_fpex_t;
 			__mu0_extension__
 			typedef __float128     mu0_fp128_t;
 #		endif
-#	elif MU0_HAVE_CC_GNUC
+#	elif MU0_HAVE_CC_GNUCC
 #		if ((defined(__STDC_IEC_60559_TYPES__) || defined(__STDC_IEC_559__)) && defined(FLT128_MAX))
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1
@@ -92,7 +92,7 @@ typedef long double             mu0_fp128_t;
 			__mu0_extension__
 			typedef _Float64       mu0_fp64_t;;
 #		endif
-#	elif MU0_HAVE_CC_GNUC
+#	elif MU0_HAVE_CC_GNUCC
 #			undef  MU0_HAVE_FLOAT64
 #			define MU0_HAVE_FLOAT64 1
 		__mu0_extension__
@@ -113,7 +113,7 @@ typedef double                  mu0_fp64_t;
 			__mu0_extension__
 			typedef _Float32       mu0_fp32_t;
 #		endif
-#	elif MU0_HAVE_CC_GNUC
+#	elif MU0_HAVE_CC_GNUCC
 #			undef  MU0_HAVE_FLOAT32
 #			define MU0_HAVE_FLOAT32 1
 		__mu0_extension__
@@ -138,7 +138,7 @@ typedef float                   mu0_fp32_t;
 			__mu0_extension__
 			typedef __fp16         mu0_fp16_t;
 #		endif
-#	elif MU0_HAVE_CC_GNUC && MU0_HAVE_ARM64
+#	elif MU0_HAVE_CC_GNUCC && MU0_HAVE_ARM64
 #		undef  MU0_HAVE_FLOAT16
 #		define MU0_HAVE_FLOAT16 1
 		__mu0_extension__

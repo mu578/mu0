@@ -26,7 +26,7 @@ MU0_BEGIN_CDECL
 #	undef  __m0_sync_cpu_yield__
 #	define MU0_HAVE_CPUYIELD 0
 
-#  if MU0_HAVE_CC_MSVC
+#  if MU0_HAVE_CC_MSVCC
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		if defined(_M_AMD64) || defined(_M_IX86)
@@ -40,7 +40,7 @@ MU0_BEGIN_CDECL
 #		endif
 #  endif
 
-#  if MU0_HAVE_CC_ICC
+#  if MU0_HAVE_CC_ITLCC
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		if defined(__MIC__)
@@ -90,7 +90,7 @@ MU0_BEGIN_CDECL
 #	endif
 #	endif
 
-#  if MU0_HAVE_CC_GNUC
+#  if MU0_HAVE_CC_GNUCC
 #	if   __has_builtin(__builtin_ia32_pause)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1

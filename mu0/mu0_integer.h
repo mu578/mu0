@@ -37,7 +37,7 @@ typedef   uintmax_t                     mu0_uintmax_t;
 typedef   intmax_t                      mu0_sintmax_t;
 
 #	if   MU0_USE_INT128
-#	if   MU0_HAVE_CC_GNUC
+#	if   MU0_HAVE_CC_GNUCC
 __mu0_extension__
 typedef unsigned __int128               mu0_uint128_t;
 __mu0_extension__

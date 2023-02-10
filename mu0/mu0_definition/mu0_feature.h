@@ -25,7 +25,7 @@ MU0_BEGIN_CDECL
 #	undef  MU0_HAVE_EXTENSION
 #	undef  __mu0_extension__
 #	define MU0_HAVE_EXTENSION 0
-#	if MU0_HAVE_CC_GNUC || MU0_HAVE_CC_CLANG
+#	if MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC
 #		undef  MU0_HAVE_EXTENSION
 #		define MU0_HAVE_EXTENSION 1
 #		define __mu0_extension__  __extension__
@@ -51,14 +51,14 @@ MU0_BEGIN_CDECL
 #	undef  __mu0_isofkind__
 #	define MU0_HAVE_TYPEOF 0
 
-#	if MU0_HAVE_CC_GICC && MU0_HAVE_C11
+#	if MU0_HAVE_CC_ITLGC && MU0_HAVE_C11
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__             __typeof__
 #		define __mu0_kindof__(__x)        __mu0_typeof__((__x) + 0)
 #		define __mu0_isoftype__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
 #		define __mu0_isofkind__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
-#	elif MU0_HAVE_CC_GNUC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCC
+#	elif MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__             __typeof__
