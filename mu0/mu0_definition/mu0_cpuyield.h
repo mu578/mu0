@@ -49,8 +49,8 @@ MU0_BEGIN_CDECL
 #		else
 #			pragma intrinsic(_mm_pause)
 #			define __m0_sync_cpu_yield__()    _mm_pause()
+#		endif
 #	endif
-#endif
 
 #	if MU0_HAVE_CC_ARMCC
 #		undef  MU0_HAVE_CPUYIELD
@@ -131,6 +131,7 @@ MU0_END_CDECL
 #		include <sched.h>
 #		define __m0_sync_cpu_yield__()      sched_yield()
 #	endif
+#	endif
 
 MU0_BEGIN_CDECL
 
@@ -140,4 +141,6 @@ MU0_BEGIN_CDECL
 
 MU0_END_CDECL
 
-#endif /* !MU0_COMPILER_H */
+#endif /* !MU0_CPUYIELD_H */
+
+/* EOF */

@@ -25,6 +25,7 @@
 #	include <mu0/mu0_definition/mu0_cpuyield.h>
 #	include <mu0/mu0_definition/mu0_feature.h>
 #	include <mu0/mu0_definition/mu0_language.h>
+#	include <mu0/mu0_definition/mu0_memfence.h>
 #	include <mu0/mu0_definition/mu0_platform.h>
 
 #	include <stddef.h>

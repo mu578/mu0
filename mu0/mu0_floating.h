@@ -64,10 +64,12 @@ typedef long double             mu0_fpex_t;
 			__mu0_extension__
 			typedef _Float128      mu0_fp128_t;
 #		elif !__is_identifier(__float128)
+#		if MU0_HAVE_X64
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1
 			__mu0_extension__
 			typedef __float128     mu0_fp128_t;
+#		endif
 #		endif
 #	elif MU0_HAVE_CC_GNUCC
 #		if ((defined(__STDC_IEC_60559_TYPES__) || defined(__STDC_IEC_559__)) && defined(FLT128_MAX))
@@ -76,7 +78,6 @@ typedef long double             mu0_fpex_t;
 			__mu0_extension__
 			typedef _Float128      mu0_fp128_t;
 #		endif
-#	endif
 #	endif
 #	endif
 
@@ -97,7 +98,6 @@ typedef long double             mu0_fp128_t;
 #			define MU0_HAVE_FLOAT64 1
 		__mu0_extension__
 		typedef _Float64          mu0_fp64_t;
-#	endif
 #	endif
 #	endif
 
@@ -159,7 +159,7 @@ typedef float                   mu0_fp16_t;
 #	define mu0_fp64(__x)         mu0_cast(mu0_fp64_t, __x)
 #	define mu0_const_fp64(__x)   mu0_const_cast(mu0_fp64_t, __x)
 
-#	define mu0_fp32(__x)         (mu0_fp32_t, __x)
+#	define mu0_fp32(__x)         mu0_cast(mu0_fp32_t, __x)
 #	define mu0_const_fp32(__x)   mu0_const_cast(mu0_fp32_t, __x)
 
 #	define mu0_fp16(__x)         mu0_cast(mu0_fp16_t, __x)
