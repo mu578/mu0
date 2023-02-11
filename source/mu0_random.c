@@ -1,9 +1,18 @@
 //
 // # -*- coding: utf-8, tab-width: 3 -*-
 
+//                                                           ___                                            //
+//                                                          / _ \                                           //
+//                                            _   _  _   _ | | | |                                          //
+//                                           | | | || | | || | | |                                          //
+//                                           | |_| || |_| || |_| |                                          //
+//                                           | ._,_| \___/  \___/                                           //
+//                                           | |                                                            //
+//                                           |_|                                                            //
+
 // mu0_random.c
 //
-// Copyright (C) 2022-2023 eDoMu Limited. All rights reserved.
+// Copyright (C) 2023 mu578. All rights reserved.
 //
 
 #include <mu0/mu0_random.h>
