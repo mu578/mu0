@@ -29,7 +29,7 @@ endif
 
 MU0_MODULE_NAME  ?= mu0
 MU0_MODULE_PATH  ?= $(MU0_ROOT_PATH)
-MU0_SOURCE_FILES ?= $(call walk-dir, $(MU0_MODULE_PATH)/source)
+MU0_SOURCE_FILES ?= $(call walk-dir-recursive, $(MU0_MODULE_PATH)/source)
 MU0_FILTER_FILES ?= $(filter %.c, $(MU0_SOURCE_FILES))
 
 LOCAL_SRC_FILES += $(MU0_FILTER_FILES)
