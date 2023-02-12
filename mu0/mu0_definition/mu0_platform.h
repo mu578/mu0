@@ -20,8 +20,6 @@
 #ifndef MU0_PLATFORM_H
 #define MU0_PLATFORM_H 1
 
-MU0_BEGIN_CDECL
-
 #	undef  MU0_HAVE_DARWIN
 #	undef  MU0_HAVE_MACOSX
 #	undef  MU0_HAVE_IOS
@@ -295,8 +293,6 @@ MU0_BEGIN_CDECL
 #	if !MU0_HAVE_ARCH
 #		error mu0_platform.h
 #	endif
-
-MU0_END_CDECL
 
 #endif /* !MU0_PLATFORM_H */
 

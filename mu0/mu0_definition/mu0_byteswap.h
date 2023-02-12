@@ -21,8 +21,6 @@
 #ifndef MU0_BYTESWAP_H
 #define MU0_BYTESWAP_H 1
 
-MU0_BEGIN_CDECL
-
 #	undef  MU0_HAVE_BYTESWAP
 #	undef  __mu0_bswap_16__
 #	undef  __mu0_bswap_32__
@@ -59,8 +57,6 @@ MU0_BEGIN_CDECL
 #		define __mu0_bswap_64__(__x)    _bswap64(__x)
 #	endif
 #	endif
-
-MU0_END_CDECL
 
 #	if !MU0_HAVE_BYTESWAP
 #	if MU0_HAVE_CC_MSVCC
@@ -154,8 +150,6 @@ MU0_END_CDECL
 #	endif
 #	endif
 
-MU0_BEGIN_CDECL
-
 #	if MU0_HAVE_BYTESWAP
 #	if   __MU0_BYTE_ORDER__ == __MU0_ORDER_LEEN__
 #		define __mu0_htobe16__(__x)     __mu0_bswap_16__(__x)
@@ -189,8 +183,6 @@ MU0_BEGIN_CDECL
 #	if !MU0_HAVE_BYTESWAP
 #		error mu0_byteswap.h
 #	endif
-
-MU0_END_CDECL
 
 #endif /* !MU0_BYTESWAP_H */
 

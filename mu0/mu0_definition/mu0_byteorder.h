@@ -20,8 +20,6 @@
 #ifndef MU0_BYTEORDER_H
 #define MU0_BYTEORDER_H 1
 
-MU0_BEGIN_CDECL
-
 #	undef  MU0_HAVE_BYTEORDER
 #	undef  __MU0_BYTE_ORDER__
 #	undef  __MU0_ORDER_LEEN__
@@ -94,8 +92,6 @@ MU0_BEGIN_CDECL
 #	if !MU0_HAVE_BYTEORDER
 #		error mu0_byteorder.h
 #	endif
-
-MU0_END_CDECL
 
 #endif /* !MU0_BYTEORDER_H */
 

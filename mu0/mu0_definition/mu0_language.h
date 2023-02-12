@@ -20,8 +20,6 @@
 #ifndef MU0_LANGUAGE_H
 #define MU0_LANGUAGE_H 1
 
-MU0_BEGIN_CDECL
-
 #	ifdef __cplusplus
 #		ifndef __STDC__
 #			define __STDC__ 1
@@ -143,7 +141,14 @@ MU0_BEGIN_CDECL
 #	endif
 #	endif
 
-MU0_END_CDECL
+#	undef  MU0_HAVE_POSIX1_2008
+#	define MU0_HAVE_POSIX1_2008 0
+#	if                                                            \
+	   (defined(_POSIX_VERSION)  && (_POSIX_VERSION  >= 200809L)) \
+	|| (defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 200809L))
+#		undef  MU0_HAVE_POSIX1_2008
+#		define MU0_HAVE_POSIX1_2008 1
+#	endif
 
 #endif /* !MU0_LANGUAGE_H */
 

@@ -35,14 +35,13 @@
 #		define MU0_END_CDECL
 #	endif
 
-MU0_BEGIN_CDECL
-
 #	undef  MU0_HAVE_COMPILER
 #	define MU0_HAVE_COMPILER 0
 
 #	undef  MU0_HAVE_CC_MSVCC
 #	define MU0_HAVE_CC_MSVCC 0
 #	if defined(_MSC_VER) && (_MSC_VER >= 1929)
+#		include <intrin.h>
 #		undef  MU0_HAVE_COMPILER
 #		undef  MU0_HAVE_CC_MSVCC
 #		define MU0_HAVE_COMPILER 1
@@ -59,6 +58,7 @@ MU0_BEGIN_CDECL
 	|| defined(__ICL)            \
 	|| defined(__ICC)            \
 	|| defined(ICC_VERSION)
+#		include <intrin.h>
 #		undef  MU0_HAVE_COMPILER
 #		undef  MU0_HAVE_CC_ITLCC
 #		define MU0_HAVE_COMPILER 1
@@ -110,8 +110,6 @@ MU0_BEGIN_CDECL
 #	if !MU0_HAVE_COMPILER
 #		error mu0_compiler.h
 #	endif
-
-MU0_END_CDECL
 
 #endif /* !MU0_COMPILER_H */
 

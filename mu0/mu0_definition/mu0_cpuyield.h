@@ -20,13 +20,11 @@
 #ifndef MU0_CPUYIELD_H
 #define MU0_CPUYIELD_H 1
 
-MU0_BEGIN_CDECL
-
 #	undef  MU0_HAVE_CPUYIELD
 #	undef  __m0_sync_cpu_yield__
 #	define MU0_HAVE_CPUYIELD 0
 
-#  if MU0_HAVE_CC_MSVCC
+#	if MU0_HAVE_CC_MSVCC
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		if defined(_M_AMD64) || defined(_M_IX86)
@@ -38,9 +36,9 @@ MU0_BEGIN_CDECL
 #		else
 #			define __m0_sync_cpu_yield__()    __asm { rep nop }
 #		endif
-#  endif
+#	endif
 
-#  if MU0_HAVE_CC_ITLCC
+#	if MU0_HAVE_CC_ITLCC
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		if defined(__MIC__)
@@ -58,7 +56,7 @@ MU0_BEGIN_CDECL
 #		define __m0_sync_cpu_yield__()       __yield()
 #	endif
 
-#  if MU0_HAVE_CC_CLANG
+#	if MU0_HAVE_CC_CLANG
 #	if   __has_builtin(__builtin_ia32_pause)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
@@ -71,7 +69,7 @@ MU0_BEGIN_CDECL
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		define __m0_sync_cpu_yield__()       __asm__ __volatile__("pause\n")
-#	elif MU0_HAVE_ARM32 || MU0_HAVE_ARM64 && !MU0_HAVE_CPUYIELD
+#	elif MU0_HAVE_ARM32 || MU0_HAVE_ARM64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		if MU0_HAVE_ARM64
@@ -90,7 +88,7 @@ MU0_BEGIN_CDECL
 #	endif
 #	endif
 
-#  if MU0_HAVE_CC_GNUCC
+#	if MU0_HAVE_CC_GNUCC
 #	if   __has_builtin(__builtin_ia32_pause)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
@@ -103,7 +101,7 @@ MU0_BEGIN_CDECL
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		define __m0_sync_cpu_yield__()       __asm__ __volatile__("pause\n")
-#	elif MU0_HAVE_ARM32 || MU0_HAVE_ARM64 && !MU0_HAVE_CPUYIELD
+#	elif MU0_HAVE_ARM32 || MU0_HAVE_ARM64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		if MU0_HAVE_ARM64
@@ -121,25 +119,17 @@ MU0_BEGIN_CDECL
 #		define __m0_sync_cpu_yield__()       __asm__ __volatile__("sync" ::: "memory");
 #	endif
 #	endif
-
-MU0_END_CDECL
 
 #	if !MU0_HAVE_CPUYIELD
-#	if                                                            \
-	   (defined(_POSIX_VERSION)  && (_POSIX_VERSION  >= 200809L)) \
-	|| (defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 200809L))
+#	if MU0_HAVE_POSIX1_2008
 #		include <sched.h>
 #		define __m0_sync_cpu_yield__()      sched_yield()
 #	endif
 #	endif
 
-MU0_BEGIN_CDECL
-
 #	if !MU0_HAVE_CPUYIELD
 #		error mu0_cpuyield.h
 #	endif
-
-MU0_END_CDECL
 
 #endif /* !MU0_CPUYIELD_H */
 
