@@ -89,6 +89,32 @@
 #		define __MU0_ORDER_BEEN__         __ORDER_BIG_ENDIAN__
 #	endif
 
+
+#	if !MU0_HAVE_BYTEORDER
+#	if   MU0_HAVE_DARWIN || MU0_HAVE_OPENBSD 
+#		include <machine/endian.h>
+#	elif MU0_HAVE_ANDROID || MU0_HAVE_LINUX || MU0_HAVE_NUTTX
+#		include <endian.h>
+#	elif MU0_HAVE_SOLARIS
+#		include <sys/byteorder.h>
+#	elif MU0_HAVE_FREEBSD || MU0_HAVE_NETBSD || MU0_HAVE_DRAGONFLYBSD
+#		include <sys/endian.h>
+#	endif
+#		if   defined(__BYTE_ORDER)
+#			undef  MU0_HAVE_BYTEORDER
+#			define MU0_HAVE_BYTEORDER      1
+#			define __MU0_BYTE_ORDER__      __BYTE_ORDER
+#			define __MU0_ORDER_LEEN__      __LITTLE_ENDIAN
+#			define __MU0_ORDER_BEEN__      __BIG_ENDIAN
+#		elif defined(BYTE_ORDER)
+#			define __MU0_BYTE_ORDER__      BYTE_ORDER
+#			define __MU0_ORDER_LEEN__      LITTLE_ENDIAN
+#			define __MU0_ORDER_BEEN__      BIG_ENDIAN
+#			undef  MU0_HAVE_BYTEORDER
+#			define MU0_HAVE_BYTEORDER      1
+#		endif
+#	endif
+
 #	if !MU0_HAVE_BYTEORDER
 #		error mu0_byteorder.h
 #	endif
