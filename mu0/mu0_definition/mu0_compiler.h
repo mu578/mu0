@@ -45,7 +45,7 @@
 #		undef  MU0_HAVE_COMPILER
 #		undef  MU0_HAVE_CC_MSVCC
 #		define MU0_HAVE_COMPILER 1
-#		define MU0_HAVE_CC_MSVCC  1
+#		define MU0_HAVE_CC_MSVCC 1
 #	endif
 
 #	undef  MU0_HAVE_CC_ITLCC

@@ -139,7 +139,7 @@
 #	endif
 
 #	if !MU0_HAVE_BYTESWAP
-#	if MU0_HAVE_ANDROID || MU0_HAVE_LINUX
+#	if MU0_HAVE_ANDROID || MU0_HAVE_LINUX || MU0_HAVE_NUTTX
 #		include <endian.h>
 #		include <byteswap.h>
 #		undef  MU0_HAVE_BYTESWAP

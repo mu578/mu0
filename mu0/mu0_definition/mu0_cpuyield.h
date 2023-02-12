@@ -25,16 +25,16 @@
 #	define MU0_HAVE_CPUYIELD 0
 
 #	if MU0_HAVE_CC_MSVCC
-#		undef  MU0_HAVE_CPUYIELD
-#		define MU0_HAVE_CPUYIELD 1
 #		if defined(_M_AMD64) || defined(_M_IX86)
+#			undef  MU0_HAVE_CPUYIELD
+#			define MU0_HAVE_CPUYIELD 1
 #			pragma intrinsic(_mm_pause)
-#			define __m0_sync_cpu_yield__()    mm_pause()
+#			define __m0_sync_cpu_yield__()    _mm_pause()
 #		elif defined(_M_ARM64) || defined(_M_ARM)
+#			undef  MU0_HAVE_CPUYIELD
+#			define MU0_HAVE_CPUYIELD 1
 #			pragma intrinsic(__yield)
 #			define __m0_sync_cpu_yield__()    __yield()
-#		else
-#			define __m0_sync_cpu_yield__()    __asm { rep nop }
 #		endif
 #	endif
 
