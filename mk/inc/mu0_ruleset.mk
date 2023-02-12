@@ -20,7 +20,7 @@ $(error LOCAL_MODULE is not set)
 endif
 
 ifeq ($(strip $(LOCAL_MODULE_PATH)),)
-LOCAL_MODULE_PATH := $(abspath ../..)/$(LOCAL_MODULE)
+$(error LOCAL_MODULE_PATH is not set)
 endif
 
 LOCAL_BUILDDIR    := /tmp/build/$(PLATFORM)
