@@ -61,7 +61,7 @@
 #			undef  MU0_HAVE_INLINE_ALWAYS
 #			define MU0_HAVE_INLINE_ALWAYS 1
 #			define __mu0_inline_always__ __forceinline
-#		elif MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC
+#		elif MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC
 #			undef  MU0_HAVE_INLINE_ALWAYS
 #			define MU0_HAVE_INLINE_ALWAYS 1
 #			define __mu0_inline_always__  __inline__ __attribute__((always_inline))
@@ -80,7 +80,7 @@
 #			undef  MU0_HAVE_INLINE_NEVER
 #			define MU0_HAVE_INLINE_NEVER 1
 #			define __mu0_inline_never__ __declspec(noinline)
-#		elif MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC
+#		elif MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC
 #			undef  MU0_HAVE_INLINE_NEVER
 #			define MU0_HAVE_INLINE_NEVER 1
 #			define __mu0_inline_never__  __attribute__((noinline))

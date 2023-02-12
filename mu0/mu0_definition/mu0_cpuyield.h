@@ -56,7 +56,7 @@
 #		define __m0_sync_cpu_yield__()       __yield()
 #	endif
 
-#	if MU0_HAVE_CC_CLANG
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG
 #	if   __has_builtin(__builtin_ia32_pause)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1

@@ -79,6 +79,17 @@
 #	endif
 
 #	if !MU0_HAVE_COMPILER
+#	undef  MU0_HAVE_CC_APLCC
+#	define MU0_HAVE_CC_APLCC 0
+#	if defined(__clang__) && defined(__apple_build_version__)
+#	if defined(__is_identifier) && defined(__has_builtin)
+#		undef  MU0_HAVE_CC_APLCC
+#		define MU0_HAVE_CC_APLCC 1
+#	endif
+#	endif
+#	endif
+
+#	if !MU0_HAVE_COMPILER
 #	undef  MU0_HAVE_CC_CLANG
 #	define MU0_HAVE_CC_CLANG 0
 #	if defined(__clang__)
