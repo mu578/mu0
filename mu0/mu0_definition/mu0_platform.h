@@ -32,6 +32,7 @@
 #	undef  MU0_HAVE_ANDROID
 #	undef  MU0_HAVE_LINUX
 #	undef  MU0_HAVE_NUTTX
+#	undef  MU0_HAVE_MINIX
 
 #	define MU0_HAVE_DARWIN          0
 #	define MU0_HAVE_MACOSX          0
@@ -45,6 +46,7 @@
 #	define MU0_HAVE_ANDROID         0
 #	define MU0_HAVE_LINUX           0
 #	define MU0_HAVE_NUTTX           0
+#	define MU0_HAVE_MINIX           0
 
 #	if defined(__APPLE__) && defined(__MACH__)
 #		if defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE
@@ -90,6 +92,9 @@
 #	elif defined(__NuttX__)
 #		undef  MU0_HAVE_NUTTX        0
 #		define MU0_HAVE_NUTTX        1
+#	elif defined(__minix)
+#		undef  MU0_HAVE_MINIX        0
+#		define MU0_HAVE_MINIX        1
 #	endif
 
 #	undef  MU0_HAVE_ARCH

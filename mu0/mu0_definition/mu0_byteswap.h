@@ -150,6 +150,17 @@
 #	endif
 #	endif
 
+#	if !MU0_HAVE_BYTESWAP
+#	if MU0_HAVE_MINIX
+#		include <sys/bswap.h>
+#		undef  MU0_HAVE_BYTESWAP
+#		define MU0_HAVE_BYTESWAP        1
+#		define __mu0_bswap_16__(__x)    bswap_16(__x)
+#		define __mu0_bswap_32__(__x)    bswap_32(__x)
+#		define __mu0_bswap_64__(__x)    bswap_64(__x)
+#	endif
+#	endif
+
 #	if MU0_HAVE_BYTESWAP
 #	if   __MU0_BYTE_ORDER__ == __MU0_ORDER_LEEN__
 #		define __mu0_htobe16__(__x)     __mu0_bswap_16__(__x)
