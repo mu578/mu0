@@ -26,9 +26,9 @@ MU0_BEGIN_CDECL
 typedef void * mu0_locale_t;
 
 mu0_locale_t mu0_locale_create(
-	  const mu0_vtchar8_t language
-	, const mu0_vtchar8_t territory
-	, const mu0_vtchar8_t modifier
+	  const mu0_string8_t language
+	, const mu0_string8_t territory
+	, const mu0_string8_t modifier
 	, const mu0_bool_t    collator
 );
 
