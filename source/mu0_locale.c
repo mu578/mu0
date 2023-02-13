@@ -31,8 +31,8 @@ const mu0_string8_t mu0_locale_name(
 	, const mu0_string8_t modifier
 ) {
 	__mu0_static__ mu0_tchar8_t s_name[48];
-	mu0_bool_t    have_name     = mu0_false;
-	mu0_uint64_t  k, l, p       = 0;
+	mu0_bool_t    have_name = mu0_false;
+	mu0_uint64_t  k, l, p   = 0;
 
 	//#! XPG syntax: language[_territory[.codeset]][@modifier]
 	memset(s_name, 0, __mu0_sizeof__(s_name));
