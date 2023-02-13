@@ -160,10 +160,11 @@ mu0_sint32_t mu0_locale_compare(
 	, const mu0_string8_t rhs
 	, const mu0_locale_t  locale
 ) {
-	if (locale != mu0_nullptr) {
-		return _MU0_LOCALE_STRCOLL_L(lhs, rhs, locale);
-	}
-	return _MU0_LOCALE_STRCOLL(lhs, rhs);
+	const mu0_sint32_t r = ((locale != mu0_nullptr)
+		? _MU0_LOCALE_STRCOLL_L(lhs, rhs, locale)
+		: _MU0_LOCALE_STRCOLL(lhs, rhs)
+	);
+	return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 }
 
 /* EOF */
