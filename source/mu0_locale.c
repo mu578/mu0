@@ -80,7 +80,7 @@ const mu0_string8_t mu0_locale_name(
 #	undef  _MU0_LOCALE_STRCOLL
 #	undef  _MU0_LOCALE_STRCOLL_L
 
-#	if MU0_HAVE_WINDOWS && !(defined(__MINGW32__) || defined(__MINGW64__))
+#	if   MU0_HAVE_WINDOWS && !(defined(__MINGW32__) || defined(__MINGW64__))
 #	define _MU0_LOCALE_T                           _locale_t
 #	define _MU0_LOCALE_GLOBAL(category, name)      setlocale(category, name)
 #	define _MU0_LOCALE_CREATE(category, name)      _create_locale(category, name)
@@ -89,7 +89,7 @@ const mu0_string8_t mu0_locale_name(
 #	define _MU0_LOCALE_MASK_COLLATE                LC_COLLATE
 #	define _MU0_LOCALE_STRCOLL(lhs, rhs)           mu0_sint32(strcoll(lhs, rhs))
 #	define _MU0_LOCALE_STRCOLL_L(lhs, rhs, locale) mu0_sint32(_strcoll_l(lhs, rhs, mu0_cast(_locale_t, locale)))
-#	elif   MU0_HAVE_POSIX1_2001
+#	elif MU0_HAVE_POSIX1_2001
 #	define _MU0_LOCALE_T                           locale_t
 #	define _MU0_LOCALE_GLOBAL(category, name)      setlocale(category, name)
 #	define _MU0_LOCALE_CREATE(category, name)      newlocale(category, name, mu0_nullptr)
