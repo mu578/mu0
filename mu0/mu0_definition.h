@@ -28,8 +28,6 @@
 #	include <mu0/mu0_definition/mu0_memfence.h>
 #	include <mu0/mu0_definition/mu0_platform.h>
 
-#	include <stddef.h>
-
 MU0_BEGIN_CDECL
 
 #	if MU0_HAVE_TYPEOF && MU0_HAVE_EXTENSION

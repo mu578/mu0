@@ -121,7 +121,7 @@
 #	endif
 
 #	if !MU0_HAVE_CPUYIELD
-#	if MU0_HAVE_POSIX1_2008
+#	if MU0_HAVE_POSIX1_2001
 #		include <sched.h>
 #		define __m0_sync_cpu_yield__()      sched_yield()
 #	endif

@@ -141,8 +141,20 @@
 #	endif
 #	endif
 
+#	undef  MU0_HAVE_POSIX1_2001
 #	undef  MU0_HAVE_POSIX1_2008
+#	define MU0_HAVE_POSIX1_2001 0
 #	define MU0_HAVE_POSIX1_2008 0
+
+#	include <unistd.h>
+#	include <stddef.h>
+
+#	if                                                            \
+	   (defined(_POSIX_VERSION)  && (_POSIX_VERSION  >= 200112L)) \
+	|| (defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 200112L))
+#		undef  MU0_HAVE_POSIX1_2001
+#		define MU0_HAVE_POSIX1_2001 1
+#	endif
 #	if                                                            \
 	   (defined(_POSIX_VERSION)  && (_POSIX_VERSION  >= 200809L)) \
 	|| (defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 200809L))
