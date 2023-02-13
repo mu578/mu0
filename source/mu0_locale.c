@@ -32,31 +32,40 @@ const mu0_string8_t mu0_locale_name(
 ) {
 	__mu0_static__ mu0_tchar8_t s_name[48];
 	mu0_bool_t    have_name     = mu0_false;
-	mu0_uint64_t  l, p          = 0;
+	mu0_uint64_t  k, l, p       = 0;
 
 	//#! XPG syntax: language[_territory[.codeset]][@modifier]
 	memset(s_name, 0, __mu0_sizeof__(s_name));
 	if (language != mu0_nullptr) {
-		l = strlen(language);
-		memcpy(s_name + p, language, l);
-		p += l;
-		if (territory != mu0_nullptr) {
-			l  = __mu0_sizeof__(mu0_tchar8_t);
-			memcpy(s_name + p, "_", mu0_min(6, l));
+		k = strlen(language);
+		if (k > 0) {
+			l  = k;
+			memcpy(s_name + p, language, l);
 			p += l;
-			l  = strlen(territory);
-			memcpy(s_name + p, territory, mu0_min(16, l));
-			p += l;
-			l  =  __mu0_sizeof__(mu0_tchar8_t) * 6;
-			memcpy(s_name + p, ".UTF-8", l);
-			have_name = mu0_true;
-			if (modifier != mu0_nullptr) {
-				p += l;
-				l  = __mu0_sizeof__(mu0_tchar8_t);
-				memcpy(s_name + p, "@", l);
-				p += l;
-				l  = strlen(modifier);
-				memcpy(s_name + p, modifier, mu0_min(16, l));
+			if (territory != mu0_nullptr) {
+				k  = strlen(territory);
+				if (k > 0) {
+					l  = __mu0_sizeof__(mu0_tchar8_t);
+					memcpy(s_name + p, "_", mu0_min(6, l));
+					p += l;
+					l  = k;
+					memcpy(s_name + p, territory, mu0_min(16, l));
+					p += l;
+					l  =  __mu0_sizeof__(mu0_tchar8_t) * 6;
+					memcpy(s_name + p, ".UTF-8", l);
+					have_name = mu0_true;
+				}
+				if (modifier != mu0_nullptr) {
+					k  = strlen(modifier);
+					if (k > 0) {
+						p += l;
+						l  = __mu0_sizeof__(mu0_tchar8_t);
+						memcpy(s_name + p, "@", l);
+						p += l;
+						l  = k ;
+						memcpy(s_name + p, modifier, mu0_min(16, l));
+					}
+				}
 			}
 		}
 	}
