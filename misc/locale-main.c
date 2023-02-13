@@ -11,6 +11,9 @@ int main(int argc, const char * argv[])
 
 	mu0_locale_t locale;
 
+	mu0_unused(argc);
+	mu0_unused(argv);
+
 	printf("\n");
 
 	printf("%p \n", (locale = mu0_locale_create("fr", "FR", mu0_nullptr, mu0_true)));

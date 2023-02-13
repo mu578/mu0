@@ -64,6 +64,8 @@ MU0_BEGIN_CDECL
 #	define mu0_cast(_Tp, __x)       (_Tp)(__x)
 #	define mu0_const_cast(_Tp, __x) (const _Tp)(__x)
 
+#	define mu0_unused(__x)          mu0_cast(void, __x)
+
 MU0_END_CDECL
 
 #endif /* !MU0_DEFINITION_H */
