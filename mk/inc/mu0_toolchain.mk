@@ -15,63 +15,63 @@
 # Copyright (C) 2023 mu578. All rights reserved.
 #
 
-RMDIR           ?= rm -Rf
-MV              ?= mv -f
-CD              ?= cd
-LNS             ?= ln -s
+RMDIR            ?= rm -Rf
+MV               ?= mv -f
+CD               ?= cd
+LNS              ?= ln -s
 
 ifeq ($(strip $(ARCH)),)
-ARCH            := $(shell uname -m)
+ARCH             := $(shell uname -m)
 endif
 
 ifeq ($(strip $(PLATFORM)),)
-PLATFORM        := $(shell uname -s)
+PLATFORM         := $(shell uname -s)
+endif
+ifeq ($(strip $(PLATFORM_VARIANT)),)
+PLATFORM_VARIANT := $(PLATFORM)
 endif
 
 ifneq (,$(findstring Darwin, $(PLATFORM)))
+	ifneq (,$(findstring Darwin, $(PLATFORM_VARIANT)))
+		XCODE_VERS   := $(shell xcodebuild -sdk -version | grep "\- macOS " | cut -d "-" -f 1 | tr -d '[:space:]')
+		XCODE_PATH   := $(shell dirname `xcrun -f clang`)
+		XCODE_SDK    := $(shell xcrun --show-sdk-path)
+		CC           := $(XCODE_PATH)/clang
+		AR           := $(XCODE_PATH)/ar
 
-XCODE_VERS      := $(shell xcodebuild -sdk -version | grep "\- macOS " | cut -d "-" -f 1 | tr -d '[:space:]')
-XCODE_PATH      := $(shell dirname `xcrun -f clang`)
-XCODE_SDK       := $(shell xcrun --show-sdk-path)
-CC              := $(XCODE_PATH)/clang
-AR              := $(XCODE_PATH)/ar
+		LD           :=               \
+			$(CC)                      \
+			-arch $(ARCH)              \
+			-mmacosx-version-min=10.13 \
+			-isysroot $(XCODE_SDK)
 
-LD              :=            \
-	$(CC)                      \
-	-arch $(ARCH)              \
-	-mmacosx-version-min=10.13 \
-	-isysroot $(XCODE_SDK)
-
-LOCAL_CFLAGS    +=            \
-	-x c                       \
-	-std=c11                   \
-	-arch $(ARCH)              \
-	-mmacosx-version-min=10.13 \
-	-isysroot $(XCODE_SDK)     \
-	-Wall                      \
-	-Wno-unused-function       \
-	-Wno-newline-eof           \
-	-pedantic
-
+		LOCAL_CFLAGS +=               \
+			-x c                       \
+			-std=c11                   \
+			-arch $(ARCH)              \
+			-mmacosx-version-min=10.13 \
+			-isysroot $(XCODE_SDK)     \
+			-Wall                      \
+			-Wno-unused-function       \
+			-Wno-newline-eof           \
+			-pedantic
+	endif
 else
 
-CC              := clang
-AR              := ar
+CC           := clang
+AR           := ar
 
-LD              :=            \
-	$(CC)                      \
-	-arch $(ARCH)              \
+LD           :=  \
+	$(CC)         \
+	-arch $(ARCH) \
 	-isysroot /
 
-LOCAL_CFLAGS    +=           \
-	-x c                      \
-	-std=c11                  \
-	-arch $(ARCH)             \
+LOCAL_CFLAGS +=  \
+	-x c          \
+	-std=c11      \
+	-arch $(ARCH) \
 	-isysroot /
 
 endif
-
-TARGET_PLATFORM   := $(PLATFORM)
-TARGET_OPTIM      := debug
 
 # EOF

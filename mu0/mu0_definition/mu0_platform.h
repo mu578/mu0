@@ -24,6 +24,7 @@
 #	undef  MU0_HAVE_MACOSX
 #	undef  MU0_HAVE_IOS
 #	undef  MU0_HAVE_WINDOWS
+#	undef  MU0_HAVE_MINGW
 #	undef  MU0_HAVE_SOLARIS
 #	undef  MU0_HAVE_FREEBSD
 #	undef  MU0_HAVE_OPENBSD
@@ -38,6 +39,7 @@
 #	define MU0_HAVE_MACOSX          0
 #	define MU0_HAVE_IOS             0
 #	define MU0_HAVE_WINDOWS         0
+#	define MU0_HAVE_MINGW           0
 #	define MU0_HAVE_SOLARIS         0
 #	define MU0_HAVE_FREEBSD         0
 #	define MU0_HAVE_OPENBSD         0
@@ -63,6 +65,9 @@
 #	elif defined(_WIN32) || defined(_WIN64)
 #		undef  MU0_HAVE_WINDOWS      0
 #		define MU0_HAVE_WINDOWS      1
+#	elif defined(__MINGW32__) || defined(__MINGW64__)
+#		undef  MU0_HAVE_MINGW        0
+#		define MU0_HAVE_MINGW        1
 #	elif                 \
 	   defined(__sun)    \
 	|| defined(sun)      \
