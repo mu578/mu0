@@ -31,18 +31,19 @@ const mu0_string8_t mu0_locale_name(
 	, const mu0_string8_t modifier  __mu0_nullable__
 ) {
 	__mu0_static__ mu0_tchar8_t s_name[48];
+	mu0_tchar8_t * c;
 	mu0_bool_t   have_name = mu0_false;
 	mu0_uint64_t k, l, p   = 0;
 
-	//#! XPG syntax: language[_territory[.codeset]][@modifier]
+	//#! XPG syntax:[language[_territory[.codeset]][@modifier][+special]
 	memset(s_name, 0, __mu0_sizeof__(s_name));
-	if (language != mu0_nullptr) {
+	if (mu0_not_nullptr(language)) {
 		k = strlen(language);
 		if (k > 0) {
 			l  = k;
 			memcpy(s_name + p, language, l);
 			p += l;
-			if (territory != mu0_nullptr) {
+			if (mu0_not_nullptr(territory)) {
 				k  = strlen(territory);
 				if (k > 0) {
 					l  = __mu0_sizeof__(mu0_tchar8_t);
@@ -55,8 +56,13 @@ const mu0_string8_t mu0_locale_name(
 					memcpy(s_name + p, ".UTF-8", l);
 					have_name = mu0_true;
 				}
-				if (modifier != mu0_nullptr) {
-					k  = strlen(modifier);
+				if (mu0_not_nullptr(modifier)) {
+					c = strchr(modifier, '+');
+					if (mu0_not_nullptr(c)) {
+						k = c - modifier;
+					} else {
+						k = strlen(modifier);
+					}
 					if (k > 0) {
 						p += l;
 						l  = __mu0_sizeof__(mu0_tchar8_t);
@@ -148,7 +154,7 @@ mu0_sint32_t mu0_locale_global(
 
 mu0_sint32_t mu0_locale_delete(mu0_locale_t locale)
 {
-	if (locale != mu0_nullptr) {
+	if (mu0_not_nullptr(locale)) {
 		_MU0_LOCALE_DELETE(locale);
 		return 0;
 	}
@@ -160,7 +166,7 @@ mu0_sint32_t mu0_locale_compare(
 	, const mu0_string8_t rhs
 	, const mu0_locale_t  locale __mu0_nullable__
 ) {
-	const mu0_sint32_t r = mu0_const_sint32((locale != mu0_nullptr)
+	const mu0_sint32_t r = mu0_const_sint32((mu0_not_nullptr(locale))
 		? _MU0_LOCALE_STRCOLL_L(lhs, rhs, locale)
 		: _MU0_LOCALE_STRCOLL(lhs, rhs)
 	);
