@@ -34,19 +34,51 @@
 #	define __mu0_strchr__  strchr
 
 #	if   MU0_HAVE_WINDOWS && !(defined(__MINGW32__) || defined(__MINGW64__))
+
 #		define __mu0_locale_t__                        _locale_t
 #		define __mu0_setlocale__(category, name)       setlocale(category, name)
 #		define __mu0_newlocale__(category, name)       _create_locale(category, name)
 #		define __mu0_freelocale__(locale)              _free_locale(((__mu0_locale_t__)locale))
-#		define __MU0_LOCAL_MASK_ALL__                  LC_ALL
-#		define __MU0_LOCAL_MASK_COLLATE__              LC_COLLATE
+
+#		define __MU0_LOCALE_ALL__                      LC_ALL
+#		define __MU0_LOCALE_COLLATE__                  LC_COLLATE
+#		define __MU0_LOCALE_CTYPE__                    LC_CTYPE
+#		define __MU0_LOCALE_MESSAGES__                 LC_MESSAGES
+#		define __MU0_LOCALE_MONETARY__                 LC_MONETARY
+#		define __MU0_LOCALE_NUMERIC__                  LC_NUMERIC
+#		define __MU0_LOCALE_TIME__                     LC_TIME
+
+#		define __MU0_LOCALE_MASK_ALL__                 LC_ALL
+#		define __MU0_LOCALE_MASK_COLLATE__             LC_COLLATE
+#		define __MU0_LOCALE_MASK_CTYPE__               LC_CTYPE
+#		define __MU0_LOCALE_MASK_MESSAGES__            LC_MESSAGES
+#		define __MU0_LOCALE_MASK_MONETARY__            LC_MONETARY
+#		define __MU0_LOCALE_MASK_NUMERIC__             LC_NUMERIC
+#		define __MU0_LOCALE_MASK_TIME__                LC_TIME
+
 #	elif MU0_HAVE_POSIX1_2001
+
 #		define __mu0_locale_t__                        locale_t
 #		define __mu0_setlocale__(category, name)       setlocale(category, name)
 #		define __mu0_newlocale__(category, name)       newlocale(category, name, NULL)
 #		define __mu0_freelocale__(locale)              freelocale(((__mu0_locale_t__)locale))
-#		define __MU0_LOCAL_MASK_ALL__                  LC_ALL_MASK
-#		define __MU0_LOCAL_MASK_COLLATE__              LC_COLLATE_MASK
+
+#		define __MU0_LOCALE_ALL__                      LC_ALL
+#		define __MU0_LOCALE_COLLATE__                  LC_COLLATE
+#		define __MU0_LOCALE_CTYPE__                    LC_CTYPE
+#		define __MU0_LOCALE_MESSAGES__                 LC_MESSAGES
+#		define __MU0_LOCALE_MONETARY__                 LC_MONETARY
+#		define __MU0_LOCALE_NUMERIC__                  LC_NUMERIC
+#		define __MU0_LOCALE_TIME__                     LC_TIME
+
+#		define __MU0_LOCALE_MASK_ALL__                 LC_ALL_MASK
+#		define __MU0_LOCALE_MASK_COLLATE__             LC_COLLATE_MASK
+#		define __MU0_LOCALE_MASK_CTYPE__               LC_CTYPE_MASK
+#		define __MU0_LOCALE_MASK_MESSAGES__            LC_MESSAGES_MASK
+#		define __MU0_LOCALE_MASK_MONETARY__            LC_MONETARY_MASK
+#		define __MU0_LOCALE_MASK_NUMERIC__             LC_NUMERIC_MASK
+#		define __MU0_LOCALE_MASK_TIME__                LC_TIME_MASK
+
 #	else
 #	error "mu0_characters.h"
 # endif

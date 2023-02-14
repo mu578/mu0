@@ -79,8 +79,8 @@ mu0_locale_t mu0_locale_create(
 	, const mu0_bool_t    collator
 ) {
 	const mu0_sint32_t category = ((collator == mu0_true)
-		? __MU0_LOCAL_MASK_COLLATE__
-		: __MU0_LOCAL_MASK_ALL__
+		? __MU0_LOCALE_MASK_COLLATE__
+		: __MU0_LOCALE_MASK_ALL__
 	);
 	const mu0_string8_t name    = mu0_locale_name(
 		  language
@@ -100,8 +100,8 @@ mu0_sint32_t mu0_locale_global(
 	, const mu0_bool_t    collator
 ) {
 	const mu0_sint32_t category = ((collator == mu0_true)
-		? __MU0_LOCAL_MASK_COLLATE__
-		: __MU0_LOCAL_MASK_ALL__
+		? __MU0_LOCALE_COLLATE__
+		: __MU0_LOCALE_ALL__
 	);
 	const mu0_string8_t name    = mu0_locale_name(
 		  language
