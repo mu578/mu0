@@ -130,10 +130,7 @@ mu0_sint32_t mu0_locale_compare(
 	, const mu0_string8_t rhs
 	, const mu0_locale_t  locale __mu0_nullable__
 ) {
-	const mu0_sint32_t r = mu0_const_sint32((mu0_not_nullptr(locale))
-		? __mu0_strcoll_l__(lhs, rhs, locale)
-		: __mu0_strcoll__(lhs, rhs)
-	);
+	const mu0_sint32_t r = mu0_const_sint32(__mu0_locale_cmp__(lhs, rhs, locale));
 	return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 }
 

@@ -84,11 +84,13 @@
 # endif
 
 #	if MU0_HAVE_WINDOWS && !(defined(__MINGW32__) || defined(__MINGW64__))
-#		define __mu0_strcoll__(lhs, rhs)           strcoll(lhs, rhs)
-#		define __mu0_strcoll_l__(lhs, rhs, locale) _strcoll_l(lhs, rhs, ((__mu0_locale_t__)locale))
+#		define __mu0_strcoll__(lhs, rhs)            strcoll(lhs, rhs)
+#		define __mu0_strcoll_l__(lhs, rhs, locale)  _strcoll_l(lhs, rhs, ((__mu0_locale_t__)locale))
+#		define __mu0_locale_cmp__(lhs, rhs, locale) ((locale) ? __mu0_strcoll_l__(lhs, rhs, locale) : __mu0_strcoll__(lhs, rhs))
 #	elif MU0_HAVE_POSIX1_2001
-#		define __mu0_strcoll__(lhs, rhs)           strcoll(lhs, rhs)
-#		define __mu0_strcoll_l__(lhs, rhs, locale) strcoll_l(lhs, rhs, ((__mu0_locale_t__)locale))
+#		define __mu0_strcoll__(lhs, rhs)            strcoll(lhs, rhs)
+#		define __mu0_strcoll_l__(lhs, rhs, locale)  strcoll_l(lhs, rhs, ((__mu0_locale_t__)locale))
+#		define __mu0_locale_cmp__(lhs, rhs, locale) ((locale) ? __mu0_strcoll_l__(lhs, rhs, locale) : __mu0_strcoll__(lhs, rhs))
 #	else
 #	error "mu0_characters.h"
 # endif
