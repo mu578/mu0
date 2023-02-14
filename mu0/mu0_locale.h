@@ -28,14 +28,14 @@ typedef void * mu0_locale_t;
 mu0_locale_t mu0_locale_create(
 	  const mu0_string8_t language
 	, const mu0_string8_t territory
-	, const mu0_string8_t modifier
+	, const mu0_string8_t modifier  __mu0_nullable__
 	, const mu0_bool_t    collator
 );
 
 mu0_sint32_t mu0_locale_global(
 	  const mu0_string8_t language
 	, const mu0_string8_t territory
-	, const mu0_string8_t modifier
+	, const mu0_string8_t modifier  __mu0_nullable__
 	, const mu0_bool_t    collator
 );
 
@@ -44,7 +44,7 @@ mu0_sint32_t mu0_locale_delete(mu0_locale_t locale);
 mu0_sint32_t mu0_locale_compare(
 	  const mu0_string8_t lhs
 	, const mu0_string8_t rhs
-	, const mu0_locale_t  locale
+	, const mu0_locale_t  locale __mu0_nullable__
 );
 
 MU0_END_CDECL

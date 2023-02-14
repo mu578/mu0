@@ -28,11 +28,11 @@ __mu0_static_inline__
 const mu0_string8_t mu0_locale_name(
 	  const mu0_string8_t language
 	, const mu0_string8_t territory
-	, const mu0_string8_t modifier
+	, const mu0_string8_t modifier  __mu0_nullable__
 ) {
 	__mu0_static__ mu0_tchar8_t s_name[48];
-	mu0_bool_t    have_name = mu0_false;
-	mu0_uint64_t  k, l, p   = 0;
+	mu0_bool_t   have_name = mu0_false;
+	mu0_uint64_t k, l, p   = 0;
 
 	//#! XPG syntax: language[_territory[.codeset]][@modifier]
 	memset(s_name, 0, __mu0_sizeof__(s_name));
@@ -87,8 +87,8 @@ const mu0_string8_t mu0_locale_name(
 #	define _MU0_LOCALE_DELETE(locale)              _free_locale(mu0_cast(_locale_t, locale))
 #	define _MU0_LOCALE_MASK_ALL                    LC_ALL
 #	define _MU0_LOCALE_MASK_COLLATE                LC_COLLATE
-#	define _MU0_LOCALE_STRCOLL(lhs, rhs)           mu0_sint32(strcoll(lhs, rhs))
-#	define _MU0_LOCALE_STRCOLL_L(lhs, rhs, locale) mu0_sint32(_strcoll_l(lhs, rhs, mu0_cast(_locale_t, locale)))
+#	define _MU0_LOCALE_STRCOLL(lhs, rhs)           strcoll(lhs, rhs)
+#	define _MU0_LOCALE_STRCOLL_L(lhs, rhs, locale) _strcoll_l(lhs, rhs, mu0_cast(_locale_t, locale))
 #	elif MU0_HAVE_POSIX1_2001
 #	define _MU0_LOCALE_T                           locale_t
 #	define _MU0_LOCALE_GLOBAL(category, name)      setlocale(category, name)
@@ -96,8 +96,8 @@ const mu0_string8_t mu0_locale_name(
 #	define _MU0_LOCALE_DELETE(locale)              freelocale(mu0_cast(locale_t, locale))
 #	define _MU0_LOCALE_MASK_ALL                    LC_ALL_MASK
 #	define _MU0_LOCALE_MASK_COLLATE                LC_COLLATE_MASK
-#	define _MU0_LOCALE_STRCOLL(lhs, rhs)           mu0_sint32(strcoll(lhs, rhs))
-#	define _MU0_LOCALE_STRCOLL_L(lhs, rhs, locale) mu0_sint32(strcoll_l(lhs, rhs, mu0_cast(locale_t, locale)))
+#	define _MU0_LOCALE_STRCOLL(lhs, rhs)           strcoll(lhs, rhs)
+#	define _MU0_LOCALE_STRCOLL_L(lhs, rhs, locale) strcoll_l(lhs, rhs, mu0_cast(locale_t, locale))
 #	else
 #	error "mu0_locale.c"
 # endif
@@ -105,7 +105,7 @@ const mu0_string8_t mu0_locale_name(
 mu0_locale_t mu0_locale_create(
 	  const mu0_string8_t language
 	, const mu0_string8_t territory
-	, const mu0_string8_t modifier
+	, const mu0_string8_t modifier  __mu0_nullable__
 	, const mu0_bool_t    collator
 ) {
 	const mu0_sint32_t category = ((collator == mu0_true)
@@ -126,7 +126,7 @@ mu0_locale_t mu0_locale_create(
 mu0_sint32_t mu0_locale_global(
 	  const mu0_string8_t language
 	, const mu0_string8_t territory
-	, const mu0_string8_t modifier
+	, const mu0_string8_t modifier  __mu0_nullable__
 	, const mu0_bool_t    collator
 ) {
 	const mu0_sint32_t category = ((collator == mu0_true)
@@ -158,9 +158,9 @@ mu0_sint32_t mu0_locale_delete(mu0_locale_t locale)
 mu0_sint32_t mu0_locale_compare(
 	  const mu0_string8_t lhs
 	, const mu0_string8_t rhs
-	, const mu0_locale_t  locale
+	, const mu0_locale_t  locale __mu0_nullable__
 ) {
-	const mu0_sint32_t r = ((locale != mu0_nullptr)
+	const mu0_sint32_t r = mu0_const_sint32((locale != mu0_nullptr)
 		? _MU0_LOCALE_STRCOLL_L(lhs, rhs, locale)
 		: _MU0_LOCALE_STRCOLL(lhs, rhs)
 	);
