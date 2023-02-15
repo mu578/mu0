@@ -131,7 +131,7 @@
 #	endif
 
 #	if !MU0_HAVE_C11 && !MU0_HAVE_CPP11
-#	if !defined(_MSC_VER)
+#	if !MU0_HAVE_CC_MSVCC
 #		if !defined(__STDC_FORMAT_MACROS)
 #			define __STDC_FORMAT_MACROS   1
 #		endif
@@ -146,7 +146,16 @@
 #	define MU0_HAVE_POSIX1_2001 0
 #	define MU0_HAVE_POSIX1_2008 0
 
+#	if MU0_HAVE_CC_MSVCC
+#	if MU0_HAVE_IA64 || MU0_HAVE_AMD64 || MU0_HAVE_ARM64
+		typedef __int64 ssize_t;
+#	else
+		typedef __int32 ssize_t;
+#	endif
+#	else
 #	include <unistd.h>
+#	endif
+
 #	include <stddef.h>
 
 #	if                                                            \

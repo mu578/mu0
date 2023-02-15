@@ -36,13 +36,12 @@ typedef   ptrdiff_t                     mu0_ptrdiff_t;
 typedef   uintmax_t                     mu0_uintmax_t;
 typedef   intmax_t                      mu0_sintmax_t;
 
-#	if   MU0_USE_INT128
-#	if   MU0_HAVE_CC_GNUCC
-__mu0_extension__
-typedef unsigned __int128               mu0_uint128_t;
-__mu0_extension__
-typedef __int128                        mu0_sint128_t;
-#	elif MU0_HAVE_CC_CLANG
+typedef   size_t                        mu0_usize_t;
+typedef   ssize_t                       mu0_ssize_t;
+typedef   off_t                         mu0_index_t;
+
+#	if MU0_USE_INT128
+#	if   MU0_HAVE_CC_CLANG
 #		if !__is_identifier(__int128_t)
 #			undef  MU0_HAVE_INT128
 #			define MU0_HAVE_INT128 1
@@ -54,13 +53,21 @@ typedef __int128                        mu0_sint128_t;
 			typedef uint64_t               mu0_uint128_t;
 			typedef int64_t                mu0_sint128_t;
 #		endif
-#		else
-			typedef uint64_t               mu0_uint128_t;
-			typedef int64_t                mu0_sint128_t;
+#	elif MU0_HAVE_CC_GNUCC
+#		if MU0_HAVE_X64
+#			undef  MU0_HAVE_INT128
+#			define MU0_HAVE_INT128 1
+			__mu0_extension__
+			typedef unsigned __int128      mu0_uint128_t;
+			__mu0_extension__
+			typedef __int128               mu0_sint128_t;
+#		endif
 #	endif
-#	else
-	typedef uint64_t                     mu0_uint128_t;
-	typedef int64_t                      mu0_sint128_t;
+#	endif
+
+#	if !MU0_HAVE_INT128
+typedef uint64_t                        mu0_uint128_t;
+typedef int64_t                         mu0_sint128_t;
 #	endif
 
 typedef   uint64_t                      mu0_uint64_t;
