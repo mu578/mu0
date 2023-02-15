@@ -19,6 +19,18 @@
 
 #include <time.h>
 
+#	undef  __mu0_time_t__
+#	undef  __mu0_time__
+#	undef  __mu0_clock_t__
+#	undef  __mu0_clock__
+#	undef  __MU0_CLOCKS_PER_SECECOND__
+
+#	define __mu0_time_t__              time_t
+#	define __mu0_time__                time
+#	define __mu0_clock_t__             clock_t
+#	define __mu0_clock__               clock
+#	define __MU0_CLOCKS_PER_SECECOND__ CLOCKS_PER_SEC
+
 typedef struct
 {
 	mu0_uint64_t u_state;
@@ -42,11 +54,14 @@ mu0_uint32_t         g_mu0_pcg32_default = 0U;
 __mu0_static_inline__
 void mu0_pcg32_context_seed_build(mu0_uint64_t * seed, mu0_uint64_t * incr)
 {
-	time_t tm = 0;
-	if (!(time(&tm))) {
-		tm = mu0_const_cast(time_t, ((clock() + mu0_const_cast(clock_t, 1)) * CLOCKS_PER_SEC));
+	__mu0_time_t__ tm = 0;
+	if (!(__mu0_time__(&tm))) {
+		tm = mu0_const_cast(
+			  __mu0_time_t__
+			, ((__mu0_clock__() + 1) * __MU0_CLOCKS_PER_SECECOND__)
+		);
 	}
-	*seed = mu0_uint64(tm);
+	*seed = mu0_uint64(tm % 1000);
 	*incr = (*seed >> 1U) | 1U;
 }
 

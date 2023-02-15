@@ -1,3 +1,20 @@
+//
+// # -*- coding: utf-8, tab-width: 3 -*-
+
+//                                                           ___                                            //
+//                                                          / _ \                                           //
+//                                            _   _  _   _ | | | |                                          //
+//                                           | | | || | | || | | |                                          //
+//                                           | |_| || |_| || |_| |                                          //
+//                                           | ._,_| \___/  \___/                                           //
+//                                           | |                                                            //
+//                                           |_|                                                            //
+
+// locale-main.h
+//
+// Copyright (C) 2023 mu578. All rights reserved.
+//
+
 #include <mu0/mu0_locale.h>
 #include <stdio.h>
 
