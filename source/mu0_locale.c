@@ -29,6 +29,7 @@
 #	undef  __mu0_memmove__
 #	undef  __mu0_strlen__
 #	undef  __mu0_strchr__
+#	undef  __mu0_strcmp__
 
 #	undef  MU0_HAVE_LOCALE
 #	undef  __mu0_locale_t__ 
@@ -119,6 +120,7 @@
 #		define __mu0_memmove__ memmove
 #		define __mu0_strlen__  strlen
 #		define __mu0_strchr__  strchr
+#		define __mu0_strcmp__  strcmp
 #	endif
 
 __mu0_static_inline__
@@ -260,8 +262,14 @@ mu0_sint32_t mu0_locale_compare(
 	, const mu0_string8_t rhs
 	, const mu0_locale_t  locale __mu0_nullable__
 ) {
+#	if MU0_HAVE_LOCALE
 	const mu0_sint32_t r = __mu0_locale_cmp__(lhs, rhs, locale);
 	return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
+#	else
+	const mu0_sint32_t r = __mu0_strcmp__(lhs, rhs);
+	mu0_unused(locale);
+	return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
+#	endif
 }
 
 /* EOF */
