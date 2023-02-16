@@ -94,6 +94,9 @@
 #		define __MU0_LOCALE_CATEGORY_MASK_MONETARY__ LC_MONETARY_MASK
 #		define __MU0_LOCALE_CATEGORY_MASK_NUMERIC__  LC_NUMERIC_MASK
 #		define __MU0_LOCALE_CATEGORY_MASK_TIME__     LC_TIME_MASK
+#	else
+__mu0_static__
+const mu0_vtchar8_t g_locale_default = "en_EN.UTF-8";
 #	endif
 
 #	if MU0_HAVE_LOCALE
@@ -205,13 +208,14 @@ mu0_locale_t mu0_locale_create(
 	if (mu0_not_nullptr(name)) {
 		return __mu0_newlocale__(category, name);
 	}
+	return mu0_nullptr;
 #	else
 	mu0_unused(language);
 	mu0_unused(territory);
 	mu0_unused(modifier);
 	mu0_unused(collator);
+	return g_locale_default;
 #	endif
-	return mu0_nullptr;
 }
 
 mu0_sint32_t mu0_locale_global(
@@ -235,13 +239,14 @@ mu0_sint32_t mu0_locale_global(
 			return 0;
 		}
 	}
+	return -1;
 #	else
 	mu0_unused(language);
 	mu0_unused(territory);
 	mu0_unused(modifier);
 	mu0_unused(collator);
+	return 0;
 #	endif
-	return -1;
 }
 
 mu0_sint32_t mu0_locale_delete(mu0_locale_t locale)
@@ -251,10 +256,11 @@ mu0_sint32_t mu0_locale_delete(mu0_locale_t locale)
 		__mu0_freelocale__(locale);
 		return 0;
 	}
+	return -1;
 #	else
 	mu0_unused(locale);
+	return 0;
 #	endif
-	return -1;
 }
 
 mu0_sint32_t mu0_locale_compare(

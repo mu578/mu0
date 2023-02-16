@@ -23,13 +23,13 @@
 #	undef  __mu0_time__
 #	undef  __mu0_clock_t__
 #	undef  __mu0_clock__
-#	undef  __MU0_CLOCKS_PER_SECECOND__
+#	undef  __MU0_CLOCKS_PER_SECOND__
 
 #	define __mu0_time_t__              time_t
 #	define __mu0_time__                time
 #	define __mu0_clock_t__             clock_t
 #	define __mu0_clock__               clock
-#	define __MU0_CLOCKS_PER_SECECOND__ CLOCKS_PER_SEC
+#	define __MU0_CLOCKS_PER_SECOND__   CLOCKS_PER_SEC
 
 typedef struct
 {
@@ -58,7 +58,7 @@ void mu0_pcg32_context_seed_build(mu0_uint64_t * seed, mu0_uint64_t * incr)
 	if (!(__mu0_time__(&tm))) {
 		tm = mu0_const_cast(
 			  __mu0_time_t__
-			, ((__mu0_clock__() + 1) * __MU0_CLOCKS_PER_SECECOND__)
+			, ((__mu0_clock__() + 222111U) * __MU0_CLOCKS_PER_SECOND__)
 		);
 	}
 	*seed = mu0_uint64(tm % 1000);

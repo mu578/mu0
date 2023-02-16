@@ -10,35 +10,38 @@
 //                                           | |                                                            //
 //                                           |_|                                                            //
 
-// mu0_string.h
+// mu0_string.c
 //
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
-#include <mu0/mu0_integer.h>
+#include <mu0/mu0_string.h>
 
-#ifndef MU0_STRING_H
-#define MU0_STRING_H 1
+#include <string.h>
 
-MU0_BEGIN_CDECL
+#	undef  __mu0_strlen__
+#	define __mu0_strlen__  strlen
 
-typedef          char  mu0_tchar8_t;
-typedef unsigned char  mu0_uchar8_t;
-typedef signed   char  mu0_schar8_t;
+mu0_usize_t mu0_string8_length(const mu0_string8_t src)
+{
+	return __mu0_strlen__(src);
+}
 
-typedef mu0_tchar8_t * mu0_vtchar8_t;
-typedef mu0_uchar8_t * mu0_vuchar8_t;
-typedef mu0_schar8_t * mu0_vschar8_t;
+mu0_usize_t mu0_string8_size(const mu0_string8_t src)
+{
+	return __mu0_strlen__(src) + 1U;
+}
 
-typedef mu0_vtchar8_t  mu0_string8_t;
-typedef mu0_vuchar8_t  mu0_binary8_t;
-
-mu0_usize_t mu0_string8_length(const mu0_string8_t src);
-mu0_usize_t mu0_string8_size  (const mu0_string8_t src);
-mu0_usize_t mu0_string8_count (const mu0_string8_t src);
-
-MU0_END_CDECL
-
-#endif /* !MU0_STRING_H */
+mu0_usize_t mu0_string8_count(const mu0_string8_t src)
+{
+	mu0_string8_t p = src;
+	mu0_usize_t   c = 0;
+	for (; *p; ++p) {
+		if ((*p & 0xC0) != 0x80) {
+			++c;
+		}
+	}
+	return c;
+}
 
 /* EOF */

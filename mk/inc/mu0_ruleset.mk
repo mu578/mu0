@@ -55,14 +55,14 @@ rule_objects_cmds::
 	-@for src_file in $(MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file}); \
 		$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o \
-			$(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).o; \
+			$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o; \
 	done
 
 rule_link_cmds::
 	-@for src_file in $(MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
-		$(LD) $(OBJ_FILES) $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).o \
-			-o $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).cmd; \
+		$(LD) $(OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o \
+			-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 	done
 
 rule_list_objects::
