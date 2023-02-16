@@ -26,7 +26,6 @@
 
 #	undef  __mu0_memset__
 #	undef  __mu0_memcpy__
-#	undef  __mu0_memmove__
 #	undef  __mu0_strlen__
 #	undef  __mu0_strchr__
 #	undef  __mu0_strcmp__
@@ -96,33 +95,25 @@
 #		define __MU0_LOCALE_CATEGORY_MASK_TIME__     LC_TIME_MASK
 #	else
 __mu0_static__
-const mu0_vtchar8_t g_locale_default = "en_EN.UTF-8";
+const mu0_vtchar8_t g_mu0_locale_default = "en_EN.UTF-8";
 #	endif
 
 #	if MU0_HAVE_LOCALE
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #		define __mu0_strcoll__(lhs, rhs)            strcoll(lhs, rhs)
 #		define __mu0_strcoll_l__(lhs, rhs, locale)  _strcoll_l(lhs, rhs, ((__mu0_locale_t__)locale))
-#		define __mu0_locale_cmp__(lhs, rhs, locale) ((locale) \
-			? __mu0_strcoll_l__(lhs, rhs, locale) \
-			: __mu0_strcoll__(lhs, rhs) \
-		)
 #	elif MU0_HAVE_POSIX1_2001
 #		define __mu0_strcoll__(lhs, rhs)            strcoll(lhs, rhs)
 #		define __mu0_strcoll_l__(lhs, rhs, locale)  strcoll_l(lhs, rhs, ((__mu0_locale_t__)locale))
-#		define __mu0_locale_cmp__(lhs, rhs, locale) ((locale) \
-			? __mu0_strcoll_l__(lhs, rhs, locale) \
-			: __mu0_strcoll__(lhs, rhs) \
-		)
 #	endif
 #	endif
 
 #	if MU0_HAVE_LOCALE
 #		define __mu0_memset__  memset
 #		define __mu0_memcpy__  memcpy
-#		define __mu0_memmove__ memmove
 #		define __mu0_strlen__  strlen
 #		define __mu0_strchr__  strchr
+#	else
 #		define __mu0_strcmp__  strcmp
 #	endif
 
@@ -214,7 +205,7 @@ mu0_locale_t mu0_locale_create(
 	mu0_unused(territory);
 	mu0_unused(modifier);
 	mu0_unused(collator);
-	return g_locale_default;
+	return g_mu0_locale_default;
 #	endif
 }
 
@@ -269,7 +260,10 @@ mu0_sint32_t mu0_locale_compare(
 	, const mu0_locale_t  locale __mu0_nullable__
 ) {
 #	if MU0_HAVE_LOCALE
-	const mu0_sint32_t r = __mu0_locale_cmp__(lhs, rhs, locale);
+	const mu0_sint32_t r = (mu0_not_nullptr(locale)
+		? __mu0_strcoll_l__ (lhs, rhs, locale)
+		: __mu0_strcoll__   (lhs, rhs)
+	);
 	return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 #	else
 	const mu0_sint32_t r = __mu0_strcmp__(lhs, rhs);
