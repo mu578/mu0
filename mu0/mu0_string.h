@@ -33,6 +33,25 @@ typedef mu0_schar8_t * mu0_vschar8_t;
 typedef mu0_vtchar8_t  mu0_string8_t;
 typedef mu0_vuchar8_t  mu0_binary8_t;
 
+#	define mu0_tchar8(__x)        mu0_cast(mu0_tchar8_t, __x)
+#	define mu0_const_tchar8(__x)  mu0_const_cast(mu0_tchar8_t, __x)
+#	define mu0_uchar8(__x)        mu0_cast(mu0_uchar8_t, __x)
+#	define mu0_const_uchar8(__x)  mu0_const_cast(mu0_uchar8_t, __x)
+#	define mu0_schar8(__x)        mu0_cast(mu0_schar8_t, __x)
+#	define mu0_const_schar8(__x)  mu0_const_cast(mu0_schar8_t, __x)
+
+#	define mu0_vtchar8(__x)       mu0_cast(mu0_vtchar8_t, __x)
+#	define mu0_const_vtchar8(__x) mu0_const_cast(mu0_vtchar8_t, __x)
+#	define mu0_vuchar8(__x)       mu0_cast(mu0_vuchar8_t, __x)
+#	define mu0_const_vuchar8(__x) mu0_const_cast(mu0_vuchar8_t, __x)
+#	define mu0_vschar8(__x)       mu0_cast(mu0_vschar8_t, __x)
+#	define mu0_const_vschar8(__x) mu0_const_cast(mu0_vschar8_t, __x)
+
+#	define mu0_string8(__x)       mu0_cast(mu0_string8_t, __x)
+#	define mu0_const_string8(__x) mu0_const_cast(mu0_string8_t, __x)
+#	define mu0_binary8(__x)       mu0_cast(mu0_binary8_t, __x)
+#	define mu0_const_binary8(__x) mu0_const_cast(mu0_binary8_t, __x)
+
 mu0_usize_t mu0_string8_length(const mu0_string8_t src);
 mu0_usize_t mu0_string8_size  (const mu0_string8_t src);
 mu0_usize_t mu0_string8_count (const mu0_string8_t src);

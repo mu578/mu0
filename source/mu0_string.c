@@ -32,11 +32,11 @@ mu0_usize_t mu0_string8_size(const mu0_string8_t src)
 	return __mu0_strlen__(src) + 1U;
 }
 
-size_t mu0_string8_count(const mu0_string8_t src)
+mu0_usize_t mu0_string8_count(const mu0_string8_t src)
 {
 	mu0_usize_t   i = 0, j = 0;
 	mu0_string8_t p = src;
-	mu0_uchar8_t  c = *(p + 0);
+	mu0_uchar8_t  c = mu0_const_uchar8(*(p + 0));
 	mu0_uint32_t  c0, c1, c2, c3;
 
 	for (; c != 0; ++j) {
@@ -45,7 +45,7 @@ size_t mu0_string8_count(const mu0_string8_t src)
 		c2  = (c & 0x20) >> 5U;
 		c3  = (c & 0x10) >> 4U;
 		i  += 1U + c0 * c1 + c0 * c1 * c2 + c0 * c1 * c2 * c3;
-		c   = *(p + i);
+		c   = mu0_const_uchar8(*(p + i));
 	}
 	return j;
 }
