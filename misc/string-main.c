@@ -23,7 +23,7 @@ int main(int argc, const char * argv[])
 	const mu0_string8_t s1 = u8"éducation";
 	const mu0_string8_t s2 = u8"Education";
 
-	const mu0_string8_t s3 = u8"érudition";
+	const mu0_string8_t s3 = u8"她就心緒翻湧惡意難消";
 	const mu0_string8_t s4 = u8"Un ciel étoilé";
 
 	mu0_unused(argc);
