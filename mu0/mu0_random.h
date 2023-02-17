@@ -46,17 +46,17 @@ mu0_uint128_t mu0_ranged_random_u128(
 	, const mu0_uint128_t upper_bound
 );
 
-mu0_uint64_t  mu0_ranged_random_ui64 (
+mu0_uint64_t  mu0_ranged_random_ui64(
 	  const mu0_uint64_t  lower_bound
 	, const mu0_uint64_t  upper_bound
 );
 
-mu0_uint32_t  mu0_ranged_random_ui32 (
+mu0_uint32_t  mu0_ranged_random_ui32(
 	  const mu0_uint32_t  lower_bound
 	, const mu0_uint32_t  upper_bound
 );
 
-mu0_uint16_t  mu0_ranged_random_ui16 (
+mu0_uint16_t  mu0_ranged_random_ui16(
 	  const mu0_uint16_t  lower_bound
 	, const mu0_uint16_t  upper_bound
 );
@@ -66,17 +66,17 @@ mu0_sint128_t mu0_ranged_random_i128(
 	, const mu0_sint128_t upper_bound
 );
 
-mu0_sint64_t  mu0_ranged_random_i64 (
+mu0_sint64_t  mu0_ranged_random_i64(
 	  const mu0_sint64_t  lower_bound
 	, const mu0_sint64_t  upper_bound
 );
 
-mu0_sint32_t  mu0_ranged_random_i32 (
+mu0_sint32_t  mu0_ranged_random_i32(
 	  const mu0_sint32_t  lower_bound
 	, const mu0_sint32_t  upper_bound
 );
 
-mu0_sint16_t  mu0_ranged_random_i16 (
+mu0_sint16_t  mu0_ranged_random_i16(
 	  const mu0_sint16_t  lower_bound
 	, const mu0_sint16_t  upper_bound
 );
