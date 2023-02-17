@@ -235,10 +235,42 @@ mu0_uint16_t mu0_random_u16(void)
 	return mu0_pcg32_16_random();
 }
 
-mu0_uint128_t mu0_bounded_random_u128(const mu0_uint128_t upper_bound)
+mu0_sint128_t mu0_random_i128(void)
+{
+#	if MU0_HAVE_INT128
+#	error "mu0_random.c"
+#	else
+	mu0_pcg32_ssrandom();
+	return mu0_uint128(mu0_pcg32_64_bounded_random(mu0_sint128_max));
+#	endif
+
+}
+mu0_sint64_t  mu0_random_i64 (void)
 {
 	mu0_pcg32_ssrandom();
-	return mu0_uint128(mu0_pcg32_64_bounded_random(mu0_uint64(upper_bound)));
+	return mu0_pcg32_64_bounded_random(mu0_sint64_max);
+}
+
+mu0_sint32_t  mu0_random_i32 (void)
+{
+	mu0_pcg32_ssrandom();
+	return mu0_pcg32_bounded_random(mu0_sint32_max);
+}
+
+mu0_sint16_t  mu0_random_i16 (void)
+{
+	mu0_pcg32_ssrandom();
+	return mu0_pcg32_16_bounded_random(mu0_sint16_max);
+}
+
+mu0_uint128_t mu0_bounded_random_u128(const mu0_uint128_t upper_bound)
+{
+#	if MU0_HAVE_INT128
+#	error "mu0_random.c"
+#	else
+	mu0_pcg32_ssrandom();
+	return mu0_pcg32_64_bounded_random(upper_bound);
+#	endif
 }
 
 mu0_uint64_t mu0_bounded_random_u64(const mu0_uint64_t upper_bound)
