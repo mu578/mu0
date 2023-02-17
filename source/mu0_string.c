@@ -55,7 +55,7 @@ const mu0_string8_t mu0_string8_at(
 	, const mu0_index_t   index
 	, mu0_sint32_t *      width
 ) {
-	mu0_usize_t   i = 0, j = 0;
+	mu0_index_t   i = 0, j = 0;
 	mu0_string8_t p = src;
 	mu0_uint32_t  c = mu0_const_uchar8(*(p + 0));
 	mu0_sint32_t  k;
