@@ -221,10 +221,10 @@ __mu0_static__ const mu0_uint16_t  mu0_uint16_min  = 0U;
 __mu0_static__ const mu0_sint16_t  mu0_sint16_max  = INT16_MAX;
 __mu0_static__ const mu0_sint16_t  mu0_sint16_min  = INT16_MIN;
 
-__mu0_static__ const mu0_uint8_t  mu0_uint8_max    = UINT8_MAX;
-__mu0_static__ const mu0_uint8_t  mu0_uint8_min    = 0U;
-__mu0_static__ const mu0_sint8_t  mu0_sint8_max    = INT8_MAX;
-__mu0_static__ const mu0_sint8_t  mu0_sint8_min    = INT8_MIN;
+__mu0_static__ const mu0_uint8_t   mu0_uint8_max    = UINT8_MAX;
+__mu0_static__ const mu0_uint8_t   mu0_uint8_min    = 0U;
+__mu0_static__ const mu0_sint8_t   mu0_sint8_max    = INT8_MAX;
+__mu0_static__ const mu0_sint8_t   mu0_sint8_min    = INT8_MIN;
 
 MU0_END_CDECL
 
