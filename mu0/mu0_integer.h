@@ -194,6 +194,38 @@ typedef   mu0_sint8_t  *                mu0_vsint8_t;
 #	define mu0_is_uinteger(__x) (1)
 #	endif
 
+#	if MU0_HAVE_INT128
+__mu0_static__ const mu0_uint128_t mu0_uint128_max = UINT128_MAX;
+__mu0_static__ const mu0_uint128_t mu0_uint128_min = 0U;
+__mu0_static__ const mu0_sint128_t mu0_sint128_max = INT128_MAX;
+__mu0_static__ const mu0_sint128_t mu0_sint128_min = INT128_MIN;
+#	else
+__mu0_static__ const mu0_uint128_t mu0_uint128_max = UINT64_MAX;
+__mu0_static__ const mu0_uint128_t mu0_uint128_min = 0U;
+__mu0_static__ const mu0_sint128_t mu0_sint128_max = INT64_MAX;
+__mu0_static__ const mu0_sint128_t mu0_sint128_min = INT64_MIN;
+#	endif
+
+__mu0_static__ const mu0_uint64_t  mu0_uint64_max  = UINT64_MAX;
+__mu0_static__ const mu0_uint64_t  mu0_uint64_min  = 0U;
+__mu0_static__ const mu0_sint64_t  mu0_sint64_max  = INT64_MAX;
+__mu0_static__ const mu0_sint64_t  mu0_sint64_min  = INT64_MIN;
+
+__mu0_static__ const mu0_uint32_t  mu0_uint32_max  = UINT32_MAX;
+__mu0_static__ const mu0_uint32_t  mu0_uint32_min  = 0U;
+__mu0_static__ const mu0_sint32_t  mu0_sint32_max  = INT32_MAX;
+__mu0_static__ const mu0_sint32_t  mu0_sint32_min  = INT32_MIN;
+
+__mu0_static__ const mu0_uint16_t  mu0_uint16_max  = UINT16_MAX;
+__mu0_static__ const mu0_uint16_t  mu0_uint16_min  = 0U;
+__mu0_static__ const mu0_sint16_t  mu0_sint16_max  = INT16_MAX;
+__mu0_static__ const mu0_sint16_t  mu0_sint16_min  = INT16_MIN;
+
+__mu0_static__ const mu0_uint8_t  mu0_uint8_max    = UINT8_MAX;
+__mu0_static__ const mu0_uint8_t  mu0_uint8_min    = 0U;
+__mu0_static__ const mu0_sint8_t  mu0_sint8_max    = INT8_MAX;
+__mu0_static__ const mu0_sint8_t  mu0_sint8_min    = INT8_MIN;
+
 MU0_END_CDECL
 
 #endif /* !MU0_INTEGER_H */

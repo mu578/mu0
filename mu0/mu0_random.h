@@ -36,6 +36,26 @@ mu0_uint64_t  mu0_bounded_random_u64 (const mu0_uint64_t  upper_bound);
 mu0_uint32_t  mu0_bounded_random_u32 (const mu0_uint32_t  upper_bound);
 mu0_uint16_t  mu0_bounded_random_u16 (const mu0_uint16_t  upper_bound);
 
+mu0_uint128_t mu0_ranged_random_i128(
+	  const mu0_sint128_t lower_bound
+	, const mu0_sint128_t upper_bound
+);
+
+mu0_sint64_t  mu0_ranged_random_i64 (
+	  const mu0_sint64_t  lower_bound
+	, const mu0_sint64_t  upper_bound
+);
+
+mu0_sint32_t  mu0_ranged_random_i32 (
+	  const mu0_sint32_t  lower_bound
+	, const mu0_sint32_t  upper_bound
+);
+
+mu0_sint16_t  mu0_ranged_random_i16 (
+	  const mu0_sint16_t  lower_bound
+	, const mu0_sint16_t  upper_bound
+);
+
 mu0_fp128_t   mu0_random_fp128(void);
 mu0_fp64_t    mu0_random_fp64 (void);
 mu0_fp32_t    mu0_random_fp32 (void);
