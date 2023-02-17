@@ -117,6 +117,8 @@
 #		define __mu0_overload__
 #	endif
 
+#	define __mu0_nullable__
+
 #endif /* !MU0_ATTRIBUTE_H */
 
 /* EOF */

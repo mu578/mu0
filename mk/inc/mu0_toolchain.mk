@@ -25,14 +25,14 @@ ARCH             := $(shell uname -m)
 endif
 
 ifeq ($(strip $(PLATFORM)),)
-PLATFORM         := $(shell uname -s)
+PLATFORM         := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 endif
 ifeq ($(strip $(PLATFORM_VARIANT)),)
-PLATFORM_VARIANT := $(PLATFORM)
+PLATFORM_VARIANT := "macos_xcode"
 endif
 
-ifneq (,$(findstring Darwin, $(PLATFORM)))
-	ifneq (,$(findstring Darwin, $(PLATFORM_VARIANT)))
+ifneq (,$(findstring darwin, $(PLATFORM)))
+	ifneq (,$(findstring macos_xcode, $(PLATFORM_VARIANT)))
 		XCODE_VERS   := $(shell xcodebuild -sdk -version | grep "\- macOS " | cut -d "-" -f 1 | tr -d '[:space:]')
 		XCODE_PATH   := $(shell dirname `xcrun -f clang`)
 		XCODE_SDK    := $(shell xcrun --show-sdk-path)

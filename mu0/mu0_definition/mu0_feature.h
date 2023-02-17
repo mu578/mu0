@@ -93,8 +93,6 @@
 #		define __mu0_isofsize__(_Tp, __x) (((__mu0_sizeof__(_Tp) == __mu0_sizeof__(__x))) ? 1 : 0)
 #	endif
 
-#	define __mu0_nullable__
-
 #endif /* !MU0_FEATURE_H */
 
 /* EOF */
