@@ -23,11 +23,11 @@ ifeq ($(strip $(LOCAL_MODULE_PATH)),)
 $(error LOCAL_MODULE_PATH is not set)
 endif
 
-LOCAL_BUILDDIR := /tmp/build/$(PLATFORM)
+LOCAL_BUILDDIR  := /tmp/build/$(PLATFORM)
 
-BUILD_FILES    :=
-OBJ_FILES      :=
-MISC_FILES     :=
+MU0_BUILD_FILES :=
+MU0_OBJ_FILES   :=
+MU0_MISC_FILES  :=
 
 all:
 
@@ -35,12 +35,12 @@ rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE).a
-	@$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).a $(OBJ_FILES) 2>/dev/null
+	@$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).a $(MU0_OBJ_FILES) 2>/dev/null
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	-@if [ "$(PLATFORM)" = "darwin" ]; then \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE)-1.0.0.dylib; \
-		$(LD) -dynamiclib $(OBJ_FILES) \
+		$(LD) -dynamiclib $(MU0_OBJ_FILES) \
 			-install_name @rpath/lib$(LOCAL_MODULE).dylib \
 			-compatibility_version 1.0 \
 			-current_version       1.0.0 \
@@ -48,26 +48,26 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	fi
 
 rule_list_cmds::
-	$(eval BUILD_FILES :=$(call walk-dir-recursive, $(LOCAL_MODULE_PATH)/misc))
-	$(eval MISC_FILES  :=$(filter %-main.c, $(BUILD_FILES)))
+	$(eval MU0_BUILD_FILES :=$(call walk-dir-recursive, $(LOCAL_MODULE_PATH)/misc))
+	$(eval MU0_MISC_FILES  :=$(filter %-main.c, $(MU0_BUILD_FILES)))
 
 rule_objects_cmds::
-	-@for src_file in $(MISC_FILES); do \
+	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file}); \
 		$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o \
 			$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o; \
 	done
 
 rule_link_cmds::
-	-@for src_file in $(MISC_FILES); do \
+	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
-		$(LD) $(OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o \
+		$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o \
 			-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 	done
 
 rule_list_objects::
-	$(eval BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
-	$(eval OBJ_FILES   := $(filter %.o, $(BUILD_FILES)))
+	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
+	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 
 rule_buildir::
 	@mkdir -p $(LOCAL_BUILDDIR)
