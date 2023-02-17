@@ -109,12 +109,12 @@ const mu0_vtchar8_t g_mu0_locale_default = "en_EN.UTF-8";
 #	endif
 
 #	if MU0_HAVE_LOCALE
-#		define __mu0_memset__  memset
-#		define __mu0_memcpy__  memcpy
-#		define __mu0_strlen__  strlen
-#		define __mu0_strchr__  strchr
+#		define __mu0_memset__ memset
+#		define __mu0_memcpy__ memcpy
+#		define __mu0_strlen__ strlen
+#		define __mu0_strchr__ strchr
 #	else
-#		define __mu0_strcmp__  strcmp
+#		define __mu0_strcmp__ strcmp
 #	endif
 
 __mu0_static_inline__
