@@ -245,19 +245,19 @@ mu0_sint128_t mu0_random_i128(void)
 #	endif
 
 }
-mu0_sint64_t  mu0_random_i64 (void)
+mu0_sint64_t mu0_random_i64 (void)
 {
 	mu0_pcg32_ssrandom();
 	return mu0_pcg32_64_bounded_random(mu0_sint64_max);
 }
 
-mu0_sint32_t  mu0_random_i32 (void)
+mu0_sint32_t mu0_random_i32 (void)
 {
 	mu0_pcg32_ssrandom();
 	return mu0_pcg32_bounded_random(mu0_sint32_max);
 }
 
-mu0_sint16_t  mu0_random_i16 (void)
+mu0_sint16_t mu0_random_i16 (void)
 {
 	mu0_pcg32_ssrandom();
 	return mu0_pcg32_16_bounded_random(mu0_sint16_max);
@@ -291,7 +291,55 @@ mu0_uint16_t mu0_bounded_random_u16(const mu0_uint16_t upper_bound)
 	return mu0_pcg32_16_bounded_random(upper_bound);
 }
 
-mu0_uint128_t mu0_ranged_random_i128(
+mu0_uint64_t mu0_ranged_random_u64(
+	  const mu0_uint64_t  lower_bound
+	, const mu0_uint64_t  upper_bound
+) {
+	mu0_uint64_t lo, hi;
+
+	if (lower_bound < upper_bound) {
+		lo = lower_bound;
+		hi = upper_bound < mu0_uint64_max ? upper_bound + 1 : upper_bound;
+	} else {
+		lo = upper_bound < mu0_uint64_max ? upper_bound + 1 : upper_bound;
+		hi = lower_bound;
+	}
+	return ((mu0_random_u64() % (hi - lo)) + lo);
+}
+
+mu0_uint32_t mu0_ranged_random_u32(
+	  const mu0_uint32_t  lower_bound
+	, const mu0_uint32_t  upper_bound
+) {
+	mu0_uint32_t lo, hi;
+
+	if (lower_bound < upper_bound) {
+		lo = lower_bound;
+		hi = upper_bound < mu0_uint32_max ? upper_bound + 1 : upper_bound;
+	} else {
+		lo = upper_bound < mu0_uint32_max ? upper_bound + 1 : upper_bound;
+		hi = lower_bound;
+	}
+	return ((mu0_random_u32() % (hi - lo)) + lo);
+}
+
+mu0_uint16_t mu0_ranged_random_u16(
+	  const mu0_uint16_t  lower_bound
+	, const mu0_uint16_t  upper_bound
+) {
+	mu0_uint16_t lo, hi;
+
+	if (lower_bound < upper_bound) {
+		lo = lower_bound;
+		hi = upper_bound < mu0_uint16_max ? upper_bound + 1 : upper_bound;
+	} else {
+		lo = upper_bound < mu0_uint16_max ? upper_bound + 1 : upper_bound;
+		hi = lower_bound;
+	}
+	return ((mu0_random_u16() % (hi - lo)) + lo);
+}
+
+mu0_sint128_t mu0_ranged_random_i128(
 	  const mu0_sint128_t lower_bound
 	, const mu0_sint128_t upper_bound
 ) {
@@ -304,10 +352,10 @@ mu0_uint128_t mu0_ranged_random_i128(
 		lo = upper_bound < mu0_sint128_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	return ((mu0_random_u128() % (hi - lo)) + lo);
+	return ((mu0_random_i128() % (hi - lo)) + lo);
 }
 
-mu0_sint64_t  mu0_ranged_random_i64(
+mu0_sint64_t mu0_ranged_random_i64(
 	  const mu0_sint64_t  lower_bound
 	, const mu0_sint64_t  upper_bound
 ) {
@@ -320,10 +368,10 @@ mu0_sint64_t  mu0_ranged_random_i64(
 		lo = upper_bound < mu0_sint64_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	return ((mu0_random_u64() % (hi - lo)) + lo);
+	return ((mu0_random_i64() % (hi - lo)) + lo);
 }
 
-mu0_sint32_t  mu0_ranged_random_i32(
+mu0_sint32_t mu0_ranged_random_i32(
 	  const mu0_sint32_t  lower_bound
 	, const mu0_sint32_t  upper_bound
 ) {
@@ -336,10 +384,10 @@ mu0_sint32_t  mu0_ranged_random_i32(
 		lo = upper_bound < mu0_sint32_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	return ((mu0_random_u32() % (hi - lo)) + lo);
+	return ((mu0_random_i32() % (hi - lo)) + lo);
 }
 
-mu0_sint16_t  mu0_ranged_random_i16(
+mu0_sint16_t mu0_ranged_random_i16(
 	  const mu0_sint16_t  lower_bound
 	, const mu0_sint16_t  upper_bound
 ) {
@@ -352,7 +400,7 @@ mu0_sint16_t  mu0_ranged_random_i16(
 		lo = upper_bound < mu0_sint16_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	return ((mu0_random_u16() % (hi - lo)) + lo);
+	return ((mu0_random_i16() % (hi - lo)) + lo);
 }
 
 mu0_fp128_t mu0_random_f128(void)
