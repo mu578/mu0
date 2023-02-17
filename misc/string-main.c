@@ -35,27 +35,27 @@ int main(int argc, const char * argv[])
 
 	printf("\n");
 
-	printf("s1.length : %zu\n" , mu0_string8_length(s1));
-	printf("s1.size   : %zu\n" , mu0_string8_size(s1));
-	printf("s1.count  : %zu \n", mu0_string8_count(s1));
+	printf("s1.length : %zu\n", mu0_string8_length(s1));
+	printf("s1.size   : %zu\n", mu0_string8_size(s1)  );
+	printf("s1.count  : %zu\n", mu0_string8_count(s1) );
 
 	printf("\n");
 
-	printf("s2.length : %zu\n" , mu0_string8_length(s2));
-	printf("s2.size   : %zu\n" , mu0_string8_size(s2));
-	printf("s2.count  : %zu \n", mu0_string8_count(s2));
+	printf("s2.length : %zu\n", mu0_string8_length(s2));
+	printf("s2.size   : %zu\n", mu0_string8_size(s2)  );
+	printf("s2.count  : %zu\n", mu0_string8_count(s2) );
 
 	printf("\n");
 
-	printf("s3.length : %zu\n" , mu0_string8_length(s3));
-	printf("s3.size   : %zu\n" , mu0_string8_size(s3));
-	printf("s3.count  : %zu \n", mu0_string8_count(s3));
+	printf("s3.length : %zu\n", mu0_string8_length(s3));
+	printf("s3.size   : %zu\n", mu0_string8_size(s3)  );
+	printf("s3.count  : %zu\n", mu0_string8_count(s3) );
 
 	printf("\n");
 
-	printf("s4.length : %zu\n" , mu0_string8_length(s4));
-	printf("s4.size   : %zu\n" , mu0_string8_size(s4));
-	printf("s4.count  : %zu \n", mu0_string8_count(s4));
+	printf("s4.length : %zu\n", mu0_string8_length(s4));
+	printf("s4.size   : %zu\n", mu0_string8_size(s4)  );
+	printf("s4.count  : %zu\n", mu0_string8_count(s4) );
 
 	printf("\n");
 
