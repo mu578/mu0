@@ -38,7 +38,7 @@ rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).a $(OBJ_FILES) 2>/dev/null
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
-	-@if [ "$(PLATFORM)" = "Darwin" ]; then \
+	-@if [ "$(PLATFORM)" = "darwin" ]; then \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE)-1.0.0.dylib; \
 		$(LD) -dynamiclib $(OBJ_FILES) \
 			-install_name @rpath/lib$(LOCAL_MODULE).dylib \
@@ -66,8 +66,8 @@ rule_link_cmds::
 	done
 
 rule_list_objects::
-	$(eval BUILD_FILES   := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
-	$(eval OBJ_FILES := $(filter %.o, $(BUILD_FILES)))
+	$(eval BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
+	$(eval OBJ_FILES   := $(filter %.o, $(BUILD_FILES)))
 
 rule_buildir::
 	@mkdir -p $(LOCAL_BUILDDIR)
