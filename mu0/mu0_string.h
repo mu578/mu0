@@ -56,7 +56,7 @@ mu0_usize_t mu0_string8_length(const mu0_string8_t src);
 mu0_usize_t mu0_string8_size  (const mu0_string8_t src);
 mu0_usize_t mu0_string8_count (const mu0_string8_t src);
 
-const mu0_string8_t mu0_string8_glyphat(
+const mu0_string8_t mu0_string8_at(
 	  const mu0_string8_t src
 	, const mu0_index_t   index
 	, mu0_sint32_t *      width

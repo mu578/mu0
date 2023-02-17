@@ -60,14 +60,14 @@ int main(int argc, const char * argv[])
 	printf("\n");
 
 	for (i = 0; i < mu0_string8_count(s3); ++i) {
-		glyph = mu0_string8_glyphat(s3, i, &width);
+		glyph = mu0_string8_at(s3, i, &width);
 		printf("s3.at(%02zu) : %.*s\n", i, width, glyph);
 	}
 
 	printf("\n");
 
 	for (i = 0; i < mu0_string8_count(s4); ++i) {
-		glyph = mu0_string8_glyphat(s4, i, &width);
+		glyph = mu0_string8_at(s4, i, &width);
 		printf("s4.at(%02zu) : %.*s\n", i, width, glyph);
 	}
 

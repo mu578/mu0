@@ -50,7 +50,7 @@ mu0_usize_t mu0_string8_count(const mu0_string8_t src)
 	return j;
 }
 
-const mu0_string8_t mu0_string8_glyphat(
+const mu0_string8_t mu0_string8_at(
 	  const mu0_string8_t src
 	, const mu0_index_t   index
 	, mu0_sint32_t *      width
@@ -63,7 +63,7 @@ const mu0_string8_t mu0_string8_glyphat(
 	*width          = 0;
 	for (; c != 0; ++i, ++j) {
 		c          = mu0_const_uchar8(*(p + i));
-		     if(c <= 127)            { k = 0; }
+		     if (c <= 127)            { k = 0; }
 		else if ((c & 0xE0) == 0xC0) { k = 1; }
 		else if ((c & 0xF0) == 0xE0) { k = 2; }
 		else if ((c & 0xF8) == 0xF0) { k = 3; }
