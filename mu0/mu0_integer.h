@@ -199,11 +199,24 @@ __mu0_static__ const mu0_uint128_t mu0_uint128_max = UINT128_MAX;
 __mu0_static__ const mu0_uint128_t mu0_uint128_min = 0U;
 __mu0_static__ const mu0_sint128_t mu0_sint128_max = INT128_MAX;
 __mu0_static__ const mu0_sint128_t mu0_sint128_min = INT128_MIN;
+
+#	define MU0_UINT128_C UINT128_C
+#	define MU0_SINT128_C INT128_C
+
 #	else
 __mu0_static__ const mu0_uint128_t mu0_uint128_max = UINT64_MAX;
 __mu0_static__ const mu0_uint128_t mu0_uint128_min = 0U;
 __mu0_static__ const mu0_sint128_t mu0_sint128_max = INT64_MAX;
 __mu0_static__ const mu0_sint128_t mu0_sint128_min = INT64_MIN;
+
+#	if MU0_HAVE_C99 || MU0_HAVE_CPP11
+#	define MU0_UINT128_C UINT64_C
+#	define MU0_SINT128_C INT64_C
+#	else
+#	define MU0_UINT128_C (c) c ## U
+#	define MU0_SINT128_C (c) c
+#	endif
+
 #	endif
 
 __mu0_static__ const mu0_uint64_t  mu0_uint64_max  = UINT64_MAX;
@@ -211,20 +224,38 @@ __mu0_static__ const mu0_uint64_t  mu0_uint64_min  = 0U;
 __mu0_static__ const mu0_sint64_t  mu0_sint64_max  = INT64_MAX;
 __mu0_static__ const mu0_sint64_t  mu0_sint64_min  = INT64_MIN;
 
+#	if MU0_HAVE_C99 || MU0_HAVE_CPP11
+#	define MU0_UINT64_C UINT64_C
+#	define MU0_SINT64_C INT64_C
+#	else
+#	define MU0_UINT64_C (c) c ## U
+#	define MU0_SINT64_C (c) c
+#	endif
+
+
 __mu0_static__ const mu0_uint32_t  mu0_uint32_max  = UINT32_MAX;
 __mu0_static__ const mu0_uint32_t  mu0_uint32_min  = 0U;
 __mu0_static__ const mu0_sint32_t  mu0_sint32_max  = INT32_MAX;
 __mu0_static__ const mu0_sint32_t  mu0_sint32_min  = INT32_MIN;
+
+#	define MU0_UINT32_C UINT32_C
+#	define MU0_SINT32_C INT32_C
 
 __mu0_static__ const mu0_uint16_t  mu0_uint16_max  = UINT16_MAX;
 __mu0_static__ const mu0_uint16_t  mu0_uint16_min  = 0U;
 __mu0_static__ const mu0_sint16_t  mu0_sint16_max  = INT16_MAX;
 __mu0_static__ const mu0_sint16_t  mu0_sint16_min  = INT16_MIN;
 
+#	define MU0_UINT16_C UINT16_C
+#	define MU0_SINT16_C INT16_C
+
 __mu0_static__ const mu0_uint8_t   mu0_uint8_max   = UINT8_MAX;
 __mu0_static__ const mu0_uint8_t   mu0_uint8_min   = 0U;
 __mu0_static__ const mu0_sint8_t   mu0_sint8_max   = INT8_MAX;
 __mu0_static__ const mu0_sint8_t   mu0_sint8_min   = INT8_MIN;
+
+#	define MU0_UINT8_C UINT8_C
+#	define MU0_SINT8_C INT8_C
 
 MU0_END_CDECL
 

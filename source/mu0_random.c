@@ -37,13 +37,8 @@ typedef struct
 	mu0_uint64_t u_value;
 } mu0_random_context_t;
 
-#	if MU0_HAVE_C99 || MU0_HAVE_CPP11
 #	define mu0_pcg32_initializer \
-		{ UINT64_C(9600629759793949339)          , UINT64_C(15726070495360670683)          }
-#	else
-#	define mu0_pcg32_initializer \
-		{ mu0_const_uint64(9600629759793949339U) , mu0_const_uint64(15726070495360670683U) }
-#	endif
+	{ MU0_UINT64_C(9600629759793949339) , MU0_UINT64_C(15726070495360670683) }
 
 __mu0_static__
 mu0_random_context_t g_mu0_pcg32_context = mu0_pcg32_initializer;
@@ -69,12 +64,7 @@ __mu0_static_inline__
 mu0_uint32_t mu0_pcg32_random_r(mu0_random_context_t * ctx)
 {
 	mu0_uint64_t s = ctx->u_state;
-#	if MU0_HAVE_C99 || MU0_HAVE_CPP11
-	ctx->u_state   = s * UINT64_C(6364136223846793005) + ctx->u_value;
-#	else
-	ctx->u_state   = s * mu0_const_uint64(6364136223846793005U) + ctx->u_value;
-#	endif
-
+	ctx->u_state   = s * MU0_UINT64_C(6364136223846793005) + ctx->u_value;
 	mu0_uint32_t y = (((s >> 18U) ^ s) >> 27U) & 0xFFFFFFFF;
 	mu0_uint32_t r = s >> 59U;
 	return (y >> r) | (y << ((-r) & 31U));
@@ -414,11 +404,7 @@ mu0_fp128_t mu0_random_f128(void)
 
 mu0_fp64_t mu0_random_fp64(void)
 {
-#	if MU0_HAVE_C99 || MU0_HAVE_CPP11
-	const mu0_uint64_t k = UINT64_C(0x1FFFFFFFFFFFFF);
-#	else
-	const mu0_uint64_t k = mu0_uint64(9007199254740991U);
-#	endif
+	const mu0_uint64_t k = MU0_UINT64_C(0x1FFFFFFFFFFFFF);
 	const mu0_uint64_t a = mu0_random_u64() % k;
 	return (mu0_fp64(a) / mu0_fp64(k));
 }
