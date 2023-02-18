@@ -30,6 +30,8 @@ int main(int argc, const char * argv[])
 	const mu0_string8_t s3 = u8"她就心緒翻湧惡意難消";
 	const mu0_string8_t s4 = u8"Un ciel étoilé";
 
+	mu0_tchar8_t s5[17]    = u8"Un ciel étoilé\0";
+
 	mu0_unused(argc);
 	mu0_unused(argv);
 
@@ -64,11 +66,18 @@ int main(int argc, const char * argv[])
 		printf("s3.at(%02zu) : %.*s\n", i, width, glyph);
 	}
 
-	printf("\n");
-
 	for (i = 0; i < mu0_string8_count(s4); ++i) {
 		glyph = mu0_string8_at(s4, i, &width);
 		printf("s4.at(%02zu) : %.*s\n", i, width, glyph);
+	}
+
+	printf("\n");
+
+	mu0_string8_range_reverse(s5 + 3, s5 + 7);
+
+	for (i = 0; i < mu0_string8_count(s5); ++i) {
+		glyph = mu0_string8_at(s5, i, &width);
+		printf("s5.at(%02zu) : %.*s\n", i, width, glyph);
 	}
 
 	printf("\n");

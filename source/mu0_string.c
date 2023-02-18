@@ -26,26 +26,28 @@
 #	define __mu0_strlen__ strlen
 
 __mu0_static_inline__
-void mu0_string8_reverse_body(const mu0_string8_t first, const mu0_string8_t last)
+void mu0_string8_reverse_body(mu0_string8_t first, mu0_string8_t last)
 {
 	mu0_string8_t __first, __last;
 	mu0_tchar8_t c;
 	__first = first;
 	__last  = last;
 	while (__first < __last) {
-		c          = *__first;
-		*__first++ = *__last;
-		*__last--  = c;
+		c        = *__first;
+		*__first = *__last;
+		*__last  = c;
+		++__first;
+		--__last;
 	}
 }
 
 __mu0_static_inline__
-const mu0_string8_t mu0_string8_reverse_codepoint(const mu0_string8_t src)
+const mu0_string8_t mu0_string8_reverse_codepoint(mu0_string8_t src)
 {
 	mu0_string8_t __first = src;
 	mu0_string8_t __last  = src;
 	while ((*(__last + 1U) & 0xC0) == 0x80) {
-		__last++;
+		++__last;
 	}
 	mu0_string8_reverse_body(__first, __last);
 	return __last + 1U;
@@ -114,7 +116,7 @@ void mu0_string8_reverse(const mu0_string8_t src, mu0_string8_t dest)
 	}
 	__first = dest;
 	__last  = dest;
-	while (*__last) {
+	while (*__last != 0) {
 		__last = mu0_string8_reverse_codepoint(__last);
 	}
 	__last = __last - 1U;
@@ -148,16 +150,19 @@ const mu0_string8_t mu0_string8_range_at(
 	return mu0_nullptr;
 }
 
-void mu0_string8_range_reverse(const mu0_string8_t first, const mu0_string8_t last)
-{
+const mu0_string8_t mu0_string8_range_reverse(
+	  mu0_string8_t first
+	, mu0_string8_t last
+) {
 	mu0_string8_t __first, __last;
 	__first = first;
 	__last  = first;
-	while (*__last && __last != last) {
-		__last = mu0_string8_reverse_codepoint (__last);
+	while (*__last != 0 && __last != last) {
+		__last = mu0_string8_reverse_codepoint(__last);
 	}
 	__last = __last - 1U;
 	mu0_string8_reverse_body(__first, __last);
+	return __first;
 }
 
 /* EOF */

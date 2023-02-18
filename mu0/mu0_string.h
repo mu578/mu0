@@ -74,9 +74,9 @@ const mu0_string8_t mu0_string8_range_at(
 	, mu0_sint32_t *      width
 );
 
-void mu0_string8_range_reverse(
-	  const mu0_string8_t first
-	, const mu0_string8_t last
+const mu0_string8_t mu0_string8_range_reverse(
+	  mu0_string8_t first
+	, mu0_string8_t last
 );
 
 MU0_END_CDECL
