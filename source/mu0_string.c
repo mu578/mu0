@@ -81,6 +81,33 @@ mu0_usize_t mu0_string8_count(const mu0_string8_t src)
 	return j;
 }
 
+mu0_bool_t mu0_string8_isUTF8(
+	const mu0_string8_t src
+) {
+	mu0_bool_t    r = mu0_false;
+	mu0_usize_t   i = 0;
+	mu0_string8_t p = src;
+	mu0_uint32_t  c0, c1, c2, c3;
+
+	for (; *(p + 0) != 0;) {
+		r = ( ((*(p + 0) & 0x80) == 0)
+				|| ((*(p + 0) & 0xE0) == 0xC0 && (*(p + 1) & 0xC0) == 0x80)
+				|| ((*(p + 0) & 0xF0) == 0xE0 && (*(p + 1) & 0xC0) == 0x80 && (*(p + 2) & 0xC0) == 0x80)
+				|| ((*(p + 0) & 0xF8) == 0xF0 && (*(p + 1) & 0xC0) == 0x80 && (*(p + 2) & 0xC0) == 0x80 && (*(p + 3) & 0xC0) == 0x80)
+		) ? mu0_true : mu0_false;
+		if (r == mu0_false) {
+			break;
+		}
+		c0  = (*(p + 0) & 0x80) >> 7U;
+		c1  = (*(p + 0) & 0x40) >> 6U;
+		c2  = (*(p + 0) & 0x20) >> 5U;
+		c3  = (*(p + 0) & 0x10) >> 4U;
+		i  += 1U + c0 * c1 + c0 * c1 * c2 + c0 * c1 * c2 * c3;
+		p   = src + i;
+	}
+	return r;
+}
+
 const mu0_string8_t mu0_string8_at(
 	  const mu0_string8_t src
 	, const mu0_index_t   index
