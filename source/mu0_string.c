@@ -108,8 +108,10 @@ const mu0_string8_t mu0_string8_at(
 	return mu0_nullptr;
 }
 
-void mu0_string8_reverse(const mu0_string8_t src, mu0_string8_t dest)
-{
+const mu0_string8_t mu0_string8_reverse(
+	  const mu0_string8_t src
+	, mu0_string8_t       dest
+) {
 	mu0_string8_t __first, __last;
 	if (src != dest) {
 		__mu0_memcpy__(dest, src, __mu0_strlen__(src) + 1U);
@@ -121,6 +123,7 @@ void mu0_string8_reverse(const mu0_string8_t src, mu0_string8_t dest)
 	}
 	__last = __last - 1U;
 	mu0_string8_reverse_body(__first, __last);
+	return __first;
 }
 
 const mu0_string8_t mu0_string8_range_at(
