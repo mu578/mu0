@@ -61,7 +61,7 @@ int main(int argc, const char * argv[])
 
 	printf("\n");
 
-	printf("s3.isUTF8()  : %d\n" , mu0_string8_isUTF8(s3));
+	printf("s3.isUTF8() : %d\n" , mu0_string8_isUTF8(s3));
 	for (i = 0; i < mu0_string8_count(s3); ++i) {
 		glyph = mu0_string8_at(s3, i, &width);
 		printf("s3.at(%02zu) : %.*s\n", i, width, glyph);
@@ -69,7 +69,7 @@ int main(int argc, const char * argv[])
 
 	printf("\n");
 
-	printf("s4.isUTF8()  : %d\n" , mu0_string8_isUTF8(s4));
+	printf("s4.isUTF8() : %d\n" , mu0_string8_isUTF8(s4));
 	for (i = 0; i < mu0_string8_count(s4); ++i) {
 		glyph = mu0_string8_at(s4, i, &width);
 		printf("s4.at(%02zu) : %.*s\n", i, width, glyph);
@@ -77,7 +77,7 @@ int main(int argc, const char * argv[])
 
 	printf("\n");
 
-	printf("s5.isUTF8()  : %d\n" , mu0_string8_isUTF8(s5));
+	printf("s5.isUTF8() : %d\n" , mu0_string8_isUTF8(s5));
 	mu0_string8_range_reverse(s5 + 3, s5 + 7);
 	for (i = 0; i < mu0_string8_count(s5); ++i) {
 		glyph = mu0_string8_at(s5, i, &width);
