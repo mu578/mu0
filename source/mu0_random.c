@@ -53,7 +53,7 @@ void mu0_pcg32_context_seed_build(mu0_uint64_t * seed, mu0_uint64_t * incr)
 	if (!(__mu0_time__(&tm))) {
 		tm = mu0_const_cast(
 			  __mu0_time_t__
-			, ((__mu0_clock__() + 222111U) * __MU0_CLOCKS_PER_SECOND__)
+			, ((__mu0_clock__() + MU0_UINT32_C(222111)) * __MU0_CLOCKS_PER_SECOND__)
 		);
 	}
 	*seed = mu0_uint64(tm % 1000);
@@ -411,14 +411,14 @@ mu0_fp64_t mu0_random_fp64(void)
 
 mu0_fp32_t mu0_random_fp32(void)
 {
-	const mu0_uint32_t k = 0x1000001U;
+	const mu0_uint32_t k = MU0_UINT32_C(0x1000001);
 	const mu0_uint32_t a = mu0_random_u32() % k;
 	return (mu0_fp32(a)/ mu0_fp32(k));
 }
 
 mu0_fp16_t mu0_random_fp16(void)
 {
-	const mu0_uint16_t k = 0xFFE0U;
+	const mu0_uint16_t k = MU0_UINT16_C(0xFFE0);
 	const mu0_uint16_t a = mu0_random_u16() % k;
 	return (mu0_fp16(a) / mu0_fp16(k));
 }
