@@ -126,15 +126,15 @@ int __mu0_clz_c__(const unsigned char __x)
 #	define __mu0_bit_width__(__x)   (__mu0_bit_digits__(__x) - __mu0_countl_zero__(__x))
 #	endif
 
-#	define __mu0_bit_reverse__(_Tp, __x)                                                              \
-	__mu0_scope_begin__                                                                               \
+#	define __mu0_bit_reverse__(_Tp, __x)                                                               \
+	__mu0_scope_begin__                                                                                \
 		unsigned int __mu0_bit_reverse__digits__ = __mu0_cast__(unsigned int, __mu0_bit_digits__(__x)); \
-		_Tp          __mu0_bit_reverse__mask__   = ~((_Tp)(0));                                        \
-		while (__mu0_bit_reverse__digits__ >>= 1) {                                                    \
-			__mu0_bit_reverse__mask__ ^= __mu0_bit_reverse__mask__ << (__mu0_bit_reverse__digits__);    \
-			(__x) = ((__x) & ~__mu0_bit_reverse__mask__) >> __mu0_bit_reverse__digits__                 \
-					| ((__x) &__mu0_bit_reverse__mask__) << __mu0_bit_reverse__digits__;                  \
-		}                                                                                              \
+		_Tp          __mu0_bit_reverse__mask__   = ~((_Tp)(0));                                         \
+		while (__mu0_bit_reverse__digits__ >>= 1) {                                                     \
+			__mu0_bit_reverse__mask__ ^= __mu0_bit_reverse__mask__ << (__mu0_bit_reverse__digits__);     \
+			(__x) = ((__x) & ~__mu0_bit_reverse__mask__) >> __mu0_bit_reverse__digits__                  \
+					| ((__x) &__mu0_bit_reverse__mask__) << __mu0_bit_reverse__digits__;                   \
+		}                                                                                               \
 	__mu0_scope_end__
 
 #	define __mu0_bitset_reverse_u8__(__x)                   \

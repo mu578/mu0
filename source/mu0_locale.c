@@ -101,10 +101,10 @@ const mu0_vtchar8_t g_mu0_locale_default = "en_EN.UTF-8";
 #	if MU0_HAVE_LOCALE
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #		define __mu0_strcoll__(lhs, rhs)            strcoll(lhs, rhs)
-#		define __mu0_strcoll_l__(lhs, rhs, locale)  _strcoll_l(lhs, rhs, ((__mu0_locale_t__)locale))
+#		define __mu0_strcoll_l__(lhs, rhs, locale)  _strcoll_l(lhs, rhs, __mu0_cast__(__mu0_locale_t__, locale))
 #	elif MU0_HAVE_POSIX1_2001
 #		define __mu0_strcoll__(lhs, rhs)            strcoll(lhs, rhs)
-#		define __mu0_strcoll_l__(lhs, rhs, locale)  strcoll_l(lhs, rhs, ((__mu0_locale_t__)locale))
+#		define __mu0_strcoll_l__(lhs, rhs, locale)  strcoll_l(lhs, rhs, __mu0_cast__(__mu0_locale_t__, locale))
 #	endif
 #	endif
 
@@ -132,13 +132,13 @@ const mu0_string8_t mu0_locale_name(
 
 	//#! XPG syntax:[language[_territory[.codeset]][@modifier[+variant]]
 	__mu0_memset__(s_name, 0, __mu0_sizeof__(s_name));
-	if (mu0_not_nullptr(language)) {
+	if (__mu0_not_nullptr__(language)) {
 		k = __mu0_strlen__(language);
 		if (k > 0) {
 			l  = k;
 			__mu0_memcpy__(s_name + p, language, l);
 			p += l;
-			if (mu0_not_nullptr(territory)) {
+			if (__mu0_not_nullptr__(territory)) {
 				k  = __mu0_strlen__(territory);
 				if (k > 0) {
 					l  = __mu0_sizeof__(mu0_tchar8_t);
@@ -151,9 +151,9 @@ const mu0_string8_t mu0_locale_name(
 					__mu0_memcpy__(s_name + p, ".UTF-8", l);
 					have_name = mu0_true;
 				}
-				if (mu0_not_nullptr(modifier)) {
+				if (__mu0_not_nullptr__(modifier)) {
 					variant = __mu0_strchr__(modifier, '+');
-					if (mu0_not_nullptr(variant)) {
+					if (__mu0_not_nullptr__(variant)) {
 						k = variant - modifier;
 					} else {
 						k = __mu0_strlen__(modifier);
@@ -170,13 +170,13 @@ const mu0_string8_t mu0_locale_name(
 			}
 		}
 	}
-	return (have_name == mu0_true) ? s_name : mu0_nullptr;
+	return (have_name == mu0_true) ? s_name : __mu0_nullptr__;
 #	else
-	mu0_unused(language);
-	mu0_unused(territory);
-	mu0_unused(modifier);
+	__mu0_unused__(language);
+	__mu0_unused__(territory);
+	__mu0_unused__(modifier);
 
-	return mu0_nullptr;
+	return __mu0_nullptr__;
 #	endif
 }
 
@@ -196,15 +196,15 @@ mu0_locale_t mu0_locale_create(
 		, territory
 		, modifier
 	);
-	if (mu0_not_nullptr(name)) {
+	if (__mu0_not_nullptr__(name)) {
 		return __mu0_newlocale__(category, name);
 	}
-	return mu0_nullptr;
+	return __mu0_nullptr__;
 #	else
-	mu0_unused(language);
-	mu0_unused(territory);
-	mu0_unused(modifier);
-	mu0_unused(collator);
+	__mu0_unused__(language);
+	__mu0_unused__(territory);
+	__mu0_unused__(modifier);
+	__mu0_unused__(collator);
 	return g_mu0_locale_default;
 #	endif
 }
@@ -225,17 +225,17 @@ mu0_sint32_t mu0_locale_global(
 		, territory
 		, modifier
 	);
-	if (mu0_not_nullptr(name)) {
-		if (mu0_not_nullptr(__mu0_setlocale__(category, name))) {
+	if (__mu0_not_nullptr__(name)) {
+		if (__mu0_not_nullptr__(__mu0_setlocale__(category, name))) {
 			return 0;
 		}
 	}
 	return -1;
 #	else
-	mu0_unused(language);
-	mu0_unused(territory);
-	mu0_unused(modifier);
-	mu0_unused(collator);
+	__mu0_unused__(language);
+	__mu0_unused__(territory);
+	__mu0_unused__(modifier);
+	__mu0_unused__(collator);
 	return 0;
 #	endif
 }
@@ -243,13 +243,13 @@ mu0_sint32_t mu0_locale_global(
 mu0_sint32_t mu0_locale_delete(mu0_locale_t locale)
 {
 #	if MU0_HAVE_LOCALE
-	if (mu0_not_nullptr(locale)) {
+	if (__mu0_not_nullptr__(locale)) {
 		__mu0_freelocale__(locale);
 		return 0;
 	}
 	return -1;
 #	else
-	mu0_unused(locale);
+	__mu0_unused__(locale);
 	return 0;
 #	endif
 }
@@ -260,14 +260,14 @@ mu0_sint32_t mu0_locale_compare(
 	, const mu0_locale_t  locale __mu0_nullable__
 ) {
 #	if MU0_HAVE_LOCALE
-	const mu0_sint32_t r = (mu0_not_nullptr(locale)
+	const mu0_sint32_t r = (__mu0_not_nullptr__(locale)
 		? __mu0_strcoll_l__ (lhs, rhs, locale)
 		: __mu0_strcoll__   (lhs, rhs)
 	);
 	return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 #	else
 	const mu0_sint32_t r = __mu0_strcmp__(lhs, rhs);
-	mu0_unused(locale);
+	__mu0_unused__(locale);
 	return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 #	endif
 }
