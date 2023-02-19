@@ -16,7 +16,6 @@
 //
 
 #include <mu0/mu0_random.h>
-#include <stdio.h>
 
 int main(int argc, const char * argv[])
 {
@@ -26,52 +25,52 @@ int main(int argc, const char * argv[])
 	mu0_uinteger_t i, k = 0;
 
 	mu0_srandom(20, 2);
-	printf("\n");
+	__mu0_console__("\n");
 
 	for (; k < 8; ++k) {
 		i = 0;
 		for (; i < 8; ++i) {
-			printf("%06u ", mu0_random_u16());
+			__mu0_console__("%06u ", mu0_random_u16());
 		}
 
-		printf("\n");
+		__mu0_console__("\n");
 		i = 0;
 		for (; i < 8; ++i) {
-			printf("%06u ", mu0_bounded_random_u32(8));
+			__mu0_console__("%06u ", mu0_bounded_random_u32(8));
 		}
 
-		printf("\n");
+		__mu0_console__("\n");
 		i = 0;
 		for (; i < 8; ++i) {
-			printf("%.04f ", mu0_random_fp64());
+			__mu0_console__("%.04f ", mu0_random_fp64());
 		}
-		printf("\n\n");
+		__mu0_console__("\n\n");
 	}
 
 	mu0_ssrandom();
-	printf("\n");
+	__mu0_console__("\n");
 
 	k = 0;
 	for (; k < 8; ++k) {
 		i = 0;
 		for (; i < 8; ++i) {
-			printf("%06u ", mu0_random_u16());
+			__mu0_console__("%06u ", mu0_random_u16());
 		}
 
-		printf("\n");
+		__mu0_console__("\n");
 		i = 0;
 		for (; i < 8; ++i) {
-			printf("%06u ", mu0_bounded_random_u32(32));
+			__mu0_console__("%06u ", mu0_bounded_random_u32(32));
 		}
 
-		printf("\n");
+		__mu0_console__("\n");
 		i = 0;
 		for (; i < 8; ++i) {
-			printf("%.04f ", mu0_random_fp64());
+			__mu0_console__("%.04f ", mu0_random_fp64());
 		}
-		printf("\n\n");
+		__mu0_console__("\n\n");
 	}
-	printf("\n");
+	__mu0_console__("\n");
 
 	return 0;
 }

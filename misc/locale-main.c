@@ -16,7 +16,6 @@
 //
 
 #include <mu0/mu0_locale.h>
-#include <stdio.h>
 
 int main(int argc, const char * argv[])
 {
@@ -31,35 +30,35 @@ int main(int argc, const char * argv[])
 	mu0_unused(argc);
 	mu0_unused(argv);
 
-	printf("\n");
+	__mu0_console__("\n");
 
-	printf("%p \n", (locale = mu0_locale_create("fr", "FR", mu0_nullptr, mu0_true)));
-	printf("%02d s1 <> s1\n", mu0_locale_compare(s1, s1, locale));
-	printf("%02d s1 <> s2\n", mu0_locale_compare(s1, s2, locale));
-	printf("%02d s1 <> s2\n", mu0_locale_compare(s2, s1, locale));
-	printf("%02d s3 <> s4\n", mu0_locale_compare(s3, s4, locale));
-	printf("%02d s4 <> s3\n", mu0_locale_compare(s4, s3, locale));
-	printf("%02d \n", mu0_locale_delete(locale));
+	__mu0_console__("%p \n", (locale = mu0_locale_create("fr", "FR", mu0_nullptr, mu0_true)));
+	__mu0_console__("%02d s1 <> s1\n", mu0_locale_compare(s1, s1, locale));
+	__mu0_console__("%02d s1 <> s2\n", mu0_locale_compare(s1, s2, locale));
+	__mu0_console__("%02d s1 <> s2\n", mu0_locale_compare(s2, s1, locale));
+	__mu0_console__("%02d s3 <> s4\n", mu0_locale_compare(s3, s4, locale));
+	__mu0_console__("%02d s4 <> s3\n", mu0_locale_compare(s4, s3, locale));
+	__mu0_console__("%02d \n", mu0_locale_delete(locale));
 
-	printf("\n");
+	__mu0_console__("\n");
 
-	printf("%02d \n", mu0_locale_global("fr", "FR", mu0_nullptr, mu0_true));
-	printf("%02d s1 <> s1\n", mu0_locale_compare(s1, s1, mu0_nullptr));
-	printf("%02d s1 <> s2\n", mu0_locale_compare(s1, s2, mu0_nullptr));
-	printf("%02d s1 <> s2\n", mu0_locale_compare(s2, s1, mu0_nullptr));
-	printf("%02d s3 <> s4\n", mu0_locale_compare(s3, s4, mu0_nullptr));
-	printf("%02d s4 <> s3\n", mu0_locale_compare(s4, s3, mu0_nullptr));
+	__mu0_console__("%02d \n", mu0_locale_global("fr", "FR", mu0_nullptr, mu0_true));
+	__mu0_console__("%02d s1 <> s1\n", mu0_locale_compare(s1, s1, mu0_nullptr));
+	__mu0_console__("%02d s1 <> s2\n", mu0_locale_compare(s1, s2, mu0_nullptr));
+	__mu0_console__("%02d s1 <> s2\n", mu0_locale_compare(s2, s1, mu0_nullptr));
+	__mu0_console__("%02d s3 <> s4\n", mu0_locale_compare(s3, s4, mu0_nullptr));
+	__mu0_console__("%02d s4 <> s3\n", mu0_locale_compare(s4, s3, mu0_nullptr));
 
-	printf("\n");
+	__mu0_console__("\n");
 
-	printf("%02d \n", mu0_locale_global("en", "US", mu0_nullptr, mu0_true));
-	printf("%02d s1 <> s1\n", mu0_locale_compare(s1, s1, mu0_nullptr));
-	printf("%02d s1 <> s2\n", mu0_locale_compare(s1, s2, mu0_nullptr));
-	printf("%02d s1 <> s2\n", mu0_locale_compare(s2, s1, mu0_nullptr));
-	printf("%02d s3 <> s4\n", mu0_locale_compare(s3, s4, mu0_nullptr));
-	printf("%02d s4 <> s3\n", mu0_locale_compare(s4, s3, mu0_nullptr));
+	__mu0_console__("%02d \n", mu0_locale_global("en", "US", mu0_nullptr, mu0_true));
+	__mu0_console__("%02d s1 <> s1\n", mu0_locale_compare(s1, s1, mu0_nullptr));
+	__mu0_console__("%02d s1 <> s2\n", mu0_locale_compare(s1, s2, mu0_nullptr));
+	__mu0_console__("%02d s1 <> s2\n", mu0_locale_compare(s2, s1, mu0_nullptr));
+	__mu0_console__("%02d s3 <> s4\n", mu0_locale_compare(s3, s4, mu0_nullptr));
+	__mu0_console__("%02d s4 <> s3\n", mu0_locale_compare(s4, s3, mu0_nullptr));
 
-	printf("\n");
+	__mu0_console__("\n");
 
 	return 0;
 }

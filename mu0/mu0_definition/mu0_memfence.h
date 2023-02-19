@@ -62,7 +62,7 @@
 #		define __mu0_memfence_write__()   _mm_sfence()
 #	endif
 
-#	if MU0_HAVE_CC_ARMCC ||  MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC
+#	if MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC
 #		undef  MU0_HAVE_MEMFENCE
 #		define MU0_HAVE_MEMFENCE 1
 #		define __mu0_memfence_acquire__() __sync_synchronize()
