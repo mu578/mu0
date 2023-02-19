@@ -174,16 +174,16 @@ int __mu0_clz_c__(const unsigned char __x)
 	__mu0_bitset_format_u32__((__x) >> 32U), __mu0_bitset_format_u32__((__x))
 
 #	define __mu0_bitset_print_u8__(__x) \
-	__mu0_console_log__("" __mu0_bitset_pattern_u8__ "\(__x)", __mu0_bitset_format_u8__(__x)
+	__mu0_console_log__("" __mu0_bitset_pattern_u8__  "\n", __mu0_bitset_format_u8__(__x)
 
 #	define __mu0_bitset_print_u16__(__x) \
-	__mu0_console_log__("" __mu0_bitset_pattern_u16__ "\(__x)", __mu0_bitset_format_u16__(__x)
+	__mu0_console_log__("" __mu0_bitset_pattern_u16__ "\n", __mu0_bitset_format_u16__(__x)
 
 #	define __mu0_bitset_print_u32__(__x) \
-	__mu0_console_log__("" __mu0_bitset_pattern_u32__ "\(__x)", __mu0_bitset_format_u32__(__x)
+	__mu0_console_log__("" __mu0_bitset_pattern_u32__ "\n", __mu0_bitset_format_u32__(__x)
 
 #	define __mu0_bitset_print_u64__(__x) \
-	__mu0_console_log__("" __mu0_bitset_pattern_u64__ "\(__x)", __mu0_bitset_format_u64__(__x)
+	__mu0_console_log__("" __mu0_bitset_pattern_u64__ "\n", __mu0_bitset_format_u64__(__x)
 
 #	if !MU0_HAVE_BITSET
 #		error mu0_bitset.h
