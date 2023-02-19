@@ -85,65 +85,92 @@ int __mu0_cnttz_l__(const unsigned long __x)
 }
 
 #	if MU0_HAVE_CC_MSVCC
-#	if defined(_M_X64) && !defined(_M_ARM64EC)
-#		pragma intrinsic(_BitScanReverse64)
-#	endif
-#	pragma intrinsic(_BitScanReverse)
+#	if MU0_HAVE_AMD64
+	__mu0_static_inline__
+	int __mu0_clz_ll__(const unsigned long long __x)
+	{ return (__x > 0) ? __lzcnt64(__x)                              : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
-#	undef  MU0_HAVE_BITWISEOP
-#	define MU0_HAVE_BITWISEOP 1
+	__mu0_static_inline__
+	int __mu0_clz_l__(const unsigned long __x)
+	{ return (__x > 0) ? __lzcnt(__x)                                : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
-__mu0_static_inline__
-int __mu0_clz_ll__(const unsigned long long __x)
-{
-	unsigned long index         = 0;
-#	if defined(_M_X64) && !defined(_M_ARM64EC)
-	const unsigned __int64 mask = __mu0_const_cast__(__int64, __x);
-	if (__x > 0) {
-		if (_BitScanReverse64(&index, mask)) {
-			return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
-		}
-	}
+	__mu0_static_inline__
+	int __mu0_clz_i__(const unsigned int __x)
+	{ return (__x > 0) ? __lzcnt(__x)                                : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+
+	__mu0_static_inline__
+	int __mu0_clz_i__(const unsigned int __x)
+	{ return (__x > 0) ? __mu0_clz_l__(__x)                          : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+
+	__mu0_static_inline__
+	int __mu0_clz_s__(const unsigned short __x)
+	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 2) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+
+	__mu0_static_inline__
+	int __mu0_clz_c__(const unsigned char __x)
+	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+
 #	else
-	const unsigned long mask_lo = __mu0_const_cast__(unsigned long, __x);
-	const unsigned int  hdigits = __mu0_const_cast__(unsigned int, __mu0_bit_counts__(mask_lo));
-	const unsigned long mask_hi = __mu0_const_cast__(unsigned long, (__x >> hdigits));
+#		if defined(_M_X64) && !defined(_M_ARM64EC)
+#			pragma intrinsic(_BitScanReverse64)
+#		endif
+#		pragma intrinsic(_BitScanReverse)
 
-	if (__x > 0) {
-		if (!_BitScanReverse(&index, mask_lo) && _BitScanReverse(&index, mask_hi)) {
-			index += hdigits;
+#		undef  MU0_HAVE_BITWISEOP
+#		define MU0_HAVE_BITWISEOP 1
+
+	__mu0_static_inline__
+	int __mu0_clz_ll__(const unsigned long long __x)
+	{
+		unsigned long index         = 0;
+	#	if defined(_M_X64) && !defined(_M_ARM64EC)
+		const unsigned __int64 mask = __mu0_const_cast__(__int64, __x);
+		if (__x > 0) {
+			if (_BitScanReverse64(&index, mask)) {
+				return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
+			}
 		}
-		return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
-	}
-#	endif
-	return __mu0_cast__(int, __mu0_bit_counts__(__x));
-}
+	#	else
+		const unsigned long mask_lo = __mu0_const_cast__(unsigned long, __x);
+		const unsigned int  hdigits = __mu0_const_cast__(unsigned int, __mu0_bit_counts__(mask_lo));
+		const unsigned long mask_hi = __mu0_const_cast__(unsigned long, (__x >> hdigits));
 
-__mu0_static_inline__
-int __mu0_clz_l__(const unsigned long __x)
-{
-	unsigned long index = 0;
-   unsigned long mask  = __x;
-	if (__x > 0) {
-		if (_BitScanReverse(&index, mask)) {
+		if (__x > 0) {
+			if (!_BitScanReverse(&index, mask_lo) && _BitScanReverse(&index, mask_hi)) {
+				index += hdigits;
+			}
 			return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
 		}
+	#	endif
+		return __mu0_cast__(int, __mu0_bit_counts__(__x));
 	}
-	return __mu0_cast__(int, __mu0_bit_counts__(__x));
-}
 
-__mu0_static_inline__
-int __mu0_clz_i__(const unsigned int __x)
-{ return (__x > 0) ? __mu0_clz_l__(__x)                          : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	__mu0_static_inline__
+	int __mu0_clz_l__(const unsigned long __x)
+	{
+		unsigned long index = 0;
+		unsigned long mask  = __x;
+		if (__x > 0) {
+			if (_BitScanReverse(&index, mask)) {
+				return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
+			}
+		}
+		return __mu0_cast__(int, __mu0_bit_counts__(__x));
+	}
 
-__mu0_static_inline__
-int __mu0_clz_s__(const unsigned short __x)
-{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 2) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	__mu0_static_inline__
+	int __mu0_clz_i__(const unsigned int __x)
+	{ return (__x > 0) ? __mu0_clz_l__(__x)                          : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
-__mu0_static_inline__
-int __mu0_clz_c__(const unsigned char __x)
-{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	__mu0_static_inline__
+	int __mu0_clz_s__(const unsigned short __x)
+	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 2) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
+	__mu0_static_inline__
+	int __mu0_clz_c__(const unsigned char __x)
+	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+
+#		endif
 #	elif MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC
 
 #	undef  MU0_HAVE_BITWISEOP
