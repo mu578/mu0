@@ -86,6 +86,11 @@ int __mu0_cnttz_l__(const unsigned long __x)
 
 #	if MU0_HAVE_CC_MSVCC
 #	if MU0_HAVE_AMD64
+#	pragma intrinsic(__lzcnt64)
+#	pragma intrinsic(__lzcnt)
+#	undef  MU0_HAVE_BITWISEOP
+#	define MU0_HAVE_BITWISEOP 1
+
 	__mu0_static_inline__
 	int __mu0_clz_ll__(const unsigned long long __x)
 	{ return (__x > 0) ? __lzcnt64(__x)                              : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
@@ -111,13 +116,12 @@ int __mu0_cnttz_l__(const unsigned long __x)
 	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 #	else
-#		if defined(_M_X64) && !defined(_M_ARM64EC)
-#			pragma intrinsic(_BitScanReverse64)
-#		endif
-#		pragma intrinsic(_BitScanReverse)
-
-#		undef  MU0_HAVE_BITWISEOP
-#		define MU0_HAVE_BITWISEOP 1
+#	if defined(_M_X64) && !defined(_M_ARM64EC)
+#		pragma intrinsic(_BitScanReverse64)
+#	endif
+#	pragma intrinsic(_BitScanReverse)
+#	undef  MU0_HAVE_BITWISEOP
+#	define MU0_HAVE_BITWISEOP 1
 
 	__mu0_static_inline__
 	int __mu0_clz_ll__(const unsigned long long __x)
