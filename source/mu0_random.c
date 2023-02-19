@@ -75,7 +75,7 @@ mu0_uint32_t mu0_pcg32_bounded_random_r(mu0_random_context_t * ctx, const mu0_ui
 {
 	const mu0_uint32_t t = -bound % bound;
 	mu0_uint32_t r;
-	while(1) {
+	while (1) {
 		r = mu0_pcg32_random_r(ctx);
 		if (r >= t) { return r % bound; }
 	}
@@ -101,7 +101,7 @@ mu0_uint64_t mu0_pcg32_64_bounded_random_r(mu0_random_context_t * ctx, const mu0
 {
 	const mu0_uint64_t t = -bound % bound;
 	mu0_uint64_t r;
-	while(1) {
+	while (1) {
 		r = mu0_pcg32_64_random_r(ctx);
 		if (r >= t) { return r % bound; }
 	}

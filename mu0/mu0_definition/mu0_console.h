@@ -16,7 +16,6 @@
 //
 
 #include <mu0/mu0_definition/mu0_compiler.h>
-#include <mu0/mu0_definition/mu0_bitset.h>
 
 #ifndef MU0_CONSOLE_H
 #define MU0_CONSOLE_H 1
@@ -31,26 +30,6 @@
 #		else
 #		define __mu0_console__(...)     fprintf(stderr, __VA_ARGS__)
 #		endif
-#	endif
-
-#	define __mu0_bitset_print_u8__(__x) \
-	__mu0_console__("" __mu0_bitset_pattern_u8__ "\n", __mu0_bitset_format_u8__(((unsigned char)(__x))))
-
-#	define __mu0_bitset_print_u16__(__x) \
-	__mu0_console__("" __mu0_bitset_pattern_u16__ "\n", __mu0_bitset_format_u16__(((unsigned short)(__x))))
-
-#	define __mu0_bitset_print_u32__(__x) \
-	__mu0_console__("" __mu0_bitset_pattern_u32__ "\n", __mu0_bitset_format_u32__(((unsigned int)(__x))))
-
-#	if MU0_HAVE_CC_MSVCC || MU0_HAVE_CC_ITLCC
-#	define __mu0_bitset_print_u64__(__x) \
-	__mu0_console__("" __mu0_bitset_pattern_u64__ "\n", __mu0_bitset_format_u64__(((__int64)(__x))))
-#	elif MU0_HAVE_C99 || MU0_HAVE_CPP11
-#	define __mu0_bitset_print_u64__(__x) \
-	__mu0_console__("" __mu0_bitset_pattern_u64__ "\n", __mu0_bitset_format_u64__(((unsigned long long)(__x))))
-#	else
-#	define __mu0_bitset_print_u64__(__x) \
-	__mu0_console__("" __mu0_bitset_pattern_u64__ "\n", __mu0_bitset_format_u64__(((unsigned long)(__x))))
 #	endif
 
 #endif /* !MU0_CONSOLE_H */

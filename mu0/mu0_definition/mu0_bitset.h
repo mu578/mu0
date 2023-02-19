@@ -15,7 +15,7 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
-#include <mu0/mu0_definition/mu0_compiler.h>
+#include <mu0/mu0_definition/mu0_console.h>
 #include <mu0/mu0_definition/mu0_feature.h>
 
 #ifndef MU0_BITSET_H
@@ -38,6 +38,8 @@
 #	define __mu0_bit_digits__(__x) (__mu0_sizeof__(__x) * __MU0_CHAR_BIT__)
 
 #	if MU0_HAVE_CC_MSVCC
+#	pragma intrinsic(_BitScanReverse64)
+#	pragma intrinsic(_BitScanReverse)
 
 #	undef  MU0_HAVE_BITSET
 #	define MU0_HAVE_BITSET 1
@@ -119,12 +121,28 @@ int __mu0_clz_c__(const unsigned char __x)
 				)                                                            \
 			)                                                               \
 		)                                                                  \
-	)                                                                     \
-
+	)
 #	define __mu0_countl_zero__(__x) (__mu0_clz__(__x))
 #	define __mu0_bit_width__(__x)   (__mu0_bit_digits__(__x) - __mu0_countl_zero__(__x))
-
 #	endif
+
+#	define __mu0_bit_reverse__(_Tp, __x)                                                           \
+	do {                                                                                           \
+		unsigned int __mu0_bit_reverse__digits__ = (unsigned int)__mu0_bit_digits__(__x);           \
+		_Tp          __mu0_bit_reverse__mask__   = ~((_Tp)(0));                                     \
+		while (__mu0_bit_reverse__digits__ >>= 1) {                                                 \
+			__mu0_bit_reverse__mask__ ^= __mu0_bit_reverse__mask__ << (__mu0_bit_reverse__digits__); \
+			(__x) = ((__x) & ~__mu0_bit_reverse__mask__) >> __mu0_bit_reverse__digits__              \
+					| ((__x) &__mu0_bit_reverse__mask__) << __mu0_bit_reverse__digits__;               \
+		}                                                                                           \
+	} while (0)
+
+#	define __mu0_bitset_reverse_u8__(__x)                   \
+	do {                                                    \
+		(__x) = ((__x) & 0xF0) >> 4U | ((__x) & 0x0F) << 4U; \
+		(__x) = ((__x) & 0xCC) >> 2U | ((__x) & 0x33) << 2U; \
+		(__x) = ((__x) & 0xAA) >> 1U | ((__x) & 0x55) << 1U; \
+	} while (0)
 
 #	define __mu0_bitset_pattern_u8__ "%c%c%c%c%c%c%c%c"
 #	define __mu0_bitset_format_u8__(__x)  \
@@ -154,6 +172,18 @@ int __mu0_clz_c__(const unsigned char __x)
 
 #	define __mu0_bitset_format_u64__(__x) \
 	__mu0_bitset_format_u32__((__x) >> 32U), __mu0_bitset_format_u32__((__x))
+
+#	define __mu0_bitset_print_u8__(__x) \
+	__mu0_console__("" __mu0_bitset_pattern_u8__ "\(__x)", __mu0_bitset_format_u8__(__x)
+
+#	define __mu0_bitset_print_u16__(__x) \
+	__mu0_console__("" __mu0_bitset_pattern_u16__ "\(__x)", __mu0_bitset_format_u16__(__x)
+
+#	define __mu0_bitset_print_u32__(__x) \
+	__mu0_console__("" __mu0_bitset_pattern_u32__ "\(__x)", __mu0_bitset_format_u32__(__x)
+
+#	define __mu0_bitset_print_u64__(__x) \
+	__mu0_console__("" __mu0_bitset_pattern_u64__ "\(__x)", __mu0_bitset_format_u64__(__x)
 
 #	if !MU0_HAVE_BITSET
 #		error mu0_bitset.h
