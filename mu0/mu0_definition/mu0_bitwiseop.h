@@ -85,6 +85,7 @@ int __mu0_cnttz_l__(const unsigned long __x)
 }
 
 #	if   MU0_HAVE_CC_ITLCC
+
 #	pragma intrinsic(_lzcnt_u64)
 #	pragma intrinsic(_lzcnt_u32)
 #	undef  MU0_HAVE_BITWISEOP
@@ -117,7 +118,9 @@ int __mu0_cnttz_l__(const unsigned long __x)
 	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 #	elif MU0_HAVE_CC_MSVCC
+
 #	if MU0_HAVE_AMD64
+
 #	pragma intrinsic(__lzcnt64)
 #	pragma intrinsic(__lzcnt)
 #	undef  MU0_HAVE_BITWISEOP
@@ -144,6 +147,7 @@ int __mu0_cnttz_l__(const unsigned long __x)
 	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 #	else
+
 #	if defined(_M_X64) && !defined(_M_ARM64EC)
 #		pragma intrinsic(_BitScanReverse64)
 #	endif
@@ -203,6 +207,7 @@ int __mu0_cnttz_l__(const unsigned long __x)
 	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 #		endif
+
 #	elif MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC
 
 #	undef  MU0_HAVE_BITWISEOP
