@@ -68,6 +68,8 @@ MU0_BEGIN_CDECL
 
 #	define mu0_unused(__x)          mu0_cast(void, __x)
 
+#	define mu0_console_log          __mu0_console__
+
 MU0_END_CDECL
 
 #endif /* !MU0_DEFINITION_H */

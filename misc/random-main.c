@@ -25,52 +25,52 @@ int main(int argc, const char * argv[])
 	mu0_uinteger_t i, k = 0;
 
 	mu0_srandom(20, 2);
-	__mu0_console__("\n");
+	mu0_console_log("\n");
 
 	for (; k < 8; ++k) {
 		i = 0;
 		for (; i < 8; ++i) {
-			__mu0_console__("%06u ", mu0_random_u16());
+			mu0_console_log("%06u ", mu0_random_u16());
 		}
 
-		__mu0_console__("\n");
+		mu0_console_log("\n");
 		i = 0;
 		for (; i < 8; ++i) {
-			__mu0_console__("%06u ", mu0_bounded_random_u32(8));
+			mu0_console_log("%06u ", mu0_bounded_random_u32(8));
 		}
 
-		__mu0_console__("\n");
+		mu0_console_log("\n");
 		i = 0;
 		for (; i < 8; ++i) {
-			__mu0_console__("%.04f ", mu0_random_fp64());
+			mu0_console_log("%.04f ", mu0_random_fp64());
 		}
-		__mu0_console__("\n\n");
+		mu0_console_log("\n\n");
 	}
 
 	mu0_ssrandom();
-	__mu0_console__("\n");
+	mu0_console_log("\n");
 
 	k = 0;
 	for (; k < 8; ++k) {
 		i = 0;
 		for (; i < 8; ++i) {
-			__mu0_console__("%06u ", mu0_random_u16());
+			mu0_console_log("%06u ", mu0_random_u16());
 		}
 
-		__mu0_console__("\n");
+		mu0_console_log("\n");
 		i = 0;
 		for (; i < 8; ++i) {
-			__mu0_console__("%06u ", mu0_bounded_random_u32(32));
+			mu0_console_log("%06u ", mu0_bounded_random_u32(32));
 		}
 
-		__mu0_console__("\n");
+		mu0_console_log("\n");
 		i = 0;
 		for (; i < 8; ++i) {
-			__mu0_console__("%.04f ", mu0_random_fp64());
+			mu0_console_log("%.04f ", mu0_random_fp64());
 		}
-		__mu0_console__("\n\n");
+		mu0_console_log("\n\n");
 	}
-	__mu0_console__("\n");
+	mu0_console_log("\n");
 
 	return 0;
 }
