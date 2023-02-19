@@ -175,19 +175,19 @@ typedef   mu0_sint8_t  *                mu0_vsint8_t;
 #	if MU0_HAVE_TYPEOF
 #	define mu0_is_sinteger(__x)                \
 	((                                         \
-		   __mu0_isoftype__(m0_sint64_t  , __x) \
-		|| __mu0_isoftype__(m0_sint32_t  , __x) \
-		|| __mu0_isoftype__(m0_sint16_t  , __x) \
-		|| __mu0_isoftype__(m0_sint8_t   , __x) \
-		|| __mu0_isoftype__(mu0_ptrdiff_t, __x) \
+		   __mu0_isofkind__(m0_sint64_t  , __x) \
+		|| __mu0_isofkind__(m0_sint32_t  , __x) \
+		|| __mu0_isofkind__(m0_sint16_t  , __x) \
+		|| __mu0_isofkind__(m0_sint8_t   , __x) \
+		|| __mu0_isofkind__(mu0_ptrdiff_t, __x) \
 	) ? 1 : 0)
 
 #	define mu0_is_uinteger(__x)              \
 	((                                       \
-		   __mu0_isoftype__(m0_uint64_t, __x) \
-		|| __mu0_isoftype__(m0_uint32_t, __x) \
-		|| __mu0_isoftype__(m0_uint16_t, __x) \
-		|| __mu0_isoftype__(m0_uint8_t , __x) \
+		   __mu0_isofkind__(m0_uint64_t, __x) \
+		|| __mu0_isofkind__(m0_uint32_t, __x) \
+		|| __mu0_isofkind__(m0_uint16_t, __x) \
+		|| __mu0_isofkind__(m0_uint8_t , __x) \
 	) ? 1 : 0)
 #	else
 #	define mu0_is_sinteger(__x) (1)
@@ -231,7 +231,6 @@ __mu0_static__ const mu0_sint64_t  mu0_sint64_min  = INT64_MIN;
 #	define MU0_UINT64_C (c) c ## U
 #	define MU0_SINT64_C (c) c
 #	endif
-
 
 __mu0_static__ const mu0_uint32_t  mu0_uint32_max  = UINT32_MAX;
 __mu0_static__ const mu0_uint32_t  mu0_uint32_min  = 0U;

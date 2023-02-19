@@ -37,6 +37,53 @@
 #	define __mu0_bit_counts__(__x) (__mu0_sizeof__(__x) / __MU0_CHAR_BIT__)
 #	define __mu0_bit_digits__(__x) (__mu0_sizeof__(__x) * __MU0_CHAR_BIT__)
 
+__mu0_static_inline__
+int __mu0_cnttz_i__(const unsigned int __x)
+{
+	unsigned int x = __x;
+	unsigned int d = __mu0_const_cast__(unsigned int, __mu0_bit_digits__(x));
+	unsigned int y;
+
+	if (x > 0) {
+		y = x >> 16U; if (y != 0U) { d = d - 16U; x = y; }
+		y = x >>  8U; if (y != 0U) { d = d -  8U; x = y; }
+		y = x >>  4U; if (y != 0U) { d = d -  4U; x = y; }
+		y = x >>  2U; if (y != 0U) { d = d -  2U; x = y; }
+		y = x >>  1U;
+
+		return __mu0_cast__(int, ((y != 0U) ? d - 2U : d - x));
+	}
+	return __mu0_cast__(int, __mu0_bit_counts__(x));
+}
+
+__mu0_static_inline__
+int __mu0_cnttz_ll__(const unsigned long long __x)
+{
+	const unsigned int x = 0U;
+	const unsigned int d = __mu0_const_cast__(unsigned int, __mu0_bit_counts__(x));
+#	if MU0_HAVE_C99 || MU0_HAVE_CPP11
+	return ((__x & 0xFFFFFFFF00000000ULL)
+		?     __mu0_cnttz_i__(__x >> d)
+		: d + __mu0_cnttz_i__(__x & 0xFFFFFFFFULL)
+	);
+#	else
+	return ((__x & 0xFFFFFFFF00000000U)
+		?     __mu0_cnttz_i__(__x >> d)
+		: d + __mu0_cnttz_i__(__x & 0xFFFFFFFFU)
+	);
+#	endif
+}
+
+__mu0_static_inline__
+int __mu0_cnttz_l__(const unsigned long __x)
+{
+#	if defined(__LP64__)
+	return __mu0_cnttz_ll__(__x);
+#	else
+	return __mu0_cnttz_i__(__x);
+#	endif
+}
+
 #	if MU0_HAVE_CC_MSVCC
 #	if defined(_M_X64) && !defined(_M_ARM64EC)
 #		pragma intrinsic(_BitScanReverse64)
@@ -49,19 +96,24 @@
 __mu0_static_inline__
 int __mu0_clz_ll__(const unsigned long long __x)
 {
-	unsigned long index = 0;
+	unsigned long index         = 0;
 #	if defined(_M_X64) && !defined(_M_ARM64EC)
-	unsigned __int64 mask = __x;
+	const unsigned __int64 mask = __mu0_const_cast__(__int64, __x);
 	if (__x > 0) {
 		if (_BitScanReverse64(&index, mask)) {
 			return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
 		}
 	}
 #	else
-	unsigned long mask_lo = __mu0_cast__(unsigned long, __x);
-	unsigned long mask_hi = __mu0_cast__(unsigned long, (__x >> 32U));
-	if (!_BitScanReverse(&index, mask_lo) && _BitScanReverse(&index, mask_hi)) {
-		return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - (index + __mu0_bit_counts__(mask_hi)));
+	const unsigned long mask_lo = __mu0_const_cast__(unsigned long, __x);
+	const unsigned int  hdigits = __mu0_const_cast__(unsigned int, __mu0_bit_counts__(mask_lo));
+	const unsigned long mask_hi = __mu0_const_cast__(unsigned long, (__x >> hdigits));
+
+	if (__x > 0) {
+		if (!_BitScanReverse(&index, mask_lo) && _BitScanReverse(&index, mask_hi)) {
+			index += hdigits;
+		}
+		return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
 	}
 #	endif
 	return __mu0_cast__(int, __mu0_bit_counts__(__x));
