@@ -51,10 +51,10 @@ int __mu0_clz_ll__(const unsigned long long __x)
 	unsigned __int64 mask = __x;
 	if (__x > 0) {
 		if (_BitScanReverse64(&index, mask)) {
-			return _mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
+			return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
 		}
 	}
-	return _mu0_cast__(int, __mu0_bit_counts__(__x));
+	return __mu0_cast__(int, __mu0_bit_counts__(__x));
 }
 
 __mu0_static_inline__
@@ -64,23 +64,23 @@ int __mu0_clz_l__(const unsigned long __x)
    unsigned long mask  = __x;
 	if (__x > 0) {
 		if (_BitScanReverse(&index, mask)) {
-			return _mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
+			return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
 		}
 	}
-	return _mu0_cast__(int, __mu0_bit_counts__(__x));
+	return __mu0_cast__(int, __mu0_bit_counts__(__x));
 }
 
 __mu0_static_inline__
 int __mu0_clz_i__(const unsigned int __x)
-{ return (__x > 0) ? __mu0_clz_l__(__x)                          : _mu0_cast__(int, __mu0_bit_counts__(__x)); }
+{ return (__x > 0) ? __mu0_clz_l__(__x)                          : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 __mu0_static_inline__
 int __mu0_clz_s__(const unsigned short __x)
-{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 2) : _mu0_cast__(int, __mu0_bit_counts__(__x)); }
+{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 2) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 __mu0_static_inline__
 int __mu0_clz_c__(const unsigned char __x)
-{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : _mu0_cast__(int, __mu0_bit_counts__(__x)); }
+{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 #	elif MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC
 
@@ -88,16 +88,16 @@ int __mu0_clz_c__(const unsigned char __x)
 #	define MU0_HAVE_BITSET 1
 
 #	define __mu0_clz_ll__(__x) \
-	(_mu0_cast__(int, (__x) ? __builtin_clzll(__x)                            : __mu0_bit_counts__(__x)))
+	(__mu0_cast__(int, (__x) ? __builtin_clzll(__x)                            : __mu0_bit_counts__(__x)))
 
 #	define __mu0_clz_l__(__x) \
-	(_mu0_cast__(int, (__x) ? __builtin_clzl(__x)                             : __mu0_bit_counts__(__x)))
+	(__mu0_cast__(int, (__x) ? __builtin_clzl(__x)                             : __mu0_bit_counts__(__x)))
 
 #	define __mu0_clz_i__(__x) \
-	(_mu0_cast__(int, (__x) ? __builtin_clz(__x)                              : __mu0_bit_counts__(__x)))
+	(__mu0_cast__(int, (__x) ? __builtin_clz(__x)                              : __mu0_bit_counts__(__x)))
 
 #	define __mu0_clz_s__(__x) \
-	(_mu0_cast__(int, (__x) ? ((__builtin_clz(__x) - (__MU0_CHAR_BIT__ * 2))) : __mu0_bit_counts__(__x)))
+	(__mu0_cast__(int, (__x) ? ((__builtin_clz(__x) - (__MU0_CHAR_BIT__ * 2))) : __mu0_bit_counts__(__x)))
 
 #	define __mu0_clz_c__(__x) \
 	(__mu0_cast__(int, (__x) ? ((__builtin_clz(__x) - (__MU0_CHAR_BIT__ * 3))) : __mu0_bit_counts__(__x)))
@@ -128,7 +128,7 @@ int __mu0_clz_c__(const unsigned char __x)
 
 #	define __mu0_bit_reverse__(_Tp, __x)                                                              \
 	__mu0_scope_begin__                                                                               \
-		unsigned int __mu0_bit_reverse__digits__ = _mu0_cast__(unsigned int, __mu0_bit_digits__(__x)); \
+		unsigned int __mu0_bit_reverse__digits__ = __mu0_cast__(unsigned int, __mu0_bit_digits__(__x)); \
 		_Tp          __mu0_bit_reverse__mask__   = ~((_Tp)(0));                                        \
 		while (__mu0_bit_reverse__digits__ >>= 1) {                                                    \
 			__mu0_bit_reverse__mask__ ^= __mu0_bit_reverse__mask__ << (__mu0_bit_reverse__digits__);    \
