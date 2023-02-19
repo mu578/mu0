@@ -57,7 +57,7 @@
 #		define __mu0_locale_t__                      _locale_t
 #		define __mu0_setlocale__(category, name)     setlocale(category, name)
 #		define __mu0_newlocale__(category, name)     _create_locale(category, name)
-#		define __mu0_freelocale__(locale)            _free_locale(((__mu0_locale_t__)locale))
+#		define __mu0_freelocale__(locale)            _free_locale(__mu0_cast__(__mu0_locale_t__, locale))
 #		define __MU0_LOCALE_CATEGORY_ALL__           LC_ALL
 #		define __MU0_LOCALE_CATEGORY_COLLATE__       LC_COLLATE
 #		define __MU0_LOCALE_CATEGORY_CTYPE__         LC_CTYPE
@@ -78,7 +78,7 @@
 #		define __mu0_locale_t__                      locale_t
 #		define __mu0_setlocale__(category, name)     setlocale(category, name)
 #		define __mu0_newlocale__(category, name)     newlocale(category, name, NULL)
-#		define __mu0_freelocale__(locale)            freelocale(((__mu0_locale_t__)locale))
+#		define __mu0_freelocale__(locale)            freelocale(__mu0_cast__(__mu0_locale_t__, locale))
 #		define __MU0_LOCALE_CATEGORY_ALL__           LC_ALL
 #		define __MU0_LOCALE_CATEGORY_COLLATE__       LC_COLLATE
 #		define __MU0_LOCALE_CATEGORY_CTYPE__         LC_CTYPE
