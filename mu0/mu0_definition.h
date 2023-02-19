@@ -19,7 +19,7 @@
 #define MU0_DEFINITION_H 1
 
 #	include <mu0/mu0_definition/mu0_attribute.h>
-#	include <mu0/mu0_definition/mu0_bitset.h>
+#	include <mu0/mu0_definition/mu0_bitwiseop.h>
 #	include <mu0/mu0_definition/mu0_byteorder.h>
 #	include <mu0/mu0_definition/mu0_byteswap.h>
 #	include <mu0/mu0_definition/mu0_compiler.h>
