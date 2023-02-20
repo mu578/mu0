@@ -305,6 +305,50 @@
 #		define MU0_HAVE_ARM64 1
 #	endif
 
+#	undef  MU0_HAVE_ILP32
+#	undef  MU0_HAVE_LLP64
+#	undef  MU0_HAVE_LP64
+#	undef  MU0_HAVE_ILP64
+#	undef  MU0_HAVE_SILP64
+
+#	define MU0_HAVE_ILP64  1
+#	define MU0_HAVE_SILP64 1
+
+#	if                    \
+	   defined(__ILP32__) \
+	|| defined(_ILP32)
+#		undef  MU0_HAVE_ILP32
+#		undef  MU0_HAVE_LLP64
+#		undef  MU0_HAVE_LP64
+#		undef  MU0_HAVE_ILP64
+#		undef  MU0_HAVE_SILP64
+#		define MU0_HAVE_ILP32  1
+#	endif
+
+#	if                   \
+	   defined(__LP64__) \
+	|| defined(__LP64)
+#		undef  MU0_HAVE_ILP32
+#		undef  MU0_HAVE_LLP64
+#		undef  MU0_HAVE_LP64
+#		undef  MU0_HAVE_ILP64
+#		undef  MU0_HAVE_SILP64
+#		define MU0_HAVE_LP64   1
+#	endif
+
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#		undef  MU0_HAVE_ILP32
+#		undef  MU0_HAVE_LLP64
+#		undef  MU0_HAVE_LP64
+#		undef  MU0_HAVE_ILP64
+#		undef  MU0_HAVE_SILP64
+#		define MU0_HAVE_LLP64  1
+#	endif
+
+#	if defined(MU0_HAVE_ILP64) || defined(MU0_HAVE_SILP64)
+#		error mu0_platform.h
+#	endif
+
 #	if !MU0_HAVE_ARCH
 #		error mu0_platform.h
 #	endif
