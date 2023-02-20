@@ -55,11 +55,11 @@ int __mu0_bit_digits_c__(void)
 { return __mu0_const_cast__(int, (__mu0_sizeof__(unsigned char)      * __MU0_CHAR_BIT__)); }
 
 # if    MU0_HAVE_OVERLOAD
-__mu0_overload__ int __mu0_bit_digits__ (const unsigned long long __x) { return __mu0_bit_digits_ll__ (); }
-__mu0_overload__ int __mu0_bit_digits__ (const unsigned long      __x) { return __mu0_bit_digits_l__  (); }
-__mu0_overload__ int __mu0_bit_digits__ (const unsigned int       __x) { return __mu0_bit_digits_i__  (); }
-__mu0_overload__ int __mu0_bit_digits__ (const unsigned short     __x) { return __mu0_bit_digits_s__  (); }
-__mu0_overload__ int __mu0_bit_digits__ (const unsigned char      __x) { return __mu0_bit_digits_c__  (); }
+__mu0_overload__ int __mu0_bit_digits__ (const unsigned long long __x) { __mu0_unused__(__x); return __mu0_bit_digits_ll__ (); }
+__mu0_overload__ int __mu0_bit_digits__ (const unsigned long      __x) { __mu0_unused__(__x); return __mu0_bit_digits_l__  (); }
+__mu0_overload__ int __mu0_bit_digits__ (const unsigned int       __x) { __mu0_unused__(__x); return __mu0_bit_digits_i__  (); }
+__mu0_overload__ int __mu0_bit_digits__ (const unsigned short     __x) { __mu0_unused__(__x); return __mu0_bit_digits_s__  (); }
+__mu0_overload__ int __mu0_bit_digits__ (const unsigned char      __x) { __mu0_unused__(__x); return __mu0_bit_digits_c__  (); }
 #	elif MU0_HAVE_GENERIC
 #	define __mu0_bit_digits__(__x) __mu0_generic__(__x \
 	, unsigned long long : __mu0_bit_digits_ll__       \
