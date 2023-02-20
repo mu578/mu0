@@ -310,19 +310,19 @@ int __mu0_cntlz_l__(const unsigned long __x)
 
 	__mu0_static_inline__
 	int __mu0_clz_ll__(const unsigned long long __x)
-	{ return (__x) ? __builtin_clzll(__x)                             : __mu0_bit_digits_ll__(); }
+	{ return (__x) ? __builtin_clzll(__x)                            : __mu0_bit_digits_ll__(); }
 
 	__mu0_static_inline__
 	int __mu0_clz_l__(const unsigned long       __x)
-	{ return (__x) ? __builtin_clzl(__x)                              : __mu0_bit_digits_l__();  }
+	{ return (__x) ? __builtin_clzl(__x)                             : __mu0_bit_digits_l__();  }
 
 	__mu0_static_inline__
 	int __mu0_clz_i__(const unsigned int        __x)
-	{ return (__x) ? __builtin_clz(__x)                               : __mu0_bit_digits_i__();  }
+	{ return (__x) ? __builtin_clz(__x)                              : __mu0_bit_digits_i__();  }
 
 	__mu0_static_inline__
 	int __mu0_clz_s__(const unsigned short      __x)
-	{ return (__x) ? ((__builtin_clz(__x) - (__MU0_CHAR_BIT__ * 2)))  : __mu0_bit_digits_s__();  }
+	{ return (__x) ? ((__builtin_clz(__x) - (__MU0_CHAR_BIT__ * 2))) : __mu0_bit_digits_s__();  }
 
 
 	__mu0_static_inline__
