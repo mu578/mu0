@@ -356,7 +356,7 @@ __mu0_overload__ int __mu0_clz__ (const unsigned char      __x) { return __mu0_c
 	, unsigned char      : __mu0_clz_c__        \
 ) (__x)
 #	elif MU0_HAVE_TYPEOF
-#	define __mu0_bit_digits__(__x)                        \
+#	define __mu0_clz__(__x)                               \
 	((__mu0_isofkind__(unsigned long long, __x))          \
 		? __mu0_clz_ll__(__x)                              \
 		: ((__mu0_isofkind__(unsigned long, __x))          \
