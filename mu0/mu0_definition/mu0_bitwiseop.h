@@ -41,7 +41,6 @@
 #	define __mu0_bit_digits_s__()  __mu0_const_cast__(int, (__mu0_sizeof__(unsigned short) * __MU0_CHAR_BIT__))
 #	define __mu0_bit_digits_c__()  __mu0_const_cast__(int, (__mu0_sizeof__(unsigned char) * __MU0_CHAR_BIT__))
 
-
 #	define __mu0_bit_digits__(__x)                                        \
 	((__mu0_sizeof__(__x) == __mu0_sizeof__(unsigned long long))          \
 		? __mu0_bit_digits_ll__()                                          \
@@ -72,17 +71,17 @@ int __mu0_cntlz_i__(const unsigned int __x)
 		, 19, 27, 23,  6, 26,  5,  4, 31
 	};
 
-	unsigned int x;
-	if (__x) {
-		x = __x;
+	const unsigned int d = __mu0_bit_digits_i__();
+	      unsigned int x = __x;
+	if (x) {
 		x = x | (x >>  1U);
 		x = x | (x >>  2U);
 		x = x | (x >>  4U);
 		x = x | (x >>  8U);
 		x = x | (x >> 16U);
-		return (__mu0_bit_digits_i__() - 1) - s_table[((x * 0x07C4ACDD) >> 27U) % 32U];
+		return (d - 1) - s_table[((x * 0x07C4ACDD) >> 27U) % d];
 	}
-	return __mu0_bit_digits_i__();
+	return d;
 }
 
 #	if 0
@@ -93,7 +92,7 @@ int __mu0_cntlz_i__(const unsigned int __x)
 	unsigned int x, d, y;
 	if (__x) {
 		x = __x;
-		d = __mu0_const_cast__(unsigned int, __mu0_bit_digits__(x));
+		d = __mu0_bit_digits_i__();
 		y = x >> 16U; if (y != 0U) { d = d - 16U; x = y; }
 		y = x >>  8U; if (y != 0U) { d = d -  8U; x = y; }
 		y = x >>  4U; if (y != 0U) { d = d -  4U; x = y; }
@@ -106,12 +105,10 @@ int __mu0_cntlz_i__(const unsigned int __x)
 
 #	endif
 
-
 __mu0_static_inline__
 int __mu0_cntlz_ll__(const unsigned long long __x)
 {
-	const unsigned int x = 0U;
-	const unsigned int d = __mu0_const_cast__(unsigned int, __mu0_bit_digits__(x));
+	const unsigned int d = __mu0_bit_digits_i__();
 #	if MU0_HAVE_C99 || MU0_HAVE_CPP11
 	return ((__x & 0xFFFFFFFF00000000ULL)
 		?     __mu0_cntlz_i__(__x >> d)
