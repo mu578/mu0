@@ -71,8 +71,8 @@ int __mu0_cntlz_i__(const unsigned int __x)
 		, 19, 27, 23,  6, 26,  5,  4, 31
 	};
 
-	const unsigned int d = __mu0_bit_digits_i__();
-	      unsigned int x = __x;
+	const int d    = __mu0_bit_digits_i__();
+	unsigned int x = __x;
 	if (x) {
 		x = x | (x >>  1U);
 		x = x | (x >>  2U);
@@ -108,7 +108,7 @@ int __mu0_cntlz_i__(const unsigned int __x)
 __mu0_static_inline__
 int __mu0_cntlz_ll__(const unsigned long long __x)
 {
-	const unsigned int d = __mu0_bit_digits_i__();
+	const int d = __mu0_bit_digits_i__();
 #	if MU0_HAVE_C99 || MU0_HAVE_CPP11
 	return ((__x & 0xFFFFFFFF00000000ULL)
 		?     __mu0_cntlz_i__(__x >> d)
