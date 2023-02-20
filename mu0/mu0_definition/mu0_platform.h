@@ -20,6 +20,8 @@
 #ifndef MU0_PLATFORM_H
 #define MU0_PLATFORM_H 1
 
+#	include <limits.h>
+
 #	undef  MU0_HAVE_DARWIN
 #	undef  MU0_HAVE_MACOSX
 #	undef  MU0_HAVE_IOS
@@ -305,18 +307,24 @@
 #		define MU0_HAVE_ARM64 1
 #	endif
 
+#	undef  MU0_HAVE_LP32
 #	undef  MU0_HAVE_ILP32
 #	undef  MU0_HAVE_LLP64
 #	undef  MU0_HAVE_LP64
 #	undef  MU0_HAVE_ILP64
 #	undef  MU0_HAVE_SILP64
 
+#	define MU0_HAVE_LP32   1
+#	define MU0_HAVE_ILP32  0
+#	define MU0_HAVE_LLP64  0
+#	define MU0_HAVE_LP64   0
 #	define MU0_HAVE_ILP64  1
 #	define MU0_HAVE_SILP64 1
 
 #	if                    \
 	   defined(__ILP32__) \
 	|| defined(_ILP32)
+#		undef  MU0_HAVE_LP32
 #		undef  MU0_HAVE_ILP32
 #		undef  MU0_HAVE_LLP64
 #		undef  MU0_HAVE_LP64
@@ -325,9 +333,11 @@
 #		define MU0_HAVE_ILP32  1
 #	endif
 
-#	if                   \
-	   defined(__LP64__) \
-	|| defined(__LP64)
+#	if                                                    \
+	   defined(__LP64__)                                  \
+	|| defined(__LP64)                                    \
+	|| (defined(__SIZEOF_LONG__) && __SIZEOF_LONG__ == 8)
+#		undef  MU0_HAVE_LP32
 #		undef  MU0_HAVE_ILP32
 #		undef  MU0_HAVE_LLP64
 #		undef  MU0_HAVE_LP64
@@ -336,7 +346,10 @@
 #		define MU0_HAVE_LP64   1
 #	endif
 
-#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#	if                     \
+		   MU0_HAVE_WINDOWS \
+		|| ((defined(LONG_MAX) && defined(INT_MAX)) && (LONG_MAX == INT_MAX))
+#		undef  MU0_HAVE_LP32
 #		undef  MU0_HAVE_ILP32
 #		undef  MU0_HAVE_LLP64
 #		undef  MU0_HAVE_LP64
@@ -345,8 +358,19 @@
 #		define MU0_HAVE_LLP64  1
 #	endif
 
-#	if defined(MU0_HAVE_ILP64) || defined(MU0_HAVE_SILP64)
+#	if defined(MU0_HAVE_LP32) || defined(MU0_HAVE_ILP64) || defined(MU0_HAVE_SILP64)
 #		error mu0_platform.h
+#	endif
+
+#	undef  MU0_HAVE_CHAR_UNSIGNED
+#	define MU0_HAVE_CHAR_UNSIGNED 0
+
+#	if                                                                      \
+	   defined(_CHAR_UNSIGNED)                                              \
+	|| ((defined(CHAR_MIN) && defined(SCHAR_MIN)) && CHAR_MIN != SCHAR_MIN) \
+	|| (defined(CHAR_MIN) && CHAR_MIN < 0)
+#	undef  MU0_HAVE_CHAR_UNSIGNED
+#	define MU0_HAVE_CHAR_UNSIGNED 1
 #	endif
 
 #	if !MU0_HAVE_ARCH

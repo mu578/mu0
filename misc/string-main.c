@@ -83,12 +83,6 @@ int main(int argc, const char * argv[])
 		mu0_console_log("s5.at(%02zu) : %.*s\n", i, width, glyph);
 	}
 
-	mu0_uint64_t x = mu0_uint64_max / 20;
-
-	__mu0_bitset_print_u64__(x);
-	mu0_console_log("padd110011001100110011001100110011001100110011001100110011001100\n");
-	mu0_console_log("%llu\n", x);
-
 	mu0_console_log("\n");
 
 	return 0;

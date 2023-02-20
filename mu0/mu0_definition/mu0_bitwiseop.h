@@ -106,51 +106,11 @@ __mu0_overload__ int __mu0_bit_digits__ (const unsigned char      __x) { __mu0_u
 	)
 #	endif
 
-__mu0_static_inline__
-int __mu0_cntlz_i__(const unsigned int __x)
-{
-	__mu0_static__
-	const unsigned char s_table[32] =
-	{
-		   0,  9,  1, 10, 13, 21,  2, 29
-		, 11, 14, 16, 18, 22, 25,  3, 30
-		,  8, 12, 20, 28, 15, 17, 24,  7
-		, 19, 27, 23,  6, 26,  5,  4, 31
-	};
-
-	const int d    = __mu0_bit_digits_i__();
-	unsigned int x = __x;
-	if (x) {
-		x = x | (x >>  1U);
-		x = x | (x >>  2U);
-		x = x | (x >>  4U);
-		x = x | (x >>  8U);
-		x = x | (x >> 16U);
-		return (d - 1) - s_table[((x * 0x07C4ACDD) >> 27U) % d];
-	}
-	return d;
-}
-
-#	if 0
-
-__mu0_static_inline__
-int __mu0_cntlz_i__(const unsigned int __x)
-{
-	unsigned int x, d, y;
-	if (__x) {
-		x = __x;
-		d = __mu0_bit_digits_i__();
-		y = x >> 16U; if (y != 0U) { d = d - 16U; x = y; }
-		y = x >>  8U; if (y != 0U) { d = d -  8U; x = y; }
-		y = x >>  4U; if (y != 0U) { d = d -  4U; x = y; }
-		y = x >>  2U; if (y != 0U) { d = d -  2U; x = y; }
-		y = x >>  1U;
-		return __mu0_cast__(int, ((y != 0U) ? d - 2U : d - x));
-	}
-	return __mu0_bit_digits_i__();
-}
-
-#	endif
+__mu0_static_inline__ int __mu0_cntlz_ll__(const unsigned long long __x);
+__mu0_static_inline__ int __mu0_cntlz_l__ (const unsigned long      __x);
+__mu0_static_inline__ int __mu0_cntlz_i__ (const unsigned int       __x);
+__mu0_static_inline__ int __mu0_cntlz_s__ (const unsigned short     __x);
+__mu0_static_inline__ int __mu0_cntlz_c__ (const unsigned char      __x);
 
 __mu0_static_inline__
 int __mu0_cntlz_ll__(const unsigned long long __x)
@@ -178,6 +138,100 @@ __mu0_static_inline__
 int __mu0_cntlz_l__(const unsigned long __x)
 { return __mu0_cntlz_i__(__x); }
 #	endif
+
+__mu0_static_inline__
+int __mu0_cntlz_i__(const unsigned int __x)
+{
+	unsigned char d = 0;
+	unsigned int  x = __x;
+	if (x) {
+		if (x & 0xFFFF0000U) { x = x >> 16U; } else { d += 16; }
+		return d + __mu0_cntlz_s__(x);
+	}
+	return __mu0_bit_digits_i__();
+}
+
+#	if 0
+
+__mu0_static_inline__
+int __mu0_cntlz_i__(const unsigned int __x)
+{
+	__mu0_static__
+	const unsigned char s_table[32] =
+	{
+		   0,  9,  1, 10, 13, 21,  2, 29
+		, 11, 14, 16, 18, 22, 25,  3, 30
+		,  8, 12, 20, 28, 15, 17, 24,  7
+		, 19, 27, 23,  6, 26,  5,  4, 31
+	};
+
+	const int d    = __mu0_bit_digits_i__();
+	unsigned int x = __x;
+	if (x) {
+		x = x | (x >>  1U);
+		x = x | (x >>  2U);
+		x = x | (x >>  4U);
+		x = x | (x >>  8U);
+		x = x | (x >> 16U);
+		return (d - 1) - s_table[((x * 0x07C4ACDD) >> 27U) % d];
+	}
+	return d;
+}
+
+#	endif
+
+#	if 0
+
+__mu0_static_inline__
+int __mu0_cntlz_i__(const unsigned int __x)
+{
+	unsigned int x, d, y;
+	if (__x) {
+		x = __x;
+		d = __mu0_bit_digits_i__();
+		y = x >> 16U; if (y != 0U) { d = d - 16U; x = y; }
+		y = x >>  8U; if (y != 0U) { d = d -  8U; x = y; }
+		y = x >>  4U; if (y != 0U) { d = d -  4U; x = y; }
+		y = x >>  2U; if (y != 0U) { d = d -  2U; x = y; }
+		y = x >>  1U;
+		return __mu0_cast__(int, ((y != 0U) ? d - 2U : d - x));
+	}
+	return __mu0_bit_digits_i__();
+}
+
+#	endif
+
+__mu0_static_inline__
+int __mu0_cntlz_s__(const unsigned short __x)
+{
+	unsigned char  d = 0;
+	unsigned short x = __x;
+	if (x) {
+		if (x & 0xFF00U) { x >>= 8U; } else { d += 8; }
+		return d + __mu0_cntlz_c__(x);
+	}
+	return __mu0_bit_digits_s__();
+}
+
+__mu0_static_inline__
+int __mu0_cntlz_c__(const unsigned char __x)
+{
+	unsigned char d = 0;
+	unsigned char x = __x;
+	if (x) {
+		if (((x & 0xF0U))) { x  = x >> 4U; } else { d += 4; }
+		if (((x & 0x0CU))) { x  = x >> 2U; } else { d += 2; }
+		if (!(x & 0x02U) ) { d += 1;      }
+		return d;
+	}
+	return __mu0_bit_digits_c__();
+}
+
+__mu0_static_inline__ int __mu0_clz_ll__(const unsigned long long __x);
+__mu0_static_inline__ int __mu0_clz_l__ (const unsigned long      __x);
+__mu0_static_inline__ int __mu0_clz_i__ (const unsigned int       __x);
+__mu0_static_inline__ int __mu0_clz_s__ (const unsigned short     __x);
+__mu0_static_inline__ int __mu0_clz_c__ (const unsigned char      __x);
 
 #	if   MU0_HAVE_CC_ITLCC
 #		pragma intrinsic(_lzcnt_u64)
@@ -338,11 +392,13 @@ int __mu0_cntlz_l__(const unsigned long __x)
 #	else
 #		undef  MU0_HAVE_BITWISEOP
 #		define MU0_HAVE_BITWISEOP 1
-#		define __mu0_clz_ll__     __mu0_cntlz_ll__
-#		define __mu0_clz_l__      __mu0_cntlz_l__
-#		define __mu0_clz_i__      __mu0_cntlz_i__
-#		define __mu0_clz_s__      __mu0_cntlz_s__
-#		define __mu0_clz_c__      __mu0_cntlz_c__
+
+__mu0_static_inline__ int __mu0_clz_ll__(const unsigned long long __x) { return __mu0_cntlz_ll__ (__x); }
+__mu0_static_inline__ int __mu0_clz_l__ (const unsigned long      __x) { return __mu0_cntlz_l__  (__x); }
+__mu0_static_inline__ int __mu0_clz_i__ (const unsigned int       __x) { return __mu0_cntlz_i__  (__x); }
+__mu0_static_inline__ int __mu0_clz_s__ (const unsigned short     __x) { return __mu0_cntlz_s__  (__x); }
+__mu0_static_inline__ int __mu0_clz_c__ (const unsigned char      __x) { return __mu0_cntlz_c__  (__x); }
+
 #	endif
 
 #	if   MU0_HAVE_OVERLOAD
