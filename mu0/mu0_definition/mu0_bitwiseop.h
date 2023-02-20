@@ -37,50 +37,76 @@
 #	define __mu0_bit_counts__(__x) (__mu0_sizeof__(__x) / __MU0_CHAR_BIT__)
 #	define __mu0_bit_digits__(__x) (__mu0_sizeof__(__x) * __MU0_CHAR_BIT__)
 
-__mu0_static_inline__
-int __mu0_cnttz_i__(const unsigned int __x)
-{
-	unsigned int x = __x;
-	unsigned int d = __mu0_const_cast__(unsigned int, __mu0_bit_digits__(x));
-	unsigned int y;
 
-	if (x > 0) {
+__mu0_static_inline__
+int __mu0_cntlz_i__(const unsigned int __x)
+{
+	__mu0_static__
+	const unsigned char s_table[32] =
+	{
+		   0,  9,  1, 10, 13, 21,  2, 29
+		, 11, 14, 16, 18, 22, 25,  3, 30
+		,  8, 12, 20, 28, 15, 17, 24,  7
+		, 19, 27, 23,  6, 26,  5,  4, 31
+	};
+
+	unsigned int x;
+	if (__x) {
+		x = __x;
+		x = x | (x >>  1U);
+		x = x | (x >>  2U);
+		x = x | (x >>  4U);
+		x = x | (x >>  8U);
+		x = x | (x >> 16U);
+		return __mu0_cast__(int, s_table[((x * 0x07C4ACDD) >> 27U) % 32U]);
+	}
+	return __mu0_cast__(int, __mu0_bit_counts__(__x));
+}
+
+#	if 0
+__mu0_static_inline__
+int __mu0_cntlz_i__(const unsigned int __x)
+{
+	unsigned int x, d, y;
+	if (__x) {
+		x = __x;
+		d = __mu0_const_cast__(unsigned int, __mu0_bit_digits__(x));
 		y = x >> 16U; if (y != 0U) { d = d - 16U; x = y; }
 		y = x >>  8U; if (y != 0U) { d = d -  8U; x = y; }
 		y = x >>  4U; if (y != 0U) { d = d -  4U; x = y; }
 		y = x >>  2U; if (y != 0U) { d = d -  2U; x = y; }
 		y = x >>  1U;
-
 		return __mu0_cast__(int, ((y != 0U) ? d - 2U : d - x));
 	}
-	return __mu0_cast__(int, __mu0_bit_counts__(x));
+	return __mu0_cast__(int, __mu0_bit_counts__(__x));
 }
+#	endif
 
 __mu0_static_inline__
-int __mu0_cnttz_ll__(const unsigned long long __x)
+int __mu0_cntlz_ll__(const unsigned long long __x)
 {
 	const unsigned int x = 0U;
 	const unsigned int d = __mu0_const_cast__(unsigned int, __mu0_bit_counts__(x));
 #	if MU0_HAVE_C99 || MU0_HAVE_CPP11
 	return ((__x & 0xFFFFFFFF00000000ULL)
-		?     __mu0_cnttz_i__(__x >> d)
-		: d + __mu0_cnttz_i__(__x & 0xFFFFFFFFULL)
+		?     __mu0_cntlz_i__(__x >> d)
+		: d + __mu0_cntlz_i__(__x & 0xFFFFFFFFULL)
 	);
 #	else
 	return ((__x & 0xFFFFFFFF00000000U)
-		?     __mu0_cnttz_i__(__x >> d)
-		: d + __mu0_cnttz_i__(__x & 0xFFFFFFFFU)
+		?     __mu0_cntlz_i__(__x >> d)
+		: d + __mu0_cntlz_i__(__x & 0xFFFFFFFFU)
 	);
 #	endif
 }
 
 __mu0_static_inline__
-int __mu0_cnttz_l__(const unsigned long __x)
+int __mu0_cntlz_l__(const unsigned long __x)
 {
 #	if defined(__LP64__) || defined(__LP64)
-	return __mu0_cnttz_ll__(__x);
+	return __mu0_cntlz_ll__(__x);
 #	else
-	return __mu0_cnttz_i__(__x);
+	return __mu0_cntlz_i__(__x);
 #	endif
 }
 
@@ -93,29 +119,29 @@ int __mu0_cnttz_l__(const unsigned long __x)
 
 	__mu0_static_inline__
 	int __mu0_clz_ll__(const unsigned long long __x)
-	{ return (__x > 0) ? _lzcnt_u64(__x)                             : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? _lzcnt_u64(__x)                             : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 #	if defined(__LP64)
 	__mu0_static_inline__
 	int __mu0_clz_l__(const unsigned long __x)
-	{ return (__x > 0) ? _lzcnt_u64(__x)                             : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? _lzcnt_u64(__x)                             : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 #	else
 	__mu0_static_inline__
 	int __mu0_clz_l__(const unsigned long __x)
-	{ return (__x > 0) ? _lzcnt_u32(__x)                             : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? _lzcnt_u32(__x)                             : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 #	endif
 
 	__mu0_static_inline__
 	int __mu0_clz_i__(const unsigned int __x)
-	{ return (__x > 0) ? _lzcnt_u32(__x)                             : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? _lzcnt_u32(__x)                             : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 	__mu0_static_inline__
 	int __mu0_clz_s__(const unsigned short __x)
-	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 2) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 2) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 	__mu0_static_inline__
 	int __mu0_clz_c__(const unsigned char __x)
-	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 #	elif MU0_HAVE_CC_MSVCC
 
@@ -128,23 +154,23 @@ int __mu0_cnttz_l__(const unsigned long __x)
 
 	__mu0_static_inline__
 	int __mu0_clz_ll__(const unsigned long long __x)
-	{ return (__x > 0) ? __lzcnt64(__x)                              : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? __lzcnt64(__x)                              : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 	__mu0_static_inline__
 	int __mu0_clz_l__(const unsigned long __x)
-	{ return (__x > 0) ? __lzcnt(__x)                                : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? __lzcnt(__x)                                : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 	__mu0_static_inline__
 	int __mu0_clz_i__(const unsigned int __x)
-	{ return (__x > 0) ? __lzcnt(__x)                                : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? __lzcnt(__x)                                : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 	__mu0_static_inline__
 	int __mu0_clz_s__(const unsigned short __x)
-	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 2) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 2) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 	__mu0_static_inline__
 	int __mu0_clz_c__(const unsigned char __x)
-	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 #	else
 
@@ -161,7 +187,7 @@ int __mu0_cnttz_l__(const unsigned long __x)
 		unsigned long index         = 0;
 	#	if defined(_M_X64) && !defined(_M_ARM64EC)
 		const unsigned __int64 mask = __mu0_const_cast__(__int64, __x);
-		if (__x > 0) {
+		if (__x) {
 			if (_BitScanReverse64(&index, mask)) {
 				return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
 			}
@@ -171,7 +197,7 @@ int __mu0_cnttz_l__(const unsigned long __x)
 		const unsigned int  hdigits = __mu0_const_cast__(unsigned int, __mu0_bit_counts__(mask_lo));
 		const unsigned long mask_hi = __mu0_const_cast__(unsigned long, (__x >> hdigits));
 
-		if (__x > 0) {
+		if (__x) {
 			if (!_BitScanReverse(&index, mask_lo) && _BitScanReverse(&index, mask_hi)) {
 				index += hdigits;
 			}
@@ -186,7 +212,7 @@ int __mu0_cnttz_l__(const unsigned long __x)
 	{
 		unsigned long index = 0;
 		unsigned long mask  = __x;
-		if (__x > 0) {
+		if (__x) {
 			if (_BitScanReverse(&index, mask)) {
 				return __mu0_cast__(int, (__mu0_bit_counts__(__x) - 1) - index);
 			}
@@ -196,15 +222,15 @@ int __mu0_cnttz_l__(const unsigned long __x)
 
 	__mu0_static_inline__
 	int __mu0_clz_i__(const unsigned int __x)
-	{ return (__x > 0) ? __mu0_clz_l__(__x)                          : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? __mu0_clz_l__(__x)                          : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 	__mu0_static_inline__
 	int __mu0_clz_s__(const unsigned short __x)
-	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 2) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 2) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 	__mu0_static_inline__
 	int __mu0_clz_c__(const unsigned char __x)
-	{ return (__x > 0) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
+	{ return (__x) ? __mu0_clz_i__(__x) - (__MU0_CHAR_BIT__ * 3) : __mu0_cast__(int, __mu0_bit_counts__(__x)); }
 
 #		endif
 
