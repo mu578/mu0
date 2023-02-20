@@ -34,13 +34,59 @@
 #		define __MU0_CHAR_BIT__ (8U)
 #	endif
 
+__mu0_static_inline__
+int __mu0_bit_digits_ll__(void)
+{ return __mu0_const_cast__(int, (__mu0_sizeof__(unsigned long long) * __MU0_CHAR_BIT__)); }
 
-#	define __mu0_bit_digits_ll__() __mu0_const_cast__(int, (__mu0_sizeof__(unsigned long long) * __MU0_CHAR_BIT__))
-#	define __mu0_bit_digits_l__()  __mu0_const_cast__(int, (__mu0_sizeof__(unsigned long) * __MU0_CHAR_BIT__))
-#	define __mu0_bit_digits_i__()  __mu0_const_cast__(int, (__mu0_sizeof__(unsigned int) * __MU0_CHAR_BIT__))
-#	define __mu0_bit_digits_s__()  __mu0_const_cast__(int, (__mu0_sizeof__(unsigned short) * __MU0_CHAR_BIT__))
-#	define __mu0_bit_digits_c__()  __mu0_const_cast__(int, (__mu0_sizeof__(unsigned char) * __MU0_CHAR_BIT__))
+__mu0_static_inline__
+int __mu0_bit_digits_l__(void)
+{ return __mu0_const_cast__(int, (__mu0_sizeof__(unsigned long)      * __MU0_CHAR_BIT__)); }
 
+__mu0_static_inline__
+int __mu0_bit_digits_i__(void)
+{ return __mu0_const_cast__(int, (__mu0_sizeof__(unsigned int)       * __MU0_CHAR_BIT__)); }
+
+__mu0_static_inline__
+int __mu0_bit_digits_s__(void)
+{ return __mu0_const_cast__(int, (__mu0_sizeof__(unsigned short)     * __MU0_CHAR_BIT__)); }
+
+__mu0_static_inline__
+int __mu0_bit_digits_c__(void)
+{ return __mu0_const_cast__(int, (__mu0_sizeof__(unsigned char)      * __MU0_CHAR_BIT__)); }
+
+# if    MU0_HAVE_OVERLOAD
+__mu0_overload__ int __mu0_bit_digits__ (const unsigned long long __x) { return __mu0_bit_digits_ll__ (); }
+__mu0_overload__ int __mu0_bit_digits__ (const unsigned long      __x) { return __mu0_bit_digits_l__  (); }
+__mu0_overload__ int __mu0_bit_digits__ (const unsigned int       __x) { return __mu0_bit_digits_i__  (); }
+__mu0_overload__ int __mu0_bit_digits__ (const unsigned short     __x) { return __mu0_bit_digits_s__  (); }
+__mu0_overload__ int __mu0_bit_digits__ (const unsigned char      __x) { return __mu0_bit_digits_c__  (); }
+#	elif MU0_HAVE_GENERIC
+#	define __mu0_bit_digits__(__x) __mu0_generic__(__x \
+	, unsigned long long : __mu0_bit_digits_ll__       \
+	, unsigned long      : __mu0_bit_digits_l__        \
+	, unsigned int       : __mu0_bit_digits_i__        \
+	, unsigned short     : __mu0_bit_digits_s__        \
+	, unsigned char      : __mu0_bit_digits_c__        \
+) (__x)
+#	elif MU0_HAVE_TYPEOF
+#	define __mu0_bit_digits__(__x)                        \
+	((__mu0_isofkind__(unsigned long long, __x))          \
+		? __mu0_bit_digits_ll__()                          \
+		: ((__mu0_isofkind__(unsigned long, __x))          \
+			? __mu0_bit_digits_l__()                        \
+			: ((__mu0_isofkind__(unsigned int, __x))        \
+				? __mu0_bit_digits_i__()                     \
+				: ((__mu0_isofkind__(unsigned short, __x))   \
+					? __mu0_bit_digits_s__()                  \
+					: ((__mu0_isofkind__(unsigned char, __x)) \
+						? __mu0_bit_digits_c__()               \
+						: 0                                    \
+					)                                         \
+				)                                            \
+			)                                               \
+		)                                                  \
+	)
+#	else
 #	define __mu0_bit_digits__(__x)                                        \
 	((__mu0_sizeof__(__x) == __mu0_sizeof__(unsigned long long))          \
 		? __mu0_bit_digits_ll__()                                          \
@@ -58,6 +104,7 @@
 			)                                                               \
 		)                                                                  \
 	)
+#	endif
 
 __mu0_static_inline__
 int __mu0_cntlz_i__(const unsigned int __x)
@@ -257,6 +304,7 @@ int __mu0_cntlz_l__(const unsigned long __x)
 #		endif
 
 #	elif MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC
+
 #	undef  MU0_HAVE_BITWISEOP
 #	define MU0_HAVE_BITWISEOP 1
 
@@ -281,6 +329,15 @@ int __mu0_cntlz_l__(const unsigned long __x)
 	int __mu0_clz_c__(const unsigned char __x)
 	{ return (__x) ? ((__builtin_clz(__x) - (__MU0_CHAR_BIT__ * 3))) : __mu0_bit_digits_c__();  }
 
+#	else
+#	undef  MU0_HAVE_BITWISEOP
+#	define MU0_HAVE_BITWISEOP 1
+
+#	define __mu0_clz_ll__ __mu0_cntlz_ll__
+#	define __mu0_clz_l__  __mu0_cntlz_l__
+#	define __mu0_clz_i__  __mu0_cntlz_i__
+#	define __mu0_clz_s__  __mu0_cntlz_s__
+#	define __mu0_clz_c__  __mu0_cntlz_c__
 #	endif
 
 #	if MU0_HAVE_BITWISEOP
