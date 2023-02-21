@@ -213,7 +213,7 @@ __mu0_static__ const mu0_sint128_t mu0_sint128_min = INT64_MIN;
 #	define MU0_UINT128_C UINT64_C
 #	define MU0_SINT128_C INT64_C
 #	else
-#	define MU0_UINT128_C (c) c ## U
+#	define MU0_UINT128_C (c) c ## UL
 #	define MU0_SINT128_C (c) c
 #	endif
 
