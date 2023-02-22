@@ -16,7 +16,6 @@
 //
 
 #include <mu0/mu0_random.h>
-
 #include <time.h>
 
 #	undef  __mu0_time_t__

@@ -16,7 +16,6 @@
 //
 
 #include <mu0/mu0_string.h>
-
 #include <string.h>
 
 #	undef  __mu0_memcpy__
