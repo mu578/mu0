@@ -113,7 +113,7 @@ const char * __mu0_xlocale_set__(int category, const char * locale)
 }
 
 __mu0_static_inline__
-int __mu0_xlocale_free__(__mu0_xlocale_t__ loc)
+const int __mu0_xlocale_free__(__mu0_xlocale_t__ loc)
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	if (__mu0_not_nullptr__(loc)) {
@@ -130,7 +130,7 @@ int __mu0_xlocale_free__(__mu0_xlocale_t__ loc)
 }
 
 __mu0_static_inline__
-int __mu0_xlocale_collate__(
+const int __mu0_xlocale_collate__(
 	  const char *      lhs
 	, const char *      rhs
 	, __mu0_xlocale_t__ loc
