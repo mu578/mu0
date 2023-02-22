@@ -118,6 +118,7 @@
 #	endif
 
 #	define __mu0_nullable__
+#	define __mu0_delineate__ enum { /***/ }
 
 #endif /* !MU0_ATTRIBUTE_H */
 
