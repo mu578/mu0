@@ -278,7 +278,7 @@ const int __mu0_cnttz_s__(const unsigned short __x)
 	unsigned char  d = 0;
 	unsigned short x = __x;
 	if (x) {
-		if (!(x & 0x00ff)) { d += 8; x = x >> 8U; }
+		if (!(x & 0x00FFU)) { d += 8; x = x >> 8U; }
 		return d + __mu0_cnttz_c__(x);
 	}
 	return __mu0_bit_digits_s__();
@@ -290,9 +290,9 @@ const int __mu0_cnttz_c__(const unsigned char __x)
 	unsigned char d = 0;
 	unsigned char x = __x;
 	if (x) {
-		if (!(x & 0x0f)) { d += 4; x = x >> 4U; }
-		if (!(x & 0x03)) { d += 2; x = x >> 2U; }
-		if (!(x & 0x01)) { d += 1;              }
+		if (!(x & 0X0FU)) { d += 4; x = x >> 4U; }
+		if (!(x & 0x03U)) { d += 2; x = x >> 2U; }
+		if (!(x & 0x01U)) { d += 1;              }
 		return d;
 	}
 	return __mu0_bit_digits_c__();
