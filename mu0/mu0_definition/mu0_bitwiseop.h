@@ -752,6 +752,57 @@ unsigned char __mu0_bit_ceil_c__(const unsigned char            __x)
 	return __x > 1 ? (one << __mu0_bit_width_c__(__x - one)) : one;
 }
 
+__mu0_static_inline__ unsigned long long __mu0_bit_floor_ll__(const unsigned long long __x);
+__mu0_static_inline__ unsigned long      __mu0_bit_floor_l__ (const unsigned long      __x);
+__mu0_static_inline__ unsigned int       __mu0_bit_floor_i__ (const unsigned int       __x);
+__mu0_static_inline__ unsigned short     __mu0_bit_floor_s__ (const unsigned short     __x);
+__mu0_static_inline__ unsigned char      __mu0_bit_floor_c__ (const unsigned char      __x);
+
+__mu0_static_inline__
+unsigned long long __mu0_bit_floor_ll__(const unsigned long long __x)
+{
+#	if MU0_HAVE_C99 || MU0_HAVE_CPP11
+	const unsigned long long one  = 1ULL;
+	const unsigned long long zero = 0ULL;
+#	else
+	const unsigned long long one  = 1UL;
+	const unsigned long long zero = 0UL;
+#	endif
+	return __x != zero ? (one << (__mu0_bit_width_ll__(__x) - one)) : zero;
+}
+
+__mu0_static_inline__
+unsigned long __mu0_bit_floor_l__(const unsigned long            __x)
+{
+	const unsigned long one  = 1UL;
+	const unsigned long zero = 0UL;
+	return __x != zero ? (one << (__mu0_bit_width_l__(__x) - one)) : zero;
+}
+
+__mu0_static_inline__
+unsigned int __mu0_bit_floor_i__(const unsigned int              __x)
+{
+	const unsigned int one  = 1U;
+	const unsigned int zero = 0U;
+	return __x != zero ? (one << (__mu0_bit_width_i__(__x) - one)) : zero;
+}
+
+__mu0_static_inline__
+unsigned short __mu0_bit_floor_s__(const unsigned short          __x)
+{
+	const unsigned short one  = 1;
+	const unsigned short zero = 0;
+	return __x != zero ? (one << (__mu0_bit_width_s__(__x) - one)) : zero;
+}
+
+__mu0_static_inline__
+unsigned char __mu0_bit_floor_c__(const unsigned char            __x)
+{
+	const unsigned char one  = 1;
+	const unsigned char zero = 0;
+	return __x != zero ? (one << (__mu0_bit_width_c__(__x) - one)) : zero;
+}
+
 #	define __mu0_bit_reverse__(_Tp, __x)                                                               \
 	__mu0_scope_begin__                                                                                \
 		unsigned int __mu0_bit_reverse__digits__ = __mu0_cast__(unsigned int, __mu0_bit_digits__(__x)); \
@@ -771,7 +822,7 @@ unsigned char __mu0_bit_ceil_c__(const unsigned char            __x)
 	__mu0_scope_end__
 
 #	define __mu0_bitset_pattern_u8__ "%c%c%c%c%c%c%c%c"
-#	define __mu0_bitset_format_u8__(__x)  \
+#	define __mu0_bitset_format_u8__(__x) \
 	  (((__x) & 0x80U) ? '1' : '0') \
 	, (((__x) & 0x40U) ? '1' : '0') \
 	, (((__x) & 0x20U) ? '1' : '0') \
