@@ -62,7 +62,7 @@
 #	endif
 
 __mu0_static_inline__
-__mu0_xlocale_t__ __mu0_xlocale_new__(int mask, const char * locale, __mu0_xlocale_t__ base)
+__mu0_xlocale_t__ __mu0_xlocale_new__(const int mask, const char * locale, __mu0_xlocale_t__ base)
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	__mu0_unused__(mask);
@@ -98,7 +98,7 @@ __mu0_xlocale_t__ __mu0_xlocale_use__(__mu0_xlocale_t__ loc)
 }
 
 __mu0_static_inline__
-const char * __mu0_xlocale_set__(int category, const char * locale)
+const char * __mu0_xlocale_set__(const int category, const char * locale)
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	__mu0_unused__(category);
