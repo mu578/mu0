@@ -23,7 +23,7 @@
 #	undef  __mu0_strlen__
 #	undef  __mu0_strchr__
 
-#	if MU0_HAVE_XLOCALE
+#	if MU0_HAVE_I18NLOCALE
 #		define __mu0_memset__ memset
 #		define __mu0_memcpy__ memcpy
 #		define __mu0_strlen__ strlen
@@ -36,7 +36,7 @@ const mu0_string8_t mu0_locale_name(
 	, const mu0_string8_t territory
 	, const mu0_string8_t modifier  __mu0_nullable__
 ) {
-#	if MU0_HAVE_XLOCALE
+#	if MU0_HAVE_I18NLOCALE
 	__mu0_static__
 	mu0_tchar8_t  s_name[48];
 	mu0_vtchar8_t variant;
@@ -106,7 +106,7 @@ mu0_locale_t mu0_locale_create(
 		, modifier
 	);
 	if (__mu0_not_nullptr__(name)) {
-		return __mu0_xlocale_new__(category, name, __mu0_nullptr__);
+		return __mu0_i18nlocale_new__(category, name, __mu0_nullptr__);
 	}
 	return __mu0_nullptr__;
 }
@@ -124,7 +124,7 @@ mu0_sint32_t mu0_locale_global(
 		, modifier
 	);
 	if (__mu0_not_nullptr__(name)) {
-		if (__mu0_not_nullptr__(__mu0_xlocale_set__(category, name))) {
+		if (__mu0_not_nullptr__(__mu0_i18nlocale_set__(category, name))) {
 			return 0;
 		}
 	}
@@ -132,12 +132,12 @@ mu0_sint32_t mu0_locale_global(
 }
 
 mu0_sint32_t mu0_locale_delete(mu0_locale_t locale)
-{ return __mu0_xlocale_free__(locale); }
+{ return __mu0_i18nlocale_free__(locale); }
 
 mu0_sint32_t mu0_locale_compare(
 	  const mu0_string8_t lhs
 	, const mu0_string8_t rhs
 	, const mu0_locale_t  locale __mu0_nullable__
-) { return __mu0_xlocale_collate__(lhs, rhs, locale); }
+) { return __mu0_i18nlocale_collate__(lhs, rhs, locale); }
 
 /* EOF */
