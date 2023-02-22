@@ -99,14 +99,14 @@ mu0_locale_t mu0_locale_create(
 	, const mu0_string8_t modifier  __mu0_nullable__
 	, const mu0_bool_t    collator
 ) {
-	const mu0_sint32_t category = ((collator == mu0_true) ? LC_COLLATE_MASK : LC_ALL_MASK);
-	const mu0_string8_t name    = mu0_locale_name(
+	const mu0_sint32_t  mask = ((collator == mu0_true) ? LC_COLLATE_MASK : LC_ALL_MASK);
+	const mu0_string8_t name = mu0_locale_name(
 		  language
 		, territory
 		, modifier
 	);
 	if (__mu0_not_nullptr__(name)) {
-		return __mu0_i18nlocale_new__(category, name, __mu0_nullptr__);
+		return __mu0_i18nlocale_new__(mask, name, __mu0_nullptr__);
 	}
 	return __mu0_nullptr__;
 }

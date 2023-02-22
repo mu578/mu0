@@ -125,7 +125,7 @@ const mu0_string8_t mu0_string8_at(
 		else if ((c & 0xF0) == 0xE0) { k = 2; }
 		else if ((c & 0xF8) == 0xF0) { k = 3; }
 		else                         { break; }
-		if(j == index) {
+		if (j == index) {
 			*width = k + 1;
 			return p + i;
 		}
@@ -170,7 +170,7 @@ const mu0_string8_t mu0_string8_range_at(
 		else if ((c & 0xF0) == 0xE0) { k = 2; }
 		else if ((c & 0xF8) == 0xF0) { k = 3; }
 		else                         { break; }
-		if(j == index) {
+		if (j == index) {
 			*width = k + 1;
 			return __first + i;
 		}
