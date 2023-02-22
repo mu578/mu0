@@ -16,6 +16,7 @@
 //
 
 #include <mu0/mu0_definition/mu0_platform.h>
+#include <mu0/mu0_definition/mu0_language.h>
 
 #ifndef MU0_XLOCALE_H
 #define MU0_XLOCALE_H 1
@@ -65,13 +66,14 @@ __mu0_xlocale_t__ __mu0_xlocale_new__(int mask, const char * locale, __mu0_xloca
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	__mu0_unused__(mask);
-	if (__mu0_not_nullptr__(base)) {
-		/***/
-	}
+	__mu0_unused__(base);
 	return _create_locale(LC_ALL, locale);
 #	elif MU0_HAVE_POSIX1_2001
 	return newlocale(mask, locale, base);
 #	else
+	__mu0_unused__(mask);
+	__mu0_unused__(locale);
+	__mu0_unused__(base);
 	return __mu0_nullptr__;
 #	endif
 }
@@ -90,18 +92,22 @@ __mu0_xlocale_t__ __mu0_xlocale_use__(__mu0_xlocale_t__ loc)
 #	elif MU0_HAVE_POSIX1_2001
 	return uselocale(loc);
 #	else
+	__mu0_unused__(loc);
 	return __mu0_nullptr__;
 #	endif
 }
 
 __mu0_static_inline__
-char * __mu0_xlocale_set__(int category, const char * locale)
+const char * __mu0_xlocale_set__(int category, const char * locale)
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+	__mu0_unused__(category);
 	return setlocale(LC_ALL, locale);
 #	elif MU0_HAVE_POSIX1_2001
 	return setlocale(category, locale);
 #	else
+	__mu0_unused__(category);
+	__mu0_unused__(locale);
 	return "en_EN.UTF-8";
 #	endif
 }
@@ -118,6 +124,7 @@ int __mu0_xlocale_free__(__mu0_xlocale_t__ loc)
 #	elif MU0_HAVE_POSIX1_2001
 	return freelocale(loc);
 #	else
+	__mu0_unused__(loc);
 	return 0;
 #	endif
 }
@@ -140,6 +147,7 @@ int __mu0_xlocale_collate__(
 		: __mu0_strcoll__   (lhs, rhs)
 	);
 #	else
+	__mu0_unused__(loc);
 	const int r = __mu0_strcmp__(lhs, rhs);
 #	endif
 	return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
