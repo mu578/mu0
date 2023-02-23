@@ -96,20 +96,20 @@
 #	if MU0_HAVE_TYPEOF && MU0_HAVE_EXTENSION
 #	define __mu0_min__(__a, __b)                  \
 	__mu0_extension__ ({                          \
-		__mu0_typeof__(__a) __m0_max__a__ = (__a); \
-		__mu0_typeof__(__b) __m0_max__b__ = (__b); \
-		(__m0_max__a__ < __m0_max__b__             \
-			? __m0_max__a__                         \
-			: __m0_max__b__                         \
+		__mu0_typeof__(__a) __mu0_max__a__ = (__a); \
+		__mu0_typeof__(__b) __mu0_max__b__ = (__b); \
+		(__mu0_max__a__ < __mu0_max__b__             \
+			? __mu0_max__a__                         \
+			: __mu0_max__b__                         \
 		);                                         \
 	})
 #	define __mu0_max__(__a, __b)                  \
 	__mu0_extension__ ({                          \
-		__mu0_typeof__(__a) __m0_max__a__ = (__a); \
-		__mu0_typeof__(__b) __m0_max__b__ = (__b); \
-		(__m0_max__a__ > __m0_max__b__             \
-			? __m0_max__a__                         \
-			: __m0_max__b__                         \
+		__mu0_typeof__(__a) __mu0_max__a__ = (__a); \
+		__mu0_typeof__(__b) __mu0_max__b__ = (__b); \
+		(__mu0_max__a__ > __mu0_max__b__             \
+			? __mu0_max__a__                         \
+			: __mu0_max__b__                         \
 		);                                         \
 	})
 #	else

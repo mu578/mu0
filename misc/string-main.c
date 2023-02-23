@@ -84,6 +84,19 @@ int main(int argc, const char * argv[])
 		mu0_console_log("s5.at(%02zu) : %.*s\n", i, width, glyph);
 	}
 
+
+	const volatile long long     v0 = 0;
+	unsigned long v1 = 0;
+	unsigned int  v2 = 0;
+	short         v3 = 0;
+	signed char   v4 = 0;
+
+	mu0_console_log("%01d)\n", mu0_is_sinteger(v0));
+	mu0_console_log("%01d)\n", mu0_is_sinteger(v1));
+	mu0_console_log("%01d)\n", mu0_is_sinteger(v2));
+	mu0_console_log("%01d)\n", mu0_is_sinteger(v3));
+	mu0_console_log("%01d)\n", mu0_is_sinteger(v4));
+
 	mu0_console_log("\n");
 
 	return 0;

@@ -192,7 +192,39 @@ typedef   mu0_fp16_t *          mu0_vfp16_t;
 #	define mu0_vfp16(__x)        __mu0_cast__(mu0_vfp16_t, __x)
 #	define mu0_const_vfp16(__x)  __mu0_const_cast__(mu0_vfp16_t, __x)
 
-#	if MU0_HAVE_TYPEOF
+#	if   MU0_HAVE_GENERIC
+#	if   MU0_HAVE_FLOAT128 && MU0_HAVE_FLOAT16
+#	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
+		, mu0_fp128_t : 1                                         \
+		, mu0_fp64_t  : 1                                         \
+		, mu0_fp32_t  : 1                                         \
+		, mu0_fp16_t  : 1                                         \
+		, default     : 0                                         \
+	)
+#	elif  MU0_HAVE_FLOAT128
+#	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
+		, mu0_fp128_t : 1                                         \
+		, mu0_fp64_t  : 1                                         \
+		, mu0_fp32_t  : 1                                         \
+		, default     : 0                                         \
+	)
+#	elif  MU0_HAVE_FLOAT16
+#	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
+		, mu0_fpex_t : 1                                          \
+		, mu0_fp64_t : 1                                          \
+		, mu0_fp32_t : 1                                          \
+		, mu0_fp16_t : 1                                          \
+		, default    : 0                                          \
+	)
+#	else
+#	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
+		, mu0_fpex_t : 1                                          \
+		, mu0_fp64_t : 1                                          \
+		, mu0_fp32_t : 1                                          \
+		, default    : 0                                          \
+	)
+#	endif
+#	elif MU0_HAVE_TYPEOF
 #	define mu0_is_floating_point(__x)        \
 	((                                       \
 		   __mu0_isofkind__(mu0_fp128_t, __x) \

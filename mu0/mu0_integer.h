@@ -172,22 +172,58 @@ typedef   mu0_sint8_t  *                mu0_vsint8_t;
 #	define mu0_vsint8(__x)               __mu0_cast__(mu0_vsint8_t, __x)
 #	define mu0_const_vsint8(__x)         __mu0_const_cast__(mu0_vsint8_t, __x)
 
-#	if MU0_HAVE_TYPEOF
-#	define mu0_is_sinteger(__x)                \
-	((                                         \
-		   __mu0_isofkind__(m0_sint64_t  , __x) \
-		|| __mu0_isofkind__(m0_sint32_t  , __x) \
-		|| __mu0_isofkind__(m0_sint16_t  , __x) \
-		|| __mu0_isofkind__(m0_sint8_t   , __x) \
-		|| __mu0_isofkind__(mu0_ptrdiff_t, __x) \
+#	if   MU0_HAVE_GENERIC
+#	if   MU0_HAVE_INT128
+#	define mu0_is_sinteger(__x) __mu0_generic__((__x) + 0 \
+		, mu0_sint128_t : 1                                \
+		, mu0_sint64_t  : 1                                \
+		, mu0_sint32_t  : 1                                \
+		, mu0_sint16_t  : 1                                \
+		, mu0_sint8_t   : 1                                \
+		, default       : 0                                \
+	)
+#	define mu0_is_uinteger(__x) __mu0_generic__((__x) + 0 \
+		, mu0_uint128_t : 1                                \
+		, mu0_uint64_t  : 1                                \
+		, mu0_uint32_t  : 1                                \
+		, mu0_uint16_t  : 1                                \
+		, mu0_uint8_t   : 1                                \
+		, default       : 0                                \
+	) 
+#	else
+#	define mu0_is_sinteger(__x) __mu0_generic__((__x) + 0 \
+		, mu0_sint64_t : 1                                 \
+		, mu0_sint32_t : 1                                 \
+		, mu0_sint16_t : 1                                 \
+		, mu0_sint8_t  : 1                                 \
+		, default      : 0                                 \
+	)
+#	define mu0_is_uinteger(__x) __mu0_generic__((__x) + 0 \
+		, mu0_uint64_t : 1                                 \
+		, mu0_uint32_t : 1                                 \
+		, mu0_uint16_t : 1                                 \
+		, mu0_uint8_t  : 1                                 \
+		, default      : 0                                 \
+	)
+#	endif
+#	elif MU0_HAVE_TYPEOF
+#	define mu0_is_sinteger(__x)                 \
+	((                                          \
+		   __mu0_isofkind__(mu0_sint128_t , __x) \
+		|| __mu0_isofkind__(mu0_sint64_t  , __x) \
+		|| __mu0_isofkind__(mu0_sint32_t  , __x) \
+		|| __mu0_isofkind__(mu0_sint16_t  , __x) \
+		|| __mu0_isofkind__(mu0_sint8_t   , __x) \
+		|| __mu0_isofkind__(mu0_ptrdiff_t, __x)  \
 	) ? 1 : 0)
 
-#	define mu0_is_uinteger(__x)              \
-	((                                       \
-		   __mu0_isofkind__(m0_uint64_t, __x) \
-		|| __mu0_isofkind__(m0_uint32_t, __x) \
-		|| __mu0_isofkind__(m0_uint16_t, __x) \
-		|| __mu0_isofkind__(m0_uint8_t , __x) \
+#	define mu0_is_uinteger(__x)                \
+	((                                         \
+		   __mu0_isofkind__(mu0_uint128_t, __x) \
+		|| __mu0_isofkind__(mu0_uint64_t , __x) \
+		|| __mu0_isofkind__(mu0_uint32_t , __x) \
+		|| __mu0_isofkind__(mu0_uint16_t , __x) \
+		|| __mu0_isofkind__(mu0_uint8_t  , __x) \
 	) ? 1 : 0)
 #	else
 #	define mu0_is_sinteger(__x) (1)

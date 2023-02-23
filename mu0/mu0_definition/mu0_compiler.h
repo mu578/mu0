@@ -41,9 +41,7 @@
 #	undef  MU0_HAVE_CC_MSVCC
 #	define MU0_HAVE_CC_MSVCC 0
 #	if defined(_MSC_VER) && (_MSC_VER >= 1929)
-#	if defined(_M_X64) && !defined(_M_ARM64EC)
 #		include <intrin.h>
-#	endif
 #		undef  MU0_HAVE_COMPILER
 #		undef  MU0_HAVE_CC_MSVCC
 #		define MU0_HAVE_COMPILER 1
