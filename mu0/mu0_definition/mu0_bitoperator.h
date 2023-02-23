@@ -471,6 +471,12 @@ __mu0_static_inline__ const int __mu0_clz_c__ (const unsigned char      __x) { r
 
 #	endif
 
+__mu0_static_inline__ const int __mu0_clo_ll__(const unsigned long long __x) { return __mu0_clz_ll__ (~__x); }
+__mu0_static_inline__ const int __mu0_clo_l__ (const unsigned long      __x) { return __mu0_clz_l__  (~__x); }
+__mu0_static_inline__ const int __mu0_clo_i__ (const unsigned int       __x) { return __mu0_clz_i__  (~__x); }
+__mu0_static_inline__ const int __mu0_clo_s__ (const unsigned short     __x) { return __mu0_clz_s__  (~__x); }
+__mu0_static_inline__ const int __mu0_clo_c__ (const unsigned char      __x) { return __mu0_clz_c__  (~__x); }
+
 #	if   MU0_HAVE_OVERLOAD
 __mu0_overload__ const int __mu0_clz__ (const unsigned long long __x) { return __mu0_clz_ll__ (__x); }
 __mu0_overload__ const int __mu0_clz__ (const unsigned long      __x) { return __mu0_clz_l__  (__x); }
@@ -515,6 +521,58 @@ __mu0_overload__ const int __mu0_clz__ (const unsigned char      __x) { return _
 					? __mu0_clz_s__(__x)                                      \
 					: ((__mu0_sizeof__(__x) == __mu0_sizeof__(unsigned char)) \
 						? __mu0_clz_c__(__x)                                   \
+						: 0                                                    \
+					)                                                         \
+				)                                                            \
+			)                                                               \
+		)                                                                  \
+	)
+#	endif
+
+#	if   MU0_HAVE_OVERLOAD
+__mu0_overload__ const int __mu0_clo__ (const unsigned long long __x) { return __mu0_clo_ll__ (__x); }
+__mu0_overload__ const int __mu0_clo__ (const unsigned long      __x) { return __mu0_clo_l__  (__x); }
+__mu0_overload__ const int __mu0_clo__ (const unsigned int       __x) { return __mu0_clo_i__  (__x); }
+__mu0_overload__ const int __mu0_clo__ (const unsigned short     __x) { return __mu0_clo_s__  (__x); }
+__mu0_overload__ const int __mu0_clo__ (const unsigned char      __x) { return __mu0_clo_c__  (__x); }
+#	elif MU0_HAVE_GENERIC
+#	define __mu0_clo__(__x) __mu0_generic__(__x \
+	, unsigned long long : __mu0_clo_ll__       \
+	, unsigned long      : __mu0_clo_l__        \
+	, unsigned int       : __mu0_clo_i__        \
+	, unsigned short     : __mu0_clo_s__        \
+	, unsigned char      : __mu0_clo_c__        \
+) (__x)
+#	elif MU0_HAVE_TYPEOF
+#	define __mu0_clo__(__x)                               \
+	((__mu0_isofkind__(unsigned long long, __x))          \
+		? __mu0_clo_ll__(__x)                              \
+		: ((__mu0_isofkind__(unsigned long, __x))          \
+			? __mu0_clo_l__(__x)                            \
+			: ((__mu0_isofkind__(unsigned int, __x))        \
+				? __mu0_clo_i__(__x)                         \
+				: ((__mu0_isofkind__(unsigned short, __x))   \
+					? __mu0_clo_s__(__x)                      \
+					: ((__mu0_isofkind__(unsigned char, __x)) \
+						? __mu0_clo_c__(__x)                   \
+						: 0                                    \
+					)                                         \
+				)                                            \
+			)                                               \
+		)                                                  \
+	)
+#	else
+#	define __mu0_clo__(__x)                                               \
+	((__mu0_sizeof__(__x) == __mu0_sizeof__(unsigned long long))          \
+		? __mu0_clo_ll__(__x)                                              \
+		: ((__mu0_sizeof__(__x) == __mu0_sizeof__(unsigned long))          \
+			? __mu0_clo_l__(__x)                                            \
+			: ((__mu0_sizeof__(__x) == __mu0_sizeof__(unsigned int))        \
+				? __mu0_clo_i__(__x)                                         \
+				: ((__mu0_sizeof__(__x) == __mu0_sizeof__(unsigned short))   \
+					? __mu0_clo_s__(__x)                                      \
+					: ((__mu0_sizeof__(__x) == __mu0_sizeof__(unsigned char)) \
+						? __mu0_clo_c__(__x)                                   \
 						: 0                                                    \
 					)                                                         \
 				)                                                            \
@@ -618,6 +676,7 @@ __mu0_overload__ const int __mu0_ctz__ (const unsigned char      __x) { return _
 #	endif
 
 #	define __mu0_countl_zero__(__x) (__mu0_clz__(__x))
+#	define __mu0_countl_one__(__x)  (__mu0_clo__(__x))
 #	define __mu0_countr_zero__(__x) (__mu0_ctz__(__x))
 
 __mu0_static_inline__ const int __mu0_bit_width_ll__(const unsigned long long __x);
