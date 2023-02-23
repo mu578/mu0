@@ -721,35 +721,35 @@ const unsigned long long __mu0_bit_ceil_ll__(const unsigned long long __x)
 #	else
 	const unsigned long long one = 1UL;
 #	endif
-	return __x > 1 ? (one << __mu0_bit_width_ll__(__x - one)) : one;
+	return __x > one ? (one << __mu0_bit_width_ll__(__x - one)) : one;
 }
 
 __mu0_static_inline__
 const unsigned long __mu0_bit_ceil_l__(const unsigned long            __x)
 {
 	const unsigned long one = 1UL;
-	return __x > 1 ? (one << __mu0_bit_width_l__(__x - one)) : one;
+	return __x > one ? (one << __mu0_bit_width_l__(__x - one)) : one;
 }
 
 __mu0_static_inline__
 const unsigned int __mu0_bit_ceil_i__(const unsigned int              __x)
 {
 	const unsigned int one = 1U;
-	return __x > 1 ? (one << __mu0_bit_width_i__(__x - one)) : one;
+	return __x > one ? (one << __mu0_bit_width_i__(__x - one)) : one;
 }
 
 __mu0_static_inline__
 const unsigned short __mu0_bit_ceil_s__(const unsigned short          __x)
 {
 	const unsigned short one = 1;
-	return __x > 1 ? (one << __mu0_bit_width_s__(__x - one)) : one;
+	return __x > one ? (one << __mu0_bit_width_s__(__x - one)) : one;
 }
 
 __mu0_static_inline__
 const unsigned char __mu0_bit_ceil_c__(const unsigned char            __x)
 {
 	const unsigned char one = 1;
-	return __x > 1 ? (one << __mu0_bit_width_c__(__x - one)) : one;
+	return __x > one ? (one << __mu0_bit_width_c__(__x - one)) : one;
 }
 
 __mu0_static_inline__ const unsigned long long __mu0_bit_floor_ll__(const unsigned long long __x);
