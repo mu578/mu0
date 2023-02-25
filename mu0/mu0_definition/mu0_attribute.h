@@ -64,9 +64,9 @@
 #		elif MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC
 #			undef  MU0_HAVE_INLINE_ALWAYS
 #			define MU0_HAVE_INLINE_ALWAYS 1
-#			define __mu0_inline_always__  __inline__ __attribute__((always_inline))
+#			define __mu0_inline_always__ __inline__ __attribute__((always_inline))
 #		else
-#			define __mu0_inline_always__  __mu0_inline__
+#			define __mu0_inline_always__ __mu0_inline__
 #		endif
 #	else
 #		define __mu0_inline_always__ __mu0_inline__
@@ -83,7 +83,7 @@
 #		elif MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC
 #			undef  MU0_HAVE_INLINE_NEVER
 #			define MU0_HAVE_INLINE_NEVER 1
-#			define __mu0_inline_never__  __attribute__((noinline))
+#			define __mu0_inline_never__ __attribute__((noinline))
 #		else
 #			define __mu0_inline_never__
 #		endif
@@ -97,7 +97,7 @@
 #	if 1
 #		undef  MU0_HAVE_STATIC_INLINE
 #		define MU0_HAVE_STATIC_INLINE 1
-#		define __mu0_static_inline__  __mu0_static__ __mu0_inline_always__
+#		define __mu0_static_inline__ __mu0_static__ __mu0_inline_always__
 #	else
 #		define __mu0_static_inline__
 #	endif
@@ -105,11 +105,11 @@
 #	undef  MU0_HAVE_OVERLOAD
 #	undef  __mu0_overload__
 #	define MU0_HAVE_OVERLOAD 0
-#	if defined(__clang__)
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCC
 #		if __has_attribute(__overloadable__)
 #			undef  MU0_HAVE_OVERLOAD
 #			define MU0_HAVE_OVERLOAD 1
-#			define __mu0_overload__  __mu0_static__ __attribute__((__overloadable__, __always_inline__, __unused__))
+#			define __mu0_overload__ __mu0_static__ __attribute__((__overloadable__, __always_inline__, __unused__))
 #		else
 #			define __mu0_overload__
 #		endif
