@@ -29,6 +29,7 @@
 #	include <mu0/mu0_definition/mu0_i18nlocale.h>
 #	include <mu0/mu0_definition/mu0_language.h>
 #	include <mu0/mu0_definition/mu0_memfence.h>
+#	include <mu0/mu0_definition/mu0_numeric.h>
 #	include <mu0/mu0_definition/mu0_platform.h>
 
 MU0_BEGIN_CDECL

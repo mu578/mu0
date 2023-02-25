@@ -93,30 +93,6 @@
 #		define __mu0_isofsize__(_Tp, __x) (((__mu0_sizeof__(_Tp) == __mu0_sizeof__(__x))) ? 1 : 0)
 #	endif
 
-#	if MU0_HAVE_TYPEOF && MU0_HAVE_EXTENSION
-#	define __mu0_min__(__a, __b)                   \
-	__mu0_extension__ ({                           \
-		__mu0_typeof__(__a) __mu0_max__a__ = (__a); \
-		__mu0_typeof__(__b) __mu0_max__b__ = (__b); \
-		(__mu0_max__a__ < __mu0_max__b__            \
-			? __mu0_max__a__                         \
-			: __mu0_max__b__                         \
-		);                                          \
-	})
-#	define __mu0_max__(__a, __b)                   \
-	__mu0_extension__ ({                           \
-		__mu0_typeof__(__a) __mu0_max__a__ = (__a); \
-		__mu0_typeof__(__b) __mu0_max__b__ = (__b); \
-		(__mu0_max__a__ > __mu0_max__b__            \
-			? __mu0_max__a__                         \
-			: __mu0_max__b__                         \
-		);                                          \
-	})
-#	else
-#	define __mu0_min__(__a, __b) (((__a) < (__b)) ? (__a) : (__b))
-#	define __mu0_max__(__a, __b) (((__a) > (__b)) ? (__a) : (__b))
-#	endif
-
 #endif /* !MU0_FEATURE_H */
 
 /* EOF */
