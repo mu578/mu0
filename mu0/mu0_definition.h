@@ -29,13 +29,16 @@
 #	include <mu0/mu0_definition/mu0_i18nlocale.h>
 #	include <mu0/mu0_definition/mu0_language.h>
 #	include <mu0/mu0_definition/mu0_memfence.h>
-#	include <mu0/mu0_definition/mu0_numeric.h>
+#	include <mu0/mu0_definition/mu0_numeral.h>
 #	include <mu0/mu0_definition/mu0_platform.h>
 
 MU0_BEGIN_CDECL
 
 #	define mu0_min(__a, __b)        __mu0_min__(__a, __b)
 #	define mu0_max(__a, __b)        __mu0_max__(__a, __b)
+#	define mu0_abs(__a)             __mu0_abs__(__a)
+#	define mu0_gcd(__a, __b)        __mu0_gcd__(__a, __b)
+#	define mu0_lcm(__a, __b)        __mu0_lcm__(__a, __b)
 
 #	define mu0_console_log          __mu0_console_log__
 #	define mu0_scope_begin          __mu0_scope_begin__

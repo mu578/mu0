@@ -10,7 +10,7 @@
 //                                           | |                                                            //
 //                                           |_|                                                            //
 
-// mu0_numeric.h
+// mu0_numeral.h
 //
 // Copyright (C) 2023 mu578. All rights reserved.
 //
@@ -18,8 +18,8 @@
 #include <mu0/mu0_definition/mu0_attribute.h>
 #include <mu0/mu0_definition/mu0_feature.h>
 
-#ifndef MU0_NUMERIC_H
-#define MU0_NUMERIC_H 1
+#ifndef MU0_NUMERAL_H
+#define MU0_NUMERAL_H 1
 
 #	if MU0_HAVE_TYPEOF && MU0_HAVE_EXTENSION
 #	define __mu0_min__(__a, __b)                             \
@@ -52,7 +52,7 @@
 #	else
 #	define __mu0_min__(__a, __b)      (((__a) < (__b)) ? (__a) : (__b))
 #	define __mu0_max__(__a, __b)      (((__a) > (__b)) ? (__a) : (__b))
-#	define __mu0_abs__(__a)           (((__a) == 0)    ? 0 : (((__a) > 0) ? (__a) : -(__a)))
+#	define __mu0_abs__(__a)           (((__a) == 0   ) ? 0     : (((__a) > 0) ? (__a) : -(__a)))
 #	endif
 
 #	define __mu0_clamp__(__a, __b, __c) (__mu0_max__(__b, __mu0_min__(__a, __c)))
@@ -104,11 +104,11 @@ const unsigned char __mu0_gcd_c__(const unsigned char __a, const unsigned char _
 }
 
 #	if   MU0_HAVE_OVERLOAD
-__mu0_overload__ const int __mu0_gcd__ (const unsigned long long __a, const unsigned long long __b) { return __mu0_gcd_ll__ (__a, __b); }
-__mu0_overload__ const int __mu0_gcd__ (const unsigned long      __a, const unsigned long      __b) { return __mu0_gcd_l__  (__a, __b); }
-__mu0_overload__ const int __mu0_gcd__ (const unsigned int       __a, const unsigned int       __b) { return __mu0_gcd_i__  (__a, __b); }
-__mu0_overload__ const int __mu0_gcd__ (const unsigned short     __a, const unsigned short     __b) { return __mu0_gcd_s__  (__a, __b); }
-__mu0_overload__ const int __mu0_gcd__ (const unsigned char      __a, const unsigned char      __b) { return __mu0_gcd_c__  (__a, __b); }
+__mu0_overload__ const unsigned long long __mu0_gcd__ (const unsigned long long __a, const unsigned long long __b) { return __mu0_gcd_ll__ (__a, __b); }
+__mu0_overload__ const unsigned long      __mu0_gcd__ (const unsigned long      __a, const unsigned long      __b) { return __mu0_gcd_l__  (__a, __b); }
+__mu0_overload__ const unsigned int       __mu0_gcd__ (const unsigned int       __a, const unsigned int       __b) { return __mu0_gcd_i__  (__a, __b); }
+__mu0_overload__ const unsigned short     __mu0_gcd__ (const unsigned short     __a, const unsigned short     __b) { return __mu0_gcd_s__  (__a, __b); }
+__mu0_overload__ const unsigned char      __mu0_gcd__ (const unsigned char      __a, const unsigned char      __b) { return __mu0_gcd_c__  (__a, __b); }
 #	elif MU0_HAVE_GENERIC
 #	define __mu0_gcd__(__a, __b) __mu0_generic__((__a)+(__b) \
 	, unsigned long long : __mu0_gcd_ll__                    \
@@ -198,11 +198,11 @@ const unsigned char __mu0_lcm_c__(const unsigned char __a, const unsigned char _
 }
 
 #	if   MU0_HAVE_OVERLOAD
-__mu0_overload__ const int __mu0_lcm__ (const unsigned long long __a, const unsigned long long __b) { return __mu0_lcm_ll__ (__a, __b); }
-__mu0_overload__ const int __mu0_lcm__ (const unsigned long      __a, const unsigned long      __b) { return __mu0_lcm_l__  (__a, __b); }
-__mu0_overload__ const int __mu0_lcm__ (const unsigned int       __a, const unsigned int       __b) { return __mu0_lcm_i__  (__a, __b); }
-__mu0_overload__ const int __mu0_lcm__ (const unsigned short     __a, const unsigned short     __b) { return __mu0_lcm_s__  (__a, __b); }
-__mu0_overload__ const int __mu0_lcm__ (const unsigned char      __a, const unsigned char      __b) { return __mu0_lcm_c__  (__a, __b); }
+__mu0_overload__ const unsigned long long __mu0_lcm__ (const unsigned long long __a, const unsigned long long __b) { return __mu0_lcm_ll__ (__a, __b); }
+__mu0_overload__ const unsigned long      __mu0_lcm__ (const unsigned long      __a, const unsigned long      __b) { return __mu0_lcm_l__  (__a, __b); }
+__mu0_overload__ const unsigned int       __mu0_lcm__ (const unsigned int       __a, const unsigned int       __b) { return __mu0_lcm_i__  (__a, __b); }
+__mu0_overload__ const unsigned short     __mu0_lcm__ (const unsigned short     __a, const unsigned short     __b) { return __mu0_lcm_s__  (__a, __b); }
+__mu0_overload__ const unsigned char      __mu0_lcm__ (const unsigned char      __a, const unsigned char      __b) { return __mu0_lcm_c__  (__a, __b); }
 #	elif MU0_HAVE_GENERIC
 #	define __mu0_lcm__(__a, __b) __mu0_generic__((__a)+(__b) \
 	, unsigned long long : __mu0_lcm_ll__                    \
@@ -249,6 +249,6 @@ __mu0_overload__ const int __mu0_lcm__ (const unsigned char      __a, const unsi
 	)
 #	endif
 
-#endif /* !MU0_NUMERIC_H */
+#endif /* !MU0_NUMERAL_H */
 
 /* EOF */
