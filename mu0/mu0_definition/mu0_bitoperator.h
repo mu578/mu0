@@ -26,6 +26,75 @@
 
 #	include <limits.h>
 
+#	define ___mu0_bit_rev___(_Tp, __x)                                                          \
+	__mu0_scope_begin__                                                                         \
+		unsigned int ___mu0_bit_rev__d___ = __mu0_cast__(unsigned int, __mu0_bit_digits__(__x)); \
+		_Tp          ___mu0_bit_rev__m___ = ~(__mu0_const_cast__(_Tp, 0));                       \
+		while (___mu0_bit_rev__d___ >>= 1) {                                                     \
+			___mu0_bit_rev__m___ ^= ___mu0_bit_rev__m___ << (___mu0_bit_rev__d___);               \
+			(__x) = ((__x) & ~___mu0_bit_rev__m___) >> ___mu0_bit_rev__d___                       \
+					| ((__x) &___mu0_bit_rev__m___) << ___mu0_bit_rev__d___;                        \
+		}                                                                                        \
+	__mu0_scope_end__
+
+#	define __mu0_bitset_rev_u8__(__x)                       \
+	__mu0_scope_begin__                                     \
+		(__x) = ((__x) & 0xF0) >> 4U | ((__x) & 0x0F) << 4U; \
+		(__x) = ((__x) & 0xCC) >> 2U | ((__x) & 0x33) << 2U; \
+		(__x) = ((__x) & 0xAA) >> 1U | ((__x) & 0x55) << 1U; \
+	__mu0_scope_end__
+
+#	define ___mu0_bitset_pattern_u8___ "%c%c%c%c%c%c%c%c"
+#	define ___mu0_bitset_format_u8___(__x) \
+	  (((__x) & 0x80U) ? '1' : '0')      \
+	, (((__x) & 0x40U) ? '1' : '0')      \
+	, (((__x) & 0x20U) ? '1' : '0')      \
+	, (((__x) & 0x10U) ? '1' : '0')      \
+	, (((__x) & 0x08U) ? '1' : '0')      \
+	, (((__x) & 0x04U) ? '1' : '0')      \
+	, (((__x) & 0x02U) ? '1' : '0')      \
+	, (((__x) & 0x01U) ? '1' : '0')
+
+#	define ___mu0_bitset_pattern_u16___ \
+	___mu0_bitset_pattern_u8___ ___mu0_bitset_pattern_u8___
+
+#	define ___mu0_bitset_pattern_u32___ \
+	___mu0_bitset_pattern_u16___ ___mu0_bitset_pattern_u16___
+
+#	define ___mu0_bitset_pattern_u64___ \
+	___mu0_bitset_pattern_u32___ ___mu0_bitset_pattern_u32___
+
+#	define ___mu0_bitset_format_u16___(__x) \
+	___mu0_bitset_format_u8___((__x) >> 8U), ___mu0_bitset_format_u8___((__x))
+
+#	define ___mu0_bitset_format_u32___(__x) \
+	___mu0_bitset_format_u16___((__x) >> 16U), ___mu0_bitset_format_u16___((__x))
+
+#	define ___mu0_bitset_format_u64___(__x) \
+	___mu0_bitset_format_u32___((__x) >> 32U), ___mu0_bitset_format_u32___((__x))
+
+#	define ___mu0_bitset_print_u8___(__x)                    \
+	__mu0_console_log__("" ___mu0_bitset_pattern_u8___  "\n" \
+	, ___mu0_bitset_format_u8___(__mu0_const_cast__(unsigned char,       __x)))
+
+#	define ___mu0_bitset_print_u16___(__x)                   \
+	__mu0_console_log__("" ___mu0_bitset_pattern_u16___ "\n" \
+	, ___mu0_bitset_format_u16___(__mu0_const_cast__(unsigned short,     __x)))
+
+#	define ___mu0_bitset_print_u32___(__x)                   \
+	__mu0_console_log__("" ___mu0_bitset_pattern_u32___ "\n" \
+	, ___mu0_bitset_format_u32___(__mu0_const_cast__(unsigned int,       __x)))
+
+#	if MU0_HAVE_LP64
+#	define ___mu0_bitset_print_u64___(__x)                   \
+	__mu0_console_log__("" ___mu0_bitset_pattern_u64___ "\n" \
+	, ___mu0_bitset_format_u64___(__mu0_const_cast__(unsigned long,      __x)))
+#	else
+#	define ___mu0_bitset_print_u64___(__x)                   \
+	__mu0_console_log__("" ___mu0_bitset_pattern_u64___ "\n" \
+	, ___mu0_bitset_format_u64___(__mu0_const_cast__(unsigned long long, __x)))
+#	endif
+
 #	if defined(__CHAR_BIT__)
 #		define __MU0_CHAR_BIT__ __CHAR_BIT__
 #	elif defined(CHAR_BIT)
@@ -861,75 +930,6 @@ const unsigned char __mu0_bit_floor_c__(const unsigned char            __x)
 	const unsigned char zero = 0;
 	return __x != zero ? (one << (__mu0_bit_width_c__(__x) - one)) : zero;
 }
-
-#	define __mu0_bit_reverse__(_Tp, __x)                                                               \
-	__mu0_scope_begin__                                                                                \
-		unsigned int __mu0_bit_reverse__digits__ = __mu0_cast__(unsigned int, __mu0_bit_digits__(__x)); \
-		_Tp          __mu0_bit_reverse__mask__   = ~(__mu0_const_cast__(_Tp, 0));                       \
-		while (__mu0_bit_reverse__digits__ >>= 1) {                                                     \
-			__mu0_bit_reverse__mask__ ^= __mu0_bit_reverse__mask__ << (__mu0_bit_reverse__digits__);     \
-			(__x) = ((__x) & ~__mu0_bit_reverse__mask__) >> __mu0_bit_reverse__digits__                  \
-					| ((__x) &__mu0_bit_reverse__mask__) << __mu0_bit_reverse__digits__;                   \
-		}                                                                                               \
-	__mu0_scope_end__
-
-#	define __mu0_bitset_reverse_u8__(__x)                   \
-	__mu0_scope_begin__                                     \
-		(__x) = ((__x) & 0xF0) >> 4U | ((__x) & 0x0F) << 4U; \
-		(__x) = ((__x) & 0xCC) >> 2U | ((__x) & 0x33) << 2U; \
-		(__x) = ((__x) & 0xAA) >> 1U | ((__x) & 0x55) << 1U; \
-	__mu0_scope_end__
-
-#	define __mu0_bitset_pattern_u8__ "%c%c%c%c%c%c%c%c"
-#	define __mu0_bitset_format_u8__(__x) \
-	  (((__x) & 0x80U) ? '1' : '0')      \
-	, (((__x) & 0x40U) ? '1' : '0')      \
-	, (((__x) & 0x20U) ? '1' : '0')      \
-	, (((__x) & 0x10U) ? '1' : '0')      \
-	, (((__x) & 0x08U) ? '1' : '0')      \
-	, (((__x) & 0x04U) ? '1' : '0')      \
-	, (((__x) & 0x02U) ? '1' : '0')      \
-	, (((__x) & 0x01U) ? '1' : '0')
-
-#	define __mu0_bitset_pattern_u16__ \
-	__mu0_bitset_pattern_u8__ __mu0_bitset_pattern_u8__
-
-#	define __mu0_bitset_pattern_u32__ \
-	__mu0_bitset_pattern_u16__ __mu0_bitset_pattern_u16__
-
-#	define __mu0_bitset_pattern_u64__ \
-	__mu0_bitset_pattern_u32__ __mu0_bitset_pattern_u32__
-
-#	define __mu0_bitset_format_u16__(__x) \
-	__mu0_bitset_format_u8__((__x) >> 8U), __mu0_bitset_format_u8__((__x))
-
-#	define __mu0_bitset_format_u32__(__x) \
-	__mu0_bitset_format_u16__((__x) >> 16U), __mu0_bitset_format_u16__((__x))
-
-#	define __mu0_bitset_format_u64__(__x) \
-	__mu0_bitset_format_u32__((__x) >> 32U), __mu0_bitset_format_u32__((__x))
-
-#	define __mu0_bitset_print_u8__(__x)                    \
-	__mu0_console_log__("" __mu0_bitset_pattern_u8__  "\n" \
-	, __mu0_bitset_format_u8__(__mu0_const_cast__(unsigned char,       __x)))
-
-#	define __mu0_bitset_print_u16__(__x)                   \
-	__mu0_console_log__("" __mu0_bitset_pattern_u16__ "\n" \
-	, __mu0_bitset_format_u16__(__mu0_const_cast__(unsigned short,     __x)))
-
-#	define __mu0_bitset_print_u32__(__x)                   \
-	__mu0_console_log__("" __mu0_bitset_pattern_u32__ "\n" \
-	, __mu0_bitset_format_u32__(__mu0_const_cast__(unsigned int,       __x)))
-
-#	if MU0_HAVE_LP64
-#	define __mu0_bitset_print_u64__(__x)                   \
-	__mu0_console_log__("" __mu0_bitset_pattern_u64__ "\n" \
-	, __mu0_bitset_format_u64__(__mu0_const_cast__(unsigned long,      __x)))
-#	else
-#	define __mu0_bitset_print_u64__(__x)                   \
-	__mu0_console_log__("" __mu0_bitset_pattern_u64__ "\n" \
-	, __mu0_bitset_format_u64__(__mu0_const_cast__(unsigned long long, __x)))
-#	endif
 
 #	if !MU0_HAVE_BITOPERATOR
 #		error mu0_bitoperator.h

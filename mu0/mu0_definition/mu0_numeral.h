@@ -57,50 +57,68 @@
 
 #	define __mu0_clamp__(__a, __b, __c) (__mu0_max__(__b, __mu0_min__(__a, __c)))
 
+#	define ___mu0_gcd___(_Tp, __a, __b, __c)             \
+__mu0_scope_begin__                                     \
+	_Tp ___mu0_gcd__a___ = __mu0_const_cast__(_Tp, __a); \
+	_Tp ___mu0_gcd__b___ = __mu0_const_cast__(_Tp, __b); \
+	if (___mu0_gcd__a___ && ___mu0_gcd__b___) { for (    \
+			;                                              \
+			   (___mu0_gcd__a___ %= ___mu0_gcd__b___)      \
+			&& (___mu0_gcd__b___ %= ___mu0_gcd__a___)      \
+			;                                              \
+		);                                                \
+	}                                                    \
+	__c = ___mu0_gcd__a___ | ___mu0_gcd__b___;           \
+__mu0_scope_end__
+
+#	define ___mu0_lcm___(_Tp, __a, __b, __c)        \
+__mu0_scope_begin__                                \
+	_Tp ___mu0_lcm__c___;                           \
+	___mu0_gcd___(_Tp, __a, __b, ___mu0_lcm__c___); \
+	__c = (___mu0_lcm__c___                         \
+		? (__a / ___mu0_lcm__c___ * __b)             \
+		: __mu0_const_cast__(_Tp, 0)                 \
+	);                                              \
+__mu0_scope_end__
+
 __mu0_static_inline__
 const unsigned long long __mu0_gcd_ll__(const unsigned long long __a, const unsigned long long __b)
 {
-	long long a = __a;
-	long long b = __b;
-	if (a && b) { for(; (a %= b) && (b %= a);); }
-	return a | b;
+	unsigned long long c;
+	___mu0_gcd___(unsigned long long, __a, __b, c);
+	return c;
 }
 
 __mu0_static_inline__
 const unsigned long __mu0_gcd_l__(const unsigned long __a, const unsigned long __b)
 {
-	long a = __a;
-	long b = __b;
-	if (a && b) { for(; (a %= b) && (b %= a);); }
-	return a | b;
+	unsigned long c;
+	___mu0_gcd___(unsigned long, __a, __b, c);
+	return c;
 }
 
 __mu0_static_inline__
 const unsigned int __mu0_gcd_i__(const unsigned int __a, const unsigned int __b)
 {
-	unsigned int a = __a;
-	unsigned int b = __b;
-	if (a && b) { for(; (a %= b) && (b %= a);); }
-	return a | b;
+	unsigned int c;
+	___mu0_gcd___(unsigned int, __a, __b, c);
+	return c;
 }
 
 __mu0_static_inline__
 const unsigned short __mu0_gcd_s__(const unsigned short __a, const unsigned short __b)
 {
-	unsigned short a = __a;
-	unsigned short b = __b;
-	if (a && b) { for(; (a %= b) && (b %= a);); }
-	return a | b;
+	unsigned short c;
+	___mu0_gcd___(unsigned short, __a, __b, c);
+	return c;
 }
 
 __mu0_static_inline__
 const unsigned char __mu0_gcd_c__(const unsigned char __a, const unsigned char __b)
 {
-	return (__mu0_const_cast__(unsigned char
-		, __mu0_gcd_i__(
-			  __mu0_const_cast__(unsigned int, __a)
-			, __mu0_const_cast__(unsigned int, __b)
-	)));
+	unsigned char c;
+	___mu0_gcd___(unsigned char, __a, __b, c);
+	return c;
 }
 
 #	if   MU0_HAVE_OVERLOAD
@@ -158,43 +176,41 @@ __mu0_overload__ const unsigned char      __mu0_gcd__ (const unsigned char      
 __mu0_static_inline__
 const unsigned long long __mu0_lcm_ll__(const unsigned long long __a, const unsigned long long __b)
 {
-	const unsigned long long c = __mu0_gcd_ll__(__a, __b);
-#	if MU0_HAVE_C99 || MU0_HAVE_CPP11
-	return c ? (__a / c * __b) : 0ULL;
-#	else
-	return c ? (__a / c * __b) : 0UL;
-#	endif
+	unsigned long long c;
+	___mu0_lcm___(unsigned long long, __a, __b, c);
+	return c;
 }
 
 __mu0_static_inline__
 const unsigned long __mu0_lcm_l__(const unsigned long __a, const unsigned long __b)
 {
-	const unsigned long c = __mu0_gcd_l__(__a, __b);
-	return c ? (__a / c * __b) : 0UL;
+	unsigned long c;
+	___mu0_lcm___(unsigned long, __a, __b, c);
+	return c;
 }
 
 __mu0_static_inline__
 const unsigned int __mu0_lcm_i__(const unsigned int __a, const unsigned int __b)
 {
-	const unsigned int c = __mu0_gcd_i__(__a, __b);
-	return c ? (__a / c * __b) : 0U;
+	unsigned int c;
+	___mu0_lcm___(unsigned int, __a, __b, c);
+	return c;
 }
 
 __mu0_static_inline__
 const unsigned short __mu0_lcm_s__(const unsigned short __a, const unsigned short __b)
 {
-	const unsigned short c = __mu0_gcd_s__(__a, __b);
-	return c ? (__a / c * __b) : 0;
+	unsigned short c;
+	___mu0_lcm___(unsigned short, __a, __b, c);
+	return c;
 }
 
 __mu0_static_inline__
 const unsigned char __mu0_lcm_c__(const unsigned char __a, const unsigned char __b)
 {
-	return (__mu0_const_cast__(unsigned char
-		, __mu0_lcm_i__(
-			  __mu0_const_cast__(unsigned int, __a)
-			, __mu0_const_cast__(unsigned int, __b)
-	)));
+	unsigned char c;
+	___mu0_lcm___(unsigned char, __a, __b, c);
+	return c;
 }
 
 #	if   MU0_HAVE_OVERLOAD
