@@ -249,7 +249,7 @@ __mu0_static__ const mu0_sint128_t mu0_sint128_min = INT64_MIN;
 #	define __mu0_uint128_const__ UINT64_C
 #	define __mu0_sint128_const__ INT64_C
 #	else
-#	define __mu0_uint128_const__ (c) c ## UL
+#	define __mu0_uint128_const__(c) c ## UL
 #	define __mu0_sint128_const__(c) c
 #	endif
 
@@ -264,8 +264,8 @@ __mu0_static__ const mu0_sint64_t  mu0_sint64_min  = INT64_MIN;
 #	define __mu0_uint64_const__ UINT64_C
 #	define __mu0_sint64_const__ INT64_C
 #	else
-#	define __mu0_uint64_const__ (c) c ## U
-#	define __mu0_sint64_const__ (c) c
+#	define __mu0_uint64_const__(c) c ## U
+#	define __mu0_sint64_const__(c) c
 #	endif
 
 __mu0_static__ const mu0_uint32_t  mu0_uint32_max  = UINT32_MAX;
