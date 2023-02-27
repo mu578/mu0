@@ -137,11 +137,11 @@ void mu0_pcg32_ssrandom_r(mu0_random_context_t * ctx)
 {
 	mu0_uint64_t seed, incr;
 	if (g_mu0_pcg32_default == 0U) {
-		__mu0_memfence_acquire__();
+		__mu0_barrier_acquire__();
 		mu0_pcg32_context_seed_build(&seed, &incr);
 		mu0_pcg32_srandom_r(ctx, seed, incr);
 		g_mu0_pcg32_default = 1U;
-		__mu0_memfence_release__();
+		__mu0_barrier_release__();
 	}
 }
 

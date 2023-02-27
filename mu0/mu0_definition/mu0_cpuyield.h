@@ -113,7 +113,11 @@
 #				define __mu0_sync_cpu_yield__() __asm__ __volatile__("or 27, 27, 27" ::: "memory")
 #			endif
 #		endif
-#	elif defined(__ppc__) || defined(__powerpc64__) || defined(__mips__)
+#	elif defined(__mips64)
+#		undef  MU0_HAVE_CPUYIELD
+#		define MU0_HAVE_CPUYIELD 1
+#		define __mu0_sync_cpu_yield__()       __asm__ __volatile__("pause")
+#	elif defined(__ppc__) || defined(__powerpc64__) || defined(__mips__) || defined(__mips)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		define __mu0_sync_cpu_yield__()       __asm__ __volatile__("sync" ::: "memory");

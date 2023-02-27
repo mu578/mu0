@@ -28,10 +28,22 @@ ifeq ($(strip $(PLATFORM)),)
 PLATFORM         := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 endif
 ifeq ($(strip $(PLATFORM_VARIANT)),)
-PLATFORM_VARIANT := "macos_xcode"
+PLATFORM_VARIANT := macos_xcode
 endif
 
+PLATFORM_ARCH    := -arch $(ARCH)
+
 ifneq (,$(findstring darwin, $(PLATFORM)))
+	ifneq (,$(findstring macos_xcode.x86_64, $(PLATFORM_VARIANT)))
+		PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+		PLATFORM_ARCH    := -arch x86_64
+		ARCH             := x86_64
+	endif
+	ifneq (,$(findstring macos_xcode.fat, $(PLATFORM_VARIANT)))
+		PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+		PLATFORM_ARCH    := -arch $(ARCH) -arch x86_64
+		ARCH             :=
+	endif
 	ifneq (,$(findstring macos_xcode, $(PLATFORM_VARIANT)))
 		XCODE_VERS   := $(shell xcodebuild -sdk -version | grep "\- macOS " | cut -d "-" -f 1 | tr -d '[:space:]')
 		XCODE_PATH   := $(shell dirname `xcrun -f clang`)
@@ -41,14 +53,14 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 
 		LD           :=               \
 			$(CC)                      \
-			-arch $(ARCH)              \
+			$(PLATFORM_ARCH)           \
 			-mmacosx-version-min=10.13 \
 			-isysroot $(XCODE_SDK)
 
 		LOCAL_CFLAGS +=               \
 			-x c                       \
 			-std=c11                   \
-			-arch $(ARCH)              \
+			$(PLATFORM_ARCH)           \
 			-mmacosx-version-min=10.13 \
 			-isysroot $(XCODE_SDK)     \
 			-Wall                      \
@@ -61,15 +73,15 @@ else
 CC           := clang
 AR           := ar
 
-LD           :=  \
-	$(CC)         \
-	-arch $(ARCH) \
+LD           :=     \
+	$(CC)            \
+	$(PLATFORM_ARCH) \
 	-isysroot /
 
-LOCAL_CFLAGS +=  \
-	-x c          \
-	-std=c11      \
-	-arch $(ARCH) \
+LOCAL_CFLAGS +=     \
+	-x c             \
+	-std=c11         \
+	$(PLATFORM_ARCH) \
 	-isysroot /
 
 endif
