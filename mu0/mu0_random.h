@@ -86,6 +86,26 @@ mu0_fp64_t    mu0_random_fp64 (void);
 mu0_fp32_t    mu0_random_fp32 (void);
 mu0_fp16_t    mu0_random_fp16 (void);
 
+mu0_fp128_t   mu0_ranged_random_fp128(
+	  const mu0_fp128_t lower_bound
+	, const mu0_fp128_t upper_bound
+);
+
+mu0_fp64_t    mu0_ranged_random_fp64(
+	  const mu0_fp64_t  lower_bound
+	, const mu0_fp64_t  upper_bound
+);
+
+mu0_fp32_t    mu0_ranged_random_fp32(
+	  const mu0_fp32_t  lower_bound
+	, const mu0_fp32_t  upper_bound
+);
+
+mu0_fp16_t    mu0_ranged_random_fp16(
+	  const mu0_fp16_t  lower_bound
+	, const mu0_fp16_t  upper_bound
+);
+
 MU0_END_CDECL
 
 #endif /* !MU0_RANDOM_H */

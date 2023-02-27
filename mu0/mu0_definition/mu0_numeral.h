@@ -50,12 +50,13 @@
 		));                                         \
 	})
 #	else
-#	define __mu0_min__(__a, __b)      (((__a) < (__b)) ? (__a) : (__b))
-#	define __mu0_max__(__a, __b)      (((__a) > (__b)) ? (__a) : (__b))
-#	define __mu0_abs__(__a)           (((__a) == 0   ) ? 0     : (((__a) > 0) ? (__a) : -(__a)))
+#	define __mu0_min__(__a, __b) (((__a) < (__b)) ? (__a) : (__b))
+#	define __mu0_max__(__a, __b) (((__a) > (__b)) ? (__a) : (__b))
+#	define __mu0_abs__(__a)      (((__a) == 0   ) ? 0     : (((__a) > 0) ? (__a) : -(__a)))
 #	endif
 
-#	define __mu0_clamp__(__a, __b, __c) (__mu0_max__(__b, __mu0_min__(__a, __c)))
+#	define __mu0_clamp__(__a, __c, __b) \
+	(__mu0_max__(__c, __mu0_min__(__a, __b)))
 
 #	define ___mu0_gcd___(_Tp, __a, __b, __c)             \
 __mu0_scope_begin__                                     \

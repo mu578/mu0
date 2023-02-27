@@ -392,7 +392,7 @@ mu0_sint16_t mu0_ranged_random_i16(
 	return ((mu0_random_i16() % (hi - lo)) + lo);
 }
 
-mu0_fp128_t mu0_random_f128(void)
+mu0_fp128_t mu0_random_fp128(void)
 {
 #	if MU0_HAVE_FLOAT128
 #	error "mu0_random.c"
@@ -420,6 +420,42 @@ mu0_fp16_t mu0_random_fp16(void)
 	const mu0_uint16_t k = __mu0_uint16_const__(0xFFE0);
 	const mu0_uint16_t a = mu0_random_u16() % k;
 	return (mu0_fp16(a) / mu0_fp16(k));
+}
+
+mu0_fp128_t mu0_ranged_random_fp128(
+	  const mu0_fp128_t lower_bound
+	, const mu0_fp128_t upper_bound
+) {
+	const mu0_fp128_t k = mu0_random_fp128();
+	const mu0_fp128_t d = lower_bound + k * (upper_bound - lower_bound);
+	return d;
+}
+
+mu0_fp64_t mu0_ranged_random_fp64(
+	  const mu0_fp64_t  lower_bound
+	, const mu0_fp64_t  upper_bound
+) {
+	const mu0_fp64_t k = mu0_random_fp64();
+	const mu0_fp64_t d = lower_bound + k * (upper_bound - lower_bound);
+	return d;
+}
+
+mu0_fp32_t mu0_ranged_random_fp32(
+	  const mu0_fp32_t  lower_bound
+	, const mu0_fp32_t  upper_bound
+) {
+	const mu0_fp32_t k = mu0_random_fp32();
+	const mu0_fp32_t d = lower_bound + k * (upper_bound - lower_bound);
+	return d;
+}
+
+mu0_fp16_t mu0_ranged_random_fp16(
+	  const mu0_fp16_t  lower_bound
+	, const mu0_fp16_t  upper_bound
+) {
+	const mu0_fp16_t k = mu0_random_fp16();
+	const mu0_fp16_t d = lower_bound + k * (upper_bound - lower_bound);
+	return d;
 }
 
 /* EOF */
