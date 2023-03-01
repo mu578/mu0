@@ -55,31 +55,46 @@
 #	define __mu0_abs__(__a)      (((__a) == 0   ) ? 0     : (((__a) > 0) ? (__a) : -(__a)))
 #	endif
 
+#	define __mu0_inline_abs__(__a) (((__a) == 0   ) ? 0     : (((__a) > 0) ? (__a) : -(__a)))
+
 #	define __mu0_clamp__(__a, __c, __b) \
 	(__mu0_max__(__c, __mu0_min__(__a, __b)))
 
-#	define ___mu0_gcd___(_Tp, __a, __b, __c)             \
-__mu0_scope_begin__                                     \
-	_Tp ___mu0_gcd__a___ = __mu0_const_cast__(_Tp, __a); \
-	_Tp ___mu0_gcd__b___ = __mu0_const_cast__(_Tp, __b); \
-	if (___mu0_gcd__a___ && ___mu0_gcd__b___) { for (    \
-			;                                              \
-			   (___mu0_gcd__a___ %= ___mu0_gcd__b___)      \
-			&& (___mu0_gcd__b___ %= ___mu0_gcd__a___)      \
-			;                                              \
-		);                                                \
-	}                                                    \
-	__c = ___mu0_gcd__a___ | ___mu0_gcd__b___;           \
+#	define ___mu0_gcd_11___(__a, __b) (0)
+#	define ___mu0_gcd_10___(__a, __b) ((((!(__b))) * (__a)) + (!!(__b)) * ___mu0_gcd_11___((__b), (__a) % ((__b) + !(__b))))
+#	define ___mu0_gcd_09___(__a, __b) ((((!(__b))) * (__a)) + (!!(__b)) * ___mu0_gcd_10___((__b), (__a) % ((__b) + !(__b))))
+#	define ___mu0_gcd_07___(__a, __b) ((((!(__b))) * (__a)) + (!!(__b)) * ___mu0_gcd_09___((__b), (__a) % ((__b) + !(__b))))
+#	define ___mu0_gcd_06___(__a, __b) ((((!(__b))) * (__a)) + (!!(__b)) * ___mu0_gcd_07___((__b), (__a) % ((__b) + !(__b))))
+#	define ___mu0_gcd_05___(__a, __b) ((((!(__b))) * (__a)) + (!!(__b)) * ___mu0_gcd_06___((__b), (__a) % ((__b) + !(__b))))
+#	define ___mu0_gcd_04___(__a, __b) ((((!(__b))) * (__a)) + (!!(__b)) * ___mu0_gcd_05___((__b), (__a) % ((__b) + !(__b))))
+#	define ___mu0_gcd_03___(__a, __b) ((((!(__b))) * (__a)) + (!!(__b)) * ___mu0_gcd_04___((__b), (__a) % ((__b) + !(__b))))
+#	define ___mu0_gcd_02___(__a, __b) ((((!(__b))) * (__a)) + (!!(__b)) * ___mu0_gcd_03___((__b), (__a) % ((__b) + !(__b))))
+#	define ___mu0_gcd_01___(__a, __b) ((((!(__b))) * (__a)) + (!!(__b)) * ___mu0_gcd_02___((__b), (__a) % ((__b) + !(__b))))
+#	define ___mu0_gcd_00___(__a, __b) (((__a >= __b) * ___mu0_gcd_01___(__a, __b) + (__a < __b) * ___mu0_gcd_01___(__b,__a)))
+#	define ___mu0_lcm_00___(__a, __b) ((((__a) * (__b))) / ___mu0_gcd_00___(__a, __b))
+
+#	define ___mu0_gcd___(_Uint, __a, __b, __c)               \
+__mu0_scope_begin__                                         \
+	_Uint ___mu0_gcd__a___ = __mu0_const_cast__(_Uint, __a); \
+	_Uint ___mu0_gcd__b___ = __mu0_const_cast__(_Uint, __b); \
+	if (___mu0_gcd__a___ && ___mu0_gcd__b___) { for (        \
+			;                                                  \
+			   (___mu0_gcd__a___ %= ___mu0_gcd__b___)          \
+			&& (___mu0_gcd__b___ %= ___mu0_gcd__a___)          \
+			;                                                  \
+		);                                                    \
+	}                                                        \
+	__c = ___mu0_gcd__a___ | ___mu0_gcd__b___;               \
 __mu0_scope_end__
 
-#	define ___mu0_lcm___(_Tp, __a, __b, __c)        \
-__mu0_scope_begin__                                \
-	_Tp ___mu0_lcm__c___;                           \
-	___mu0_gcd___(_Tp, __a, __b, ___mu0_lcm__c___); \
-	__c = (___mu0_lcm__c___                         \
-		? (__a / ___mu0_lcm__c___ * __b)             \
-		: __mu0_const_cast__(_Tp, 0)                 \
-	);                                              \
+#	define ___mu0_lcm___(_Uint, __a, __b, __c)        \
+__mu0_scope_begin__                                  \
+	_Uint ___mu0_lcm__c___;                           \
+	___mu0_gcd___(_Uint, __a, __b, ___mu0_lcm__c___); \
+	__c = (___mu0_lcm__c___                           \
+		? ((__a * __b) / ___mu0_lcm__c___)             \
+		: __mu0_const_cast__(_Uint, 0)                 \
+	);                                                \
 __mu0_scope_end__
 
 __mu0_static_inline__
@@ -121,6 +136,9 @@ const unsigned char __mu0_gcd_c__(const unsigned char __a, const unsigned char _
 	___mu0_gcd___(unsigned char, __a, __b, c);
 	return c;
 }
+
+#	define __mu0_inline_gcd_const__(_Int, __a, __b) __mu0_const_cast__(_Int, ___mu0_gcd_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
+#	define __mu0_inline_gcd__(_Int, __a, __b)       __mu0_const_cast__(_Int, __mu0_gcd_i__   (__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
 
 #	if   MU0_HAVE_OVERLOAD
 __mu0_overload__ const unsigned long long __mu0_gcd__ (const unsigned long long __a, const unsigned long long __b) { return __mu0_gcd_ll__ (__a, __b); }
@@ -213,6 +231,9 @@ const unsigned char __mu0_lcm_c__(const unsigned char __a, const unsigned char _
 	___mu0_lcm___(unsigned char, __a, __b, c);
 	return c;
 }
+
+#	define __mu0_inline_lcm_const__(_Int, __a, __b) __mu0_const_cast__(_Int, ___mu0_lcm_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
+#	define __mu0_inline_lcm__(_Int, __a, __b)       __mu0_const_cast__(_Int, __mu0_lcm_i__   (__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
 
 #	if   MU0_HAVE_OVERLOAD
 __mu0_overload__ const unsigned long long __mu0_lcm__ (const unsigned long long __a, const unsigned long long __b) { return __mu0_lcm_ll__ (__a, __b); }
