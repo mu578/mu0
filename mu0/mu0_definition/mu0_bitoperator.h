@@ -763,13 +763,13 @@ const int __mu0_bit_width_ll__(const unsigned long long __x)
 __mu0_static_inline__
 const int __mu0_bit_width_l__(const unsigned long       __x)
 {
-	return __mu0_bit_digits_l__()  - __mu0_ctz_l__ (__x);
+	return __mu0_bit_digits_l__()  - __mu0_ctz_l__(__x);
 }
 
 __mu0_static_inline__
 const int __mu0_bit_width_i__(const unsigned int        __x)
 {
-	return __mu0_bit_digits_i__()  - __mu0_ctz_l__  (__x);
+	return __mu0_bit_digits_i__()  - __mu0_ctz_l__(__x);
 }
 
 __mu0_static_inline__
