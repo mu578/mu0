@@ -140,7 +140,10 @@ const unsigned char __mu0_gcd_c__(const unsigned char __a, const unsigned char _
 }
 
 #	define __mu0_inline_gcd_const__(__a, __b) __mu0_const_cast__(unsigned int, ___mu0_gcd_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
-#	define __mu0_inline_gcd__(__a, __b)       __mu0_gcd_i__     (__mu0_inline_abs__(__a), __mu0_inline_abs__(__b))
+#	define __mu0_inline_gcd__(__a, __b)       __mu0_gcd_i__(    \
+	  __mu0_const_cast__(unsigned int, __mu0_inline_abs__(__a)) \
+	, __mu0_const_cast__(unsigned int, __mu0_inline_abs__(__b)) \
+)
 
 #	if   MU0_HAVE_OVERLOAD
 __mu0_overload__ const unsigned long long __mu0_gcd__ (const unsigned long long __a, const unsigned long long __b) { return __mu0_gcd_ll__ (__a, __b); }
@@ -235,7 +238,10 @@ const unsigned char __mu0_lcm_c__(const unsigned char __a, const unsigned char _
 }
 
 #	define __mu0_inline_lcm_const__(__a, __b) __mu0_const_cast__(unsigned int, ___mu0_lcm_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
-#	define __mu0_inline_lcm__(__a, __b)       __mu0_lcm_i__     (__mu0_inline_abs__(__a), __mu0_inline_abs__(__b))
+#	define __mu0_inline_lcm__(__a, __b)       __mu0_lcm_i__(    \
+	  __mu0_const_cast__(unsigned int, __mu0_inline_abs__(__a)) \
+	, __mu0_const_cast__(unsigned int, __mu0_inline_abs__(__b)) \
+)
 
 #	if   MU0_HAVE_OVERLOAD
 __mu0_overload__ const unsigned long long __mu0_lcm__ (const unsigned long long __a, const unsigned long long __b) { return __mu0_lcm_ll__ (__a, __b); }
