@@ -358,6 +358,10 @@
 #		define MU0_HAVE_LLP64  1
 #	endif
 
+#	if !MU0_HAVE_ARCH
+#		error mu0_platform.h
+#	endif
+
 #	if defined(MU0_HAVE_LP32) || defined(MU0_HAVE_ILP64) || defined(MU0_HAVE_SILP64)
 #		error mu0_platform.h
 #	endif
@@ -367,15 +371,54 @@
 
 #	if                                                                      \
 	   defined(_CHAR_UNSIGNED)                                              \
+	|| defined(__CHAR_UNSIGNED__)                                           \
 	|| ((defined(CHAR_MIN) && defined(SCHAR_MIN)) && CHAR_MIN != SCHAR_MIN) \
 	|| (defined(CHAR_MIN) && CHAR_MIN < 0)
 #	undef  MU0_HAVE_CHAR_UNSIGNED
 #	define MU0_HAVE_CHAR_UNSIGNED 1
 #	endif
 
-#	if !MU0_HAVE_ARCH
+#	if defined(__CHAR_BIT__)
+#	if __CHAR_BIT__ != 8
 #		error mu0_platform.h
 #	endif
+#	endif
+
+#	if defined(__SIZEOF_SHORT__)
+#	if __SIZEOF_SHORT__ != 2
+#		error mu0_platform.h
+#	endif
+#	endif
+
+#	if defined(__SIZEOF_INT__)
+#	if __SIZEOF_INT__ != 4
+#		error mu0_platform.h
+#	endif
+#	endif
+
+#	if defined(__SIZEOF_LONG__)
+#	if !(__SIZEOF_LONG__ == 8 || __SIZEOF_LONG__ == 4)
+#		error mu0_platform.h
+#	endif
+#	endif
+
+#	if defined(__SIZEOF_LONG_LONG__)
+#	if __SIZEOF_LONG_LONG__ != 8
+#		error mu0_platform.h
+#	endif
+#	endif
+
+#	define ___mu0_uint8_t___ unsigned long long
+#	define ___mu0_uintx_t___ unsigned long
+#	define ___mu0_uint4_t___ unsigned int
+#	define ___mu0_uint2_t___ unsigned short
+#	define ___mu0_uint1_t___ unsigned char
+
+#	define ___mu0_sint8_t___ signed long long
+#	define ___mu0_sintx_t___ signed long
+#	define ___mu0_sint4_t___ signed int
+#	define ___mu0_sint2_t___ signed short
+#	define ___mu0_sint1_t___ signed char
 
 #endif /* !MU0_PLATFORM_H */
 

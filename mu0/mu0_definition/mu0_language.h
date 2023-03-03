@@ -15,7 +15,7 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
-#include <mu0/mu0_definition/mu0_compiler.h>
+#include <mu0/mu0_definition/mu0_platform.h>
 
 #ifndef MU0_LANGUAGE_H
 #define MU0_LANGUAGE_H 1
@@ -97,8 +97,8 @@
 #		undef  __stdmuc_version__
 #		undef  __stdmucpp_version__
 
-#		define  __stdmuc__          1
-#		define  __stdmucpp__        0
+#		define __stdmuc__           1
+#		define __stdmucpp__         0
 #		define __stdmuc_version__   202302L
 #		define __stdmucpp_version__ 0L
 

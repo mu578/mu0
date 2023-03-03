@@ -15,7 +15,7 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
-#include <mu0/mu0_definition/mu0_compiler.h>
+#include <mu0/mu0_definition/mu0_platform.h>
 
 #ifndef MU0_ATTRIBUTE_H
 #define MU0_ATTRIBUTE_H 1

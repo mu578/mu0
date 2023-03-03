@@ -23,7 +23,7 @@
 
 #	define __mu0_inline_min__(__a, __b) (((__a) < (__b)) ? (__a) : (__b))
 #	define __mu0_inline_max__(__a, __b) (((__a) > (__b)) ? (__a) : (__b))
-#	define __mu0_inline_abs__(__a) (((__a) == 0   ) ? 0     : (((__a) > 0) ? (__a) : -(__a)))
+#	define __mu0_inline_abs__(__a)      (((__a) == 0   ) ? 0     : (((__a) > 0) ? (__a) : -(__a)))
 
 #	if MU0_HAVE_TYPEOF && MU0_HAVE_EXTENSION
 #	define __mu0_min__(__a, __b)                             \
@@ -89,209 +89,209 @@ __mu0_scope_begin__                                         \
 	__c = ___mu0_gcd__a___ | ___mu0_gcd__b___;               \
 __mu0_scope_end__
 
-#	define ___mu0_lcm___(_Uint, __a, __b, __c)        \
-__mu0_scope_begin__                                  \
-	_Uint ___mu0_lcm__c___;                           \
-	___mu0_gcd___(_Uint, __a, __b, ___mu0_lcm__c___); \
-	__c = (___mu0_lcm__c___                           \
-		? ((__a * __b) / ___mu0_lcm__c___)             \
-		: __mu0_const_cast__(_Uint, 0)                 \
-	);                                                \
+#	define ___mu0_lcm___(_Uint, __a, __b, __c)         \
+__mu0_scope_begin__                                   \
+	_Uint ___mu0_lcm__u1___;                           \
+	___mu0_gcd___(_Uint, __a, __b, ___mu0_lcm__u1___); \
+	__c = (___mu0_lcm__u1___                           \
+		? ((__a * __b) / ___mu0_lcm__u1___)             \
+		: __mu0_const_cast__(_Uint, 0)                  \
+	);                                                 \
 __mu0_scope_end__
 
 __mu0_static_inline__
-const unsigned long long __mu0_gcd_ll__(const unsigned long long __a, const unsigned long long __b)
+const ___mu0_uint8_t___ __mu0_gcd_u8__(const ___mu0_uint8_t___ __a, const ___mu0_uint8_t___ __b)
 {
-	unsigned long long c;
-	___mu0_gcd___(unsigned long long, __a, __b, c);
+	___mu0_uint8_t___ c;
+	___mu0_gcd___(___mu0_uint8_t___, __a, __b, c);
 	return c;
 }
 
 __mu0_static_inline__
-const unsigned long __mu0_gcd_l__(const unsigned long __a, const unsigned long __b)
+const ___mu0_uintx_t___ __mu0_gcd_ux__(const ___mu0_uintx_t___ __a, const ___mu0_uintx_t___ __b)
 {
-	unsigned long c;
-	___mu0_gcd___(unsigned long, __a, __b, c);
+	___mu0_uintx_t___ c;
+	___mu0_gcd___(___mu0_uintx_t___, __a, __b, c);
 	return c;
 }
 
 __mu0_static_inline__
-const unsigned int __mu0_gcd_i__(const unsigned int __a, const unsigned int __b)
+const ___mu0_uint4_t___ __mu0_gcd_u4__(const ___mu0_uint4_t___ __a, const ___mu0_uint4_t___ __b)
 {
-	unsigned int c;
-	___mu0_gcd___(unsigned int, __a, __b, c);
+	___mu0_uint4_t___ c;
+	___mu0_gcd___(___mu0_uint4_t___, __a, __b, c);
 	return c;
 }
 
 __mu0_static_inline__
-const unsigned short __mu0_gcd_s__(const unsigned short __a, const unsigned short __b)
+const ___mu0_uint2_t___ __mu0_gcd_u2__(const ___mu0_uint2_t___ __a, const ___mu0_uint2_t___ __b)
 {
-	unsigned short c;
-	___mu0_gcd___(unsigned short, __a, __b, c);
+	___mu0_uint2_t___ c;
+	___mu0_gcd___(___mu0_uint2_t___, __a, __b, c);
 	return c;
 }
 
 __mu0_static_inline__
-const unsigned char __mu0_gcd_c__(const unsigned char __a, const unsigned char __b)
+const ___mu0_uint1_t___ __mu0_gcd_u1__(const ___mu0_uint1_t___ __a, const ___mu0_uint1_t___ __b)
 {
-	unsigned char c;
-	___mu0_gcd___(unsigned char, __a, __b, c);
+	___mu0_uint1_t___ c;
+	___mu0_gcd___(___mu0_uint1_t___, __a, __b, c);
 	return c;
 }
 
-#	define __mu0_inline_gcd_const__(__a, __b) __mu0_const_cast__(unsigned int, ___mu0_gcd_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
-#	define __mu0_inline_gcd__(__a, __b)       __mu0_gcd_i__(    \
-	  __mu0_const_cast__(unsigned int, __mu0_inline_abs__(__a)) \
-	, __mu0_const_cast__(unsigned int, __mu0_inline_abs__(__b)) \
+#	define __mu0_inline_gcd_const__(__a, __b) __mu0_const_cast__(___mu0_uint4_t___, ___mu0_gcd_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
+#	define __mu0_inline_gcd__(__a, __b)       __mu0_gcd_u4__(        \
+	  __mu0_const_cast__(___mu0_uint4_t___, __mu0_inline_abs__(__a)) \
+	, __mu0_const_cast__(___mu0_uint4_t___, __mu0_inline_abs__(__b)) \
 )
 
 #	if   MU0_HAVE_OVERLOAD
-__mu0_overload__ const unsigned long long __mu0_gcd__ (const unsigned long long __a, const unsigned long long __b) { return __mu0_gcd_ll__ (__a, __b); }
-__mu0_overload__ const unsigned long      __mu0_gcd__ (const unsigned long      __a, const unsigned long      __b) { return __mu0_gcd_l__  (__a, __b); }
-__mu0_overload__ const unsigned int       __mu0_gcd__ (const unsigned int       __a, const unsigned int       __b) { return __mu0_gcd_i__  (__a, __b); }
-__mu0_overload__ const unsigned short     __mu0_gcd__ (const unsigned short     __a, const unsigned short     __b) { return __mu0_gcd_s__  (__a, __b); }
-__mu0_overload__ const unsigned char      __mu0_gcd__ (const unsigned char      __a, const unsigned char      __b) { return __mu0_gcd_c__  (__a, __b); }
+__mu0_overload__ const ___mu0_uint8_t___ __mu0_gcd__(const ___mu0_uint8_t___ __a, const ___mu0_uint8_t___ __b) { return __mu0_gcd_u8__(__a, __b); }
+__mu0_overload__ const ___mu0_uintx_t___ __mu0_gcd__(const ___mu0_uintx_t___ __a, const ___mu0_uintx_t___ __b) { return __mu0_gcd_ux__(__a, __b); }
+__mu0_overload__ const ___mu0_uint4_t___ __mu0_gcd__(const ___mu0_uint4_t___ __a, const ___mu0_uint4_t___ __b) { return __mu0_gcd_u4__(__a, __b); }
+__mu0_overload__ const ___mu0_uint2_t___ __mu0_gcd__(const ___mu0_uint2_t___ __a, const ___mu0_uint2_t___ __b) { return __mu0_gcd_u2__(__a, __b); }
+__mu0_overload__ const ___mu0_uint1_t___ __mu0_gcd__(const ___mu0_uint1_t___ __a, const ___mu0_uint1_t___ __b) { return __mu0_gcd_u1__(__a, __b); }
 #	elif MU0_HAVE_GENERIC
 #	define __mu0_gcd__(__a, __b) __mu0_generic__((__a)+(__b) \
-	, unsigned long long : __mu0_gcd_ll__                    \
-	, unsigned long      : __mu0_gcd_l__                     \
-	, unsigned int       : __mu0_gcd_i__                     \
-	, unsigned short     : __mu0_gcd_s__                     \
-	, unsigned char      : __mu0_gcd_c__                     \
+	, ___mu0_uint8_t___ : __mu0_gcd_u8__                     \
+	, ___mu0_uintx_t___ : __mu0_gcd_ux__                     \
+	, ___mu0_uint4_t___ : __mu0_gcd_u4__                     \
+	, ___mu0_uint2_t___ : __mu0_gcd_u2__                     \
+	, ___mu0_uint1_t___ : __mu0_gcd_u1__                     \
 ) (__a, __b)
 #	elif MU0_HAVE_TYPEOF
-#	define __mu0_gcd__(__a, __b)                                    \
-	((__mu0_isofkind__(unsigned long long, ((__a)+(__b))))          \
-		? __mu0_gcd_ll__(__a, __b)                                   \
-		: ((__mu0_isofkind__(unsigned long, ((__a)+(__b))))          \
-			? __mu0_gcd_l__(__a, __b)                                 \
-			: ((__mu0_isofkind__(unsigned int, ((__a)+(__b))))        \
-				? __mu0_gcd_i__(__a, __b)                              \
-				: ((__mu0_isofkind__(unsigned short, ((__a)+(__b))))   \
-					? __mu0_gcd_s__(__a, __b)                           \
-					: ((__mu0_isofkind__(unsigned char, ((__a)+(__b)))) \
-						? __mu0_gcd_c__(__a, __b)                        \
-						: 0                                              \
-					)                                                   \
-				)                                                      \
-			)                                                         \
-		)                                                            \
+#	define __mu0_gcd__(__a, __b)                                        \
+	((__mu0_isofkind__(___mu0_uint8_t___, ((__a)+(__b))))               \
+		? __mu0_gcd_u8__(__a, __b)                                       \
+		: ((__mu0_isofkind__(___mu0_uintx_t___, ((__a)+(__b))))          \
+			? __mu0_gcd_ux__(__a, __b)                                    \
+			: ((__mu0_isofkind__(___mu0_uint4_t___, ((__a)+(__b))))       \
+				? __mu0_gcd_u4__(__a, __b)                                 \
+				: ((__mu0_isofkind__(___mu0_uint2_t___, ((__a)+(__b))))    \
+					? __mu0_gcd_u2__(__a, __b)                              \
+					: ((__mu0_isofkind__(___mu0_uint1_t___, ((__a)+(__b)))) \
+						? __mu0_gcd_u1__(__a, __b)                           \
+						: 0                                                  \
+					)                                                       \
+				)                                                          \
+			)                                                             \
+		)                                                                \
 	)
 #	else
-#	define __mu0_gcd__(__a, __b)                                                    \
-	((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(unsigned long long))          \
-		? __mu0_gcd_ll__(__a, __b)                                                   \
-		: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(unsigned long))          \
-			? __mu0_gcd_l__(__a, __b)                                                 \
-			: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(unsigned int))        \
-				? __mu0_gcd_i__(__a, __b)                                              \
-				: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(unsigned short))   \
-					? __mu0_gcd_s__(__a, __b)                                           \
-					: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(unsigned char)) \
-						? __mu0_gcd_c__(__a, __b)                                        \
-						: 0                                                              \
-					)                                                                   \
-				)                                                                      \
-			)                                                                         \
-		)                                                                            \
+#	define __mu0_gcd__(__a, __b)                                                        \
+	((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(___mu0_uint8_t___))               \
+		? __mu0_gcd_u8__(__a, __b)                                                       \
+		: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(___mu0_uintx_t___))          \
+			? __mu0_gcd_ux__(__a, __b)                                                    \
+			: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(___mu0_uint4_t___))       \
+				? __mu0_gcd_u4__(__a, __b)                                                 \
+				: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(___mu0_uint2_t___))    \
+					? __mu0_gcd_u2__(__a, __b)                                              \
+					: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(___mu0_uint1_t___)) \
+						? __mu0_gcd_u1__(__a, __b)                                           \
+						: 0                                                                  \
+					)                                                                       \
+				)                                                                          \
+			)                                                                             \
+		)                                                                                \
 	)
 #	endif
 
 __mu0_static_inline__
-const unsigned long long __mu0_lcm_ll__(const unsigned long long __a, const unsigned long long __b)
+const ___mu0_uint8_t___ __mu0_lcm_u8__(const ___mu0_uint8_t___ __a, const ___mu0_uint8_t___ __b)
 {
-	unsigned long long c;
-	___mu0_lcm___(unsigned long long, __a, __b, c);
+	___mu0_uint8_t___ c;
+	___mu0_lcm___(___mu0_uint8_t___, __a, __b, c);
 	return c;
 }
 
 __mu0_static_inline__
-const unsigned long __mu0_lcm_l__(const unsigned long __a, const unsigned long __b)
+const ___mu0_uintx_t___ __mu0_lcm_ux__(const ___mu0_uintx_t___ __a, const ___mu0_uintx_t___ __b)
 {
-	unsigned long c;
-	___mu0_lcm___(unsigned long, __a, __b, c);
+	___mu0_uintx_t___ c;
+	___mu0_lcm___(___mu0_uintx_t___, __a, __b, c);
 	return c;
 }
 
 __mu0_static_inline__
-const unsigned int __mu0_lcm_i__(const unsigned int __a, const unsigned int __b)
+const ___mu0_uint4_t___ __mu0_lcm_u4__(const ___mu0_uint4_t___ __a, const ___mu0_uint4_t___ __b)
 {
-	unsigned int c;
-	___mu0_lcm___(unsigned int, __a, __b, c);
+	___mu0_uint4_t___ c;
+	___mu0_lcm___(___mu0_uint4_t___, __a, __b, c);
 	return c;
 }
 
 __mu0_static_inline__
-const unsigned short __mu0_lcm_s__(const unsigned short __a, const unsigned short __b)
+const ___mu0_uint2_t___ __mu0_lcm_u2__(const ___mu0_uint2_t___ __a, const ___mu0_uint2_t___ __b)
 {
-	unsigned short c;
-	___mu0_lcm___(unsigned short, __a, __b, c);
+	___mu0_uint2_t___ c;
+	___mu0_lcm___(___mu0_uint2_t___, __a, __b, c);
 	return c;
 }
 
 __mu0_static_inline__
-const unsigned char __mu0_lcm_c__(const unsigned char __a, const unsigned char __b)
+const ___mu0_uint1_t___ __mu0_lcm_u1__(const ___mu0_uint1_t___ __a, const ___mu0_uint1_t___ __b)
 {
-	unsigned char c;
-	___mu0_lcm___(unsigned char, __a, __b, c);
+	___mu0_uint1_t___ c;
+	___mu0_lcm___(___mu0_uint1_t___, __a, __b, c);
 	return c;
 }
 
-#	define __mu0_inline_lcm_const__(__a, __b) __mu0_const_cast__(unsigned int, ___mu0_lcm_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
-#	define __mu0_inline_lcm__(__a, __b)       __mu0_lcm_i__(    \
-	  __mu0_const_cast__(unsigned int, __mu0_inline_abs__(__a)) \
-	, __mu0_const_cast__(unsigned int, __mu0_inline_abs__(__b)) \
+#	define __mu0_inline_lcm_const__(__a, __b) __mu0_const_cast__(___mu0_uint4_t___, ___mu0_lcm_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
+#	define __mu0_inline_lcm__(__a, __b)       __mu0_lcm_u4__(        \
+	  __mu0_const_cast__(___mu0_uint4_t___, __mu0_inline_abs__(__a)) \
+	, __mu0_const_cast__(___mu0_uint4_t___, __mu0_inline_abs__(__b)) \
 )
 
 #	if   MU0_HAVE_OVERLOAD
-__mu0_overload__ const unsigned long long __mu0_lcm__ (const unsigned long long __a, const unsigned long long __b) { return __mu0_lcm_ll__ (__a, __b); }
-__mu0_overload__ const unsigned long      __mu0_lcm__ (const unsigned long      __a, const unsigned long      __b) { return __mu0_lcm_l__  (__a, __b); }
-__mu0_overload__ const unsigned int       __mu0_lcm__ (const unsigned int       __a, const unsigned int       __b) { return __mu0_lcm_i__  (__a, __b); }
-__mu0_overload__ const unsigned short     __mu0_lcm__ (const unsigned short     __a, const unsigned short     __b) { return __mu0_lcm_s__  (__a, __b); }
-__mu0_overload__ const unsigned char      __mu0_lcm__ (const unsigned char      __a, const unsigned char      __b) { return __mu0_lcm_c__  (__a, __b); }
+__mu0_overload__ const ___mu0_uint8_t___ __mu0_lcm__(const ___mu0_uint8_t___ __a, const ___mu0_uint8_t___ __b) { return __mu0_lcm_u8__(__a, __b); }
+__mu0_overload__ const ___mu0_uintx_t___ __mu0_lcm__(const ___mu0_uintx_t___ __a, const ___mu0_uintx_t___ __b) { return __mu0_lcm_ux__(__a, __b); }
+__mu0_overload__ const ___mu0_uint4_t___ __mu0_lcm__(const ___mu0_uint4_t___ __a, const ___mu0_uint4_t___ __b) { return __mu0_lcm_u4__(__a, __b); }
+__mu0_overload__ const ___mu0_uint2_t___ __mu0_lcm__(const ___mu0_uint2_t___ __a, const ___mu0_uint2_t___ __b) { return __mu0_lcm_u2__(__a, __b); }
+__mu0_overload__ const ___mu0_uint1_t___ __mu0_lcm__(const ___mu0_uint1_t___ __a, const ___mu0_uint1_t___ __b) { return __mu0_lcm_u1__(__a, __b); }
 #	elif MU0_HAVE_GENERIC
 #	define __mu0_lcm__(__a, __b) __mu0_generic__((__a)+(__b) \
-	, unsigned long long : __mu0_lcm_ll__                    \
-	, unsigned long      : __mu0_lcm_l__                     \
-	, unsigned int       : __mu0_lcm_i__                     \
-	, unsigned short     : __mu0_lcm_s__                     \
-	, unsigned char      : __mu0_lcm_c__                     \
+	, ___mu0_uint8_t___ : __mu0_lcm_u8__                     \
+	, ___mu0_uintx_t___ : __mu0_lcm_ux__                     \
+	, ___mu0_uint4_t___ : __mu0_lcm_u4__                     \
+	, ___mu0_uint2_t___ : __mu0_lcm_u2__                     \
+	, ___mu0_uint1_t___ : __mu0_lcm_u1__                     \
 ) (__a, __b)
 #	elif MU0_HAVE_TYPEOF
-#	define __mu0_lcm__(__a, __b)                                    \
-	((__mu0_isofkind__(unsigned long long, ((__a)+(__b))))          \
-		? __mu0_lcm_ll__(__a, __b)                                   \
-		: ((__mu0_isofkind__(unsigned long, ((__a)+(__b))))          \
-			? __mu0_lcm_l__(__a, __b)                                 \
-			: ((__mu0_isofkind__(unsigned int, ((__a)+(__b))))        \
-				? __mu0_lcm_i__(__a, __b)                              \
-				: ((__mu0_isofkind__(unsigned short, ((__a)+(__b))))   \
-					? __mu0_lcm_s__(__a, __b)                           \
-					: ((__mu0_isofkind__(unsigned char, ((__a)+(__b)))) \
-						? __mu0_lcm_c__(__a, __b)                        \
-						: 0                                              \
-					)                                                   \
-				)                                                      \
-			)                                                         \
-		)                                                            \
+#	define __mu0_lcm__(__a, __b)                                        \
+	((__mu0_isofkind__(___mu0_uint8_t___, ((__a)+(__b))))               \
+		? __mu0_lcm_u8__(__a, __b)                                       \
+		: ((__mu0_isofkind__(___mu0_uintx_t___, ((__a)+(__b))))          \
+			? __mu0_lcm_ux__(__a, __b)                                    \
+			: ((__mu0_isofkind__(___mu0_uint4_t___, ((__a)+(__b))))       \
+				? __mu0_lcm_u4__(__a, __b)                                 \
+				: ((__mu0_isofkind__(___mu0_uint2_t___, ((__a)+(__b))))    \
+					? __mu0_lcm_u2__(__a, __b)                              \
+					: ((__mu0_isofkind__(___mu0_uint1_t___, ((__a)+(__b)))) \
+						? __mu0_lcm_u1__(__a, __b)                           \
+						: 0                                                  \
+					)                                                       \
+				)                                                          \
+			)                                                             \
+		)                                                                \
 	)
 #	else
-#	define __mu0_lcm__(__a, __b)                                                    \
-	((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(unsigned long long))          \
-		? __mu0_lcm_ll__(__a, __b)                                                   \
-		: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(unsigned long))          \
-			? __mu0_lcm_l__(__a, __b)                                                 \
-			: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(unsigned int))        \
-				? __mu0_lcm_i__(__a, __b)                                              \
-				: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(unsigned short))   \
-					? __mu0_lcm_s__(__a, __b)                                           \
-					: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(unsigned char)) \
-						? __mu0_lcm_c__(__a, __b)                                        \
-						: 0                                                              \
-					)                                                                   \
-				)                                                                      \
-			)                                                                         \
-		)                                                                            \
+#	define __mu0_lcm__(__a, __b)                                                        \
+	((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(___mu0_uint8_t___))               \
+		? __mu0_lcm_u8__(__a, __b)                                                       \
+		: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(___mu0_uintx_t___))          \
+			? __mu0_lcm_ux__(__a, __b)                                                    \
+			: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(___mu0_uint4_t___))       \
+				? __mu0_lcm_u4__(__a, __b)                                                 \
+				: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(___mu0_uint2_t___))    \
+					? __mu0_lcm_u2__(__a, __b)                                              \
+					: ((__mu0_sizeof__(((__a)+(__b))) == __mu0_sizeof__(___mu0_uint1_t___)) \
+						? __mu0_lcm_u1__(__a, __b)                                           \
+						: 0                                                                  \
+					)                                                                       \
+				)                                                                          \
+			)                                                                             \
+		)                                                                                \
 	)
 #	endif
 
