@@ -49,14 +49,7 @@
 #	undef  __mu0_isofkind__
 #	define MU0_HAVE_TYPEOF 0
 
-#	if MU0_HAVE_CC_ITLGC && MU0_HAVE_C11
-#		undef  MU0_HAVE_TYPEOF
-#		define MU0_HAVE_TYPEOF            1
-#		define __mu0_typeof__             __typeof__
-#		define __mu0_kindof__(__x)        __mu0_typeof__((__x) + 0)
-#		define __mu0_isoftype__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
-#		define __mu0_isofkind__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
-#	elif MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC
+#	if   MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__             __typeof__
@@ -70,6 +63,13 @@
 #		define __mu0_kindof__(__x)        typeof_unequal(__x)
 #		define __mu0_isoftype__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x)) ? 1 : 0)
 #		define __mu0_isofkind__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x) || __mu0_typeof__(_Tp) == __mu0_kindof__(__x))  ? 1 : 0)
+#	elif MU0_HAVE_CC_ITLGC && MU0_HAVE_GENERIC
+#		undef  MU0_HAVE_TYPEOF
+#		define MU0_HAVE_TYPEOF            1
+#		define __mu0_typeof__             __typeof__
+#		define __mu0_kindof__(__x)        __mu0_typeof__((__x) + 0)
+#		define __mu0_isoftype__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
+#		define __mu0_isofkind__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
 #	endif
 
 #	if !MU0_HAVE_TYPEOF && MU0_HAVE_CPP11

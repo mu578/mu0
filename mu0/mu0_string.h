@@ -26,12 +26,8 @@ typedef          char  mu0_tchar8_t;
 typedef unsigned char  mu0_uchar8_t;
 typedef signed   char  mu0_schar8_t;
 
-typedef mu0_tchar8_t * mu0_vtchar8_t;
-typedef mu0_uchar8_t * mu0_vuchar8_t;
-typedef mu0_schar8_t * mu0_vschar8_t;
-
-typedef mu0_vtchar8_t  mu0_string8_t;
-typedef mu0_vuchar8_t  mu0_binary8_t;
+typedef mu0_tchar8_t * mu0_string8_t;
+typedef mu0_uchar8_t * mu0_binary8_t;
 
 #	define mu0_tchar8(__x)        __mu0_cast__(mu0_tchar8_t, __x)
 #	define mu0_const_tchar8(__x)  __mu0_const_cast__(mu0_tchar8_t, __x)
@@ -39,13 +35,6 @@ typedef mu0_vuchar8_t  mu0_binary8_t;
 #	define mu0_const_uchar8(__x)  __mu0_const_cast__(mu0_uchar8_t, __x)
 #	define mu0_schar8(__x)        __mu0_cast__(mu0_schar8_t, __x)
 #	define mu0_const_schar8(__x)  __mu0_const_cast__(mu0_schar8_t, __x)
-
-#	define mu0_vtchar8(__x)       __mu0_cast__(mu0_vtchar8_t, __x)
-#	define mu0_const_vtchar8(__x) __mu0_const_cast__(mu0_vtchar8_t, __x)
-#	define mu0_vuchar8(__x)       __mu0_cast__(mu0_vuchar8_t, __x)
-#	define mu0_const_vuchar8(__x) __mu0_const_cast__(mu0_vuchar8_t, __x)
-#	define mu0_vschar8(__x)       __mu0_cast__(mu0_vschar8_t, __x)
-#	define mu0_const_vschar8(__x) __mu0_const_cast__(mu0_vschar8_t, __x)
 
 #	define mu0_string8(__x)       __mu0_cast__(mu0_string8_t, __x)
 #	define mu0_const_string8(__x) __mu0_const_cast__(mu0_string8_t, __x)
