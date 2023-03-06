@@ -82,6 +82,12 @@
 #		define __mu0_isofkind__(_Tp, x)   ((::std::is_same<_Tp , __mu0_typeof__(__x) >::value == true || ::std::is_same<_Tp , __mu0_kindof__(__x) >::value == true) ? 1 : 0)
 #	endif
 
+#	if MU0_HAVE_TYPEOF
+#	define __mu0_infer__(__x) __mu0_kindof__(__x)
+#	else
+#	define __mu0_infer__(__x) void
+#	endif
+
 #	undef  MU0_HAVE_SIZEOF
 #	undef  __mu0_sizeof__
 #	undef  __mu0_isofsize__

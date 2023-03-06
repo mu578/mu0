@@ -41,7 +41,7 @@ mu0_sint32_t mu0_locale_global(
 
 mu0_sint32_t mu0_locale_delete(mu0_locale_t locale);
 
-mu0_sint32_t mu0_locale_compare(
+enum mu0_ordering mu0_locale_compare(
 	  const mu0_string8_t lhs
 	, const mu0_string8_t rhs
 	, const mu0_locale_t  locale __mu0_nullable__

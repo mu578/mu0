@@ -139,7 +139,7 @@ const ___mu0_uint1_t___ __mu0_gcd_u1__(const ___mu0_uint1_t___ __a, const ___mu0
 	return c;
 }
 
-#	define __mu0_inline_gcd_const__(__a, __b) __mu0_const_cast__(___mu0_uint4_t___, ___mu0_gcd_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
+#	define __mu0_inline_gcd_const__(__a, __b) __mu0_const_cast__(___mu0_uint4_t___, ((__a) && (__b) ? ___mu0_gcd_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)) : 0))
 #	define __mu0_inline_gcd__(__a, __b)       __mu0_gcd_u4__(        \
 	  __mu0_const_cast__(___mu0_uint4_t___, __mu0_inline_abs__(__a)) \
 	, __mu0_const_cast__(___mu0_uint4_t___, __mu0_inline_abs__(__b)) \
@@ -237,7 +237,7 @@ const ___mu0_uint1_t___ __mu0_lcm_u1__(const ___mu0_uint1_t___ __a, const ___mu0
 	return c;
 }
 
-#	define __mu0_inline_lcm_const__(__a, __b) __mu0_const_cast__(___mu0_uint4_t___, ___mu0_lcm_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)))
+#	define __mu0_inline_lcm_const__(__a, __b) __mu0_const_cast__(___mu0_uint4_t___, ((__a) && (__b) ? ___mu0_lcm_00___(__mu0_inline_abs__(__a), __mu0_inline_abs__(__b)) : 0))
 #	define __mu0_inline_lcm__(__a, __b)       __mu0_lcm_u4__(        \
 	  __mu0_const_cast__(___mu0_uint4_t___, __mu0_inline_abs__(__a)) \
 	, __mu0_const_cast__(___mu0_uint4_t___, __mu0_inline_abs__(__b)) \
