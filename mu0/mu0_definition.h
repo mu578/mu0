@@ -30,15 +30,16 @@
 #	include <mu0/mu0_definition/mu0_language.h>
 #	include <mu0/mu0_definition/mu0_barrier.h>
 #	include <mu0/mu0_definition/mu0_numeral.h>
+#	include <mu0/mu0_definition/mu0_parallelize.h>
 #	include <mu0/mu0_definition/mu0_platform.h>
 
 MU0_BEGIN_CDECL
 
 enum mu0_endian
 {
-	  mu0_endian_little    = __MU0_ORDER_LEEN__
-	, mu0_endian_big       = __MU0_ORDER_BEEN__
-	, mu0_endian_native    = __MU0_BYTE_ORDER__
+	  mu0_endian_little    = __mu0_order_leen__
+	, mu0_endian_big       = __mu0_order_been__
+	, mu0_endian_native    = __mu0_byte_order__
 };
 
 enum mu0_ordering

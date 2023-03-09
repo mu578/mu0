@@ -21,25 +21,25 @@
 #define MU0_BYTEORDER_H 1
 
 #	undef  MU0_HAVE_BYTEORDER
-#	undef  __MU0_BYTE_ORDER__
-#	undef  __MU0_ORDER_LEEN__
-#	undef  __MU0_ORDER_BEEN__
+#	undef  __mu0_byte_order__
+#	undef  __mu0_order_leen__
+#	undef  __mu0_order_been__
 #	define MU0_HAVE_BYTEORDER 0
 #	if defined(__LITTLE_ENDIAN__)
 #		if __LITTLE_ENDIAN__
 #			undef  MU0_HAVE_BYTEORDER
 #			define MU0_HAVE_BYTEORDER     1
-#			define __MU0_BYTE_ORDER__     __BYTE_ORDER__
-#			define __MU0_ORDER_LEEN__     __ORDER_LITTLE_ENDIAN__
-#			define __MU0_ORDER_BEEN__     __ORDER_BIG_ENDIAN__
+#			define __mu0_byte_order__     __BYTE_ORDER__
+#			define __mu0_order_leen__     __ORDER_LITTLE_ENDIAN__
+#			define __mu0_order_been__     __ORDER_BIG_ENDIAN__
 #		endif
 #	elif defined(__BIG_ENDIAN__)
 #		if __BIG_ENDIAN__
 #			undef  MU0_HAVE_BYTEORDER
 #			define MU0_HAVE_BYTEORDER      1
-#			define __MU0_BYTE_ORDER__      __BYTE_ORDER__
-#			define __MU0_ORDER_LEEN__      __ORDER_LITTLE_ENDIAN__
-#			define __MU0_ORDER_BEEN__      __ORDER_BIG_ENDIAN__
+#			define __mu0_byte_order__      __BYTE_ORDER__
+#			define __mu0_order_leen__      __ORDER_LITTLE_ENDIAN__
+#			define __mu0_order_been__      __ORDER_BIG_ENDIAN__
 #		endif
 #	elif MU0_HAVE_CC_ARMCC
 #		undef  MU0_HAVE_BYTEORDER
@@ -53,9 +53,9 @@
 #				define __BYTE_ORDER__       __ORDER_LITTLE_ENDIAN__
 #			endif
 #		endif
-#		define __MU0_BYTE_ORDER__         __BYTE_ORDER__
-#		define __MU0_ORDER_LEEN__         __ORDER_LITTLE_ENDIAN__
-#		define __MU0_ORDER_BEEN__         __ORDER_BIG_ENDIAN__
+#		define __mu0_byte_order__         __BYTE_ORDER__
+#		define __mu0_order_leen__         __ORDER_LITTLE_ENDIAN__
+#		define __mu0_order_been__         __ORDER_BIG_ENDIAN__
 #	elif MU0_HAVE_CC_MSVCC
 #		if defined(_M_PPC) || defined(_M_ALPHA)
 #			undef  MU0_HAVE_BYTEORDER
@@ -63,18 +63,18 @@
 #			define __ORDER_LITTLE_ENDIAN__ (1234)
 #			define __ORDER_BIG_ENDIAN__    (4321)
 #			define __BYTE_ORDER__          __ORDER_BIG_ENDIAN__
-#			define __MU0_BYTE_ORDER__      __BYTE_ORDER__
-#			define __MU0_ORDER_LEEN__      __ORDER_LITTLE_ENDIAN__
-#			define __MU0_ORDER_BEEN__      __ORDER_BIG_ENDIAN__
+#			define __mu0_byte_order__      __BYTE_ORDER__
+#			define __mu0_order_leen__      __ORDER_LITTLE_ENDIAN__
+#			define __mu0_order_been__      __ORDER_BIG_ENDIAN__
 #		else
 #			undef  MU0_HAVE_BYTEORDER
 #			define MU0_HAVE_BYTEORDER      1
 #			define __ORDER_LITTLE_ENDIAN__ (1234)
 #			define __ORDER_BIG_ENDIAN__    (4321)
 #			define __BYTE_ORDER__          __ORDER_LITTLE_ENDIAN__
-#			define __MU0_BYTE_ORDER__      __BYTE_ORDER__
-#			define __MU0_ORDER_LEEN__      __ORDER_LITTLE_ENDIAN__
-#			define __MU0_ORDER_BEEN__      __ORDER_BIG_ENDIAN__
+#			define __mu0_byte_order__      __BYTE_ORDER__
+#			define __mu0_order_leen__      __ORDER_LITTLE_ENDIAN__
+#			define __mu0_order_been__      __ORDER_BIG_ENDIAN__
 #		endif
 #	elif MU0_HAVE_CC_ITLCC
 #		undef  MU0_HAVE_BYTEORDER
@@ -84,9 +84,9 @@
 #			define __ORDER_BIG_ENDIAN__    (4321)
 #			define __BYTE_ORDER__          __ORDER_LITTLE_ENDIAN__
 #		endif
-#		define __MU0_BYTE_ORDER__         __BYTE_ORDER__
-#		define __MU0_ORDER_LEEN__         __ORDER_LITTLE_ENDIAN__
-#		define __MU0_ORDER_BEEN__         __ORDER_BIG_ENDIAN__
+#		define __mu0_byte_order__         __BYTE_ORDER__
+#		define __mu0_order_leen__         __ORDER_LITTLE_ENDIAN__
+#		define __mu0_order_been__         __ORDER_BIG_ENDIAN__
 #	endif
 
 #	if !MU0_HAVE_BYTEORDER
@@ -102,21 +102,21 @@
 #		if   defined(__BYTE_ORDER)
 #			undef  MU0_HAVE_BYTEORDER
 #			define MU0_HAVE_BYTEORDER      1
-#			define __MU0_BYTE_ORDER__      __BYTE_ORDER
-#			define __MU0_ORDER_LEEN__      __LITTLE_ENDIAN
-#			define __MU0_ORDER_BEEN__      __BIG_ENDIAN
+#			define __mu0_byte_order__      __BYTE_ORDER
+#			define __mu0_order_leen__      __LITTLE_ENDIAN
+#			define __mu0_order_been__      __BIG_ENDIAN
 #		elif defined(_BYTE_ORDER)
 #			undef  MU0_HAVE_BYTEORDER
 #			define MU0_HAVE_BYTEORDER      1
-#			define __MU0_BYTE_ORDER__      _BYTE_ORDER
-#			define __MU0_ORDER_LEEN__      _LITTLE_ENDIAN
-#			define __MU0_ORDER_BEEN__      _BIG_ENDIAN
+#			define __mu0_byte_order__      _BYTE_ORDER
+#			define __mu0_order_leen__      _LITTLE_ENDIAN
+#			define __mu0_order_been__      _BIG_ENDIAN
 #		elif defined(BYTE_ORDER)
 #			undef  MU0_HAVE_BYTEORDER
 #			define MU0_HAVE_BYTEORDER      1
-#			define __MU0_BYTE_ORDER__      BYTE_ORDER
-#			define __MU0_ORDER_LEEN__      LITTLE_ENDIAN
-#			define __MU0_ORDER_BEEN__      BIG_ENDIAN
+#			define __mu0_byte_order__      BYTE_ORDER
+#			define __mu0_order_leen__      LITTLE_ENDIAN
+#			define __mu0_order_been__      BIG_ENDIAN
 #		endif
 #	endif
 

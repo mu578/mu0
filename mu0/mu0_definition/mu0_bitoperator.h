@@ -96,32 +96,32 @@
 #	endif
 
 #	if defined(__CHAR_BIT__)
-#		define __MU0_CHAR_BIT__ __CHAR_BIT__
+#		define __mu0_char_bit__ __CHAR_BIT__
 #	elif defined(CHAR_BIT)
-#		define __MU0_CHAR_BIT__ CHAR_BIT
+#		define __mu0_char_bit__ CHAR_BIT
 #	else
-#		define __MU0_CHAR_BIT__ (8U)
+#		define __mu0_char_bit__ (8U)
 #	endif
 
 __mu0_static_inline__
 const int __mu0_bit_digits_u8__(void)
-{ return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint8_t___) * __MU0_CHAR_BIT__)); }
+{ return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint8_t___) * __mu0_char_bit__)); }
 
 __mu0_static_inline__
 const int __mu0_bit_digits_ux__(void)
-{ return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uintx_t___) * __MU0_CHAR_BIT__)); }
+{ return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uintx_t___) * __mu0_char_bit__)); }
 
 __mu0_static_inline__
 const int __mu0_bit_digits_u4__(void)
-{ return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint4_t___) * __MU0_CHAR_BIT__)); }
+{ return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint4_t___) * __mu0_char_bit__)); }
 
 __mu0_static_inline__
 const int __mu0_bit_digits_u2__(void)
-{ return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint2_t___) * __MU0_CHAR_BIT__)); }
+{ return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint2_t___) * __mu0_char_bit__)); }
 
 __mu0_static_inline__
 const int __mu0_bit_digits_u1__(void)
-{ return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint1_t___) * __MU0_CHAR_BIT__)); }
+{ return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint1_t___) * __mu0_char_bit__)); }
 
 #	if   MU0_HAVE_OVERLOAD
 __mu0_overload__ const int __mu0_bit_digits__(const ___mu0_uint8_t___ __x) { __mu0_unused__(__x); return __mu0_bit_digits_u8__(); }

@@ -75,7 +75,7 @@
 #		if MU0_HAVE_ARM64
 #			define __mu0_sync_cpu_yield__()    __asm__ __volatile__("yield;" ::: "memory")
 #		else
-#			if __MU0_BYTE_ORDER__ == __MU0_ORDER_LEEN__
+#			if __mu0_byte_order__ == __mu0_order_leen__
 #				define __mu0_sync_cpu_yield__() __asm__ __volatile__("yield");
 #			else
 #				define __mu0_sync_cpu_yield__() __asm__ __volatile__("or 27, 27, 27" ::: "memory")
@@ -107,7 +107,7 @@
 #		if MU0_HAVE_ARM64
 #			define __mu0_sync_cpu_yield__()    __asm__ __volatile__("yield;" ::: "memory")
 #		else
-#			if __MU0_BYTE_ORDER__ == __MU0_ORDER_LEEN__
+#			if __mu0_byte_order__ == __mu0_order_leen__
 #				define __mu0_sync_cpu_yield__() __asm__ __volatile__("yield");
 #			else
 #				define __mu0_sync_cpu_yield__() __asm__ __volatile__("or 27, 27, 27" ::: "memory")

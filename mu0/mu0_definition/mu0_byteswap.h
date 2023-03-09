@@ -162,7 +162,7 @@
 #	endif
 
 #	if MU0_HAVE_BYTESWAP
-#	if   __MU0_BYTE_ORDER__ == __MU0_ORDER_LEEN__
+#	if   __mu0_byte_order__ == __mu0_order_leen__
 #		define __mu0_htobe16__(__x)     __mu0_bswap_16__(__x)
 #		define __mu0_htole16__(__x)     (__x)
 #		define __mu0_be16toh__(__x)     __mu0_bswap_16__(__x)
@@ -175,7 +175,7 @@
 #		define __mu0_htole64__(__x)     (__x)
 #		define __mu0_be64toh__(__x)     __mu0_bswap_64__(__x)
 #		define __mu0_le64toh__(__x)     (__x)
-#	elif __MU0_BYTE_ORDER__ == __MU0_ORDER_BEEN__
+#	elif __mu0_byte_order__ == __mu0_order_been__
 #		define __mu0_htobe16__(__x)     (__x)
 #		define __mu0_htole16__(__x)     __mu0_bswap_16__(__x)
 #		define __mu0_be16toh__(__x)     (__x)
