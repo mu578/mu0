@@ -131,20 +131,20 @@ const int __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ loc)
 
 __mu0_static_inline__
 const int __mu0_i18nlocale_collate__(
-	  const char *      lhs
-	, const char *      rhs
+	  const char *         lhs
+	, const char *         rhs
 	, __mu0_i18nlocale_t__ loc
 ) {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	const int r = (__mu0_not_nullptr__(loc)
-		? __mu0_strcoll_l__ (lhs, rhs, loc)
-		: __mu0_strcoll__   (lhs, rhs)
+		? __mu0_strcoll_l__(lhs, rhs, loc)
+		: __mu0_strcoll__  (lhs, rhs)
 	);
 	return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 #	elif MU0_HAVE_POSIX1_2001
 	const int r = (__mu0_not_nullptr__(loc)
-		? __mu0_strcoll_l__ (lhs, rhs, loc)
-		: __mu0_strcoll__   (lhs, rhs)
+		? __mu0_strcoll_l__(lhs, rhs, loc)
+		: __mu0_strcoll__  (lhs, rhs)
 	);
 #	else
 	__mu0_unused__(loc);
