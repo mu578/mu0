@@ -459,7 +459,7 @@ __mu0_static_inline__ const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x);
 				}
 			#	else
 				const ___mu0_uintx_t___ mask_lo = __mu0_const_cast__(___mu0_uintx_t___, __x);
-				const ___mu0_uint4_t___  hdigits = __mu0_bit_digits_u4__();
+				const ___mu0_uint4_t___ hdigits = __mu0_bit_digits_u4__();
 				const ___mu0_uintx_t___ mask_hi = __mu0_const_cast__(___mu0_uintx_t___, (__x >> hdigits));
 
 				if (__x) {

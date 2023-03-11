@@ -25,7 +25,14 @@
 #	if _OPENMP
 #		undef  MU0_HAVE_PARALLELIZE
 #		define MU0_HAVE_PARALLELIZE 1
+#		if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC
+#		pragma GCC diagnostic push
+#		pragma GCC diagnostic ignored "-Wpedantic"
+#		endif
 #		include <omp.h>
+#		if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC
+#		pragma GCC diagnostic pop
+#		endif
 #	endif
 
 #endif /* !MU0_PARALLELIZE_H */
