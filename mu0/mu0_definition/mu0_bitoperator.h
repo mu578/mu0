@@ -29,7 +29,7 @@
 #	define ___mu0_bit_rev___(_Tp, __x)                                                                    \
 	__mu0_scope_begin__                                                                                   \
 		___mu0_uint4_t___ ___mu0_bit_rev__d___ = __mu0_cast__(___mu0_uint4_t___, __mu0_bit_digits__(__x)); \
-		_Tp          ___mu0_bit_rev__m___ = ~(__mu0_const_cast__(_Tp, 0));                                 \
+		_Tp               ___mu0_bit_rev__m___ = ~(__mu0_const_cast__(_Tp, 0));                            \
 		while (___mu0_bit_rev__d___ >>= 1) {                                                               \
 			___mu0_bit_rev__m___ ^= ___mu0_bit_rev__m___ << (___mu0_bit_rev__d___);                         \
 			(__x) = ((__x) & ~___mu0_bit_rev__m___) >> ___mu0_bit_rev__d___                                 \

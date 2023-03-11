@@ -19,7 +19,7 @@ LOCAL_MODULE      := mu0
 LOCAL_MODULE_PATH := $(dir $(abspath ..))$(LOCAL_MODULE)
 MU0_ROOT_PATH     := $(LOCAL_MODULE_PATH)
 
-PLATFORM_VARIANT:=macos_macport.fat
+PLATFORM_VARIANT  := macos_macport.fat
 
 include $(MU0_ROOT_PATH)/mk/inc/mu0_source.mk
 include $(MU0_ROOT_PATH)/mk/inc/mu0_toolchain.mk

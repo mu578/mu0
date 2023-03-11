@@ -174,9 +174,22 @@
 #	define __mu0_scope_begin__          do     {
 #	define __mu0_scope_end__            break; } while (0)
 
-#	define __mu0_nullptr__              NULL
-#	define __mu0_is_nullptr__(__x)      ((__x) == NULL ? 1 : 0)
-#	define __mu0_not_nullptr__(__x)     ((__x) != NULL ? 1 : 0)
+#	if !defined(NULL)
+#	if MU0_HAVE_CPP98
+#  	if !MU0_HAVE_MINGW && !MU0_HAVE_CC_MSVCC && !MU0_HAVE_CC_ITLCC
+#			define __mu0_nullptr__ __null
+#		else
+#			define __mu0_nullptr__ 0
+#		endif
+#	else
+#		define __mu0_nullptr__ __mu0_cast__(void *, 0)
+#	endif
+#	else
+#		define __mu0_nullptr__ NULL
+#	endif
+
+#	define __mu0_is_nullptr__(__x)      ((__x) == __mu0_nullptr__ ? 1 : 0)
+#	define __mu0_not_nullptr__(__x)     ((__x) != __mu0_nullptr__ ? 1 : 0)
 
 #	define __mu0_cast__(_Tp, __x)       (_Tp)(__x)
 #	define __mu0_const_cast__(_Tp, __x) (const _Tp)(__x)
