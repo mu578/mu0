@@ -22,7 +22,7 @@
 
 #	if MU0_HAVE_ANDROID
 #		include <android/log.h>
-#		define __mu0_console_log__(...)         __android_log_print(ANDROID_LOG_DEBUG, "mu0", __VA_ARGS__)
+#		define __mu0_console_log__(...)        __android_log_print(ANDROID_LOG_DEBUG, "mu0", __VA_ARGS__)
 #	else
 #		include <stdio.h>
 #		if MU0_HAVE_CC_MSVCC

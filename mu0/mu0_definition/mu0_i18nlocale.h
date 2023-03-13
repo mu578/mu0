@@ -133,7 +133,7 @@ __mu0_static_inline__
 const int __mu0_i18nlocale_collate__(
 	  const char *         lhs
 	, const char *         rhs
-	, __mu0_i18nlocale_t__ loc
+	, __mu0_i18nlocale_t__ loc __mu0_nullable__
 ) {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	const int r = (__mu0_not_nullptr__(loc)

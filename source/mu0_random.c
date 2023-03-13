@@ -92,7 +92,7 @@ mu0_uint64_t mu0_pcg32_64_random_r(mu0_random_context_t * ctx)
 __mu0_static_inline__
 mu0_uint16_t mu0_pcg32_16_random_r(mu0_random_context_t * ctx)
 {
-	return mu0_uint16(mu0_pcg32_bounded_random_r(ctx, mu0_uint32(UINT16_MAX)));
+	return mu0_uint16(mu0_pcg32_bounded_random_r(ctx, mu0_uint32(mu0_uint16_max)));
 }
 
 __mu0_static_inline__
@@ -412,7 +412,7 @@ mu0_fp32_t mu0_random_fp32(void)
 {
 	const mu0_uint32_t k = __mu0_uint32_const__(0x1000001);
 	const mu0_uint32_t a = mu0_random_u32() % k;
-	return (mu0_fp32(a)/ mu0_fp32(k));
+	return (mu0_fp32(a) / mu0_fp32(k));
 }
 
 mu0_fp16_t mu0_random_fp16(void)
