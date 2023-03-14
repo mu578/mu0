@@ -941,16 +941,16 @@ const ___mu0_uint1_t___ __mu0_bit_floor_u1__(const ___mu0_uint1_t___ __x)
 #	if MU0_HAVE_CC_CLANG
 #		if (__has_builtin(__builtin_bit_cast))
 #			define __mu0_bit_cast__(__a, __b) \
-				__a = __builtin_bit_cast(__mu0_kindof__(__a), __b)
+			(__a) = __builtin_bit_cast(__mu0_typeof__((__a) + 0), __b)
 #		else
-#			define __mu0_bit_cast__(__a, __b)                      \
-				__mu0_memset__(&__b, 0, __mu0_sizeof__(__b + 0));   \
-				__mu0_memcpy__(&__b, &__a, __mu0_sizeof__(__b + 0))
+#			define __mu0_bit_cast__(__a, __b)                          \
+			__mu0_memset__(&(__b), 0     , __mu0_sizeof__((__b) + 0)); \
+			__mu0_memcpy__(&(__b), &(__a), __mu0_sizeof__((__b) + 0))
 #		endif
 #	else
-#		define __mu0_bit_cast__(__a, __b)                      \
-			__mu0_memset__(&__b, 0, __mu0_sizeof__(__b + 0));   \
-			__mu0_memcpy__(&__b, &__a, __mu0_sizeof__(__b + 0))
+#	define __mu0_bit_cast__(__a, __b)                          \
+	__mu0_memset__(&(__b), 0     , __mu0_sizeof__((__b) + 0)); \
+	__mu0_memcpy__(&(__b), &(__a), __mu0_sizeof__((__b) + 0))
 #	endif
 
 #	if !MU0_HAVE_BITOPERATOR
