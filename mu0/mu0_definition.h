@@ -49,8 +49,8 @@ enum mu0_ordering
 	, mu0_ordering_greater =  1
 };
 
-#	define mu0_min(__a, __b)             __mu0_min__(__a, __b)
-#	define mu0_max(__a, __b)             __mu0_max__(__a, __b)
+#	define mu0_min(__a, __b)             __mu0_inline_min__(__a, __b)
+#	define mu0_max(__a, __b)             __mu0_inline_max__(__a, __b)
 #	define mu0_abs(__a)                  __mu0_inline_abs__(__a)
 
 #	define mu0_gcd_const(__a, __b)       __mu0_inline_gcd_const__(__a, __b)
@@ -59,6 +59,10 @@ enum mu0_ordering
 #	define mu0_lcm(__a, __b)             __mu0_inline_lcm__(__a, __b)
 
 #	define mu0_console_log               __mu0_console_log__
+#	define mu0_console_info              __mu0_console_info__
+#	define mu0_console_warn              __mu0_console_warn__
+#	define mu0_console_error             __mu0_console_error__
+
 #	define mu0_scope_begin               __mu0_scope_begin__
 #	define mu0_scope_end                 __mu0_scope_end__
 
