@@ -24,7 +24,14 @@
 #	undef  MU0_HAVE_BITOPERATOR
 #	define MU0_HAVE_BITOPERATOR 0
 
-#	include <limits.h>
+#include <limits.h>
+#include <string.h>
+
+#	undef  __mu0_memset__
+#	undef  __mu0_memcpy__
+
+#	define __mu0_memset__ memset
+#	define __mu0_memcpy__ memcpy
 
 #	define ___mu0_bit_rev___(_Tp, __x)                                                                    \
 	__mu0_scope_begin__                                                                                   \
@@ -930,6 +937,21 @@ const ___mu0_uint1_t___ __mu0_bit_floor_u1__(const ___mu0_uint1_t___ __x)
 	const ___mu0_uint1_t___ zero = 0;
 	return __x != zero ? (one << (__mu0_bit_width_u1__(__x) - one)) : zero;
 }
+
+#	if MU0_HAVE_CC_CLANG
+#		if (__has_builtin(__builtin_bit_cast))
+#			define __mu0_bit_cast__(__a, __b) \
+				__a = __builtin_bit_cast(__mu0_kindof__(__a), __b)
+#		else
+#			define __mu0_bit_cast__(__a, __b)                      \
+				__mu0_memset__(&__b, 0, __mu0_sizeof__(__b + 0));   \
+				__mu0_memcpy__(&__b, &__a, __mu0_sizeof__(__b + 0))
+#		endif
+#	else
+#		define __mu0_bit_cast__(__a, __b)                      \
+			__mu0_memset__(&__b, 0, __mu0_sizeof__(__b + 0));   \
+			__mu0_memcpy__(&__b, &__a, __mu0_sizeof__(__b + 0))
+#	endif
 
 #	if !MU0_HAVE_BITOPERATOR
 #		error mu0_bitoperator.h
