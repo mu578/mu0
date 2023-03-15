@@ -938,19 +938,19 @@ const ___mu0_uint1_t___ __mu0_bit_floor_u1__(const ___mu0_uint1_t___ __x)
 	return __x != zero ? (one << (__mu0_bit_width_u1__(__x) - one)) : zero;
 }
 
-#	if MU0_HAVE_CC_CLANG
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCC
 #		if (__has_builtin(__builtin_bit_cast))
 #			define __mu0_bit_cast__(__a, __b) \
 			(__a) = __builtin_bit_cast(__mu0_typeof__((__a) + 0), __b)
 #		else
-#			define __mu0_bit_cast__(__a, __b)                          \
-			__mu0_memset__(&(__b), 0     , __mu0_sizeof__((__b) + 0)); \
-			__mu0_memcpy__(&(__b), &(__a), __mu0_sizeof__((__b) + 0))
+#			define __mu0_bit_cast__(__a, __b)                                                          \
+			__mu0_memset__(__mu0_addressof__(__b), 0                     , __mu0_sizeof__((__b) + 0)); \
+			__mu0_memcpy__(__mu0_addressof__(__b), __mu0_addressof__(__a), __mu0_sizeof__((__b) + 0))
 #		endif
 #	else
-#	define __mu0_bit_cast__(__a, __b)                          \
-	__mu0_memset__(&(__b), 0     , __mu0_sizeof__((__b) + 0)); \
-	__mu0_memcpy__(&(__b), &(__a), __mu0_sizeof__((__b) + 0))
+#	define __mu0_bit_cast__(__a, __b)                                                          \
+	__mu0_memset__(__mu0_addressof__(__b), 0                     , __mu0_sizeof__((__b) + 0)); \
+	__mu0_memcpy__(__mu0_addressof__(__b), __mu0_addressof__(__a), __mu0_sizeof__((__b) + 0))
 #	endif
 
 #	if !MU0_HAVE_BITOPERATOR

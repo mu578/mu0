@@ -24,11 +24,11 @@
 #	undef  __mu0_clock__
 #	undef  __MU0_CLOCKS_PER_SECOND__
 
-#	define __mu0_time_t__              time_t
-#	define __mu0_time__                time
-#	define __mu0_clock_t__             clock_t
-#	define __mu0_clock__               clock
-#	define __MU0_CLOCKS_PER_SECOND__   CLOCKS_PER_SEC
+#	define __mu0_time_t__            time_t
+#	define __mu0_time__              time
+#	define __mu0_clock_t__           clock_t
+#	define __mu0_clock__             clock
+#	define __MU0_CLOCKS_PER_SECOND__ CLOCKS_PER_SEC
 
 typedef struct
 {
@@ -37,7 +37,7 @@ typedef struct
 } mu0_random_context_t;
 
 #	define mu0_pcg32_initializer \
-	{ __mu0_uint64_const__(9600629759793949339) , __mu0_uint64_const__(15726070495360670683) }
+	{ __mu0_uint64_const__(9600629759793949339), __mu0_uint64_const__(15726070495360670683) }
 
 __mu0_static__
 mu0_random_context_t g_mu0_pcg32_context = mu0_pcg32_initializer;

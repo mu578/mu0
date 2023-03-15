@@ -41,9 +41,9 @@ typedef mu0_uchar8_t * mu0_binary8_t;
 #	define mu0_binary8(__x)       __mu0_cast__(mu0_binary8_t, __x)
 #	define mu0_const_binary8(__x) __mu0_const_cast__(mu0_binary8_t, __x)
 
-mu0_usize_t mu0_string8_length(const mu0_string8_t src);
-mu0_usize_t mu0_string8_size  (const mu0_string8_t src);
-mu0_usize_t mu0_string8_count (const mu0_string8_t src);
+mu0_usize_t mu0_string8_length (const mu0_string8_t src);
+mu0_usize_t mu0_string8_size   (const mu0_string8_t src);
+mu0_usize_t mu0_string8_count  (const mu0_string8_t src);
 
 mu0_bool_t  mu0_string8_isUTF8(
 	const mu0_string8_t src

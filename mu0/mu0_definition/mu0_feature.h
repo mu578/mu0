@@ -94,9 +94,26 @@
 #	define MU0_HAVE_SIZEOF 0
 #	if 1
 #		undef  MU0_HAVE_SIZEOF
-#		define MU0_HAVE_TYPEOF            1
+#		define MU0_HAVE_SIZEOF            1
 #		define __mu0_sizeof__(__x)        sizeof(__x)
 #		define __mu0_isofsize__(_Tp, __x) (((__mu0_sizeof__(_Tp) == __mu0_sizeof__(__x))) ? 1 : 0)
+#	endif
+
+#	undef  MU0_HAVE_ADDRESSOF
+#	undef  __mu0_addressof__
+#	define MU0_HAVE_ADDRESSOF 0
+#	if 1
+#		undef  MU0_HAVE_ADDRESSOF
+#		define MU0_HAVE_ADDRESSOF         1
+#		if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCC
+#			if (__has_builtin(__builtin_addressof))
+#				define __mu0_addressof__(__x) __builtin_addressof(__x)
+#			else
+#				define __mu0_addressof__(__x) (&(__x))
+#			endif
+#		else
+#			define __mu0_addressof__(__x)    (&(__x))
+#		endif
 #	endif
 
 #endif /* !MU0_FEATURE_H */
