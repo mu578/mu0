@@ -16,6 +16,7 @@
 //
 
 #include <mu0/mu0_definition/mu0_compiler.h>
+#include <mu0/mu0_definition/mu0_cpuyield.h>
 
 #ifndef MU0_BARRIER_H
 #define MU0_BARRIER_H 1

@@ -28,8 +28,8 @@
 #		include <xlocale.h>
 #	endif
 
-#include <locale.h>
-#include <string.h>
+#	include <locale.h>
+#	include <string.h>
 
 #	undef  __mu0_strcoll__
 #	undef  __mu0_strcoll_l__
