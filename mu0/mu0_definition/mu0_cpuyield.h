@@ -30,9 +30,7 @@
 #	if MU0_HAVE_CC_MSVCC
 #		if defined(_M_AMD64) || defined(_M_IX86)
 #			undef  MU0_HAVE_CPUYIELD
-#			undef  MU0_HAVE_THRYIELD
 #			define MU0_HAVE_CPUYIELD 1
-#			define MU0_HAVE_THRYIELD 1
 #			pragma intrinsic(_mm_pause)
 #			define __mu0_cpu_yield__()    _mm_pause()
 #		elif defined(_M_ARM64) || defined(_M_ARM)
@@ -64,12 +62,9 @@
 #		if MU0_HAVE_WINDOWS
 			extern "C" __declspec(dllimport) void __stdcall Sleep(DWORD);
 			extern "C" __declspec(dllimport) int  __stdcall SwitchToThread();
-#			if !MU0_HAVE_CPUYIELD
-#				define __mu0_cpu_yield__() if (!SwitchToThread()) { Sleep(0); } enum { /***/ }
-#			endif
 #			undef  MU0_HAVE_THRYIELD
 #			define MU0_HAVE_THRYIELD 1
-#			define __mu0_thr_yield__()    if (!SwitchToThread()) { Sleep(1); } enum { /***/ }
+#			define __mu0_thr_yield__() if (!SwitchToThread()) { Sleep(1); } enum { /***/ }
 #		endif
 #	endif
 
