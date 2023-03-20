@@ -15,6 +15,7 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
+#include <mu0/mu0_definition/mu0_attribute.h>
 #include <mu0/mu0_definition/mu0_console.h>
 #include <mu0/mu0_definition/mu0_feature.h>
 
@@ -24,8 +25,8 @@
 #	undef  MU0_HAVE_BITOPERATOR
 #	define MU0_HAVE_BITOPERATOR 0
 
-#include <limits.h>
-#include <string.h>
+#	include <limits.h>
+#	include <string.h>
 
 #	undef  __mu0_memset__
 #	undef  __mu0_memcpy__
@@ -770,13 +771,13 @@ const int __mu0_bit_width_u8__(const ___mu0_uint8_t___ __x)
 __mu0_static_inline__
 const int __mu0_bit_width_ux__(const ___mu0_uintx_t___ __x)
 {
-	return __mu0_bit_digits_ux__()  - __mu0_ctz_ux__(__x);
+	return __mu0_bit_digits_ux__() - __mu0_ctz_ux__(__x);
 }
 
 __mu0_static_inline__
 const int __mu0_bit_width_u4__(const ___mu0_uint4_t___ __x)
 {
-	return __mu0_bit_digits_u4__()  - __mu0_ctz_ux__(__x);
+	return __mu0_bit_digits_u4__() - __mu0_ctz_ux__(__x);
 }
 
 __mu0_static_inline__

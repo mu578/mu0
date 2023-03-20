@@ -15,7 +15,9 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
+#include <mu0/mu0_definition/mu0_attribute.h>
 #include <mu0/mu0_definition/mu0_barrier.h>
+#include <mu0/mu0_definition/mu0_feature.h>
 
 #ifndef MU0_ATOMIC_H
 #define MU0_ATOMIC_H 1
@@ -59,7 +61,7 @@ __mu0_scope_end__
 
 #	define __mu0_atomic_add_and_fetch__(_Tp, __ptr, __value, __result)                    \
 __mu0_scope_begin__                                                                      \
-	__result = __sync_fetch_and_add(__ptr, __value);                                      \
+	__result = __sync_add_and_fetch(__ptr, __value);                                      \
 __mu0_scope_end__
 
 #	define __mu0_atomic_sub_and_fetch__(_Tp, __ptr, __value, __result)                    \
@@ -90,7 +92,7 @@ __mu0_scope_end__
 
 #	define __mu0_atomic_bool_compare_and_swap__(_Tp, __ptr, __oldval, __newval, __result) \
 __mu0_scope_begin__                                                                      \
-	__result = __sync_bool_compare_and_swap(__ptr, __oldval, __newval);                   \
+	__result = __sync_bool_compare_and_swap(__ptr, __oldval, __newval) ? 1 : 0;           \
 __mu0_scope_end__
 
 #	define __mu0_atomic_val_compare_and_swap__(_Tp, __ptr, __oldval, __newval, __result)  \
@@ -226,6 +228,42 @@ __mu0_scope_begin__                                                             
 	__mu0_barrier_release__();                                                            \
 __mu0_scope_end__
 #	endif
+
+typedef struct __mu0_atomic_spinlock__ { __mu0_volatile__ ___mu0_uint4_t___ u_flag; } __mu0_atomic_spinlock_t__;
+
+__mu0_static_inline__
+void __mu0_atomic_spinlock_init__(__mu0_atomic_spinlock_t__ * __s)
+{ __s->u_flag = 0; }
+
+__mu0_static_inline__
+___mu0_uint4_t___ __mu0_atomic_spinlock_trylock__(__mu0_atomic_spinlock_t__ * __s)
+{
+	___mu0_uint4_t___ r;
+	__mu0_atomic_bool_compare_and_swap__(
+		  __mu0_volatile__ ___mu0_uint4_t___
+		, &__s->u_flag
+		, 0
+		, 1
+		, r
+	);
+	return r;
+}
+
+__mu0_static_inline__
+void __mu0_atomic_spinlock_lock__(__mu0_atomic_spinlock_t__ * __s)
+{
+	while(!__mu0_atomic_spinlock_trylock__(__s)) {
+		__mu0_cpu_yield__();
+	}
+}
+
+__mu0_static_inline__
+void __mu0_atomic_spinlock_unlock__(__mu0_atomic_spinlock_t__ * __s)
+{
+	__mu0_barrier_acquire__();
+	__s->u_flag = 0;
+	__mu0_barrier_release__();
+}
 
 #	if !MU0_HAVE_ATOMIC
 #		error mu0_atomic.h

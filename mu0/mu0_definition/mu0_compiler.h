@@ -42,6 +42,7 @@
 #	define MU0_HAVE_CC_MSVCC 0
 #	if defined(_MSC_VER) && (_MSC_VER >= 1929)
 #		include <intrin.h>
+#		include <BaseTsd.h>
 #		undef  MU0_HAVE_COMPILER
 #		undef  MU0_HAVE_CC_MSVCC
 #		define MU0_HAVE_COMPILER 1
@@ -59,6 +60,9 @@
 	|| defined(__ICC)            \
 	|| defined(ICC_VERSION)
 #		include <intrin.h>
+#		if defined(_WIN32) || defined(_WIN64)
+#			include <BaseTsd.h>
+#		endif
 #		undef  MU0_HAVE_COMPILER
 #		undef  MU0_HAVE_CC_ITLCC
 #		define MU0_HAVE_COMPILER 1
