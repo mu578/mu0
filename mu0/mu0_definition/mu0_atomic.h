@@ -163,33 +163,51 @@ __mu0_scope_end__
 #	define __mu0_atomic_nand_fetch__(_Tp, __ptr, __value, __result)                       \
 __mu0_scope_begin__                                                                      \
 	__mu0_barrier_acquire__();                                                            \
-	*__ptr	 = ~*ptr & __value                                                           \
+	*__ptr   = ~*ptr & __value                                                            \
 	__result = *__ptr;                                                                    \
 	__mu0_barrier_release__();                                                            \
 __mu0_scope_end__
 
 #	define __mu0_atomic_bool_compare_and_swap__(_Tp, __ptr, __oldval, __newval, __result) \
 __mu0_scope_begin__                                                                      \
-	_Tp tmp;                                                                              \
+	_Tp               __mu0_atomic_bool_compare_and_swap__tmp__;                          \
+	___mu0_uint4_t___ __mu0_atomic_bool_compare_and_swap__bar__;                          \
 	__mu0_barrier_acquire__();                                                            \
-	tmp      = *__ptr;                                                                    \
-	__result = 0;                                                                         \
-	if (tmp == __oldval) {                                                                \
-		*__ptr   = __newval;                                                               \
-		__result = 1;                                                                      \
+	__result                                  = 0;                                        \
+	__mu0_atomic_bool_compare_and_swap__tmp__ = *__ptr;                                   \
+	__mu0_atomic_bool_compare_and_swap__bar__ = 64;                                       \
+	while (                                                                               \
+		   __mu0_atomic_bool_compare_and_swap__bar__ > 0                                   \
+		&& __mu0_atomic_bool_compare_and_swap__tmp__ == __oldval                           \
+	) {                                                                                   \
+		if (__mu0_atomic_bool_compare_and_swap__tmp__ == __oldval) {                       \
+			*__ptr = __newval;                                                              \
+			__result = 1;                                                                   \
+		}                                                                                  \
+		__mu0_atomic_bool_compare_and_swap__tmp__ = *__ptr;                                \
+		--__mu0_atomic_bool_compare_and_swap__bar__;                                       \
 	}                                                                                     \
 	__mu0_barrier_release__();                                                            \
 __mu0_scope_end__
 
 #	define __mu0_atomic_val_compare_and_swap__(_Tp, __ptr, __oldval, __newval, __result)  \
 __mu0_scope_begin__                                                                      \
-	_Tp tmp;                                                                              \
+	_Tp               __mu0_atomic_val_compare_and_swap__tmp__;                           \
+	___mu0_uint4_t___ __mu0_atomic_val_compare_and_swap__bar__;                           \
 	__mu0_barrier_acquire__();                                                            \
-	tmp = *__ptr;                                                                         \
-	if (tmp == __oldval) {                                                                \
-		*__ptr = __newval;                                                                 \
+	__mu0_atomic_val_compare_and_swap__tmp__ = *__ptr;                                    \
+	__mu0_atomic_val_compare_and_swap__bar__ = 64;                                        \
+	while (                                                                               \
+		   __mu0_atomic_val_compare_and_swap__bar__ > 0                                    \
+		&& __mu0_atomic_val_compare_and_swap__tmp__ == __oldval                            \
+	) {                                                                                   \
+		if (__mu0_atomic_val_compare_and_swap__tmp__ == __oldval) {                        \
+			*__ptr = __newval;                                                              \
+		}                                                                                  \
+		__mu0_atomic_val_compare_and_swap__tmp__ = *__ptr;                                 \
+		--__mu0_atomic_val_compare_and_swap__bar__;                                        \
 	}                                                                                     \
-	__result = tmp;                                                                       \
+	__result = __mu0_atomic_val_compare_and_swap__tmp__;                                  \
 	__mu0_barrier_release__();                                                            \
 __mu0_scope_end__
 
