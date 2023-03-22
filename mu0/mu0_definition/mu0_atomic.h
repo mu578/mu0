@@ -195,7 +195,7 @@ __mu0_scope_begin__                                                             
 	_Tp               __mu0_atomic_val_compare_and_swap__tmp__;                           \
 	___mu0_uint4_t___ __mu0_atomic_val_compare_and_swap__bar__;                           \
 	__mu0_barrier_acquire__();                                                            \
-	__mu0_atomic_val_compare_and_swap__tmp__ *__ptr;                                      \
+	__mu0_atomic_val_compare_and_swap__tmp__ = *__ptr;                                    \
 	__mu0_atomic_val_compare_and_swap__bar__ = 64;                                        \
 	while (                                                                               \
 		   __mu0_atomic_val_compare_and_swap__bar__ > 0                                    \
