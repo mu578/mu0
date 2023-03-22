@@ -20,6 +20,9 @@
 #ifndef MU0_CONSOLE_H
 #define MU0_CONSOLE_H 1
 
+#	undef  MU0_HAVE_CONSOLE
+#	define MU0_HAVE_CONSOLE 1
+
 __mu0_static__ char const * const __mu0_console_color_red__    = "\033[0;31m";
 __mu0_static__ char const * const __mu0_console_color_green__  = "\033[0;32m";
 __mu0_static__ char const * const __mu0_console_color_yellow__ = "\033[0;33m";
@@ -64,6 +67,10 @@ __mu0_static__ char const * const __mu0_console_color_clear__  = "\033[0m";
 				                                 fprintf(stderr, __VA_ARGS__); \
 				__mu0_console_set_color__(__mu0_console_color_clear__)
 #		endif
+#	endif
+
+#	if !MU0_HAVE_CONSOLE
+#		error mu0_console.h
 #	endif
 
 #endif /* !MU0_CONSOLE_H */
