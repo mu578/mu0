@@ -31,10 +31,10 @@
 #	endif
 
 __mu0_static_inline__
-const mu0_string8_t mu0_locale_name(
-	  const mu0_string8_t language
-	, const mu0_string8_t territory
-	, const mu0_string8_t modifier  __mu0_nullable__
+const mu0_tchar8_t * mu0_locale_name(
+	  const mu0_tchar8_t * language
+	, const mu0_tchar8_t * territory
+	, const mu0_tchar8_t * modifier  __mu0_nullable__
 ) {
 #	if MU0_HAVE_I18NLOCALE
 	__mu0_static__
@@ -94,13 +94,13 @@ const mu0_string8_t mu0_locale_name(
 }
 
 mu0_locale_t mu0_locale_create(
-	  const mu0_string8_t language
-	, const mu0_string8_t territory
-	, const mu0_string8_t modifier  __mu0_nullable__
-	, const mu0_bool_t    collator
+	  const mu0_tchar8_t * language
+	, const mu0_tchar8_t * territory
+	, const mu0_tchar8_t * modifier  __mu0_nullable__
+	, const mu0_bool_t     collator
 ) {
-	const mu0_sint32_t  mask = ((collator == mu0_true) ? LC_COLLATE_MASK : LC_ALL_MASK);
-	const mu0_string8_t name = mu0_locale_name(
+	const mu0_sint32_t   mask = ((collator == mu0_true) ? LC_COLLATE_MASK : LC_ALL_MASK);
+	const mu0_tchar8_t * name = mu0_locale_name(
 		  language
 		, territory
 		, modifier
@@ -112,13 +112,13 @@ mu0_locale_t mu0_locale_create(
 }
 
 mu0_sint32_t mu0_locale_global(
-	  const mu0_string8_t language
-	, const mu0_string8_t territory
-	, const mu0_string8_t modifier  __mu0_nullable__
-	, const mu0_bool_t    collator
+	  const mu0_tchar8_t * language
+	, const mu0_tchar8_t * territory
+	, const mu0_tchar8_t * modifier  __mu0_nullable__
+	, const mu0_bool_t     collator
 ) {
-	const mu0_sint32_t category = ((collator == mu0_true) ? LC_COLLATE : LC_ALL);
-	const mu0_string8_t name    = mu0_locale_name(
+	const mu0_sint32_t   category = ((collator == mu0_true) ? LC_COLLATE : LC_ALL);
+	const mu0_tchar8_t * name     = mu0_locale_name(
 		  language
 		, territory
 		, modifier
@@ -135,9 +135,9 @@ mu0_sint32_t mu0_locale_delete(mu0_locale_t locale)
 { return __mu0_i18nlocale_free__(locale); }
 
 enum mu0_ordering mu0_locale_compare(
-	  const mu0_string8_t lhs
-	, const mu0_string8_t rhs
-	, const mu0_locale_t  locale __mu0_nullable__
+	  const mu0_tchar8_t * lhs
+	, const mu0_tchar8_t * rhs
+	, const mu0_locale_t   locale __mu0_nullable__
 ) { return __mu0_i18nlocale_collate__(lhs, rhs, locale); }
 
 /* EOF */

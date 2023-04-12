@@ -19,17 +19,15 @@
 
 int main(int argc, const char * argv[])
 {
-	mu0_usize_t i;
-	mu0_string8_t glyph;
-	mu0_sint32_t width;
+	      mu0_usize_t i;
+	      mu0_sint32_t width;
+	const mu0_tchar8_t * glyph;
 
-	const mu0_string8_t s1 = u8"éducation";
-	const mu0_string8_t s2 = u8"Education";
-
-	const mu0_string8_t s3 = u8"她就心緒翻湧惡意難消";
-	const mu0_string8_t s4 = u8"Un ciel étoilé";
-
-	mu0_tchar8_t s5[17]    = u8"Un ciel étoilé\0";
+	const mu0_tchar8_t * s1   = u8"éducation";
+	const mu0_tchar8_t * s2   = u8"Education";
+	const mu0_tchar8_t * s3   = u8"她就心緒翻湧惡意難消";
+	const mu0_tchar8_t * s4   = u8"Un ciel étoilé";
+	      mu0_tchar8_t s5[17] = u8"Un ciel étoilé\0";
 
 	mu0_unused(argc);
 	mu0_unused(argv);

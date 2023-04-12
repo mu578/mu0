@@ -83,7 +83,7 @@
 #	endif
 
 #	if MU0_HAVE_TYPEOF
-#	define __mu0_infer__(__x) __mu0_kindof__(__x)
+#	define __mu0_infer__(__x) __mu0_typeof__(__x)
 #	else
 #	warning "mu0_feature.h"
 #	define __mu0_infer__(__x) void

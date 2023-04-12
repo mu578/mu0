@@ -25,9 +25,9 @@
 #	define __mu0_strlen__ strlen
 
 __mu0_static_inline__
-void mu0_string8_reverse_body(mu0_string8_t first, mu0_string8_t last)
+void mu0_string8_reverse_body(mu0_tchar8_t * first, mu0_tchar8_t * last)
 {
-	mu0_string8_t __first, __last;
+	mu0_tchar8_t * __first, * __last;
 	mu0_tchar8_t c;
 	__first = first;
 	__last  = last;
@@ -41,10 +41,10 @@ void mu0_string8_reverse_body(mu0_string8_t first, mu0_string8_t last)
 }
 
 __mu0_static_inline__
-const mu0_string8_t mu0_string8_reverse_codepoint(mu0_string8_t src)
+mu0_tchar8_t * mu0_string8_reverse_codepoint(mu0_tchar8_t * src)
 {
-	mu0_string8_t __first = src;
-	mu0_string8_t __last  = src;
+	mu0_tchar8_t * __first = src;
+	mu0_tchar8_t * __last  = src;
 	while ((*(__last + 1U) & 0xC0) == 0x80) {
 		++__last;
 	}
@@ -52,22 +52,22 @@ const mu0_string8_t mu0_string8_reverse_codepoint(mu0_string8_t src)
 	return __last + 1U;
 }
 
-mu0_usize_t mu0_string8_length(const mu0_string8_t src)
+mu0_usize_t mu0_string8_length(const mu0_tchar8_t * src)
 {
 	return __mu0_strlen__(src);
 }
 
-mu0_usize_t mu0_string8_size(const mu0_string8_t src)
+mu0_usize_t mu0_string8_size(const mu0_tchar8_t * src)
 {
 	return __mu0_strlen__(src) + 1U;
 }
 
-mu0_usize_t mu0_string8_count(const mu0_string8_t src)
+mu0_usize_t mu0_string8_count(const mu0_tchar8_t * src)
 {
-	mu0_usize_t   i = 0, j = 0;
-	mu0_string8_t p = src;
-	mu0_uint32_t  c = mu0_const_uchar8(*(p + 0));
-	mu0_uint32_t  c0, c1, c2, c3;
+	      mu0_usize_t    i = 0, j = 0;
+	const mu0_tchar8_t * p = src;
+	      mu0_uint32_t   c = mu0_const_uchar8(*(p + 0));
+	      mu0_uint32_t   c0, c1, c2, c3;
 
 	for (; c != 0; ++j) {
 		c0  = (c & 0x80) >> 7U;
@@ -81,12 +81,12 @@ mu0_usize_t mu0_string8_count(const mu0_string8_t src)
 }
 
 mu0_bool_t mu0_string8_isUTF8(
-	const mu0_string8_t src
+	const mu0_tchar8_t * src
 ) {
-	mu0_bool_t    r = mu0_false;
-	mu0_usize_t   i = 0;
-	mu0_string8_t p = src;
-	mu0_uint32_t  c0, c1, c2, c3;
+	      mu0_bool_t     r = mu0_false;
+	      mu0_usize_t    i = 0;
+	const mu0_tchar8_t * p = src;
+	      mu0_uint32_t   c0, c1, c2, c3;
 
 	for (; *(p + 0) != 0;) {
 		r = ( ((*(p + 0) & 0x80) == 0)
@@ -107,15 +107,15 @@ mu0_bool_t mu0_string8_isUTF8(
 	return r;
 }
 
-const mu0_string8_t mu0_string8_at(
-	  const mu0_string8_t src
-	, const mu0_index_t   index
-	, mu0_sint32_t *      width
+const mu0_tchar8_t * mu0_string8_at(
+	  const mu0_tchar8_t * src
+	, const mu0_index_t    index
+	,       mu0_sint32_t * width
 ) {
-	mu0_index_t   i = 0, j = 0;
-	mu0_string8_t p = src;
-	mu0_uint32_t  c = mu0_const_uchar8(*(p + 0));
-	mu0_sint32_t  k;
+	      mu0_index_t    i = 0, j = 0;
+	const mu0_tchar8_t * p = src;
+	      mu0_uint32_t   c = mu0_const_uchar8(*(p + 0));
+	      mu0_sint32_t   k;
 
 	*width          = 0;
 	for (; c != 0; ++i, ++j) {
@@ -134,11 +134,11 @@ const mu0_string8_t mu0_string8_at(
 	return mu0_nullptr;
 }
 
-const mu0_string8_t mu0_string8_reverse(
-	  const mu0_string8_t src
-	, mu0_string8_t       dest
+const mu0_tchar8_t * mu0_string8_reverse(
+	  const mu0_tchar8_t * src
+	,       mu0_tchar8_t * dest
 ) {
-	mu0_string8_t __first, __last;
+	mu0_tchar8_t * __first, * __last;
 	if (src != dest) {
 		__mu0_memcpy__(dest, src, __mu0_strlen__(src) + __mu0_sizeof__(mu0_tchar8_t));
 	}
@@ -152,17 +152,17 @@ const mu0_string8_t mu0_string8_reverse(
 	return __first;
 }
 
-const mu0_string8_t mu0_string8_range_at(
-	  const mu0_string8_t first
-	, const mu0_string8_t last
-	, const mu0_index_t   index
-	, mu0_sint32_t *      width
+const mu0_tchar8_t * mu0_string8_range_at(
+	  const mu0_tchar8_t * first
+	, const mu0_tchar8_t * last
+	, const mu0_index_t    index
+	,       mu0_sint32_t * width
 ) {
-	mu0_index_t   i       = 0, j = 0;
-	mu0_string8_t __first = first, __last = last;
-	mu0_uint32_t  c       = mu0_const_uchar8(*(__first + 0));
-	mu0_sint32_t  k;
-	*width                = 0;
+	      mu0_index_t    i       = 0, j = 0;
+	const mu0_tchar8_t * __first = first, * __last = last;
+	      mu0_uint32_t   c       = mu0_const_uchar8(*(__first + 0));
+	      mu0_sint32_t   k;
+	*width                 = 0;
 	for (; c != 0 && __first != __last; ++i, ++j) {
 		c          = mu0_const_uchar8(*(__first + i));
 		     if (c <= 127)           { k = 0; }
@@ -179,11 +179,11 @@ const mu0_string8_t mu0_string8_range_at(
 	return mu0_nullptr;
 }
 
-const mu0_string8_t mu0_string8_range_reverse(
-	  mu0_string8_t first
-	, mu0_string8_t last
+const mu0_tchar8_t * mu0_string8_range_reverse(
+	  mu0_tchar8_t * first
+	, mu0_tchar8_t * last
 ) {
-	mu0_string8_t __first, __last;
+	mu0_tchar8_t * __first, * __last;
 	__first = first;
 	__last  = first;
 	while (*__last != 0 && __last != last) {
