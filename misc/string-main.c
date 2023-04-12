@@ -16,7 +16,6 @@
 //
 
 #include <mu0/mu0_string.h>
- #include <assert.h>
 
 int main(int argc, const char * argv[])
 {

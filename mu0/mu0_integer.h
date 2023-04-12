@@ -192,6 +192,7 @@ typedef   mu0_ptrdiff_t             mu0_distance_t;
 #	endif
 
 #	if MU0_HAVE_INT128
+
 __mu0_static__ const mu0_uint128_t mu0_uint128_max = UINT128_MAX;
 __mu0_static__ const mu0_uint128_t mu0_uint128_min = 0U;
 __mu0_static__ const mu0_sint128_t mu0_sint128_max = INT128_MAX;
@@ -201,6 +202,7 @@ __mu0_static__ const mu0_sint128_t mu0_sint128_min = INT128_MIN;
 #	define __mu0_sint128_const__ INT128_C
 
 #	else
+
 __mu0_static__ const mu0_uint128_t mu0_uint128_max = UINT64_MAX;
 __mu0_static__ const mu0_uint128_t mu0_uint128_min = 0U;
 __mu0_static__ const mu0_sint128_t mu0_sint128_max = INT64_MAX;

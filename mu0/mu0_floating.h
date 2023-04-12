@@ -214,6 +214,48 @@ typedef float                  mu0_fp16_t;
 #	define mu0_is_floating_point(__x) (1)
 #	endif
 
+#	if MU0_HAVE_FLOAT128
+
+__mu0_static__ const mu0_fp128_t mu0_fp128_max = FLT128_MAX;
+__mu0_static__ const mu0_fp128_t mu0_fp128_min = FLT128_MIN;
+
+#	define __mu0_fp128_const__(c) c
+
+#	else
+
+__mu0_static__ const mu0_fp128_t mu0_fp128_max = LDBL_MAX;
+__mu0_static__ const mu0_fp128_t mu0_fp128_min = LDBL_MIN;
+
+#	define __mu0_fp128_const__(c) c ## L
+
+#	endif
+
+__mu0_static__ const mu0_fp64_t  mu0_fp64_max  = DBL_MAX;
+__mu0_static__ const mu0_fp64_t  mu0_fp64_min  = DBL_MIN;
+
+#	define __mu0_fp64_const__(c) c
+
+__mu0_static__ const mu0_fp32_t  mu0_fp32_max  = FLT_MAX;
+__mu0_static__ const mu0_fp32_t  mu0_fp32_min  = FLT_MIN;
+
+#	define __mu0_fp32_const__(c) c ## f
+
+#	if MU0_HAVE_FLOAT16
+
+__mu0_static__ const mu0_fp16_t  mu0_fp16_max  = FLT16_MAX;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_min  = FLT16_MIN;
+
+#	define __mu0_fp16_const__(c) c ## f
+
+#	else
+
+__mu0_static__ const mu0_fp16_t  mu0_fp16_max  = FLT_MAX;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_min  = FLT_MIN;
+
+#	define __mu0_fp16_const__(c) c ## f
+
+#	endif
+
 MU0_END_CDECL
 
 #endif /* !MU0_FLOATING_H */
