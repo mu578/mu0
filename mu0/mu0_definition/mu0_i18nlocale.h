@@ -75,12 +75,12 @@
 			const ___mu0_uint4_t___ need_b = (__rhs[__n + 1] != '\0') ? 1 : 0;
 			___mu0_tint1_t___ * a, * b;
 			if (need_a) {
-				a = __mu0_alloca__(__n + 1);
+				a      = __mu0_alloca__(__n + 1);
 				__mu0_memcpy__(a, __lhs, __n);
 				a[__n] = '\0';
 			}
 			if (need_b) {
-				b = __mu0_alloca__(__n + 1);
+				b      = __mu0_alloca__(__n + 1);
 				__mu0_memcpy__(b, __rhs, __n);
 				b[__n] = '\0';
 			}
