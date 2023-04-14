@@ -71,24 +71,22 @@
 			, const ___mu0_uint4_t___   __n
 			, __mu0_i18nlocale_t__      __locale __mu0_nullable__
 		) {
+			const ___mu0_uint4_t___ need_a = (__lhs[__n + 1] != '\0') ? 1 : 0;
+			const ___mu0_uint4_t___ need_b = (__rhs[__n + 1] != '\0') ? 1 : 0;
 			___mu0_tint1_t___ * a, * b;
-			if (__lhs[__n + 1] != '\0') {
+			if (need_a) {
 				a = __mu0_alloca__(__n + 1);
 				__mu0_memcpy__(a, __lhs, __n);
 				a[__n] = '\0';
-			} else {
-				a = __mu0_cast__(___mu0_tint1_t___ *, __lhs);
 			}
-			if (__rhs[__n + 1] != '\0') {
+			if (need_b) {
 				b = __mu0_alloca__(__n + 1);
 				__mu0_memcpy__(b, __rhs, __n);
 				b[__n] = '\0';
-			} else {
-				b = __mu0_cast__(___mu0_tint1_t___ *, __rhs);
 			}
 			return __mu0_not_nullptr__(__locale)
-				? __mu0_strcoll_l__(a, b, __locale)
-				: __mu0_strcoll__  (a, b)
+				? __mu0_strcoll_l__(need_a ? a : __lhs, need_b ? b : __rhs, __locale)
+				: __mu0_strcoll__  (need_a ? a : __lhs, need_b ? b : __rhs)
 			;
 		}
 
@@ -105,8 +103,8 @@
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 0
 		typedef void * __mu0_i18nlocale_t__;
-#		define __mu0_strcmp__(__lhs, __rhs)                   strcmp (__lhs, __rhs)
-#		define __mu0_strncmp__(__lhs, __rhs, __n)             strncmp(__lhs, __rhs, __n)
+#		define __mu0_strcmp__(__lhs, __rhs)                    strcmp (__lhs, __rhs)
+#		define __mu0_strncmp__(__lhs, __rhs, __n)              strncmp(__lhs, __rhs, __n)
 #	endif
 
 __mu0_static_inline__
