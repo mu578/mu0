@@ -71,8 +71,8 @@
 			, const ___mu0_uint4_t___   __n
 			, __mu0_i18nlocale_t__      __locale __mu0_nullable__
 		) {
-			const ___mu0_uint4_t___ need_a = (__lhs[__n + 1] != '\0') ? 1 : 0;
-			const ___mu0_uint4_t___ need_b = (__rhs[__n + 1] != '\0') ? 1 : 0;
+			const ___mu0_uint4_t___ need_a = (__lhs[__n] != '\0') ? 1 : 0;
+			const ___mu0_uint4_t___ need_b = (__rhs[__n] != '\0') ? 1 : 0;
 			___mu0_tint1_t___ * a, * b;
 			if (need_a) {
 				a      = __mu0_alloca__(__n + 1);
