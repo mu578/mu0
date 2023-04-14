@@ -18,12 +18,11 @@
 #include <mu0/mu0_locale.h>
 #include <string.h>
 
-#	undef  __mu0_memset__
-#	undef  __mu0_memcpy__
-#	undef  __mu0_strlen__
-#	undef  __mu0_strchr__
-
 #	if MU0_HAVE_I18NLOCALE
+#		undef  __mu0_memset__
+#		undef  __mu0_memcpy__
+#		undef  __mu0_strlen__
+#		undef  __mu0_strchr__
 #		define __mu0_memset__ memset
 #		define __mu0_memcpy__ memcpy
 #		define __mu0_strlen__ strlen

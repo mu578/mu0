@@ -22,21 +22,19 @@
 #define MU0_I18NLOCALE_H 1
 
 #	undef  MU0_HAVE_I18NLOCALE
-#	define MU0_HAVE_I18NLOCALE 0
-
-#	if !MU0_HAVE_WINDOWS && !MU0_HAVE_ANDROID
-#		include <xlocale.h>
-#	endif
-
-#	include <locale.h>
-#	include <string.h>
-
 #	undef  __mu0_strcoll__
 #	undef  __mu0_strcoll_l__
 #	undef  __mu0_strncoll__
 #	undef  __mu0_strncoll_l__
 #	undef  __mu0_strcmp__
 #	undef  __mu0_strncmp__
+#	define MU0_HAVE_I18NLOCALE 0
+
+#	if !MU0_HAVE_WINDOWS && !MU0_HAVE_ANDROID
+#	include <xlocale.h>
+#	endif
+#	include <locale.h>
+#	include <string.h>
 
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #		undef  MU0_HAVE_I18NLOCALE
@@ -56,8 +54,8 @@
 #	elif MU0_HAVE_POSIX1_2001
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
-#		define __mu0_strcoll__(__lhs, __rhs)                strcoll(__lhs, __rhs)
-#		define __mu0_strcoll_l__(__lhs, __rhs, __locale)    strcoll_l(__lhs, __rhs, __locale)
+#		define __mu0_strcoll__(__lhs, __rhs)                 strcoll(__lhs, __rhs)
+#		define __mu0_strcoll_l__(__lhs, __rhs, __locale)     strcoll_l(__lhs, __rhs, __locale)
 
 #		include <alloca.h>
 		__mu0_static_inline__
@@ -102,13 +100,13 @@
 			return strcoll(a, b);
 		}
 
-#		define __mu0_strncoll__(__lhs, __rhs, n)           ___mu0_strncoll_l___(__lhs, __rhs, n)
+#		define __mu0_strncoll__(__lhs, __rhs, n)             ___mu0_strncoll_l___(__lhs, __rhs, n)
 #		define __mu0_strncoll_l__(__lhs, __rhs, n, __locale) ___mu0_strncoll___(__lhs, __rhs, n, __locale)
 		typedef locale_t __mu0_i18nlocale_t__;
 #	else
 		typedef void * __mu0_i18nlocale_t__;
-#		define __mu0_strcmp__(__lhs, __rhs)                strcmp(__lhs, __rhs)
-#		define __mu0_strncmp__(__lhs, __rhs, n)            strncmp(__lhs, __rhs, n)
+#		define __mu0_strcmp__(__lhs, __rhs)                  strcmp(__lhs, __rhs)
+#		define __mu0_strncmp__(__lhs, __rhs, n)              strncmp(__lhs, __rhs, n)
 #	endif
 
 __mu0_static_inline__
