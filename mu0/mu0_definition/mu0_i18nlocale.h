@@ -65,11 +65,11 @@
 #		define __mu0_memcpy__ memcpy
 
 		__mu0_static_inline__
-		int ___mu0_strncoll_l___(
+		const ___mu0_sint4_t___ ___mu0_strncoll_l___(
 			  const ___mu0_tint1_t___ * __lhs
 			, const ___mu0_tint1_t___ * __rhs
 			, const ___mu0_uint4_t___   __n
-			, __mu0_i18nlocale_t__      __locale
+			, __mu0_i18nlocale_t__      __locale __mu0_nullable__
 		) {
 			___mu0_tint1_t___ * a, * b;
 			if (__lhs[__n + 1] != '\0') {
@@ -93,7 +93,7 @@
 		}
 
 		__mu0_static_inline__
-		int ___mu0_strncoll___(
+		const ___mu0_sint4_t___ ___mu0_strncoll___(
 			  const ___mu0_tint1_t___ * __lhs
 			, const ___mu0_tint1_t___ * __rhs
 			, const ___mu0_uint4_t___   __n
@@ -110,7 +110,7 @@
 #	endif
 
 __mu0_static_inline__
-__mu0_i18nlocale_t__ __mu0_i18nlocale_new__(const int __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ __base)
+__mu0_i18nlocale_t__ __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ __base)
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	__mu0_unused__(__mask);
@@ -146,7 +146,7 @@ __mu0_i18nlocale_t__ __mu0_i18nlocale_use__(__mu0_i18nlocale_t__ __locale)
 }
 
 __mu0_static_inline__
-const ___mu0_tint1_t___ * __mu0_i18nlocale_set__(const int __category, const ___mu0_tint1_t___ * __locale)
+const ___mu0_tint1_t___ * __mu0_i18nlocale_set__(const ___mu0_sint4_t___ __category, const ___mu0_tint1_t___ * __locale)
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	__mu0_unused__(__category);
@@ -161,7 +161,7 @@ const ___mu0_tint1_t___ * __mu0_i18nlocale_set__(const int __category, const ___
 }
 
 __mu0_static_inline__
-const int __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ __locale)
+const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ __locale)
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	if (__mu0_not_nullptr__(__locale)) {
@@ -178,25 +178,25 @@ const int __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ __locale)
 }
 
 __mu0_static_inline__
-const int __mu0_i18nlocale_collate__(
-	  const ___mu0_tint1_t___ *         __lhs
-	, const ___mu0_tint1_t___ *         __rhs
-	, __mu0_i18nlocale_t__ __locale __mu0_nullable__
+const ___mu0_sint4_t___ __mu0_i18nlocale_collate__(
+	  const ___mu0_tint1_t___ * __lhs
+	, const ___mu0_tint1_t___ * __rhs
+	, __mu0_i18nlocale_t__      __locale __mu0_nullable__
 ) {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
-	const int r = (__mu0_not_nullptr__(__locale)
+	const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 		? __mu0_strcoll_l__(__lhs, __rhs, __locale)
 		: __mu0_strcoll__  (__lhs, __rhs)
 	);
 	return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 #	elif MU0_HAVE_POSIX1_2001
-	const int r = (__mu0_not_nullptr__(__locale)
+	const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 		? __mu0_strcoll_l__(__lhs, __rhs, __locale)
 		: __mu0_strcoll__  (__lhs, __rhs)
 	);
 #	else
 	__mu0_unused__(__locale);
-	const int r = __mu0_strcmp__(__lhs, __rhs);
+	const ___mu0_sint4_t___ r = __mu0_strcmp__(__lhs, __rhs);
 #	endif
 	return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 }

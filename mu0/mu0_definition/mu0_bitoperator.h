@@ -112,31 +112,31 @@
 #	endif
 
 __mu0_static_inline__
-const int __mu0_bit_digits_u8__(void)
+const ___mu0_sint4_t___ __mu0_bit_digits_u8__(void)
 { return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint8_t___) * __mu0_char_bit__)); }
 
 __mu0_static_inline__
-const int __mu0_bit_digits_ux__(void)
+const ___mu0_sint4_t___ __mu0_bit_digits_ux__(void)
 { return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uintx_t___) * __mu0_char_bit__)); }
 
 __mu0_static_inline__
-const int __mu0_bit_digits_u4__(void)
+const ___mu0_sint4_t___ __mu0_bit_digits_u4__(void)
 { return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint4_t___) * __mu0_char_bit__)); }
 
 __mu0_static_inline__
-const int __mu0_bit_digits_u2__(void)
+const ___mu0_sint4_t___ __mu0_bit_digits_u2__(void)
 { return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint2_t___) * __mu0_char_bit__)); }
 
 __mu0_static_inline__
-const int __mu0_bit_digits_u1__(void)
+const ___mu0_sint4_t___ __mu0_bit_digits_u1__(void)
 { return __mu0_const_cast__(int, (__mu0_sizeof__(___mu0_uint1_t___) * __mu0_char_bit__)); }
 
 #	if   MU0_HAVE_OVERLOAD
-__mu0_overload__ const int __mu0_bit_digits__(const ___mu0_uint8_t___ __x) { __mu0_unused__(__x); return __mu0_bit_digits_u8__(); }
-__mu0_overload__ const int __mu0_bit_digits__(const ___mu0_uintx_t___ __x) { __mu0_unused__(__x); return __mu0_bit_digits_ux__(); }
-__mu0_overload__ const int __mu0_bit_digits__(const ___mu0_uint4_t___ __x) { __mu0_unused__(__x); return __mu0_bit_digits_u4__(); }
-__mu0_overload__ const int __mu0_bit_digits__(const ___mu0_uint2_t___ __x) { __mu0_unused__(__x); return __mu0_bit_digits_u2__(); }
-__mu0_overload__ const int __mu0_bit_digits__(const ___mu0_uint1_t___ __x) { __mu0_unused__(__x); return __mu0_bit_digits_u1__(); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_bit_digits__(const ___mu0_uint8_t___ __x) { __mu0_unused__(__x); return __mu0_bit_digits_u8__(); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_bit_digits__(const ___mu0_uintx_t___ __x) { __mu0_unused__(__x); return __mu0_bit_digits_ux__(); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_bit_digits__(const ___mu0_uint4_t___ __x) { __mu0_unused__(__x); return __mu0_bit_digits_u4__(); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_bit_digits__(const ___mu0_uint2_t___ __x) { __mu0_unused__(__x); return __mu0_bit_digits_u2__(); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_bit_digits__(const ___mu0_uint1_t___ __x) { __mu0_unused__(__x); return __mu0_bit_digits_u1__(); }
 #	elif MU0_HAVE_GENERIC
 #	define __mu0_bit_digits__(__x) __mu0_generic__(__x \
 	, ___mu0_uint8_t___ : __mu0_bit_digits_u8__        \
@@ -183,16 +183,16 @@ __mu0_overload__ const int __mu0_bit_digits__(const ___mu0_uint1_t___ __x) { __m
 	)
 #	endif
 
-__mu0_static_inline__ const int __mu0_cntlz_u8__(const ___mu0_uint8_t___ __x);
-__mu0_static_inline__ const int __mu0_cntlz_ux__(const ___mu0_uintx_t___ __x);
-__mu0_static_inline__ const int __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x);
-__mu0_static_inline__ const int __mu0_cntlz_u2__(const ___mu0_uint2_t___ __x);
-__mu0_static_inline__ const int __mu0_cntlz_u1__(const ___mu0_uint1_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_cntlz_u8__(const ___mu0_uint8_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_cntlz_ux__(const ___mu0_uintx_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_cntlz_u2__(const ___mu0_uint2_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_cntlz_u1__(const ___mu0_uint1_t___ __x);
 
 __mu0_static_inline__
-const int __mu0_cntlz_u8__(const ___mu0_uint8_t___ __x)
+const ___mu0_sint4_t___ __mu0_cntlz_u8__(const ___mu0_uint8_t___ __x)
 {
-	const int d = __mu0_bit_digits_u4__();
+	const ___mu0_sint4_t___ d = __mu0_bit_digits_u4__();
 #	if MU0_HAVE_C99 || MU0_HAVE_CPP11
 	return ((__x & 0xFFFFFFFF00000000ULL)
 		?     __mu0_cntlz_u4__(__x >> d)
@@ -208,16 +208,16 @@ const int __mu0_cntlz_u8__(const ___mu0_uint8_t___ __x)
 
 #	if MU0_HAVE_LP64
 __mu0_static_inline__
-const int __mu0_cntlz_ux__(const ___mu0_uintx_t___ __x)
+const ___mu0_sint4_t___ __mu0_cntlz_ux__(const ___mu0_uintx_t___ __x)
 { return __mu0_cntlz_u8__(__x); }
 #	else
 __mu0_static_inline__
-const int __mu0_cntlz_ux__(const ___mu0_uintx_t___ __x)
+const ___mu0_sint4_t___ __mu0_cntlz_ux__(const ___mu0_uintx_t___ __x)
 { return __mu0_cntlz_u4__(__x); }
 #	endif
 
 __mu0_static_inline__
-const int __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x)
+const ___mu0_sint4_t___ __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x)
 {
 	___mu0_uint1_t___ d = 0;
 	___mu0_uint4_t___ x = __x;
@@ -231,7 +231,7 @@ const int __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x)
 #	if 0
 
 __mu0_static_inline__
-const int __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x)
+const ___mu0_sint4_t___ __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x)
 {
 	__mu0_static__
 	const ___mu0_uint1_t___ s_table[32] =
@@ -242,7 +242,7 @@ const int __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x)
 		, 19, 27, 23,  6, 26,  5,  4, 31
 	};
 
-	const int d    = __mu0_bit_digits_u4__();
+	const ___mu0_sint4_t___ d    = __mu0_bit_digits_u4__();
 	___mu0_uint4_t___ x = __x;
 	if (x) {
 		x = x | (x >>  1U);
@@ -260,7 +260,7 @@ const int __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x)
 #	if 0
 
 __mu0_static_inline__
-const int __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x)
+const ___mu0_sint4_t___ __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x)
 {
 	___mu0_uint4_t___ x, d, y;
 	if (__x) {
@@ -279,7 +279,7 @@ const int __mu0_cntlz_u4__(const ___mu0_uint4_t___ __x)
 #	endif
 
 __mu0_static_inline__
-const int __mu0_cntlz_u2__(const ___mu0_uint2_t___ __x)
+const ___mu0_sint4_t___ __mu0_cntlz_u2__(const ___mu0_uint2_t___ __x)
 {
 	___mu0_uint1_t___ d = 0;
 	___mu0_uint2_t___ x = __x;
@@ -291,7 +291,7 @@ const int __mu0_cntlz_u2__(const ___mu0_uint2_t___ __x)
 }
 
 __mu0_static_inline__
-const int __mu0_cntlz_u1__(const ___mu0_uint1_t___ __x)
+const ___mu0_sint4_t___ __mu0_cntlz_u1__(const ___mu0_uint1_t___ __x)
 {
 	___mu0_uint1_t___ d = 0;
 	___mu0_uint1_t___ x = __x;
@@ -304,16 +304,16 @@ const int __mu0_cntlz_u1__(const ___mu0_uint1_t___ __x)
 	return __mu0_bit_digits_u1__();
 }
 
-__mu0_static_inline__ const int __mu0_cnttz_u8__(const ___mu0_uint8_t___ __x);
-__mu0_static_inline__ const int __mu0_cnttz_ux__(const ___mu0_uintx_t___ __x);
-__mu0_static_inline__ const int __mu0_cnttz_u4__(const ___mu0_uint4_t___ __x);
-__mu0_static_inline__ const int __mu0_cnttz_u2__(const ___mu0_uint2_t___ __x);
-__mu0_static_inline__ const int __mu0_cnttz_u1__(const ___mu0_uint1_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_cnttz_u8__(const ___mu0_uint8_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_cnttz_ux__(const ___mu0_uintx_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_cnttz_u4__(const ___mu0_uint4_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_cnttz_u2__(const ___mu0_uint2_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_cnttz_u1__(const ___mu0_uint1_t___ __x);
 
 __mu0_static_inline__
-const int __mu0_cnttz_u8__(const ___mu0_uint8_t___ __x)
+const ___mu0_sint4_t___ __mu0_cnttz_u8__(const ___mu0_uint8_t___ __x)
 {
-	const int d = __mu0_bit_digits_u4__();
+	const ___mu0_sint4_t___ d = __mu0_bit_digits_u4__();
 #	if MU0_HAVE_C99 || MU0_HAVE_CPP11
 	return ((__x & 0x00000000FFFFFFFFULL)
 		?     __mu0_cnttz_u4__(__x & 0xFFFFFFFFULL)
@@ -329,16 +329,16 @@ const int __mu0_cnttz_u8__(const ___mu0_uint8_t___ __x)
 
 #	if MU0_HAVE_LP64
 __mu0_static_inline__
-const int __mu0_cnttz_ux__(const ___mu0_uintx_t___ __x)
+const ___mu0_sint4_t___ __mu0_cnttz_ux__(const ___mu0_uintx_t___ __x)
 { return __mu0_cnttz_u8__(__x); }
 #	else
 __mu0_static_inline__
-const int __mu0_cnttz_ux__(const ___mu0_uintx_t___ __x)
+const ___mu0_sint4_t___ __mu0_cnttz_ux__(const ___mu0_uintx_t___ __x)
 { return __mu0_cnttz_u4__(__x); }
 #	endif
 
 __mu0_static_inline__
-const int __mu0_cnttz_u4__(const ___mu0_uint4_t___ __x)
+const ___mu0_sint4_t___ __mu0_cnttz_u4__(const ___mu0_uint4_t___ __x)
 {
 	___mu0_uint1_t___ d = 0;
 	___mu0_uint4_t___ x = __x;
@@ -350,7 +350,7 @@ const int __mu0_cnttz_u4__(const ___mu0_uint4_t___ __x)
 }
 
 __mu0_static_inline__
-const int __mu0_cnttz_u2__(const ___mu0_uint2_t___ __x)
+const ___mu0_sint4_t___ __mu0_cnttz_u2__(const ___mu0_uint2_t___ __x)
 {
 	___mu0_uint1_t___ d = 0;
 	___mu0_uint2_t___ x = __x;
@@ -362,7 +362,7 @@ const int __mu0_cnttz_u2__(const ___mu0_uint2_t___ __x)
 }
 
 __mu0_static_inline__ 
-const int __mu0_cnttz_u1__(const ___mu0_uint1_t___ __x)
+const ___mu0_sint4_t___ __mu0_cnttz_u1__(const ___mu0_uint1_t___ __x)
 {
 	___mu0_uint1_t___ d = 0;
 	___mu0_uint1_t___ x = __x;
@@ -375,11 +375,11 @@ const int __mu0_cnttz_u1__(const ___mu0_uint1_t___ __x)
 	return __mu0_bit_digits_u1__();
 }
 
-__mu0_static_inline__ const int __mu0_clz_u8__(const ___mu0_uint8_t___ __x);
-__mu0_static_inline__ const int __mu0_clz_ux__(const ___mu0_uintx_t___ __x);
-__mu0_static_inline__ const int __mu0_clz_u4__(const ___mu0_uint4_t___ __x);
-__mu0_static_inline__ const int __mu0_clz_u2__(const ___mu0_uint2_t___ __x);
-__mu0_static_inline__ const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clz_u8__(const ___mu0_uint8_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clz_ux__(const ___mu0_uintx_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clz_u4__(const ___mu0_uint4_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clz_u2__(const ___mu0_uint2_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clz_u1__(const ___mu0_uint1_t___ __x);
 
 #	if   MU0_HAVE_CC_ITLCC
 #		pragma intrinsic(_lzcnt_u64)
@@ -388,29 +388,29 @@ __mu0_static_inline__ const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x);
 #		define MU0_HAVE_BITOPERATOR 1
 
 		__mu0_static_inline__
-		const int __mu0_clz_u8__(const ___mu0_uint8_t___ __x)
+		const ___mu0_sint4_t___ __mu0_clz_u8__(const ___mu0_uint8_t___ __x)
 		{ return (__x) ? _lzcnt_u64(__x)                                                       : __mu0_bit_digits_u8__(); }
 
 #		if MU0_HAVE_LP64
 		__mu0_static_inline__
-		const int __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
+		const ___mu0_sint4_t___ __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
 		{ return _mu0_clz_u8__(__x); }
 #		else
 		__mu0_static_inline__
-		const int __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
+		const ___mu0_sint4_t___ __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
 		{ return (__x) ? _lzcnt_u32(__x)                                                       : __mu0_bit_digits_ux__();  }
 #		endif
 
 		__mu0_static_inline__
-		const int __mu0_clz_u4__(const ___mu0_uint4_t___ __x)
+		const ___mu0_sint4_t___ __mu0_clz_u4__(const ___mu0_uint4_t___ __x)
 		{ return (__x) ? _lzcnt_u32(__x)                                                       : __mu0_bit_digits_u4__();  }
 
 		__mu0_static_inline__
-		const int __mu0_clz_u2__(const ___mu0_uint2_t___ __x)
+		const ___mu0_sint4_t___ __mu0_clz_u2__(const ___mu0_uint2_t___ __x)
 		{ return (__x) ? _lzcnt_u32(__x) - (__mu0_bit_digits_u4__() - __mu0_bit_digits_u2__()) : __mu0_bit_digits_u2__();  }
 
 		__mu0_static_inline__
-		const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x)
+		const ___mu0_sint4_t___ __mu0_clz_u1__(const ___mu0_uint1_t___ __x)
 		{ return (__x) ? _lzcnt_u32(__x) - (__mu0_bit_digits_u4__() - __mu0_bit_digits_u1__()) : __mu0_bit_digits_u1__();  }
 
 #	elif MU0_HAVE_CC_MSVCC
@@ -421,29 +421,29 @@ __mu0_static_inline__ const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x);
 #			define MU0_HAVE_BITOPERATOR 1
 
 			__mu0_static_inline__
-			const int __mu0_clz_u8__(const ___mu0_uint8_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_u8__(const ___mu0_uint8_t___ __x)
 			{ return (__x) ? __lzcnt64(__x)                                                     : __mu0_bit_digits_u8__(); }
 
 #			if MU0_HAVE_LP64
 			__mu0_static_inline__
-			const int __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
 			{ return __mu0_clz_u8__(__x);  }
 #			else
 			__mu0_static_inline__
-			const int __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
 			{ return (__x) ? __lzcnt(__x)                                                       : __mu0_bit_digits_ux__(); }
 #			endif
 
 			__mu0_static_inline__
-			const int __mu0_clz_u4__(const ___mu0_uint4_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_u4__(const ___mu0_uint4_t___ __x)
 			{ return (__x) ? __lzcnt(__x)                                                       : __mu0_bit_digits_u4__(); }
 
 			__mu0_static_inline__
-			const int __mu0_clz_u2__(const ___mu0_uint2_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_u2__(const ___mu0_uint2_t___ __x)
 			{ return (__x) ? __lzcnt(__x) - (__mu0_bit_digits_u4__() - __mu0_bit_digits_u2__()) : __mu0_bit_digits_u2__(); }
 
 			__mu0_static_inline__
-			const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_u1__(const ___mu0_uint1_t___ __x)
 			{ return (__x) ? __lzcnt(__x) - (__mu0_bit_digits_u4__() - __mu0_bit_digits_u1__()) : __mu0_bit_digits_u1__(); }
 
 #		else
@@ -455,7 +455,7 @@ __mu0_static_inline__ const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x);
 #			define MU0_HAVE_BITOPERATOR 1
 
 			__mu0_static_inline__
-			const int __mu0_clz_u8__(const ___mu0_uint8_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_u8__(const ___mu0_uint8_t___ __x)
 			{
 				___mu0_uintx_t___ index         = 0;
 			#	if defined(_M_X64) && !defined(_M_ARM64EC)
@@ -482,11 +482,11 @@ __mu0_static_inline__ const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x);
 
 #			if MU0_HAVE_LP64
 			__mu0_static_inline__
-			const int __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
 			{  return __mu0_clz_u8__(__x); }
 #			else
 			__mu0_static_inline__
-			const int __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
 			{
 				___mu0_uintx_t___ index = 0;
 				___mu0_uintx_t___ mask  = __x;
@@ -500,15 +500,15 @@ __mu0_static_inline__ const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x);
 #			endif
 
 			__mu0_static_inline__
-			const int __mu0_clz_u4__(const ___mu0_uint4_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_u4__(const ___mu0_uint4_t___ __x)
 			{ return (__x) ? __mu0_clz_ux__(__x)                                                       : __mu0_bit_digits_u4__(); }
 
 			__mu0_static_inline__
-			const int __mu0_clz_u2__(const ___mu0_uint2_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_u2__(const ___mu0_uint2_t___ __x)
 			{ return (__x) ? __mu0_clz_u4__(__x) - (__mu0_bit_digits_u4__() - __mu0_bit_digits_u2__()) : __mu0_bit_digits_u2__(); }
 
 			__mu0_static_inline__
-			const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x)
+			const ___mu0_sint4_t___ __mu0_clz_u1__(const ___mu0_uint1_t___ __x)
 			{ return (__x) ? __mu0_clz_u4__(__x) - (__mu0_bit_digits_u4__() - __mu0_bit_digits_u1__()) : __mu0_bit_digits_u1__(); }
 
 #		endif
@@ -517,49 +517,49 @@ __mu0_static_inline__ const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x);
 #		define MU0_HAVE_BITOPERATOR 1
 
 		__mu0_static_inline__
-		const int __mu0_clz_u8__(const ___mu0_uint8_t___ __x)
+		const ___mu0_sint4_t___ __mu0_clz_u8__(const ___mu0_uint8_t___ __x)
 		{ return (__x) ? __builtin_clzll(__x)                                                         : __mu0_bit_digits_u8__(); }
 
 		__mu0_static_inline__
-		const int __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
+		const ___mu0_sint4_t___ __mu0_clz_ux__(const ___mu0_uintx_t___ __x)
 		{ return (__x) ? __builtin_clzl(__x)                                                          : __mu0_bit_digits_ux__(); }
 
 		__mu0_static_inline__
-		const int __mu0_clz_u4__(const ___mu0_uint4_t___ __x)
+		const ___mu0_sint4_t___ __mu0_clz_u4__(const ___mu0_uint4_t___ __x)
 		{ return (__x) ? __builtin_clz(__x)                                                           : __mu0_bit_digits_u4__(); }
 
 		__mu0_static_inline__
-		const int __mu0_clz_u2__(const ___mu0_uint2_t___ __x)
+		const ___mu0_sint4_t___ __mu0_clz_u2__(const ___mu0_uint2_t___ __x)
 		{ return (__x) ? ((__builtin_clz(__x) - (__mu0_bit_digits_u4__() - __mu0_bit_digits_u2__()))) : __mu0_bit_digits_u2__(); }
 
 		__mu0_static_inline__
-		const int __mu0_clz_u1__(const ___mu0_uint1_t___  __x)
+		const ___mu0_sint4_t___ __mu0_clz_u1__(const ___mu0_uint1_t___  __x)
 		{ return (__x) ? ((__builtin_clz(__x) - (__mu0_bit_digits_u4__() - __mu0_bit_digits_u1__()))) : __mu0_bit_digits_u1__(); }
 
 #	else
 #		undef  MU0_HAVE_BITOPERATOR
 #		define MU0_HAVE_BITOPERATOR 1
 
-__mu0_static_inline__ const int __mu0_clz_u8__(const ___mu0_uint8_t___ __x) { return __mu0_cntlz_u8__(__x); }
-__mu0_static_inline__ const int __mu0_clz_ux__(const ___mu0_uintx_t___ __x) { return __mu0_cntlz_ux__(__x); }
-__mu0_static_inline__ const int __mu0_clz_u4__(const ___mu0_uint4_t___ __x) { return __mu0_cntlz_u4__(__x); }
-__mu0_static_inline__ const int __mu0_clz_u2__(const ___mu0_uint2_t___ __x) { return __mu0_cntlz_u2__(__x); }
-__mu0_static_inline__ const int __mu0_clz_u1__(const ___mu0_uint1_t___ __x) { return __mu0_cntlz_u1__(__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clz_u8__(const ___mu0_uint8_t___ __x) { return __mu0_cntlz_u8__(__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clz_ux__(const ___mu0_uintx_t___ __x) { return __mu0_cntlz_ux__(__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clz_u4__(const ___mu0_uint4_t___ __x) { return __mu0_cntlz_u4__(__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clz_u2__(const ___mu0_uint2_t___ __x) { return __mu0_cntlz_u2__(__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clz_u1__(const ___mu0_uint1_t___ __x) { return __mu0_cntlz_u1__(__x); }
 
 #	endif
 
-__mu0_static_inline__ const int __mu0_clo_u8__(const ___mu0_uint8_t___ __x) { return __mu0_clz_u8__(~__x); }
-__mu0_static_inline__ const int __mu0_clo_ux__(const ___mu0_uintx_t___ __x) { return __mu0_clz_ux__(~__x); }
-__mu0_static_inline__ const int __mu0_clo_u4__(const ___mu0_uint4_t___ __x) { return __mu0_clz_u4__(~__x); }
-__mu0_static_inline__ const int __mu0_clo_u2__(const ___mu0_uint2_t___ __x) { return __mu0_clz_u2__(~__x); }
-__mu0_static_inline__ const int __mu0_clo_u1__(const ___mu0_uint1_t___ __x) { return __mu0_clz_u1__(~__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clo_u8__(const ___mu0_uint8_t___ __x) { return __mu0_clz_u8__(~__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clo_ux__(const ___mu0_uintx_t___ __x) { return __mu0_clz_ux__(~__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clo_u4__(const ___mu0_uint4_t___ __x) { return __mu0_clz_u4__(~__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clo_u2__(const ___mu0_uint2_t___ __x) { return __mu0_clz_u2__(~__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clo_u1__(const ___mu0_uint1_t___ __x) { return __mu0_clz_u1__(~__x); }
 
 #	if   MU0_HAVE_OVERLOAD
-__mu0_overload__ const int __mu0_clz__(const ___mu0_uint8_t___ __x) { return __mu0_clz_u8__(__x); }
-__mu0_overload__ const int __mu0_clz__(const ___mu0_uintx_t___ __x) { return __mu0_clz_ux__(__x); }
-__mu0_overload__ const int __mu0_clz__(const ___mu0_uint4_t___ __x) { return __mu0_clz_u4__(__x); }
-__mu0_overload__ const int __mu0_clz__(const ___mu0_uint2_t___ __x) { return __mu0_clz_u2__(__x); }
-__mu0_overload__ const int __mu0_clz__(const ___mu0_uint1_t___ __x) { return __mu0_clz_u1__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_clz__(const ___mu0_uint8_t___ __x) { return __mu0_clz_u8__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_clz__(const ___mu0_uintx_t___ __x) { return __mu0_clz_ux__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_clz__(const ___mu0_uint4_t___ __x) { return __mu0_clz_u4__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_clz__(const ___mu0_uint2_t___ __x) { return __mu0_clz_u2__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_clz__(const ___mu0_uint1_t___ __x) { return __mu0_clz_u1__(__x); }
 #	elif MU0_HAVE_GENERIC
 #	define __mu0_clz__(__x) __mu0_generic__(__x \
 	, ___mu0_uint8_t___ : __mu0_clz_u8__        \
@@ -607,11 +607,11 @@ __mu0_overload__ const int __mu0_clz__(const ___mu0_uint1_t___ __x) { return __m
 #	endif
 
 #	if   MU0_HAVE_OVERLOAD
-__mu0_overload__ const int __mu0_clo__(const ___mu0_uint8_t___ __x) { return __mu0_clo_u8__(__x); }
-__mu0_overload__ const int __mu0_clo__(const ___mu0_uintx_t___ __x) { return __mu0_clo_ux__(__x); }
-__mu0_overload__ const int __mu0_clo__(const ___mu0_uint4_t___ __x) { return __mu0_clo_u4__(__x); }
-__mu0_overload__ const int __mu0_clo__(const ___mu0_uint2_t___ __x) { return __mu0_clo_u2__(__x); }
-__mu0_overload__ const int __mu0_clo__(const ___mu0_uint1_t___ __x) { return __mu0_clo_u1__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_clo__(const ___mu0_uint8_t___ __x) { return __mu0_clo_u8__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_clo__(const ___mu0_uintx_t___ __x) { return __mu0_clo_ux__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_clo__(const ___mu0_uint4_t___ __x) { return __mu0_clo_u4__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_clo__(const ___mu0_uint2_t___ __x) { return __mu0_clo_u2__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_clo__(const ___mu0_uint1_t___ __x) { return __mu0_clo_u1__(__x); }
 #	elif MU0_HAVE_GENERIC
 #	define __mu0_clo__(__x) __mu0_generic__(__x \
 	, ___mu0_uint8_t___ : __mu0_clo_u8__        \
@@ -658,54 +658,54 @@ __mu0_overload__ const int __mu0_clo__(const ___mu0_uint1_t___ __x) { return __m
 	)
 #	endif
 
-__mu0_static_inline__ const int __mu0_ctz_u8__(const ___mu0_uint8_t___ __x);
-__mu0_static_inline__ const int __mu0_ctz_ux__(const ___mu0_uintx_t___ __x);
-__mu0_static_inline__ const int __mu0_ctz_u4__(const ___mu0_uint4_t___ __x);
-__mu0_static_inline__ const int __mu0_ctz_u2__(const ___mu0_uint2_t___ __x);
-__mu0_static_inline__ const int __mu0_ctz_u1__(const ___mu0_uint1_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_u8__(const ___mu0_uint8_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_ux__(const ___mu0_uintx_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_u4__(const ___mu0_uint4_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_u2__(const ___mu0_uint2_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_u1__(const ___mu0_uint1_t___ __x);
 
 #	if MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC
 #		undef  MU0_HAVE_BITOPERATOR
 #		define MU0_HAVE_BITOPERATOR 1
 
 		__mu0_static_inline__
-		const int __mu0_ctz_u8__(const ___mu0_uint8_t___ __x)
+		const ___mu0_sint4_t___ __mu0_ctz_u8__(const ___mu0_uint8_t___ __x)
 		{ return (__x) ? __builtin_ctzll(__x) : __mu0_bit_digits_u8__(); }
 
 		__mu0_static_inline__
-		const int __mu0_ctz_ux__(const ___mu0_uintx_t___  __x)
+		const ___mu0_sint4_t___ __mu0_ctz_ux__(const ___mu0_uintx_t___ __x)
 		{ return (__x) ? __builtin_ctzl(__x)  : __mu0_bit_digits_ux__(); }
 
 		__mu0_static_inline__
-		const int __mu0_ctz_u4__(const ___mu0_uint4_t___   __x)
+		const ___mu0_sint4_t___ __mu0_ctz_u4__(const ___mu0_uint4_t___ __x)
 		{ return (__x) ? __builtin_ctz(__x)   : __mu0_bit_digits_u4__(); }
 
 		__mu0_static_inline__
-		const int __mu0_ctz_u2__(const ___mu0_uint2_t___ __x)
+		const ___mu0_sint4_t___ __mu0_ctz_u2__(const ___mu0_uint2_t___ __x)
 		{ return (__x) ? __builtin_ctz(__x)   : __mu0_bit_digits_u2__(); }
 
 		__mu0_static_inline__
-		const int __mu0_ctz_u1__(const ___mu0_uint1_t___  __x)
+		const ___mu0_sint4_t___ __mu0_ctz_u1__(const ___mu0_uint1_t___ __x)
 		{ return (__x) ? __builtin_ctz(__x)   : __mu0_bit_digits_u1__(); }
 
 #	else
 #		undef  MU0_HAVE_BITOPERATOR
 #		define MU0_HAVE_BITOPERATOR 1
 
-__mu0_static_inline__ const int __mu0_ctz_u8__(const ___mu0_uint8_t___ __x) { return __mu0_cnttz_u8__(__x); }
-__mu0_static_inline__ const int __mu0_ctz_ux__(const ___mu0_uintx_t___ __x) { return __mu0_cnttz_ux__(__x); }
-__mu0_static_inline__ const int __mu0_ctz_u4__(const ___mu0_uint4_t___ __x) { return __mu0_cnttz_u4__(__x); }
-__mu0_static_inline__ const int __mu0_ctz_u2__(const ___mu0_uint2_t___ __x) { return __mu0_cnttz_u2__(__x); }
-__mu0_static_inline__ const int __mu0_ctz_u1__(const ___mu0_uint1_t___ __x) { return __mu0_cnttz_u1__(__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_u8__(const ___mu0_uint8_t___ __x) { return __mu0_cnttz_u8__(__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_ux__(const ___mu0_uintx_t___ __x) { return __mu0_cnttz_ux__(__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_u4__(const ___mu0_uint4_t___ __x) { return __mu0_cnttz_u4__(__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_u2__(const ___mu0_uint2_t___ __x) { return __mu0_cnttz_u2__(__x); }
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_u1__(const ___mu0_uint1_t___ __x) { return __mu0_cnttz_u1__(__x); }
 
 #	endif
 
 #	if   MU0_HAVE_OVERLOAD
-__mu0_overload__ const int __mu0_ctz__(const ___mu0_uint8_t___ __x) { return __mu0_ctz_u8__(__x); }
-__mu0_overload__ const int __mu0_ctz__(const ___mu0_uintx_t___ __x) { return __mu0_ctz_ux__(__x); }
-__mu0_overload__ const int __mu0_ctz__(const ___mu0_uint4_t___ __x) { return __mu0_ctz_u4__(__x); }
-__mu0_overload__ const int __mu0_ctz__(const ___mu0_uint2_t___ __x) { return __mu0_ctz_u2__(__x); }
-__mu0_overload__ const int __mu0_ctz__(const ___mu0_uint1_t___ __x) { return __mu0_ctz_u1__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_ctz__(const ___mu0_uint8_t___ __x) { return __mu0_ctz_u8__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_ctz__(const ___mu0_uintx_t___ __x) { return __mu0_ctz_ux__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_ctz__(const ___mu0_uint4_t___ __x) { return __mu0_ctz_u4__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_ctz__(const ___mu0_uint2_t___ __x) { return __mu0_ctz_u2__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_ctz__(const ___mu0_uint1_t___ __x) { return __mu0_ctz_u1__(__x); }
 #	elif MU0_HAVE_GENERIC
 #	define __mu0_ctz__(__x) __mu0_generic__(__x \
 	, ___mu0_uint8_t___ : __mu0_ctz_u8__        \
@@ -756,47 +756,47 @@ __mu0_overload__ const int __mu0_ctz__(const ___mu0_uint1_t___ __x) { return __m
 #	define __mu0_countl_one__(__x)  (__mu0_clo__(__x))
 #	define __mu0_countr_zero__(__x) (__mu0_ctz__(__x))
 
-__mu0_static_inline__ const int __mu0_bit_width_u8__(const ___mu0_uint8_t___ __x);
-__mu0_static_inline__ const int __mu0_bit_width_ux__(const ___mu0_uintx_t___ __x);
-__mu0_static_inline__ const int __mu0_bit_width_u4__(const ___mu0_uint4_t___ __x);
-__mu0_static_inline__ const int __mu0_bit_width_u2__(const ___mu0_uint2_t___ __x);
-__mu0_static_inline__ const int __mu0_bit_width_u1__(const ___mu0_uint1_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_bit_width_u8__(const ___mu0_uint8_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_bit_width_ux__(const ___mu0_uintx_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_bit_width_u4__(const ___mu0_uint4_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_bit_width_u2__(const ___mu0_uint2_t___ __x);
+__mu0_static_inline__ const ___mu0_sint4_t___ __mu0_bit_width_u1__(const ___mu0_uint1_t___ __x);
 
 __mu0_static_inline__
-const int __mu0_bit_width_u8__(const ___mu0_uint8_t___ __x)
+const ___mu0_sint4_t___ __mu0_bit_width_u8__(const ___mu0_uint8_t___ __x)
 {
 	return __mu0_bit_digits_u8__() - __mu0_ctz_u8__(__x);
 }
 
 __mu0_static_inline__
-const int __mu0_bit_width_ux__(const ___mu0_uintx_t___ __x)
+const ___mu0_sint4_t___ __mu0_bit_width_ux__(const ___mu0_uintx_t___ __x)
 {
 	return __mu0_bit_digits_ux__() - __mu0_ctz_ux__(__x);
 }
 
 __mu0_static_inline__
-const int __mu0_bit_width_u4__(const ___mu0_uint4_t___ __x)
+const ___mu0_sint4_t___ __mu0_bit_width_u4__(const ___mu0_uint4_t___ __x)
 {
 	return __mu0_bit_digits_u4__() - __mu0_ctz_ux__(__x);
 }
 
 __mu0_static_inline__
-const int __mu0_bit_width_u2__(const ___mu0_uint2_t___ __x)
+const ___mu0_sint4_t___ __mu0_bit_width_u2__(const ___mu0_uint2_t___ __x)
 {
 	return __mu0_bit_digits_u2__() - __mu0_ctz_u2__(__x);
 }
 __mu0_static_inline__
-const int __mu0_bit_width_u1__(const ___mu0_uint1_t___  __x)
+const ___mu0_sint4_t___ __mu0_bit_width_u1__(const ___mu0_uint1_t___  __x)
 {
 	return __mu0_bit_digits_u1__() - __mu0_ctz_u1__(__x);
 }
 
 #	if   MU0_HAVE_OVERLOAD
-__mu0_overload__ const int __mu0_bit_width__(const ___mu0_uint8_t___ __x) { return __mu0_bit_width_u8__(__x); }
-__mu0_overload__ const int __mu0_bit_width__(const ___mu0_uintx_t___ __x) { return __mu0_bit_width_ux__(__x); }
-__mu0_overload__ const int __mu0_bit_width__(const ___mu0_uint4_t___ __x) { return __mu0_bit_width_u4__(__x); }
-__mu0_overload__ const int __mu0_bit_width__(const ___mu0_uint2_t___ __x) { return __mu0_bit_width_u2__(__x); }
-__mu0_overload__ const int __mu0_bit_width__(const ___mu0_uint1_t___ __x) { return __mu0_bit_width_u1__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_bit_width__(const ___mu0_uint8_t___ __x) { return __mu0_bit_width_u8__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_bit_width__(const ___mu0_uintx_t___ __x) { return __mu0_bit_width_ux__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_bit_width__(const ___mu0_uint4_t___ __x) { return __mu0_bit_width_u4__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_bit_width__(const ___mu0_uint2_t___ __x) { return __mu0_bit_width_u2__(__x); }
+__mu0_overload__ const ___mu0_sint4_t___ __mu0_bit_width__(const ___mu0_uint1_t___ __x) { return __mu0_bit_width_u1__(__x); }
 #	elif MU0_HAVE_GENERIC
 #	define __mu0_bit_width__(__x) __mu0_generic__(__x \
 	, ___mu0_uint8_t___ : __mu0_bit_width_u8__        \
