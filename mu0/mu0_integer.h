@@ -32,15 +32,6 @@
 
 MU0_BEGIN_CDECL
 
-typedef   ptrdiff_t                 mu0_ptrdiff_t;
-typedef   uintptr_t                 mu0_uintptr_t;
-typedef   uintmax_t                 mu0_uintmax_t;
-typedef   intmax_t                  mu0_sintmax_t;
-
-typedef   size_t                    mu0_usize_t;
-typedef   ssize_t                   mu0_ssize_t;
-typedef   off_t                     mu0_index_t;
-
 #	if MU0_USE_INT128
 #	if   MU0_HAVE_CC_CLANG
 #		if !__is_identifier(__int128_t)
@@ -67,8 +58,8 @@ typedef   off_t                     mu0_index_t;
 #	endif
 
 #	if !MU0_HAVE_INT128
-typedef uint64_t                    mu0_uint128_t;
-typedef int64_t                     mu0_sint128_t;
+typedef   uint64_t                  mu0_uint128_t;
+typedef   int64_t                   mu0_sint128_t;
 #	endif
 
 typedef   uint64_t                  mu0_uint64_t;
@@ -82,6 +73,15 @@ typedef   int16_t                   mu0_sint16_t;
 
 typedef   uint8_t                   mu0_uint8_t;
 typedef   int8_t                    mu0_sint8_t;
+
+typedef   ptrdiff_t                 mu0_ptrdiff_t;
+typedef   uintptr_t                 mu0_uintptr_t;
+typedef   uintmax_t                 mu0_uintmax_t;
+typedef   intmax_t                  mu0_sintmax_t;
+
+typedef   size_t                    mu0_usize_t;
+typedef   ssize_t                   mu0_ssize_t;
+typedef   off_t                     mu0_index_t;
 
 typedef   bool                      mu0_bool_t;
 #	define mu0_true                  true

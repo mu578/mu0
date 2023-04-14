@@ -22,9 +22,9 @@
 
 MU0_BEGIN_CDECL
 
-typedef          char  mu0_tchar8_t;
-typedef unsigned char  mu0_uchar8_t;
-typedef signed   char  mu0_schar8_t;
+typedef ___mu0_uint1_t___       mu0_uchar8_t;
+typedef ___mu0_sint1_t___       mu0_schar8_t;
+typedef ___mu0_tint1_t___       mu0_tchar8_t;
 
 #	define mu0_tchar8(__x)       __mu0_cast__(mu0_tchar8_t, __x)
 #	define mu0_const_tchar8(__x) __mu0_const_cast__(mu0_tchar8_t, __x)

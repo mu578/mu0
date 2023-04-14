@@ -409,16 +409,20 @@
 #	endif
 
 #	define ___mu0_uint8_t___ unsigned long long
-#	define ___mu0_uintx_t___ unsigned long
-#	define ___mu0_uint4_t___ unsigned int
-#	define ___mu0_uint2_t___ unsigned short
-#	define ___mu0_uint1_t___ unsigned char
-
 #	define ___mu0_sint8_t___ signed long long
+
+#	define ___mu0_uintx_t___ unsigned long
 #	define ___mu0_sintx_t___ signed long
+
+#	define ___mu0_uint4_t___ unsigned int
 #	define ___mu0_sint4_t___ signed int
+
+#	define ___mu0_uint2_t___ unsigned short
 #	define ___mu0_sint2_t___ signed short
+
+#	define ___mu0_uint1_t___ unsigned char
 #	define ___mu0_sint1_t___ signed char
+#	define ___mu0_tint1_t___ char
 
 #endif /* !MU0_PLATFORM_H */
 

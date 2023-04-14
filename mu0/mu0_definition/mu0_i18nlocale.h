@@ -22,6 +22,8 @@
 #define MU0_I18NLOCALE_H 1
 
 #	undef  MU0_HAVE_I18NLOCALE
+#	undef  __mu0_alloca__
+#	undef  __mu0_memcpy__
 #	undef  __mu0_strcoll__
 #	undef  __mu0_strcoll_l__
 #	undef  __mu0_strncoll__
@@ -39,11 +41,11 @@
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
-#		define __mu0_strcoll__(__lhs, __rhs)                 strcoll(__lhs, __rhs)
-#		define __mu0_strcoll_l__(__lhs, __rhs, __locale)     _strcoll_l(__lhs, __rhs, __locale)
-#		define __mu0_strncoll__(__lhs, __rhs, n)             _strncoll(__lhs, __rhs, n)
-#		define __mu0_strncoll_l__(__lhs, __rhs, n, __locale) _strncoll_l(__lhs, __rhs, n, __locale)
 		typedef _locale_t __mu0_i18nlocale_t__;
+#		define __mu0_strncoll_l__(__lhs, __rhs, __n, __locale)  _strncoll_l(__lhs, __rhs, __n, __locale)
+#		define __mu0_strncoll__(__lhs, __rhs, __n)              _strncoll  (__lhs, __rhs, __n)
+#		define __mu0_strcoll_l__(__lhs, __rhs, __locale)        _strcoll_l (__lhs, __rhs, __locale)
+#		define __mu0_strcoll__(__lhs, __rhs)                    strcoll    (__lhs, __rhs)
 #		define LC_ALL_MASK      0
 #		define LC_COLLATE_MASK  0
 #		define LC_CTYPE_MASK    0
@@ -54,63 +56,61 @@
 #	elif MU0_HAVE_POSIX1_2001
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
-#		define __mu0_strcoll__(__lhs, __rhs)                 strcoll(__lhs, __rhs)
-#		define __mu0_strcoll_l__(__lhs, __rhs, __locale)     strcoll_l(__lhs, __rhs, __locale)
+		typedef locale_t __mu0_i18nlocale_t__;
+#		define __mu0_strcoll_l__(__lhs, __rhs, __locale)       strcoll_l(__lhs, __rhs, __locale)
+#		define __mu0_strcoll__(__lhs, __rhs)                   strcoll  (__lhs, __rhs)
 
 #		include <alloca.h>
+#		define __mu0_alloca__ alloca
+#		define __mu0_memcpy__ memcpy
+
 		__mu0_static_inline__
-		int ___mu0_strncoll_l___(const char * __lhs, const char * __rhs, size_t n, locale_t __locale)
-		{
-			char * a, * b;
-			if (__lhs[n + 1] != '\0') {
-				a = alloca(n + 1);
-				memcpy(a, __lhs, n);
-				a[n] = '\0';
+		int ___mu0_strncoll_l___(
+			  const ___mu0_tint1_t___ * __lhs
+			, const ___mu0_tint1_t___ * __rhs
+			, const ___mu0_uint4_t___   __n
+			, __mu0_i18nlocale_t__      __locale
+		) {
+			___mu0_tint1_t___ * a, * b;
+			if (__lhs[__n + 1] != '\0') {
+				a = __mu0_alloca__(__n + 1);
+				__mu0_memcpy__(a, __lhs, __n);
+				a[__n] = '\0';
 			} else {
-				a = __mu0_cast__(char *, __lhs);
+				a = __mu0_cast__(___mu0_tint1_t___ *, __lhs);
 			}
-			if (__rhs[n + 1] != '\0') {
-				b = alloca(n + 1);
-				memcpy(b, __rhs, n);
-				b[n] = '\0';
+			if (__rhs[__n + 1] != '\0') {
+				b = __mu0_alloca__(__n + 1);
+				__mu0_memcpy__(b, __rhs, __n);
+				b[__n] = '\0';
 			} else {
-				b = __mu0_cast__(char *, __rhs);
+				b = __mu0_cast__(___mu0_tint1_t___ *, __rhs);
 			}
-			return strcoll_l(a, b, __locale);
+			return __mu0_not_nullptr__(__locale)
+				? __mu0_strcoll_l__(a, b, __locale)
+				: __mu0_strcoll__  (a, b)
+			;
 		}
 
 		__mu0_static_inline__
-		int ___mu0_strncoll___(const char * __lhs, const char * __rhs, size_t n)
-		{
-			char * a, * b;
-			if (__lhs[n + 1] != '\0') {
-				a = alloca(n + 1);
-				memcpy(a, __lhs, n);
-				a[n] = '\0';
-			} else {
-				a = __mu0_cast__(char *, __lhs);
-			}
-			if (__rhs[n + 1] != '\0') {
-				b = alloca(n + 1);
-				memcpy(b, __rhs, n);
-				b[n] = '\0';
-			} else {
-				b = __mu0_cast__(char *, __rhs);
-			}
-			return strcoll(a, b);
-		}
+		int ___mu0_strncoll___(
+			  const ___mu0_tint1_t___ * __lhs
+			, const ___mu0_tint1_t___ * __rhs
+			, const ___mu0_uint4_t___   __n
+		) { return ___mu0_strncoll_l___(__lhs, __rhs, __n, __mu0_nullptr__); }
 
-#		define __mu0_strncoll__(__lhs, __rhs, n)             ___mu0_strncoll_l___(__lhs, __rhs, n)
-#		define __mu0_strncoll_l__(__lhs, __rhs, n, __locale) ___mu0_strncoll___(__lhs, __rhs, n, __locale)
-		typedef locale_t __mu0_i18nlocale_t__;
+#		define __mu0_strncoll__(__lhs, __rhs, __n)             ___mu0_strncoll___  (__lhs, __rhs, __n)
+#		define __mu0_strncoll_l__(__lhs, __rhs, __n, __locale) ___mu0_strncoll_l___(__lhs, __rhs, __n, __locale)
 #	else
+#		undef  MU0_HAVE_I18NLOCALE
+#		define MU0_HAVE_I18NLOCALE 0
 		typedef void * __mu0_i18nlocale_t__;
-#		define __mu0_strcmp__(__lhs, __rhs)                  strcmp(__lhs, __rhs)
-#		define __mu0_strncmp__(__lhs, __rhs, n)              strncmp(__lhs, __rhs, n)
+#		define __mu0_strcmp__(__lhs, __rhs)                   strcmp (__lhs, __rhs)
+#		define __mu0_strncmp__(__lhs, __rhs, __n)             strncmp(__lhs, __rhs, __n)
 #	endif
 
 __mu0_static_inline__
-__mu0_i18nlocale_t__ __mu0_i18nlocale_new__(const int __mask, const char * __locale, __mu0_i18nlocale_t__ __base)
+__mu0_i18nlocale_t__ __mu0_i18nlocale_new__(const int __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ __base)
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	__mu0_unused__(__mask);
@@ -146,7 +146,7 @@ __mu0_i18nlocale_t__ __mu0_i18nlocale_use__(__mu0_i18nlocale_t__ __locale)
 }
 
 __mu0_static_inline__
-const char * __mu0_i18nlocale_set__(const int __category, const char * __locale)
+const ___mu0_tint1_t___ * __mu0_i18nlocale_set__(const int __category, const ___mu0_tint1_t___ * __locale)
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	__mu0_unused__(__category);
@@ -179,8 +179,8 @@ const int __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ __locale)
 
 __mu0_static_inline__
 const int __mu0_i18nlocale_collate__(
-	  const char *         __lhs
-	, const char *         __rhs
+	  const ___mu0_tint1_t___ *         __lhs
+	, const ___mu0_tint1_t___ *         __rhs
 	, __mu0_i18nlocale_t__ __locale __mu0_nullable__
 ) {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
