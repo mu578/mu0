@@ -137,6 +137,13 @@ enum mu0_ordering mu0_locale_compare(
 	  const mu0_tchar8_t * lhs
 	, const mu0_tchar8_t * rhs
 	, const mu0_locale_t   locale __mu0_nullable__
-) { return __mu0_i18nlocale_collate__(lhs, rhs, locale); }
+) { return __mu0_i18nlocale_compare__(lhs, rhs, locale); }
+
+enum mu0_ordering mu0_locale_compare_n(
+	  const mu0_tchar8_t * lhs
+	, const mu0_tchar8_t * rhs
+	, const mu0_uint32_t   n
+	, const mu0_locale_t   locale __mu0_nullable__
+) { return __mu0_i18nlocale_compare_n__(lhs, rhs, n, locale); }
 
 /* EOF */
