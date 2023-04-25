@@ -21,10 +21,22 @@
 #define MU0_PARALLELIZE_H 1
 
 #	undef  MU0_HAVE_PARALLELIZE
+#	undef  MU0_HAVE_OPENACC
+#	undef  MU0_HAVE_OPENMP
+#	define MU0_HAVE_OPENACC     0
+#	define MU0_HAVE_OPENMP      0
 #	define MU0_HAVE_PARALLELIZE 0
+
+#	if _OPENACC
+
+#	endif
 
 #	if _OPENMP
 #		undef  MU0_HAVE_PARALLELIZE
+#		undef  MU0_HAVE_OPENACC
+#		undef  MU0_HAVE_OPENMP
+#		define MU0_HAVE_OPENACC     0
+#		define MU0_HAVE_OPENMP      1
 #		define MU0_HAVE_PARALLELIZE 1
 #		if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC
 #		pragma GCC diagnostic push

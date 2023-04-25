@@ -47,15 +47,17 @@
 #	undef  __mu0_kindof__
 #	undef  __mu0_isoftype__
 #	undef  __mu0_isofkind__
+#	undef  __mu0_issame__
 #	define MU0_HAVE_TYPEOF 0
 
 #	if   MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__             __typeof__
-#		define __mu0_kindof__(__x)        __mu0_typeof__((__x) + 0)
+#		define __mu0_kindof__(__x)        __mu0_typeof__((__mu0_typeof__(__x))(__x))
 #		define __mu0_isoftype__(_Tp, __x) ((__builtin_types_compatible_p(_Tp, __mu0_typeof__(__x))) ? 1 : 0)
 #		define __mu0_isofkind__(_Tp, __x) ((__builtin_types_compatible_p(_Tp, __mu0_kindof__(__x))) ? 1 : 0)
+#		define __mu0_issame__(_T, _U)     ((__builtin_types_compatible_p(__mu0_typeof__(_T), __mu0_typeof__(_U))) ? 1 : 0)
 #	elif MU0_HAVE_C23
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
@@ -63,13 +65,16 @@
 #		define __mu0_kindof__(__x)        typeof_unequal(__x)
 #		define __mu0_isoftype__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x)) ? 1 : 0)
 #		define __mu0_isofkind__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x) || __mu0_typeof__(_Tp) == __mu0_kindof__(__x))  ? 1 : 0)
+#		define __mu0_issame__(_T, _U)     (__mu0_generic__(((_T){0}), _U: 1, default: 0) && __mu0_generic__(((_U){0}), _T: 1, default: 0))
 #	elif MU0_HAVE_CC_ITLGC && MU0_HAVE_GENERIC
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__             __typeof__
-#		define __mu0_kindof__(__x)        __mu0_typeof__((__x) + 0)
+#		define __mu0_kindof__(__x)        __mu0_typeof__((__mu0_typeof__(__x))(__x))
 #		define __mu0_isoftype__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
 #		define __mu0_isofkind__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
+#		define ___mu0_issame___(_T, _U)   __mu0_generic__(((_T){0} ), _U: 1, default: 0)
+#		define __mu0_issame__(_T, _U)     (__mu0_generic__(((_T){0}), _U: 1, default: 0) && __mu0_generic__(((_U){0}), _T: 1, default: 0))
 #	endif
 
 #	if !MU0_HAVE_TYPEOF && MU0_HAVE_CPP11
@@ -78,12 +83,13 @@
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__(__x)        ::std::remove_reference<decltype(__x)>::type
 #		define __mu0_kindof__(__x)        ::std::decay<decltype(__x)>::type
-#		define __mu0_isoftype__(_Tp, x)   ((::std::is_same<_Tp , __mu0_typeof__(__x) >::value == true) ? 1 : 0)
-#		define __mu0_isofkind__(_Tp, x)   ((::std::is_same<_Tp , __mu0_typeof__(__x) >::value == true || ::std::is_same<_Tp , __mu0_kindof__(__x) >::value == true) ? 1 : 0)
+#		define __mu0_isoftype__(_Tp, x)   ((::std::is_same<_Tp , __mu0_typeof__(__x)>::value == true) ? 1 : 0)
+#		define __mu0_isofkind__(_Tp, x)   ((::std::is_same<_Tp , __mu0_typeof__(__x)>::value == true || ::std::is_same<_Tp , __mu0_kindof__(__x) >::value == true) ? 1 : 0)
+#		define __mu0_issame__(_T, _U)     ((::std::is_same<_T  , _U>::value == true) ? 1 : 0)
 #	endif
 
 #	if MU0_HAVE_TYPEOF
-#	define __mu0_infer__(__x) __mu0_typeof__(__x)
+#	define __mu0_infer__(__x) __mu0_kindof__(__x)
 #	else
 #	warning "mu0_feature.h"
 #	define __mu0_infer__(__x) void

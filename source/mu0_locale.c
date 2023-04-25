@@ -16,7 +16,6 @@
 //
 
 #include <mu0/mu0_locale.h>
-#include <string.h>
 
 #	if MU0_HAVE_I18NLOCALE
 #		undef  __mu0_memset__
@@ -40,7 +39,7 @@ const mu0_tchar8_t * mu0_locale_name(
 	mu0_tchar8_t   s_name[48];
 	mu0_tchar8_t * variant;
 	mu0_bool_t     have_name = mu0_false;
-	mu0_uint64_t   k, l, p   = 0;
+	mu0_usize_t    k, l, p   = 0;
 
 	//#! XPG syntax:[language[_territory[.codeset]][@modifier[+variant]]
 	__mu0_memset__(s_name, 0, __mu0_sizeof__(s_name));
@@ -128,6 +127,14 @@ mu0_sint32_t mu0_locale_global(
 		}
 	}
 	return -1;
+}
+
+const mu0_tchar8_t * mu0_locale_identifier(
+	  const mu0_bool_t   collator
+	, const mu0_locale_t locale   __mu0_nullable__
+) {
+	const mu0_sint32_t category = ((collator == mu0_true) ? LC_COLLATE : LC_ALL);
+	return __mu0_i18nlocale_get__(category, locale);
 }
 
 mu0_sint32_t mu0_locale_delete(mu0_locale_t locale)

@@ -30,7 +30,6 @@
 
 #	undef  __mu0_memset__
 #	undef  __mu0_memcpy__
-
 #	define __mu0_memset__ memset
 #	define __mu0_memcpy__ memcpy
 

@@ -23,6 +23,7 @@
 #	include <mu0/mu0_definition/mu0_bitoperator.h>
 #	include <mu0/mu0_definition/mu0_byteorder.h>
 #	include <mu0/mu0_definition/mu0_byteswap.h>
+#	include <mu0/mu0_definition/mu0_chartrait.h>
 #	include <mu0/mu0_definition/mu0_compiler.h>
 #	include <mu0/mu0_definition/mu0_console.h>
 #	include <mu0/mu0_definition/mu0_cpuyield.h>
