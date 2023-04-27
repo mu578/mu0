@@ -15,6 +15,7 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
+#include <mu0/mu0_definition/mu0_byteswap.h>
 #include <mu0/mu0_definition/mu0_language.h>
 
 #ifndef MU0_CHARTRAIT_H
@@ -54,14 +55,14 @@ __mu0_scope_begin__                                               \
 	}                                                              \
 __mu0_scope_end__
 
-#	define __mu0_cfind__(_CharT, __first, __last, __char, __r)                         \
-__mu0_scope_begin__                                                                   \
-	const ___mu0_sint8_t___ __mu0_cfind__k__ = 0;                                      \
-	const ___mu0_sint8_t___ __mu0_cfind__n__ = __last - __first;                       \
-	__mu0_cfind_n__(_CharT, __first, __mu0_cfind__k__, __mu0_cfind__n__, __char, __r); \
-	if (__mu0_is_nullptr__(_r)) {                                                      \
-		__r = __last;                                                                   \
-	}                                                                                  \
+#	define __mu0_cfind__(_CharT, __src_first, __src_last, __char, __r)                     \
+__mu0_scope_begin__                                                                       \
+	const ___mu0_sint8_t___ __mu0_cfind__k__ = 0;                                          \
+	const ___mu0_sint8_t___ __mu0_cfind__n__ = __src_last - __src_first;                   \
+	__mu0_cfind_n__(_CharT, __src_first, __mu0_cfind__k__, __mu0_cfind__n__, __char, __r); \
+	if (__mu0_is_nullptr__(_r)) {                                                          \
+		__r = __src_last;                                                                   \
+	}                                                                                      \
 __mu0_scope_end__
 
 #	define __mu0_slength__(_CharT, __src, __r)                                         \
@@ -164,6 +165,24 @@ __mu0_scope_begin__                                                             
 			}                                                                                                                                 \
 		}                                                                                                                                    \
 	}                                                                                                                                       \
+__mu0_scope_end__
+
+#	define __mu0_utf8to16__(_Char8T, _Char16T, __src_first, __src_last, __dest_first, __endian, _r)                    \
+__mu0_scope_begin__                                                                                                   \
+	___mu0_sint8_t___ __mu0_utf8to16__r__, __mu0_utf8to16__i__;                                                        \
+	__mu0_utf8to16_n__(_Char8T, _Char16T, __src_first, (__src_last - __src_first), __dest_first, __mu0_utf8to16__r__); \
+	if (__mu0_is_not_nullptr__(__dest_first)) { /* buffer length query mode */                                         \
+		_r = __dest_first + __mu0_utf8to16__r__;                                                                        \
+		if (__mu0_utf8to16__r__ > 0 ) {                                                                                 \
+			if (__endian != __mu0_byte_order__) {                                                                        \
+				for (__mu0_utf8to16__i__ = 0; __mu0_utf8to16__i__ < __mu0_utf8to16__r__; ++__mu0_utf8to16__r__) {         \
+					__dest_first[__mu0_utf8to16__i__] = __mu0_bswap_16__(__dest_first[__mu0_utf8to16__i__]);               \
+				}                                                                                                         \
+			}                                                                                                            \
+		}                                                                                                               \
+	} else {                                                                                                           \
+		_r = __mu0_nullptr__;                                                                                           \
+	}                                                                                                                  \
 __mu0_scope_end__
 
 MU0_END_CDECL
