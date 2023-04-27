@@ -95,7 +95,7 @@ __mu0_scope_end__
 
 #	define __mu0_sutf8to32_n__(_Char8T, _Char32T, __src, __n, __dest, __r)                                                                      \
 __mu0_scope_begin__                                                                                                                            \
-	const ___mu0_uint4_t___ __mu0_sutf8to32_n__x__ = __mu0_is_not_nullptr__(__dest) ? 1U : 0U;                                                  \
+	const ___mu0_uint4_t___ __mu0_sutf8to32_n__x__ = __mu0_not_nullptr__(__dest) ? 1U : 0U;                                                     \
 	const _Char8T  *        __mu0_sutf8to32_n__i__ = __mu0_const_cast__(_Char8T *, __src);                                                      \
 	      _Char32T *        __mu0_sutf8to32_n__j__ = __mu0_sutf8to32_n__x__ ? __mu0_cast__(_Char32T *, __dest) : __mu0_nullptr__;               \
 			_Char32T          __mu0_sutf8to32_n__g__;                                                                                             \
@@ -128,7 +128,7 @@ __mu0_scope_begin__                                                             
 	_Char32T  *       __mu0_sutf8to32__q__ = __mu0_nullptr__;                                                                    \
 	___mu0_sint8_t___ __mu0_sutf8to32__r__, __mu0_sutf8to32__i__;                                                                \
 	__mu0_sutf8to32_n__(_Char8T, _Char32T, __src_first, (__src_last - __src_first), __mu0_sutf8to32__p__, __mu0_sutf8to32__r__); \
-	if (__mu0_is_not_nullptr__(__mu0_sutf8to32__p__)) {                                                                          \
+	if (__mu0_not_nullptr__(__mu0_sutf8to32__p__)) {                                                                             \
 		__mu0_sutf8to32__q__ = __mu0_sutf8to32__p__ + __mu0_sutf8to32__r__;                                                       \
 		if (__mu0_sutf8to32__r__ > 0 ) {                                                                                          \
 			if (__endian != __mu0_byte_order__) {                                                                                  \
@@ -144,7 +144,7 @@ __mu0_scope_end__
 
 #	define __mu0_sutf8to16_n__(_Char8T, _Char16T, __src, __n, __dest, __r)                                                                      \
 __mu0_scope_begin__                                                                                                                            \
-	const ___mu0_uint4_t___ __mu0_sutf8to16_n__x__ = __mu0_is_not_nullptr__(__dest) ? 1U : 0U;                                                  \
+	const ___mu0_uint4_t___ __mu0_sutf8to16_n__x__ = __mu0_not_nullptr__(__dest) ? 1U : 0U;                                                     \
 	const _Char8T  *        __mu0_sutf8to16_n__i__ = __mu0_const_cast__(_Char8T *, __src);                                                      \
 	      _Char16T *        __mu0_sutf8to16_n__j__ = __mu0_sutf8to16_n__x__ ? __mu0_cast__(_Char16T *, __dest) : __mu0_nullptr__;               \
 			_Char16T          __mu0_sutf8to16_n__g__;                                                                                             \
@@ -193,7 +193,7 @@ __mu0_scope_begin__                                                             
 	_Char16T  *       __mu0_sutf8to16__q__ = __mu0_nullptr__;                                                                    \
 	___mu0_sint8_t___ __mu0_sutf8to16__r__, __mu0_sutf8to16__i__;                                                                \
 	__mu0_sutf8to16_n__(_Char8T, _Char16T, __src_first, (__src_last - __src_first), __mu0_sutf8to16__p__, __mu0_sutf8to16__r__); \
-	if (__mu0_is_not_nullptr__(__mu0_sutf8to16__p__)) {                                                                          \
+	if (__mu0_not_nullptr__(__mu0_sutf8to16__p__)) {                                                                             \
 		__mu0_sutf8to16__q__ = __mu0_sutf8to16__p__ + __mu0_sutf8to16__r__;                                                       \
 		if (__mu0_sutf8to16__r__ > 0 ) {                                                                                          \
 			if (__endian != __mu0_byte_order__) {                                                                                  \
