@@ -169,7 +169,7 @@ __mu0_scope_begin__                                                             
 	      _Char32T *        __mu0_sutf8to32_n__j__ = __mu0_sutf8to32_n__x__ ? __mu0_cast__(_Char32T *, __dest) : __mu0_nullptr__;               \
 	      _Char32T          __mu0_sutf8to32_n__g__;                                                                                             \
 	      ___mu0_sint8_t___ __mu0_sutf8to32_n__n__ = __mu0_const_cast__(___mu0_sint8_t___, __n);                                                \
-	      ___mu0_uint4_t___ __mu0_sutf8to32_n__w__;                                                                                             \
+	      ___mu0_uint4_t___ __mu0_sutf8to32_n__w__ = 0x0000;                                                                                    \
 	      ___mu0_uint1_t___ __mu0_sutf8to32_n__c__;                                                                                             \
 	__r                                            = 0;                                                                                         \
 	for (; __mu0_sutf8to32_n__n__ != 0; --__mu0_sutf8to32_n__n__) {                                                                             \
@@ -188,6 +188,7 @@ __mu0_scope_begin__                                                             
 			}                                                                                                                                     \
 			++__r;                                                                                                                                \
 		}                                                                                                                                        \
+		__mu0_sutf8to32_n__w__ = 0x0000;                                                                                                         \
 	}                                                                                                                                           \
 __mu0_scope_end__
 
@@ -225,7 +226,7 @@ __mu0_scope_begin__                                                             
 	      _Char16T *        __mu0_sutf8to16_n__j__ = __mu0_sutf8to16_n__x__ ? __mu0_cast__(_Char16T *, __dest) : __mu0_nullptr__;               \
 	      _Char16T          __mu0_sutf8to16_n__g__;                                                                                             \
 	      ___mu0_sint8_t___ __mu0_sutf8to16_n__n__ = __mu0_const_cast__(___mu0_sint8_t___, __n);                                                \
-	      ___mu0_uint4_t___ __mu0_sutf8to16_n__w__;                                                                                             \
+	      ___mu0_uint4_t___ __mu0_sutf8to16_n__w__ = 0x0000;                                                                                    \
 	      ___mu0_uint1_t___ __mu0_sutf8to16_n__c__;                                                                                             \
 	__r                                            = 0;                                                                                         \
 	for (; __mu0_sutf8to16_n__n__ != 0; --__mu0_sutf8to16_n__n__) {                                                                             \
@@ -260,6 +261,7 @@ __mu0_scope_begin__                                                             
 				break;                                                                                                                             \
 			}                                                                                                                                     \
 		}                                                                                                                                        \
+		__mu0_sutf8to16_n__w__ = 0x0000;                                                                                                         \
 	}                                                                                                                                           \
 __mu0_scope_end__
 
