@@ -188,7 +188,6 @@ __mu0_scope_begin__                                                             
 			}                                                                                                                                     \
 			++__r;                                                                                                                                \
 		}                                                                                                                                        \
-		__mu0_sutf8to32_n__w__ = 0x0000;                                                                                                         \
 	}                                                                                                                                           \
 __mu0_scope_end__
 
@@ -261,7 +260,6 @@ __mu0_scope_begin__                                                             
 				break;                                                                                                                             \
 			}                                                                                                                                     \
 		}                                                                                                                                        \
-		__mu0_sutf8to16_n__w__ = 0x0000;                                                                                                         \
 	}                                                                                                                                           \
 __mu0_scope_end__
 
