@@ -35,6 +35,72 @@ typedef ___mu0_uint1_t___ ___mu0_uchar1_t___;
 typedef ___mu0_sint1_t___ ___mu0_schar1_t___;
 typedef ___mu0_tint1_t___ ___mu0_tchar1_t___;
 
+#	define ___mu0_sutfxxto8_n___(_CharxxT, _Char8T, __src, __n, __dest, __r)                                                         \
+__mu0_scope_begin__                                                                                                                 \
+	const ___mu0_uint4_t___ ___mu0_sutfxxto8_n___x__ = __mu0_not_nullptr__(__dest) ? 1U : 0U;                                        \
+	const _CharxxT *        ___mu0_sutfxxto8_n___i__ = __mu0_const_cast__(_CharxxT *, __src);                                        \
+	      _Char8T  *        ___mu0_sutfxxto8_n___j__ = ___mu0_sutfxxto8_n___x__ ? __mu0_cast__(_Char8T *, __dest) : __mu0_nullptr__; \
+	      ___mu0_sint8_t___ ___mu0_sutfxxto8_n___n__ = __mu0_const_cast__(___mu0_sint8_t___, __n);                                   \
+	      ___mu0_uint4_t___ ___mu0_sutfxxto8_n___c__ = 0x0000;                                                                       \
+	__r                                            = 0;                                                                              \
+	for (; ___mu0_sutfxxto8_n___n__ != 0; --___mu0_sutfxxto8_n___n__) {                                                              \
+		if (*___mu0_sutfxxto8_n___i__ >= 0xD800 && *___mu0_sutfxxto8_n___i__ <= 0xDBFF) {                                             \
+			___mu0_sutfxxto8_n___c__ = ((*___mu0_sutfxxto8_n___i__ - 0xD800) << 0xA) + 0x10000;                                        \
+		} else {                                                                                                                      \
+			if (*___mu0_sutfxxto8_n___i__ >= 0xDC00 && *___mu0_sutfxxto8_n___i__ <= 0xDFFF) {                                          \
+				___mu0_sutfxxto8_n___c__ |= *___mu0_sutfxxto8_n___i__ - 0xDC00;                                                         \
+			} else {                                                                                                                   \
+				___mu0_sutfxxto8_n___c__ = *___mu0_sutfxxto8_n___i__;                                                                   \
+			}                                                                                                                          \
+			if (___mu0_sutfxxto8_n___c__ <= 0x7F) {                                                                                    \
+				if (___mu0_sutfxxto8_n___x__) {                                                                                         \
+					*___mu0_sutfxxto8_n___j__ = __mu0_const_cast__(_Char8T, ___mu0_sutfxxto8_n___c__);                                   \
+					++___mu0_sutfxxto8_n___j__;                                                                                          \
+				}                                                                                                                       \
+				++__r;                                                                                                                  \
+			} else if (___mu0_sutfxxto8_n___c__ <= 0x7FF) {                                                                            \
+				if (___mu0_sutfxxto8_n___x__) {                                                                                         \
+					*___mu0_sutfxxto8_n___j__ = __mu0_const_cast__(_Char8T, (0xC0 | ((___mu0_sutfxxto8_n___c__ >> 0x6)  & 0x1F)));       \
+					++___mu0_sutfxxto8_n___j__;                                                                                          \
+					*___mu0_sutfxxto8_n___j__ = __mu0_const_cast__(_Char8T, (0x80 | (___mu0_sutfxxto8_n___c__           & 0x3F)));       \
+					++___mu0_sutfxxto8_n___j__;                                                                                          \
+				}                                                                                                                       \
+				++__r;                                                                                                                  \
+				++__r;                                                                                                                  \
+			} else if (___mu0_sutfxxto8_n___c__ <= 0xFFFF) {                                                                           \
+				if (___mu0_sutfxxto8_n___x__) {                                                                                         \
+					*___mu0_sutfxxto8_n___j__ = __mu0_const_cast__(_Char8T, (0xE0 | ((___mu0_sutfxxto8_n___c__ >> 0xC)  & 0x0F)));       \
+					++___mu0_sutfxxto8_n___j__;                                                                                          \
+					*___mu0_sutfxxto8_n___j__ = __mu0_const_cast__(_Char8T, (0x80 | ((___mu0_sutfxxto8_n___c__ >> 0x6)  & 0x3F)));       \
+					++___mu0_sutfxxto8_n___j__;                                                                                          \
+					*___mu0_sutfxxto8_n___j__ = __mu0_const_cast__(_Char8T, (0x80 | (___mu0_sutfxxto8_n___c__           & 0x3F)));       \
+					++___mu0_sutfxxto8_n___j__;                                                                                          \
+				}                                                                                                                       \
+				++__r;                                                                                                                  \
+				++__r;                                                                                                                  \
+				++__r;                                                                                                                  \
+			} else {                                                                                                                   \
+				if (___mu0_sutfxxto8_n___x__) {                                                                                         \
+					*___mu0_sutfxxto8_n___j__ = __mu0_const_cast__(_Char8T, (0xF0 | ((___mu0_sutfxxto8_n___c__ >> 0x12) & 0x07)));       \
+					++___mu0_sutfxxto8_n___j__;                                                                                          \
+					*___mu0_sutfxxto8_n___j__ = __mu0_const_cast__(_Char8T, (0x80 | ((___mu0_sutfxxto8_n___c__ >> 0xC)  & 0x3F)));       \
+					++___mu0_sutfxxto8_n___j__;                                                                                          \
+					*___mu0_sutfxxto8_n___j__ = __mu0_const_cast__(_Char8T, (0x80 | ((___mu0_sutfxxto8_n___c__ >> 0x6)  & 0x3F)));       \
+					++___mu0_sutfxxto8_n___j__;                                                                                          \
+					*___mu0_sutfxxto8_n___j__ = __mu0_const_cast__(_Char8T, (0x80 | (___mu0_sutfxxto8_n___c__           & 0x3F)));       \
+					++___mu0_sutfxxto8_n___j__;                                                                                          \
+				}                                                                                                                       \
+				++__r;                                                                                                                  \
+				++__r;                                                                                                                  \
+				++__r;                                                                                                                  \
+				++__r;                                                                                                                  \
+			}                                                                                                                          \
+			___mu0_sutfxxto8_n___c__ = 0x0000;                                                                                         \
+		}                                                                                                                             \
+		++___mu0_sutfxxto8_n___i__;                                                                                                   \
+	}                                                                                                                                \
+__mu0_scope_end__
+
 #	define __mu0_cfind_n__(_CharT, __src, __pos, __n, __char, __r)                     \
 __mu0_scope_begin__                                                                   \
 	___mu0_uint4_t___ __mu0_cfind_n__x__ = 0U;                                         \
@@ -56,6 +122,7 @@ __mu0_scope_begin__                                                             
 		__r = __mu0_nullptr__;                                                          \
 	}                                                                                  \
 __mu0_scope_end__
+
 
 #	define __mu0_cfind__(_CharT, __src_first, __src_last, __char, __r)                \
 __mu0_scope_begin__                                                                  \
@@ -142,6 +209,9 @@ __mu0_scope_begin__                                                             
 	_r = __mu0_sutf8to32__q__;                                                                                                   \
 __mu0_scope_end__
 
+#	define __mu0_sutf32to8_n__(_Char32T, _Char8T, __src, __n, __dest, __r) \
+	___mu0_sutfxxto8_n___(_Char32T, _Char8T, __src, __n, __dest, __r)
+
 #	define __mu0_sutf8to16_n__(_Char8T, _Char16T, __src, __n, __dest, __r)                                                                      \
 __mu0_scope_begin__                                                                                                                            \
 	const ___mu0_uint4_t___ __mu0_sutf8to16_n__x__ = __mu0_not_nullptr__(__dest) ? 1U : 0U;                                                     \
@@ -206,6 +276,9 @@ __mu0_scope_begin__                                                             
 	}                                                                                                                            \
 	_r = __mu0_sutf8to16__q__;                                                                                                   \
 __mu0_scope_end__
+
+#	define __mu0_sutf16to8_n__(_Char16T, _Char8T, __src, __n, __dest, __r) \
+	___mu0_sutfxxto8_n___(_Char16T, _Char8T, __src, __n, __dest, __r)
 
 MU0_END_CDECL
 
