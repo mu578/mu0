@@ -35,7 +35,7 @@ typedef ___mu0_uint1_t___ ___mu0_uchar1_t___;
 typedef ___mu0_sint1_t___ ___mu0_schar1_t___;
 typedef ___mu0_tint1_t___ ___mu0_tchar1_t___;
 
-#	define ___mu0_sutfxxto8_n___(_CharxxT, _Char8T, __src, __n, __dest, __endian, __swap, __r)                                       \
+#	define ___mu0_sutfxxto8_n___(_CharxxT, _Char8T, __src, __n, __dest, __endian, __swap_xx, __r)                                    \
 __mu0_scope_begin__                                                                                                                 \
 	const ___mu0_uint4_t___ ___mu0_sutfxxto8_n___x__ = __mu0_not_nullptr__(__dest) ? 1U : 0U;                                        \
 	const _CharxxT *        ___mu0_sutfxxto8_n___i__ = __mu0_const_cast__(_CharxxT *, __src);                                        \
@@ -45,7 +45,7 @@ __mu0_scope_begin__                                                             
 	      ___mu0_uint4_t___ ___mu0_sutfxxto8_n___c__ = 0x0000;                                                                       \
 	__r                                              = 0;                                                                            \
 	for (; ___mu0_sutfxxto8_n___n__ != 0; --___mu0_sutfxxto8_n___n__) {                                                              \
-		___mu0_sutfxxto8_n___g__ = __endian != __mu0_byte_order__ ? __swap(*___mu0_sutfxxto8_n___i__) : *___mu0_sutfxxto8_n___i__;    \
+		___mu0_sutfxxto8_n___g__ = __endian != __mu0_byte_order__ ? __swap_xx(*___mu0_sutfxxto8_n___i__) : *___mu0_sutfxxto8_n___i__; \
 		if (___mu0_sutfxxto8_n___g__ >= 0xD800 && ___mu0_sutfxxto8_n___g__ <= 0xDBFF) {                                               \
 			___mu0_sutfxxto8_n___c__ = ((___mu0_sutfxxto8_n___g__ - 0xD800) << 0xA) + 0x10000;                                         \
 		} else {                                                                                                                      \
