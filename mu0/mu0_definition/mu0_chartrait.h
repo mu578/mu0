@@ -40,7 +40,7 @@ __mu0_scope_begin__                                                             
 	const ___mu0_uint4_t___ ___mu0_sutfxxto8_n___x__ = __mu0_not_nullptr__(__dest) ? 1U : 0U;                                        \
 	const _CharxxT *        ___mu0_sutfxxto8_n___i__ = __mu0_const_cast__(_CharxxT *, __src);                                        \
 	      _Char8T  *        ___mu0_sutfxxto8_n___j__ = ___mu0_sutfxxto8_n___x__ ? __mu0_cast__(_Char8T *, __dest) : __mu0_nullptr__; \
-			_CharxxT          ___mu0_sutfxxto8_n___g__;                                                                                \
+	      _CharxxT          ___mu0_sutfxxto8_n___g__;                                                                                \
 	      ___mu0_sint8_t___ ___mu0_sutfxxto8_n___n__ = __mu0_const_cast__(___mu0_sint8_t___, __n);                                   \
 	      ___mu0_uint4_t___ ___mu0_sutfxxto8_n___c__ = 0x0000;                                                                       \
 	__r                                              = 0;                                                                            \
@@ -167,7 +167,7 @@ __mu0_scope_begin__                                                             
 	const ___mu0_uint4_t___ __mu0_sutf8to32_n__x__ = __mu0_not_nullptr__(__dest) ? 1U : 0U;                                                     \
 	const _Char8T  *        __mu0_sutf8to32_n__i__ = __mu0_const_cast__(_Char8T *, __src);                                                      \
 	      _Char32T *        __mu0_sutf8to32_n__j__ = __mu0_sutf8to32_n__x__ ? __mu0_cast__(_Char32T *, __dest) : __mu0_nullptr__;               \
-			_Char32T          __mu0_sutf8to32_n__g__;                                                                                             \
+	      _Char32T          __mu0_sutf8to32_n__g__;                                                                                             \
 	      ___mu0_sint8_t___ __mu0_sutf8to32_n__n__ = __mu0_const_cast__(___mu0_sint8_t___, __n);                                                \
 	      ___mu0_uint4_t___ __mu0_sutf8to32_n__w__;                                                                                             \
 	      ___mu0_uint1_t___ __mu0_sutf8to32_n__c__;                                                                                             \
@@ -211,7 +211,7 @@ __mu0_scope_begin__                                                             
 	const ___mu0_uint4_t___ __mu0_sutf8to16_n__x__ = __mu0_not_nullptr__(__dest) ? 1U : 0U;                                                     \
 	const _Char8T  *        __mu0_sutf8to16_n__i__ = __mu0_const_cast__(_Char8T *, __src);                                                      \
 	      _Char16T *        __mu0_sutf8to16_n__j__ = __mu0_sutf8to16_n__x__ ? __mu0_cast__(_Char16T *, __dest) : __mu0_nullptr__;               \
-			_Char16T          __mu0_sutf8to16_n__g__;                                                                                             \
+	      _Char16T          __mu0_sutf8to16_n__g__;                                                                                             \
 	      ___mu0_sint8_t___ __mu0_sutf8to16_n__n__ = __mu0_const_cast__(___mu0_sint8_t___, __n);                                                \
 	      ___mu0_uint4_t___ __mu0_sutf8to16_n__w__;                                                                                             \
 	      ___mu0_uint1_t___ __mu0_sutf8to16_n__c__;                                                                                             \
