@@ -162,7 +162,7 @@ __mu0_scope_begin__                                                             
 	}                                                                                               \
 __mu0_scope_end__
 
-#	define __mu0_sutf8to32_n__(_Char8T, _Char32T, __src, __n, __dest, __r)                                                                      \
+#	define __mu0_sutf8to32_n__(_Char8T, _Char32T, __src, __n, __dest, __endian, __r)                                                            \
 __mu0_scope_begin__                                                                                                                            \
 	const ___mu0_uint4_t___ __mu0_sutf8to32_n__x__ = __mu0_not_nullptr__(__dest) ? 1U : 0U;                                                     \
 	const _Char8T  *        __mu0_sutf8to32_n__i__ = __mu0_const_cast__(_Char8T *, __src);                                                      \
@@ -183,7 +183,7 @@ __mu0_scope_begin__                                                             
 		if (((*__mu0_sutf8to32_n__i__ & 0xC0) != 0x80) && (__mu0_sutf8to32_n__w__ <= 0x10FFFF)) {                                                \
 			if (__mu0_sutf8to32_n__x__) {                                                                                                         \
 				 __mu0_sutf8to32_n__g__ = __mu0_const_cast__(_Char32T, __mu0_sutf8to32_n__w__);                                                    \
-				*__mu0_sutf8to32_n__j__ = __mu0_sutf8to32_n__g__;                                                                                  \
+				*__mu0_sutf8to32_n__j__ = __endian != __mu0_byte_order__ ? __mu0_bswap_32__(__mu0_sutf8to32_n__g__) : __mu0_sutf8to32_n__g__;      \
 				++__mu0_sutf8to32_n__j__;                                                                                                          \
 			}                                                                                                                                     \
 			++__r;                                                                                                                                \
@@ -191,30 +191,22 @@ __mu0_scope_begin__                                                             
 	}                                                                                                                                           \
 __mu0_scope_end__
 
-#	define __mu0_sutf8to32__(_Char8T, _Char32T, __src_first, __src_last, __dest_first, __endian, _r)                             \
-__mu0_scope_begin__                                                                                                             \
-	_Char32T  *       __mu0_sutf8to32__p__ = __dest_first;                                                                       \
-	_Char32T  *       __mu0_sutf8to32__q__ = __mu0_nullptr__;                                                                    \
-	___mu0_sint8_t___ __mu0_sutf8to32__r__, __mu0_sutf8to32__i__;                                                                \
-	__mu0_sutf8to32_n__(_Char8T, _Char32T, __src_first, (__src_last - __src_first), __mu0_sutf8to32__p__, __mu0_sutf8to32__r__); \
-	if (__mu0_not_nullptr__(__mu0_sutf8to32__p__)) {                                                                             \
-		__mu0_sutf8to32__q__ = __mu0_sutf8to32__p__ + __mu0_sutf8to32__r__;                                                       \
-		if (__mu0_sutf8to32__r__ > 0 ) {                                                                                          \
-			if (__endian != __mu0_byte_order__) {                                                                                  \
-				while (__mu0_sutf8to32__p__ != __mu0_sutf8to32__q__) {                                                              \
-					*__mu0_sutf8to32__p__ = __mu0_bswap_32__(*__mu0_sutf8to32__p__);                                                 \
-					++__mu0_sutf8to32__p__;                                                                                          \
-				}                                                                                                                   \
-			}                                                                                                                      \
-		}                                                                                                                         \
-	}                                                                                                                            \
-	_r = __mu0_sutf8to32__q__;                                                                                                   \
+#	define __mu0_sutf8to32__(_Char8T, _Char32T, __src_first, __src_last, __dest_first, __endian, _r)                                       \
+__mu0_scope_begin__                                                                                                                       \
+	_Char32T  *       __mu0_sutf8to32__p__ = __dest_first;                                                                                 \
+	_Char32T  *       __mu0_sutf8to32__q__ = __mu0_nullptr__;                                                                              \
+	___mu0_sint8_t___ __mu0_sutf8to32__r__, __mu0_sutf8to32__i__;                                                                          \
+	__mu0_sutf8to32_n__(_Char8T, _Char32T, __src_first, (__src_last - __src_first), __mu0_sutf8to32__p__, __endian, __mu0_sutf8to32__r__); \
+	if (__mu0_not_nullptr__(__mu0_sutf8to32__p__)) {                                                                                       \
+		__mu0_sutf8to32__q__ = __mu0_sutf8to32__p__ + __mu0_sutf8to32__r__;                                                                 \
+	}                                                                                                                                      \
+	_r = __mu0_sutf8to32__q__;                                                                                                             \
 __mu0_scope_end__
 
 #	define __mu0_sutf32to8_n__(_Char32T, _Char8T, __src, __n, __dest, __endian, __r) \
 	___mu0_sutfxxto8_n___(_Char32T, _Char8T, __src, __n, __dest, __endian, __mu0_bswap_32__, __r)
 
-#	define __mu0_sutf8to16_n__(_Char8T, _Char16T, __src, __n, __dest, __r)                                                                      \
+#	define __mu0_sutf8to16_n__(_Char8T, _Char16T, __src, __n, __dest, __endian, __r)                                                            \
 __mu0_scope_begin__                                                                                                                            \
 	const ___mu0_uint4_t___ __mu0_sutf8to16_n__x__ = __mu0_not_nullptr__(__dest) ? 1U : 0U;                                                     \
 	const _Char8T  *        __mu0_sutf8to16_n__i__ = __mu0_const_cast__(_Char8T *, __src);                                                      \
@@ -236,10 +228,10 @@ __mu0_scope_begin__                                                             
 			if (__mu0_sutf8to16_n__w__ > 0xFFFF) {                                                                                                \
 				if (__mu0_sutf8to16_n__x__) {                                                                                                      \
 					 __mu0_sutf8to16_n__g__ = __mu0_const_cast__(_Char16T, (0xD800 + ((__mu0_sutf8to16_n__w__ - 0x10000) >> 0xA)));                 \
-					*__mu0_sutf8to16_n__j__ = __mu0_sutf8to16_n__g__;                                                                               \
+					*__mu0_sutf8to16_n__j__ = __endian != __mu0_byte_order__ ? __mu0_bswap_16__(__mu0_sutf8to16_n__g__) : __mu0_sutf8to16_n__g__;   \
 					++__mu0_sutf8to16_n__j__;                                                                                                       \
 					 __mu0_sutf8to16_n__g__ = __mu0_const_cast__(_Char16T, (0xDC00 + ((__mu0_sutf8to16_n__w__ - 0x10000) & 0x03FF)));               \
-					*__mu0_sutf8to16_n__j__ = __mu0_sutf8to16_n__g__;                                                                               \
+					*__mu0_sutf8to16_n__j__ = __endian != __mu0_byte_order__ ? __mu0_bswap_16__(__mu0_sutf8to16_n__g__) : __mu0_sutf8to16_n__g__;   \
 					++__mu0_sutf8to16_n__j__;                                                                                                       \
 				}                                                                                                                                  \
 				++__r;                                                                                                                             \
@@ -247,7 +239,7 @@ __mu0_scope_begin__                                                             
 			} else if (__mu0_sutf8to16_n__w__ < 0xD800 || __mu0_sutf8to16_n__w__ >= 0xE000) {                                                     \
 				if (__mu0_sutf8to16_n__x__) {                                                                                                      \
 					 __mu0_sutf8to16_n__g__ = __mu0_const_cast__(_Char16T, __mu0_sutf8to16_n__w__);                                                 \
-					*__mu0_sutf8to16_n__j__ = __mu0_sutf8to16_n__g__;                                                                               \
+					*__mu0_sutf8to16_n__j__ = __endian != __mu0_byte_order__ ? __mu0_bswap_16__(__mu0_sutf8to16_n__g__) : __mu0_sutf8to16_n__g__;   \
 					++__mu0_sutf8to16_n__j__;                                                                                                       \
 				}                                                                                                                                  \
 				++__r;                                                                                                                             \
@@ -259,24 +251,16 @@ __mu0_scope_begin__                                                             
 	}                                                                                                                                           \
 __mu0_scope_end__
 
-#	define __mu0_sutf8to16__(_Char8T, _Char16T, __src_first, __src_last, __dest_first, __endian, _r)                             \
-__mu0_scope_begin__                                                                                                             \
-	_Char16T  *       __mu0_sutf8to16__p__ = __dest_first;                                                                       \
-	_Char16T  *       __mu0_sutf8to16__q__ = __mu0_nullptr__;                                                                    \
-	___mu0_sint8_t___ __mu0_sutf8to16__r__, __mu0_sutf8to16__i__;                                                                \
-	__mu0_sutf8to16_n__(_Char8T, _Char16T, __src_first, (__src_last - __src_first), __mu0_sutf8to16__p__, __mu0_sutf8to16__r__); \
-	if (__mu0_not_nullptr__(__mu0_sutf8to16__p__)) {                                                                             \
-		__mu0_sutf8to16__q__ = __mu0_sutf8to16__p__ + __mu0_sutf8to16__r__;                                                       \
-		if (__mu0_sutf8to16__r__ > 0 ) {                                                                                          \
-			if (__endian != __mu0_byte_order__) {                                                                                  \
-				while (__mu0_sutf8to16__p__ != __mu0_sutf8to16__q__) {                                                              \
-					*__mu0_sutf8to16__p__ = __mu0_bswap_16__(*__mu0_sutf8to16__p__);                                                 \
-					++__mu0_sutf8to16__p__;                                                                                          \
-				}                                                                                                                   \
-			}                                                                                                                      \
-		}                                                                                                                         \
-	}                                                                                                                            \
-	_r = __mu0_sutf8to16__q__;                                                                                                   \
+#	define __mu0_sutf8to16__(_Char8T, _Char16T, __src_first, __src_last, __dest_first, __endian, _r)                                       \
+__mu0_scope_begin__                                                                                                                       \
+	_Char16T  *       __mu0_sutf8to16__p__ = __dest_first;                                                                                 \
+	_Char16T  *       __mu0_sutf8to16__q__ = __mu0_nullptr__;                                                                              \
+	___mu0_sint8_t___ __mu0_sutf8to16__r__, __mu0_sutf8to16__i__;                                                                          \
+	__mu0_sutf8to16_n__(_Char8T, _Char16T, __src_first, (__src_last - __src_first), __mu0_sutf8to16__p__, __endian, __mu0_sutf8to16__r__); \
+	if (__mu0_not_nullptr__(__mu0_sutf8to16__p__)) {                                                                                       \
+		__mu0_sutf8to16__q__ = __mu0_sutf8to16__p__ + __mu0_sutf8to16__r__;                                                                 \
+	}                                                                                                                                      \
+	_r = __mu0_sutf8to16__q__;                                                                                                             \
 __mu0_scope_end__
 
 #	define __mu0_sutf16to8_n__(_Char16T, _Char8T, __src, __n, __dest, __endian, __r) \
