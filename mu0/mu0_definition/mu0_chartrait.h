@@ -43,7 +43,7 @@ __mu0_scope_begin__                                                             
 			_CharxxT          ___mu0_sutfxxto8_n___g__;                                                                                \
 	      ___mu0_sint8_t___ ___mu0_sutfxxto8_n___n__ = __mu0_const_cast__(___mu0_sint8_t___, __n);                                   \
 	      ___mu0_uint4_t___ ___mu0_sutfxxto8_n___c__ = 0x0000;                                                                       \
-	__r                                            = 0;                                                                              \
+	__r                                              = 0;                                                                            \
 	for (; ___mu0_sutfxxto8_n___n__ != 0; --___mu0_sutfxxto8_n___n__) {                                                              \
 		___mu0_sutfxxto8_n___g__ = __endian != __mu0_byte_order__ ? __swap(*___mu0_sutfxxto8_n___i__) : *___mu0_sutfxxto8_n___i__;    \
 		if (___mu0_sutfxxto8_n___g__ >= 0xD800 && ___mu0_sutfxxto8_n___g__ <= 0xDBFF) {                                               \
