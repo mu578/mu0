@@ -125,7 +125,6 @@ __mu0_scope_begin__                                                             
 	}                                                                                  \
 __mu0_scope_end__
 
-
 #	define __mu0_cfind__(_CharT, __src_first, __src_last, __char, __r)                \
 __mu0_scope_begin__                                                                  \
 	__mu0_cfind_n__(_CharT, __src_first, 0, (__src_last - __src_first), __char, __r); \
@@ -161,6 +160,33 @@ __mu0_scope_begin__                                                             
 		}                                                                                            \
 	}                                                                                               \
 __mu0_scope_end__
+
+#	define __mu0_cutf8_width__(_Char8T, __char, __r)                                                                   \
+__mu0_scope_begin__                                                                                                   \
+		const _Char8T           __mu0_cutf8_width__c__ = __mu0_const_cast__(_Char8T, __char);                           \
+		const ___mu0_uint1_t___ __mu0_cutf8_width__g__ = __mu0_const_cast__(___mu0_uint1_t___, __mu0_cutf8_width__c__); \
+		     if((__mu0_cutf8_width__g__) == 0)                       { __r = 0; }                                       \
+		else if((__mu0_cutf8_width__g__ & 0b10000000) == 0)          { __r = 1; }                                       \
+		else if((__mu0_cutf8_width__g__ & 0b11100000) == 0b11000000) { __r = 2; }                                       \
+		else if((__mu0_cutf8_width__g__ & 0b11110000) == 0b11100000) { __r = 3; }                                       \
+		else if((__mu0_cutf8_width__g__ & 0b11111000) == 0b11110000) { __r = 4; }                                       \
+		else                                                         { __r = 1; }                                       \
+__mu0_scope_end__
+
+#	define __mu0_sutf8_width__(_Char8T, __src_first, __src_last, __r)                 \
+__mu0_scope_begin__                                                                  \
+	const _CharT *          __mu0_sutf8_width__i__ = __src_first;                     \
+	      ___mu0_uint2_t___ __mu0_sutf8_width__w__;                                   \
+	__r                                            = 0;                               \
+	while (__mu0_sutf8_width__i__ != __src_last) {                                    \
+		__mu0_cutf8_width__(_Char8T, *__mu0_sutf8_width__i__, __mu0_sutf8_width__w__); \
+		__r = __r + __mu0_sutf8_width__w__;                                            \
+		++__mu0_sutf8_width__i__;                                                      \
+	}                                                                                 \
+__mu0_scope_end__
+
+#	define __mu0_sutf8_width_n__(_Char8T, __src_first, __n, __r) \
+	__mu0_sutf8_width__(_Char8T, __src_first, (__src_first + __n), __r)
 
 #	define __mu0_sutf8to32_n__(_Char8T, _Char32T, __src, __n, __dest, __endian, __r)                                                            \
 __mu0_scope_begin__                                                                                                                            \

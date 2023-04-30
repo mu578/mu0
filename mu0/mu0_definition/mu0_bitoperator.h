@@ -940,8 +940,9 @@ const ___mu0_uint1_t___ __mu0_bit_floor_u1__(const ___mu0_uint1_t___ __x)
 
 #	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCC
 #		if (__has_builtin(__builtin_bit_cast))
+			/* There is a raising issue with char being promoted to int */
 #			define __mu0_bit_cast__(__a, __b) \
-			(__a) = __builtin_bit_cast(__mu0_typeof__((__a) + 0), __b)
+			(__a) = __builtin_bit_cast(__mu0_typeof__((__mu0_typeof__(__x))(__x)), __b)
 #		else
 #			define __mu0_bit_cast__(__a, __b)                                                          \
 			__mu0_memset__(__mu0_addressof__(__b), 0                     , __mu0_sizeof__((__b) + 0)); \
