@@ -19,11 +19,11 @@
 
 int main(int argc, const char * argv[])
 {
-	const mu0_tchar8_t * s1 = u8"éducation";
-	const mu0_tchar8_t * s2 = u8"Education";
+	const mu0_tchar8_t * s1 = __mu0_literal_utf8__("éducation");
+	const mu0_tchar8_t * s2 = __mu0_literal_utf8__("Education");
 
-	const mu0_tchar8_t * s3 = u8"érudition";
-	const mu0_tchar8_t * s4 = u8"Érudition";
+	const mu0_tchar8_t * s3 = __mu0_literal_utf8__("érudition");
+	const mu0_tchar8_t * s4 = __mu0_literal_utf8__("Érudition");
 
 	mu0_locale_t locale;
 

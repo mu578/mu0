@@ -41,9 +41,6 @@ MU0_BEGIN_CDECL
 			typedef __uint128_t        mu0_uint128_t;
 			__mu0_extension__
 			typedef __int128_t         mu0_sint128_t;
-#		else
-			typedef uint64_t           mu0_uint128_t;
-			typedef int64_t            mu0_sint128_t;
 #		endif
 #	elif MU0_HAVE_CC_GNUCC
 #		if MU0_HAVE_X64
