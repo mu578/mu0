@@ -23,6 +23,20 @@
 
 MU0_BEGIN_CDECL
 
+#	if ((MU0_HAVE_C11 || MU0_HAVE_CPP11) && !defined(__APPLE__))
+#	include <uchar.h>
+typedef char32_t          ___mu0_uchar4_t___;
+typedef ___mu0_sint4_t___ ___mu0_schar4_t___;
+typedef char32_t          ___mu0_tchar4_t___;
+
+typedef char16_t          ___mu0_uchar2_t___;
+typedef ___mu0_sint2_t___ ___mu0_schar2_t___;
+typedef char16_t          ___mu0_tchar2_t___;
+
+typedef ___mu0_uint1_t___ ___mu0_uchar1_t___;
+typedef ___mu0_sint1_t___ ___mu0_schar1_t___;
+typedef ___mu0_tint1_t___ ___mu0_tchar1_t___;
+#	else
 typedef ___mu0_uint4_t___ ___mu0_uchar4_t___;
 typedef ___mu0_sint4_t___ ___mu0_schar4_t___;
 typedef ___mu0_uint4_t___ ___mu0_tchar4_t___;
@@ -34,6 +48,7 @@ typedef ___mu0_uint2_t___ ___mu0_tchar2_t___;
 typedef ___mu0_uint1_t___ ___mu0_uchar1_t___;
 typedef ___mu0_sint1_t___ ___mu0_schar1_t___;
 typedef ___mu0_tint1_t___ ___mu0_tchar1_t___;
+#	endif
 
 #	define __mu0_cfind_n__(_CharT, __src, __pos, __n, __char, __r)                       \
 __mu0_scope_begin__                                                                     \

@@ -142,6 +142,15 @@
 #	endif
 #	endif
 
+#	if MU0_HAVE_C11 && !MU0_HAVE_THRYIELD
+#	if !defined(__STDC_NO_THREADS__) || (defined(__STDC_NO_THREADS__) && !__STDC_NO_THREADS__)
+#		include <threads.h>
+#		undef  MU0_HAVE_THRYIELD
+#		define MU0_HAVE_THRYIELD 1
+#		define __mu0_thr_yield__()       thrd_yield()
+#	endif
+#	endif
+
 #	if !MU0_HAVE_CPUYIELD || !MU0_HAVE_THRYIELD
 #	if MU0_HAVE_POSIX1_2001
 #		include <sched.h>
@@ -150,19 +159,12 @@
 #			define MU0_HAVE_CPUYIELD 1
 #			define __mu0_cpu_yield__()    sched_yield()
 #		endif
-#		if !MU0_HAVE_THRYIELD && !MU0_HAVE_C11
+#		if !MU0_HAVE_THRYIELD
 #			undef  MU0_HAVE_THRYIELD
 #			define MU0_HAVE_THRYIELD 1
 #			define __mu0_thr_yield__()    sched_yield()
 #		endif
 #	endif
-#	endif
-
-#	if MU0_HAVE_C11 && !MU0_HAVE_THRYIELD
-#		include <threads.h>
-#		undef  MU0_HAVE_THRYIELD
-#		define MU0_HAVE_THRYIELD 1
-#		define __mu0_thr_yield__()       thrd_yield()
 #	endif
 
 #	if !MU0_HAVE_CPUYIELD
