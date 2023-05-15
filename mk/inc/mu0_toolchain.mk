@@ -38,11 +38,14 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
 		PLATFORM_ARCH    := -arch x86_64
 		ARCH             := x86_64
-	endif
-	ifneq (,$(findstring .fat, $(PLATFORM_VARIANT)))
+	else ifneq (,$(findstring .fat, $(PLATFORM_VARIANT)))
 		PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
-		PLATFORM_ARCH    := -arch $(ARCH) -arch x86_64
-		ARCH             :=
+		ifeq (,$(findstring x86_64, $(ARCH)))
+			PLATFORM_ARCH := -arch $(ARCH) -arch x86_64
+			ARCH          := fat
+		else
+			PLATFORM_ARCH := -arch $(ARCH)
+		endif
 	endif
 	ifneq (,$(findstring macos_macport, $(PLATFORM_VARIANT)))
 		PORT_PATH    := /opt/local/bin

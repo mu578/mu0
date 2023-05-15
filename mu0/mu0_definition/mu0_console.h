@@ -21,22 +21,28 @@
 #define MU0_CONSOLE_H 1
 
 #	undef  MU0_HAVE_CONSOLE
-#	define MU0_HAVE_CONSOLE 1
+#	define MU0_HAVE_CONSOLE 0
 
-__mu0_static__ char const * const __mu0_console_color_red__    = "\033[0;31m";
-__mu0_static__ char const * const __mu0_console_color_green__  = "\033[0;32m";
-__mu0_static__ char const * const __mu0_console_color_yellow__ = "\033[0;33m";
-__mu0_static__ char const * const __mu0_console_color_blue__   = "\033[0;34m";
-__mu0_static__ char const * const __mu0_console_color_purple__ = "\033[0;35m";
-__mu0_static__ char const * const __mu0_console_color_cyan__   = "\033[0;36m";
-__mu0_static__ char const * const __mu0_console_color_clear__  = "\033[0m";
+#	if !MU0_HAVE_CONSOLE
 
-#	define __mu0_console_set_color__(_c)      fputs(_c, stderr);
+		__mu0_static__ char const * const __mu0_console_color_red__    = "\033[0;31m";
+		__mu0_static__ char const * const __mu0_console_color_green__  = "\033[0;32m";
+		__mu0_static__ char const * const __mu0_console_color_yellow__ = "\033[0;33m";
+		__mu0_static__ char const * const __mu0_console_color_blue__   = "\033[0;34m";
+		__mu0_static__ char const * const __mu0_console_color_purple__ = "\033[0;35m";
+		__mu0_static__ char const * const __mu0_console_color_cyan__   = "\033[0;36m";
+		__mu0_static__ char const * const __mu0_console_color_clear__  = "\033[0m";
+
+#		define __mu0_console_set_color__(_c)      fputs(_c, stderr);
 
 #	if MU0_HAVE_ANDROID
+#		undef  MU0_HAVE_CONSOLE
+#		define MU0_HAVE_CONSOLE 1
 #		include <android/log.h>
 #		define __mu0_console_log__(...)        __android_log_print(ANDROID_LOG_DEBUG, "mu0", __VA_ARGS__)
 #	else
+#		undef  MU0_HAVE_CONSOLE
+#		define MU0_HAVE_CONSOLE 1
 #		include <stdio.h>
 #		if MU0_HAVE_CC_MSVCC
 #			define __mu0_console_log__(ARGS...) fprintf(stderr, ##ARGS)
@@ -67,6 +73,7 @@ __mu0_static__ char const * const __mu0_console_color_clear__  = "\033[0m";
 				                                 fprintf(stderr, __VA_ARGS__); \
 				__mu0_console_set_color__(__mu0_console_color_clear__)
 #		endif
+#	endif
 #	endif
 
 #	if !MU0_HAVE_CONSOLE

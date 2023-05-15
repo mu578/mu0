@@ -29,6 +29,7 @@
 #	undef  __mu0_barrier_write__
 #	define MU0_HAVE_BARRIER 0
 
+#	if !MU0_HAVE_BARRIER
 #	if MU0_HAVE_CC_MSVCC
 #	if MU0_HAVE_X86 || MU0_HAVE_X64 && !MU0_HAVE_IA64
 #		undef  MU0_HAVE_BARRIER
@@ -51,7 +52,9 @@
 #		define __mu0_barrier_write__()   MemoryBarrier()
 #	endif
 #	endif
+#	endif
 
+#	if !MU0_HAVE_BARRIER
 #	if MU0_HAVE_CC_ITLCC
 #		undef  MU0_HAVE_BARRIER
 #		define MU0_HAVE_BARRIER 1
@@ -62,7 +65,9 @@
 #		define __mu0_barrier_read__()    _mm_lfence()
 #		define __mu0_barrier_write__()   _mm_sfence()
 #	endif
+#	endif
 
+#	if !MU0_HAVE_BARRIER
 #	if MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC
 #		undef  MU0_HAVE_BARRIER
 #		define MU0_HAVE_BARRIER 1
@@ -71,6 +76,7 @@
 #		define __mu0_barrier_full__()    __sync_synchronize()
 #		define __mu0_barrier_read__()    __sync_synchronize()
 #		define __mu0_barrier_write__()   __sync_synchronize()
+#	endif
 #	endif
 
 #	if !MU0_HAVE_BARRIER

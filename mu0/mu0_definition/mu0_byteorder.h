@@ -25,6 +25,8 @@
 #	undef  __mu0_order_leen__
 #	undef  __mu0_order_been__
 #	define MU0_HAVE_BYTEORDER 0
+
+#	if !MU0_HAVE_BYTEORDER
 #	if defined(__LITTLE_ENDIAN__)
 #		if __LITTLE_ENDIAN__
 #			undef  MU0_HAVE_BYTEORDER
@@ -87,6 +89,7 @@
 #		define __mu0_byte_order__         __BYTE_ORDER__
 #		define __mu0_order_leen__         __ORDER_LITTLE_ENDIAN__
 #		define __mu0_order_been__         __ORDER_BIG_ENDIAN__
+#	endif
 #	endif
 
 #	if !MU0_HAVE_BYTEORDER
