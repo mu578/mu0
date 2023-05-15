@@ -232,6 +232,6 @@
 #		error mu0_clocktime.h
 #	endif
 
-#endif /* !MU0_I18NLOCALE_H */
+#endif /* !MU0_CLOCKTIME_H */
 
 /* EOF */
