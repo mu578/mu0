@@ -22,19 +22,19 @@
 #define MU0_CLOCKTIME_H 1
 
 #	undef  MU0_HAVE_CLOCKTIME
-#	undef  MU0_NANOTIME_ABS
-#	undef  MU0_NANOTIME_UTC
-#	define MU0_HAVE_CLOCKTIME 0
-#	define MU0_NANOTIME_UTC   0
-#	define MU0_NANOTIME_ABS   0
+#	undef  MU0_HAVE_NANOTIME_ABS
+#	undef  MU0_HAVE_NANOTIME_UTC
+#	define MU0_HAVE_CLOCKTIME    0
+#	define MU0_HAVE_NANOTIME_UTC 0
+#	define MU0_HAVE_NANOTIME_ABS 0
 
 #	include <time.h>
 #	include <unistd.h>
 
-#	if !MU0_NANOTIME_ABS
+#	if !MU0_HAVE_NANOTIME_ABS
 #	if MU0_HAVE_C11 && defined(TIME_MONOTONIC)
-#		undef  MU0_NANOTIME_ABS
-#		define MU0_NANOTIME_ABS 1
+#		undef  MU0_HAVE_NANOTIME_ABS
+#		define MU0_HAVE_NANOTIME_ABS 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_abs__(void)
 		{
@@ -47,12 +47,12 @@
 #	endif
 #	endif
 
-#	if !MU0_NANOTIME_ABS
+#	if !MU0_HAVE_NANOTIME_ABS
 #	if MU0_HAVE_POSIX1_2001 && MU0_HAVE_DARWIN && !defined(_POSIX_TIMERS)
 #		include <mach/clock.h>
 #		include <mach/mach.h>
-#		undef  MU0_NANOTIME_ABS
-#		define MU0_NANOTIME_ABS 1
+#		undef  MU0_HAVE_NANOTIME_ABS
+#		define MU0_HAVE_NANOTIME_ABS 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_abs__(void)
 		{
@@ -61,10 +61,10 @@
 #	endif
 #	endif
 
-#	if !MU0_NANOTIME_ABS
+#	if !MU0_HAVE_NANOTIME_ABS
 #	if MU0_HAVE_POSIX1_2001 && MU0_HAVE_DARWIN && defined(CLOCK_MONOTONIC_RAW)
-#		undef  MU0_NANOTIME_ABS
-#		define MU0_NANOTIME_ABS 1
+#		undef  MU0_HAVE_NANOTIME_ABS
+#		define MU0_HAVE_NANOTIME_ABS 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_abs__(void)
 		{
@@ -73,10 +73,10 @@
 #	endif
 #	endif
 
-#	if !MU0_NANOTIME_ABS
+#	if !MU0_HAVE_NANOTIME_ABS
 #	if MU0_HAVE_POSIX1_2001 && MU0_HAVE_DARWIN && defined(CLOCK_MONOTONIC)
-#		undef  MU0_NANOTIME_ABS
-#		define MU0_NANOTIME_ABS 1
+#		undef  MU0_HAVE_NANOTIME_ABS
+#		define MU0_HAVE_NANOTIME_ABS 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_abs__(void)
 		{
@@ -85,10 +85,10 @@
 #	endif
 #	endif
 
-#	if !MU0_NANOTIME_ABS
+#	if !MU0_HAVE_NANOTIME_ABS
 #	if MU0_HAVE_POSIX1_2001 && defined(CLOCK_MONOTONIC_RAW)
-#		undef  MU0_NANOTIME_ABS
-#		define MU0_NANOTIME_ABS 1
+#		undef  MU0_HAVE_NANOTIME_ABS
+#		define MU0_HAVE_NANOTIME_ABS 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_abs__(void)
 		{
@@ -101,10 +101,10 @@
 #	endif
 #	endif
 
-#	if !MU0_NANOTIME_ABS
+#	if !MU0_HAVE_NANOTIME_ABS
 #	if MU0_HAVE_POSIX1_2001 && defined(CLOCK_MONOTONIC)
-#		undef  MU0_NANOTIME_ABS
-#		define MU0_NANOTIME_ABS 1
+#		undef  MU0_HAVE_NANOTIME_ABS
+#		define MU0_HAVE_NANOTIME_ABS 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_abs__(void)
 		{
@@ -117,11 +117,11 @@
 #	endif
 #	endif
 
-#	if !MU0_NANOTIME_ABS
+#	if !MU0_HAVE_NANOTIME_ABS
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #		include <profileapi.h>
-#		undef  MU0_NANOTIME_ABS
-#		define MU0_NANOTIME_ABS 1
+#		undef  MU0_HAVE_NANOTIME_ABS
+#		define MU0_HAVE_NANOTIME_ABS 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_abs__(void)
 		{
@@ -138,10 +138,10 @@
 #	endif
 #	endif
 
-#	if !MU0_NANOTIME_UTC
+#	if !MU0_HAVE_NANOTIME_UTC
 #	if MU0_HAVE_C11 && defined(TIME_UTC)
-#		undef  MU0_NANOTIME_UTC
-#		define MU0_NANOTIME_UTC 1
+#		undef  MU0_HAVE_NANOTIME_UTC
+#		define MU0_HAVE_NANOTIME_UTC 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_utc__(void)
 		{
@@ -154,12 +154,12 @@
 #	endif
 #	endif
 
-#	if !MU0_NANOTIME_UTC
+#	if !MU0_HAVE_NANOTIME_UTC
 #	if MU0_HAVE_POSIX1_2001 && MU0_HAVE_DARWIN && !defined(_POSIX_TIMERS)
 #		include <mach/clock.h>
 #		include <mach/mach.h>
-#		undef  MU0_NANOTIME_UTC
-#		define MU0_NANOTIME_UTC 1
+#		undef  MU0_HAVE_NANOTIME_UTC
+#		define MU0_HAVE_NANOTIME_UTC 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_utc__(void)
 		{
@@ -173,10 +173,10 @@
 #	endif
 #	endif
 
-#	if !MU0_NANOTIME_UTC
+#	if !MU0_HAVE_NANOTIME_UTC
 #	if MU0_HAVE_POSIX1_2001 && MU0_HAVE_DARWIN && defined(CLOCK_REALTIME)
-#		undef  MU0_NANOTIME_UTC
-#		define MU0_NANOTIME_UTC 1
+#		undef  MU0_HAVE_NANOTIME_UTC
+#		define MU0_HAVE_NANOTIME_UTC 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_utc__(void)
 		{
@@ -185,10 +185,10 @@
 #	endif
 #	endif
 
-#	if !MU0_NANOTIME_UTC
+#	if !MU0_HAVE_NANOTIME_UTC
 #	if MU0_HAVE_POSIX1_2001 && defined(CLOCK_REALTIME)
-#		undef  MU0_NANOTIME_UTC
-#		define MU0_NANOTIME_UTC 1
+#		undef  MU0_HAVE_NANOTIME_UTC
+#		define MU0_HAVE_NANOTIME_UTC 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_utc__(void)
 		{
@@ -201,10 +201,10 @@
 #	endif
 #	endif
 
-#	if !MU0_NANOTIME_UTC
+#	if !MU0_HAVE_NANOTIME_UTC
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
-#		undef  MU0_NANOTIME_UTC
-#		define MU0_NANOTIME_UTC 1
+#		undef  MU0_HAVE_NANOTIME_UTC
+#		define MU0_HAVE_NANOTIME_UTC 1
 #		include <sysinfoapi.h>
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_utc__(void)
@@ -223,7 +223,7 @@
 #	endif
 #	endif
 
-#	if MU0_NANOTIME_ABS && MU0_NANOTIME_UTC
+#	if MU0_HAVE_NANOTIME_ABS && MU0_HAVE_NANOTIME_UTC
 #	undef  MU0_HAVE_CLOCKTIME
 #	define MU0_HAVE_CLOCKTIME 1
 #	endif
