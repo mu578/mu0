@@ -166,7 +166,7 @@
 			clock_serv_t    ck;
 			mach_timespec_t ts;
 			host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &ck);
-			clock_get_time(ck, &mts);
+			clock_get_time(ck, &ts);
 			mach_port_deallocate(mach_task_self(), ck);
 			return __mu0_const_cast__(___mu0_uint8_t___, (ts.tv_sec * 1000000000L + ts.tv_nsec));
 		}
