@@ -133,7 +133,7 @@
 			QueryPerformanceCounter(&tv);
 			ssec = __mu0_const_cast__(__int64, (tv.QuadPart / ts.QuadPart));
 			nsec = __mu0_const_cast__(__int64, (((tv.QuadPart % ts.QuadPart) * 1000000000i64) / ts.QuadPart));
-			return __mu0_const_cast__(___mu0_uint8_t___, (sec * 1000000000i64 + nsec));
+			return __mu0_const_cast__(___mu0_uint8_t___, (ssec * 1000000000i64 + nsec));
 		}
 #	endif
 #	endif
@@ -218,7 +218,7 @@
 			tm          = __mu0_const_cast__(__int64, (lv.QuadPart - 116444736000000000Ui64));
 			ssec        = tm / 10000000i64;
 			nsec        = tm % 10000000i64 * 100i64;
-			return __mu0_const_cast__(___mu0_uint8_t___, (sec * 1000000000i64 + nsec));
+			return __mu0_const_cast__(___mu0_uint8_t___, (ssec * 1000000000i64 + nsec));
 		}
 #	endif
 #	endif
