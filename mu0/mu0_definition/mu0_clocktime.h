@@ -129,10 +129,26 @@
 			               LARGE_INTEGER tv;
 			               __int64       ssec;
 			               __int64       nsec;
-			if (!ts.QuadPart) { QueryPerformanceFrequency(&ts); if (ts.QuadPart) { return 0U; }}
-			QueryPerformanceCounter(&tv);
+			if (!ts.QuadPart) {
+				if (0 == QueryPerformanceFrequency(&ts)) {
+					return 0U;
+				}
+				if (!ts.QuadPart) {
+					return 0U;
+				}
+			}
+			if (0 == QueryPerformanceCounter(&tv)) {
+				return 0U;
+			}
+			if (!tv.QuadPart) {
+				return 0U;
+			}
 			ssec = __mu0_const_cast__(__int64, (tv.QuadPart / ts.QuadPart));
-			nsec = __mu0_const_cast__(__int64, (((tv.QuadPart % ts.QuadPart) * 1000000000i64) / ts.QuadPart));
+			nsec = __mu0_const_cast__(__int64, (((tv.QuadPart % ts.QuadPart) * 1000000000i64 (ts.QuadPart >> 1U)) / ts.QuadPart));
+			if (nsec >= 1000000000i64) {
+				ssec = ssec + 1i64;
+				nsec = nsec - 1000000000i64;
+			}
 			return __mu0_const_cast__(___mu0_uint8_t___, (ssec * 1000000000i64 + nsec));
 		}
 #	endif
@@ -290,10 +306,28 @@
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_act__(void)
 		{
+#	if 0
 			/* frequency is unknown, let's imagining it is elapsed time. */
 			__int64 r;
-			if (QueryProcessCycleTime(GetCurrentProcess(), &r)) {
+			if (0 != QueryProcessCycleTime(GetCurrentProcess(), &r)) {
 				return __mu0_const_cast__(___mu0_uint8_t___, r);
+			}
+			return 0U;
+#	endif
+			FILETIME ct, et, kt, ut;
+			ULARGE_INTEGER lv;
+			__int64 tm, tk, tu, ssec, nsec;
+			if (0 != GetProcessTimes(GetCurrentProcess(), &ct, &et, &kt, &ut)) {
+				lv.LowPart  = kt.dwLowDateTime;
+				lv.HighPart = kt.dwHighDateTime;
+				tk          = __mu0_const_cast__(__int64, lv.QuadPart);
+				lv.LowPart  = ut.dwLowDateTime;
+				lv.HighPart = ut.dwHighDateTime;
+				tu          = __mu0_const_cast__(__int64, lv.QuadPart);
+				tm          = tk + tu;
+				ssec        = tm / 10000000i64;
+				nsec        = tm % 10000000i64 * 100i64;
+				return __mu0_const_cast__(___mu0_uint8_t___, (ssec * 1000000000i64 + nsec));
 			}
 			return 0U;
 		}
@@ -353,10 +387,28 @@
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_thr__(void)
 		{
+#	if 0
 			/* frequency is unknown, let's imagining it is elapsed time. */
 			__int64 r;
-			if (QueryThreadCycleTime(GetCurrentThread(), &r)) {
+			if (0 != QueryThreadCycleTime(GetCurrentThread(), &r)) {
 				return __mu0_const_cast__(___mu0_uint8_t___, r);
+			}
+			return 0U;
+#	endif
+			FILETIME ct, et, kt, ut;
+			ULARGE_INTEGER lv;
+			__int64 tm, tk, tu, ssec, nsec;
+			if (0 != GetThreadTimes(GetCurrentThread(), &ct, &et, &kt, &ut)) {
+				lv.LowPart  = kt.dwLowDateTime;
+				lv.HighPart = kt.dwHighDateTime;
+				tk          = __mu0_const_cast__(__int64, lv.QuadPart);
+				lv.LowPart  = ut.dwLowDateTime;
+				lv.HighPart = ut.dwHighDateTime;
+				tu          = __mu0_const_cast__(__int64, lv.QuadPart);
+				tm          = tk + tu;
+				ssec        = tm / 10000000i64;
+				nsec        = tm % 10000000i64 * 100i64;
+				return __mu0_const_cast__(___mu0_uint8_t___, (ssec * 1000000000i64 + nsec));
 			}
 			return 0U;
 		}
