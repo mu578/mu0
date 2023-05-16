@@ -93,7 +93,7 @@
 		const ___mu0_uint8_t___ __mu0_nanotime_abs__(void)
 		{
 			struct timespec ts;
-			if (0 == clock_gettime(CLOCK_MONOTONIC_RAW, ts)) {
+			if (0 == clock_gettime(CLOCK_MONOTONIC_RAW, &ts)) {
 				return __mu0_const_cast__(___mu0_uint8_t___, (ts.tv_sec * 1000000000L + ts.tv_nsec));
 			}
 			return 0U;
@@ -109,7 +109,7 @@
 		const ___mu0_uint8_t___ __mu0_nanotime_abs__(void)
 		{
 			struct timespec ts;
-			if (0 == clock_gettime(CLOCK_MONOTONIC, ts)) {
+			if (0 == clock_gettime(CLOCK_MONOTONIC, &ts)) {
 				return __mu0_const_cast__(___mu0_uint8_t___, (ts.tv_sec * 1000000000L + ts.tv_nsec));
 			}
 			return 0U;
@@ -193,7 +193,7 @@
 		const ___mu0_uint8_t___ __mu0_nanotime_utc__(void)
 		{
 			struct timespec ts;
-			if (0 == clock_gettime(CLOCK_REALTIME, ts)) {
+			if (0 == clock_gettime(CLOCK_REALTIME, &ts)) {
 				return __mu0_const_cast__(___mu0_uint8_t___, (ts.tv_sec * 1000000000L + ts.tv_nsec));
 			}
 			return 0U;
@@ -219,6 +219,144 @@
 			ssec        = tm / 10000000i64;
 			nsec        = tm % 10000000i64 * 100i64;
 			return __mu0_const_cast__(___mu0_uint8_t___, (ssec * 1000000000i64 + nsec));
+		}
+#	endif
+#	endif
+
+#	if !MU0_HAVE_NANOTIME_ACT
+#	if MU0_HAVE_C11 && defined(TIME_ACTIVE)
+#		undef  MU0_HAVE_NANOTIME_ACT
+#		define MU0_HAVE_NANOTIME_ACT 1
+		__mu0_static_inline__
+		const ___mu0_uint8_t___ __mu0_nanotime_act__(void)
+		{
+			struct timespec ts;
+			if (TIME_ACTIVE == timespec_get(&ts, TIME_ACTIVE)) {
+				return __mu0_const_cast__(___mu0_uint8_t___, (ts.tv_sec * 1000000000L + ts.tv_nsec));
+			}
+			return 0U;
+		}
+#	endif
+#	endif
+
+#	if !MU0_HAVE_NANOTIME_ACT
+#	if MU0_HAVE_POSIX1_2001 && MU0_HAVE_DARWIN && !defined(_POSIX_TIMERS)
+#		include <mach/clock.h>
+#		include <mach/mach.h>
+#		undef  MU0_HAVE_NANOTIME_ACT
+#		define MU0_HAVE_NANOTIME_ACT 1
+		__mu0_static_inline__
+		const ___mu0_uint8_t___ __mu0_nanotime_act__(void)
+		{
+			return __mu0_const_cast__(___mu0_uint8_t___, mach_absolute_time());
+		}
+#	endif
+#	endif
+
+#	if !MU0_HAVE_NANOTIME_ACT
+#	if MU0_HAVE_POSIX1_2001 && MU0_HAVE_DARWIN && defined(CLOCK_PROCESS_CPUTIME_ID)
+#		undef  MU0_HAVE_NANOTIME_ACT
+#		define MU0_HAVE_NANOTIME_ACT 1
+		__mu0_static_inline__
+		const ___mu0_uint8_t___ __mu0_nanotime_act__(void)
+		{
+			return __mu0_const_cast__(___mu0_uint8_t___, clock_gettime_nsec_np(CLOCK_PROCESS_CPUTIME_ID));
+		}
+#	endif
+#	endif
+
+#	if !MU0_HAVE_NANOTIME_ACT
+#	if MU0_HAVE_POSIX1_2001 && defined(CLOCK_PROCESS_CPUTIME_ID)
+#		undef  MU0_HAVE_NANOTIME_ACT
+#		define MU0_HAVE_NANOTIME_ACT 1
+		__mu0_static_inline__
+		const ___mu0_uint8_t___ __mu0_nanotime_act__(void)
+		{
+			struct timespec ts;
+			if (0 == clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts)) {
+				return __mu0_const_cast__(___mu0_uint8_t___, (ts.tv_sec * 1000000000L + ts.tv_nsec));
+			}
+			return 0U;
+		}
+#	endif
+#	endif
+
+#	if !MU0_HAVE_NANOTIME_ACT
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#		undef  MU0_HAVE_NANOTIME_ACT
+#		define MU0_HAVE_NANOTIME_ACT 1
+#		include <processthreadsapi.h>
+#		include <realtimeapiset.h>
+		__mu0_static_inline__
+		const ___mu0_uint8_t___ __mu0_nanotime_act__(void)
+		{
+			__int64 r;
+			if (QueryProcessCycleTime(GetCurrentProcess(), &r)) {
+				return __mu0_const_cast__(___mu0_uint8_t___, r);
+			}
+			return 0U;
+		}
+#	endif
+#	endif
+
+#	if !MU0_HAVE_NANOTIME_THR
+#	if MU0_HAVE_C11 && defined(TIME_THREAD_ACTIVE)
+#		undef  MU0_HAVE_NANOTIME_THR
+#		define MU0_HAVE_NANOTIME_THR 1
+		__mu0_static_inline__
+		const ___mu0_uint8_t___ __mu0_nanotime_thr__(void)
+		{
+			struct timespec ts;
+			if (TIME_THREAD_ACTIVE == timespec_get(&ts, TIME_THREAD_ACTIVE)) {
+				return __mu0_const_cast__(___mu0_uint8_t___, (ts.tv_sec * 1000000000L + ts.tv_nsec));
+			}
+			return 0U;
+		}
+#	endif
+#	endif
+
+#	if !MU0_HAVE_NANOTIME_THR
+#	if MU0_HAVE_POSIX1_2001 && MU0_HAVE_DARWIN && defined(CLOCK_THREAD_CPUTIME_ID)
+#		undef  MU0_HAVE_NANOTIME_THR
+#		define MU0_HAVE_NANOTIME_THR 1
+		__mu0_static_inline__
+		const ___mu0_uint8_t___ __mu0_nanotime_thr__(void)
+		{
+			return __mu0_const_cast__(___mu0_uint8_t___, clock_gettime_nsec_np(CLOCK_THREAD_CPUTIME_ID));
+		}
+#	endif
+#	endif
+
+#	if !MU0_HAVE_NANOTIME_THR
+#	if MU0_HAVE_POSIX1_2001 && defined(CLOCK_THREAD_CPUTIME_ID)
+#		undef  MU0_HAVE_NANOTIME_THR
+#		define MU0_HAVE_NANOTIME_THR 1
+		__mu0_static_inline__
+		const ___mu0_uint8_t___ __mu0_nanotime_thr__(void)
+		{
+			struct timespec ts;
+			if (0 == clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts)) {
+				return __mu0_const_cast__(___mu0_uint8_t___, (ts.tv_sec * 1000000000L + ts.tv_nsec));
+			}
+			return 0U;
+		}
+#	endif
+#	endif
+
+#	if !MU0_HAVE_NANOTIME_THR
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#		undef  MU0_HAVE_NANOTIME_THR
+#		define MU0_HAVE_NANOTIME_THR 1
+#		include <processthreadsapi.h>
+#		include <realtimeapiset.h>
+		__mu0_static_inline__
+		const ___mu0_uint8_t___ __mu0_nanotime_thr__(void)
+		{
+			__int64 r;
+			if (QueryThreadCycleTime(GetCurrentThread(), &r)) {
+				return __mu0_const_cast__(___mu0_uint8_t___, r);
+			}
+			return 0U;
 		}
 #	endif
 #	endif
