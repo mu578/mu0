@@ -112,12 +112,14 @@
 #	if 1
 #		undef  MU0_HAVE_ADDRESSOF
 #		define MU0_HAVE_ADDRESSOF         1
-#		if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCC
+#		if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCC
 #			if (__has_builtin(__builtin_addressof))
 #				define __mu0_addressof__(__x) __builtin_addressof(__x)
 #			else
 #				define __mu0_addressof__(__x) (&(__x))
 #			endif
+#		elif MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ITLGC
+#			define __mu0_addressof__(__x) __builtin_addressof(__x)
 #		else
 #			define __mu0_addressof__(__x)    (&(__x))
 #		endif

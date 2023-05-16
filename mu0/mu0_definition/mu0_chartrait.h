@@ -240,7 +240,7 @@ __mu0_scope_begin__                                                             
 		__mu0_cutf8_width__(_Char8T, *__mu0_sutf8_to_utf32__i__, __mu0_sutf8_to_utf32__k__);                         \
 		switch (__mu0_sutf8_to_utf32__k__)                                                                           \
 		{                                                                                                            \
-			case 4:                                                                                                   \
+			case 4 :                                                                                                  \
 			{                                                                                                         \
 				__mu0_sutf8_to_utf32__c0__ = __mu0_const_cast__(___mu0_uint1_t___, *(__mu0_sutf8_to_utf32__i__ + 0U)); \
 				__mu0_sutf8_to_utf32__c1__ = __mu0_const_cast__(___mu0_uint1_t___, *(__mu0_sutf8_to_utf32__i__ + 1U)); \
@@ -254,7 +254,7 @@ __mu0_scope_begin__                                                             
 				);                                                                                                     \
 			}                                                                                                         \
 			break;                                                                                                    \
-			case 3:                                                                                                   \
+			case 3 :                                                                                                  \
 			{                                                                                                         \
 				__mu0_sutf8_to_utf32__c0__ = __mu0_const_cast__(___mu0_uint1_t___, *(__mu0_sutf8_to_utf32__i__ + 0U)); \
 				__mu0_sutf8_to_utf32__c1__ = __mu0_const_cast__(___mu0_uint1_t___, *(__mu0_sutf8_to_utf32__i__ + 1U)); \
@@ -266,7 +266,7 @@ __mu0_scope_begin__                                                             
 				);                                                                                                     \
 			}                                                                                                         \
 			break;                                                                                                    \
-			case 2:                                                                                                   \
+			case 2 :                                                                                                  \
 			{                                                                                                         \
 				__mu0_sutf8_to_utf32__c0__ = __mu0_const_cast__(___mu0_uint1_t___, *(__mu0_sutf8_to_utf32__i__ + 0U)); \
 				__mu0_sutf8_to_utf32__c1__ = __mu0_const_cast__(___mu0_uint1_t___, *(__mu0_sutf8_to_utf32__i__ + 1U)); \
@@ -276,7 +276,7 @@ __mu0_scope_begin__                                                             
 				);                                                                                                     \
 			}                                                                                                         \
 			break;                                                                                                    \
-			case 1:                                                                                                   \
+			case 1 :                                                                                                  \
 			{                                                                                                         \
 				__mu0_sutf8_to_utf32__c0__ = __mu0_const_cast__(___mu0_uint1_t___, *(__mu0_sutf8_to_utf32__i__ + 0U)); \
 				*__mu0_sutf8_to_utf32__j__ = (                                                                         \

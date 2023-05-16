@@ -22,11 +22,19 @@
 #define MU0_CLOCKTIME_H 1
 
 #	undef  MU0_HAVE_CLOCKTIME
+#	undef  __mu0_clocktime_utc__
+#	undef  __mu0_clocktime_abs__
+#	undef  __mu0_clocktime_act__
+#	undef  __mu0_clocktime_thr__
 #	undef  MU0_HAVE_NANOTIME_ABS
 #	undef  MU0_HAVE_NANOTIME_UTC
-#	define MU0_HAVE_CLOCKTIME    0
+#	undef  MU0_HAVE_NANOTIME_ACT
+#	undef  MU0_HAVE_NANOTIME_THR
 #	define MU0_HAVE_NANOTIME_UTC 0
 #	define MU0_HAVE_NANOTIME_ABS 0
+#	define MU0_HAVE_NANOTIME_ACT 0
+#	define MU0_HAVE_NANOTIME_THR 0
+#	define MU0_HAVE_CLOCKTIME    0
 
 #	include <time.h>
 #	include <unistd.h>
@@ -415,9 +423,49 @@
 #	endif
 #	endif
 
-#	if MU0_HAVE_NANOTIME_ABS && MU0_HAVE_NANOTIME_UTC
+#	if MU0_HAVE_NANOTIME_ABS && MU0_HAVE_NANOTIME_UTC && MU0_HAVE_NANOTIME_ACT && MU0_HAVE_NANOTIME_THR
 #	undef  MU0_HAVE_CLOCKTIME
-#	define MU0_HAVE_CLOCKTIME 1
+#	define MU0_HAVE_CLOCKTIME    1
+#	define __mu0_clocktime_utc__ 1U
+#	define __mu0_clocktime_abs__ 2U
+#	define __mu0_clocktime_act__ 3U
+#	define __mu0_clocktime_thr__ 4U
+
+__mu0_static_inline__
+const ___mu0_uint8_t___ __mu0_nanotime__(const ___mu0_uint4_t___ __tid)
+{
+	___mu0_uint8_t___ tm;
+	switch (__tid)
+	{
+		case __mu0_clocktime_utc__ :
+		{
+			tm = __mu0_nanotime_utc__();
+		}
+		break;
+		case __mu0_clocktime_abs__ :
+		{
+			tm = __mu0_nanotime_abs__();
+		}
+		break;
+		case __mu0_clocktime_act__ :
+		{
+			tm = __mu0_nanotime_act__();
+		}
+		break;
+		case __mu0_clocktime_thr__ :
+		{
+			tm = __mu0_nanotime_thr__();
+		}
+		break;
+		default:
+		{
+			tm = 0U;
+		}
+		break;
+	}
+	return tm;
+}
+
 #	endif
 
 #	if !MU0_HAVE_CLOCKTIME
