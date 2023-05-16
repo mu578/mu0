@@ -290,6 +290,7 @@
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_act__(void)
 		{
+			/* frequency is unknown, let's imagining it is elapsed time. */
 			__int64 r;
 			if (QueryProcessCycleTime(GetCurrentProcess(), &r)) {
 				return __mu0_const_cast__(___mu0_uint8_t___, r);
@@ -352,6 +353,7 @@
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ __mu0_nanotime_thr__(void)
 		{
+			/* frequency is unknown, let's imagining it is elapsed time. */
 			__int64 r;
 			if (QueryThreadCycleTime(GetCurrentThread(), &r)) {
 				return __mu0_const_cast__(___mu0_uint8_t___, r);
