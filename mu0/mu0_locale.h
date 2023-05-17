@@ -44,7 +44,9 @@ const mu0_tchar8_t * mu0_locale_identifier(
 	, const mu0_locale_t locale   __mu0_nullable__
 );
 
-mu0_sint32_t mu0_locale_delete(mu0_locale_t locale);
+mu0_sint32_t mu0_locale_delete(
+	mu0_locale_t locale
+);
 
 enum mu0_ordering mu0_locale_compare(
 	  const mu0_tchar8_t * lhs

@@ -137,8 +137,11 @@ const mu0_tchar8_t * mu0_locale_identifier(
 	return __mu0_i18nlocale_get__(category, locale);
 }
 
-mu0_sint32_t mu0_locale_delete(mu0_locale_t locale)
-{ return __mu0_i18nlocale_free__(locale); }
+mu0_sint32_t mu0_locale_delete(
+	mu0_locale_t locale
+) {
+	return __mu0_i18nlocale_free__(locale);
+}
 
 enum mu0_ordering mu0_locale_compare(
 	  const mu0_tchar8_t * lhs
