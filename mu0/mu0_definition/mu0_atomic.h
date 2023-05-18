@@ -38,7 +38,6 @@ __mu0_scope_end__
 #	define __mu0_atomic_fetch_and_or__(_Sc, __ptr, __value, __result)                     \
 __mu0_scope_begin__                                                                      \
 	__result = __sync_fetch_and_or(__ptr, __value)                                        \
-	__result = tmp;                                                                       \
 __mu0_scope_end__
 
 #	define __mu0_atomic_fetch_and_and__(_Sc, __ptr, __value, __result)                    \
@@ -48,13 +47,12 @@ __mu0_scope_end__
 
 #	define __mu0_atomic_fetch_and_xor__(_Sc, __ptr, __value, __result)                    \
 __mu0_scope_begin__                                                                      \
-	_Sc tmp = __sync_fetch_and_xor(__ptr, __value);                                       \
+	__result = __sync_fetch_and_xor(__ptr, __value);                                      \
 __mu0_scope_end__
 
 #	define __mu0_atomic_fetch_and_nand__(_Sc, __ptr, __value, __result)                   \
 __mu0_scope_begin__                                                                      \
 	__result = __sync_fetch_and_nand(__ptr, __value);                                     \
-	__result = tmp;                                                                       \
 __mu0_scope_end__
 
 #	define __mu0_atomic_add_and_fetch__(_Sc, __ptr, __value, __result)                    \

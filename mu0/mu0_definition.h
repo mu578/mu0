@@ -36,6 +36,7 @@
 #	include <mu0/mu0_definition/mu0_parallelize.h>
 #	include <mu0/mu0_definition/mu0_platform.h>
 #	include <mu0/mu0_definition/mu0_spinlock.h>
+
 MU0_BEGIN_CDECL
 
 enum mu0_endian
