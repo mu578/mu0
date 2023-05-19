@@ -100,7 +100,8 @@ AR           := ar
 LD           :=     \
 	$(CC)            \
 	$(PLATFORM_ARCH) \
-	-isysroot /
+	-isysroot /      \
+	-lm
 
 LOCAL_CFLAGS +=     \
 	-x c             \
