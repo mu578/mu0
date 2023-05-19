@@ -51,8 +51,7 @@ const ___mu0_sint4_t___ __mu0_spinlock_lock__(__mu0_spinlock_t__ * __s)
 {
 	___mu0_uint4_t___ g0 = 256U;
 	while (!__mu0_spinlock_trylock__(__s) && g0) {
-		__mu0_cpu_yield__();
-		--g0;
+		--g0; __mu0_cpu_yield__(); --g0;
 	}
 	return g0 ? 0 : -1;
 }
