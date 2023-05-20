@@ -215,7 +215,7 @@ typedef struct { mu0_fp32_t u_re; mu0_fp32_t u_im; }   mu0_cfp32_t;
 #	endif
 
 #	if MU0_USE_FLOAT16
-#	if   MU0_HAVE_CC_CLANG
+#	if   MU0_HAVE_CC_CLANG && __clang_major__ >= 16
 #		if !__is_identifier(_Float16)
 #			undef  MU0_HAVE_FLOAT16
 #			define MU0_HAVE_FLOAT16 1
