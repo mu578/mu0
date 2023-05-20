@@ -171,25 +171,40 @@ const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __categ
 	switch (__category)
 	{
 		case LC_CTYPE    :
+		{
 			mask = LC_CTYPE_MASK;
+		}
 		break;
 		case LC_NUMERIC  :
+		{
 			mask = LC_NUMERIC_MASK;
+		}
 		break;
 		case LC_TIME     :
+		{
 			mask = LC_TIME_MASK;
+		}
 		break;
 		case LC_COLLATE  :
+		{
 			mask = LC_COLLATE_MASK;
+		}
 		break;
 		case LC_MONETARY :
+		{
 			mask = LC_MONETARY_MASK;
+		}
 		break;
 		case LC_MESSAGES :
+		{
 			mask = LC_MESSAGES_MASK;
+		}
 		break;
 		default:
+		{
 			mask = LC_ALL_MASK;
+		}
+		break;
 	}
 	return querylocale(mask, __locale);
 #	elif MU0_HAVE_POSIX1_2001 && defined(NL_LOCALE_NAME)
