@@ -164,20 +164,49 @@ const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __categ
 		&& !MU0_HAVE_LINUX     \
 		&& !MU0_HAVE_NUTTX     \
 		&& !MU0_HAVE_MINGW
+	___mu0_sint4_t___ mask;
 	if (__mu0_is_nullptr__(__locale)) {
 		return setlocale(__category, __mu0_nullptr__);
 	}
-	return querylocale((__category == LC_ALL ? LC_ALL_MASK : LC_COLLATE_MASK), __locale);
+	switch (__category)
+	{
+		case LC_CTYPE    :
+			mask = LC_CTYPE_MASK;
+		break;
+		case LC_NUMERIC  :
+			mask = LC_NUMERIC_MASK;
+		break;
+		case LC_TIME     :
+			mask = LC_TIME_MASK;
+		break;
+		case LC_COLLATE  :
+			mask = LC_COLLATE_MASK;
+		break;
+		case LC_MONETARY :
+			mask = LC_MONETARY_MASK;
+		break;
+		case LC_MESSAGES :
+			mask = LC_MESSAGES_MASK;
+		break;
+		default:
+			mask = LC_ALL_MASK;
+	}
+	return querylocale(mask, __locale);
 #	elif MU0_HAVE_POSIX1_2001 && defined(NL_LOCALE_NAME)
 	if (__mu0_is_nullptr__(__locale)) {
 		return setlocale(__category, __mu0_nullptr__);
 	}
-	return nl_langinfo_l(NL_LOCALE_NAME(__category == LC_ALL ? LC_ALL : LC_COLLATE), __locale);
+	return nl_langinfo_l(NL_LOCALE_NAME(__category), __locale);
 #	elif MU0_HAVE_POSIX1_2001 && defined(_NL_LOCALE_NAME)
 	if (__mu0_is_nullptr__(__locale)) {
 		return setlocale(__category, __mu0_nullptr__);
 	}
-	return nl_langinfo_l(_NL_LOCALE_NAME(__category == LC_ALL ? LC_ALL : LC_COLLATE), __locale);
+	return nl_langinfo_l(_NL_LOCALE_NAME(__category), __locale);
+#	elif MU0_HAVE_POSIX1_2001 && defined(_NL_ITEM) && defined(_NL_ITEM_INDEX)
+	if (__mu0_is_nullptr__(__locale)) {
+		return setlocale(__category, __mu0_nullptr__);
+	}
+	return nl_langinfo_l(_NL_ITEM((__category), _NL_ITEM_INDEX(-1)), __locale);
 #	else
 	__mu0_unused__(__category);
 	__mu0_unused__(__locale);
