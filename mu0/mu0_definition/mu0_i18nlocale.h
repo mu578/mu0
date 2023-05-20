@@ -32,7 +32,11 @@
 #	undef  __mu0_strncmp__
 #	define MU0_HAVE_I18NLOCALE 0
 
-#	if MU0_HAVE_POSIX1_2001 && !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX
+#	if MU0_HAVE_POSIX1_2001 \
+		&& !MU0_HAVE_ANDROID \
+		&& !MU0_HAVE_LINUX   \
+		&& !MU0_HAVE_NUTTX   \
+		&& !MU0_HAVE_MINGW
 #	include <xlocale.h>
 #	endif
 #	if MU0_HAVE_POSIX1_2001
@@ -155,7 +159,11 @@ const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __categ
 		return setlocale(LC_ALL, __mu0_nullptr__);
 	}
 	return __locale->locinfo->lc_category[LC_ALL].locale;
-#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX
+#	elif MU0_HAVE_POSIX1_2001 \
+		&& !MU0_HAVE_ANDROID   \
+		&& !MU0_HAVE_LINUX     \
+		&& !MU0_HAVE_NUTTX     \
+		&& !MU0_HAVE_MINGW
 	if (__mu0_is_nullptr__(__locale)) {
 		return setlocale(__category, __mu0_nullptr__);
 	}
@@ -201,7 +209,11 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ __locale)
 		return 0;
 	}
 	return -1;
-#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX
+#	elif MU0_HAVE_POSIX1_2001 \
+		&& !MU0_HAVE_ANDROID   \
+		&& !MU0_HAVE_LINUX     \
+		&& !MU0_HAVE_NUTTX     \
+		&& !MU0_HAVE_MINGW
 	return freelocale(__locale);
 #	elif MU0_HAVE_POSIX1_2001
 	freelocale(__locale);
