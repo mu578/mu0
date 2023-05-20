@@ -15,31 +15,31 @@
 # Copyright (C) 2023 mu578. All rights reserved.
 #
 
-RMDIR            ?= rm -Rf
-MV               ?= mv -f
-CD               ?= cd
-LNS              ?= ln -s
+RMDIR                     ?= rm -Rf
+MV                        ?= mv -f
+CD                        ?= cd
+LNS                       ?= ln -s
 
 ifeq ($(strip $(ARCH)),)
-ARCH             := $(shell uname -m)
+ARCH                      := $(shell uname -m)
 endif
 
 ifeq ($(strip $(PLATFORM)),)
-PLATFORM         := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+PLATFORM                  := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 endif
 
 ifneq (,$(findstring darwin, $(PLATFORM)))
 	ifeq ($(strip $(PLATFORM_VARIANT)),)
-		PLATFORM_VARIANT := macos_xcode
+		PLATFORM_VARIANT    := macos_xcode
 	endif
 	ifneq (,$(findstring macos_macport, $(PLATFORM_VARIANT)))
 		ifeq ("$(wildcard /opt/local/bin)", "")
-		PLATFORM_VARIANT := macos_xcode
+			PLATFORM_VARIANT := macos_xcode
 		endif
 	endif
 endif
 
-PLATFORM_ARCH    := -arch $(ARCH)
+PLATFORM_ARCH             := -arch $(ARCH)
 
 ifneq (,$(findstring darwin, $(PLATFORM)))
 	ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
