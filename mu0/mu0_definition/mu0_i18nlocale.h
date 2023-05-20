@@ -188,8 +188,11 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ __locale)
 		return 0;
 	}
 	return -1;
-#	elif MU0_HAVE_POSIX1_2001
+#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_LINUX
 	return freelocale(__locale);
+#	elif MU0_HAVE_POSIX1_2001
+	freelocale(__locale);
+	return 0;
 #	else
 	__mu0_unused__(__locale);
 	return 0;
