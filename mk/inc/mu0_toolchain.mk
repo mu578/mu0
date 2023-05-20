@@ -27,8 +27,16 @@ endif
 ifeq ($(strip $(PLATFORM)),)
 PLATFORM         := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 endif
-ifeq ($(strip $(PLATFORM_VARIANT)),)
-PLATFORM_VARIANT := macos_xcode
+
+ifneq (,$(findstring darwin, $(PLATFORM)))
+	ifeq ($(strip $(PLATFORM_VARIANT)),)
+		PLATFORM_VARIANT := macos_xcode
+	endif
+	ifneq (,$(findstring macos_macport, $(PLATFORM_VARIANT)))
+		ifeq ("$(wildcard /opt/local/bin)", "")
+		PLATFORM_VARIANT := macos_xcode
+		endif
+	endif
 endif
 
 PLATFORM_ARCH    := -arch $(ARCH)
