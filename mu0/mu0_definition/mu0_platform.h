@@ -65,10 +65,10 @@
 #			define MU0_HAVE_MACOSX    1
 #		endif
 #	elif defined(_WIN32) || defined(_WIN64)
-#		undef  MU0_HAVE_WINDOWS      0
+#		undef  MU0_HAVE_WINDOWS
 #		define MU0_HAVE_WINDOWS      1
 #	elif defined(__MINGW32__) || defined(__MINGW64__)
-#		undef  MU0_HAVE_MINGW        0
+#		undef  MU0_HAVE_MINGW
 #		define MU0_HAVE_MINGW        1
 #	elif                 \
 	   defined(__sun)    \
@@ -76,16 +76,16 @@
 	|| defined(__sun__)  \
 	|| defined(__SVR4)   \
 	|| defined(__svr4__)
-#		undef  MU0_HAVE_SOLARIS      0
+#		undef  MU0_HAVE_SOLARIS
 #		define MU0_HAVE_SOLARIS      1
 #	elif defined(__FreeBSD__)
-#		undef  MU0_HAVE_FREEBSD      0
+#		undef  MU0_HAVE_FREEBSD
 #		define MU0_HAVE_FREEBSD      1
 #	elif defined(__OpenBSD__)
-#		undef  MU0_HAVE_OPENBSD      0
+#		undef  MU0_HAVE_OPENBSD
 #		define MU0_HAVE_OPENBSD      1
 #	elif defined(__NetBSD__)
-#		undef  MU0_HAVE_NETBSD       0
+#		undef  MU0_HAVE_NETBSD
 #		define MU0_HAVE_NETBSD       1
 #	elif defined(__DragonFly__)
 #		undef  MU0_HAVE_DRAGONFLYBSD 0
@@ -94,13 +94,13 @@
 #		undef  MU0_HAVE_ANDROID      0
 #		define MU0_HAVE_ANDROID      1
 #	elif defined(__linux__)
-#		undef  MU0_HAVE_LINUX        0
+#		undef  MU0_HAVE_LINUX
 #		define MU0_HAVE_LINUX        1
 #	elif defined(__NuttX__)
-#		undef  MU0_HAVE_NUTTX        0
+#		undef  MU0_HAVE_NUTTX
 #		define MU0_HAVE_NUTTX        1
 #	elif defined(__minix)
-#		undef  MU0_HAVE_MINIX        0
+#		undef  MU0_HAVE_MINIX
 #		define MU0_HAVE_MINIX        1
 #	endif
 

@@ -32,7 +32,7 @@
 #	undef  __mu0_strncmp__
 #	define MU0_HAVE_I18NLOCALE 0
 
-#	if !MU0_HAVE_WINDOWS && !MU0_HAVE_ANDROID
+#	if !MU0_HAVE_WINDOWS && !MU0_HAVE_ANDROID && !defined(__GLIBC__)
 #	include <xlocale.h>
 #	endif
 #	include <locale.h>
