@@ -92,6 +92,19 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			-Wno-newline-eof           \
 			-pedantic
 	endif
+else ifneq (,$(findstring linux, $(PLATFORM)))
+	CC           := clang
+	AR           := ar
+
+	LD           :=     \
+		$(CC)            \
+		-isysroot /      \
+		-lm
+
+	LOCAL_CFLAGS +=     \
+		-x c             \
+		-std=gnu11       \
+		-isysroot /
 else
 
 CC           := clang
@@ -105,7 +118,7 @@ LD           :=     \
 
 LOCAL_CFLAGS +=     \
 	-x c             \
-	-std=gnu11       \
+	-std=c11         \
 	$(PLATFORM_ARCH) \
 	-isysroot /
 
