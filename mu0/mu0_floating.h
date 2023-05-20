@@ -231,7 +231,7 @@ typedef struct { mu0_fp32_t u_re; mu0_fp32_t u_im; }   mu0_cfp32_t;
 			typedef __fp16 _Complex                       mu0_cfp16_t;
 #		endif
 #		endif
-#	elif MU0_HAVE_CC_GNUCC defined(__FLT16_MAX__)
+#	elif MU0_HAVE_CC_GNUCC
 #		if defined(__FLT16_MAX__)
 #			undef  MU0_HAVE_FLOAT16
 #			define MU0_HAVE_FLOAT16 1
