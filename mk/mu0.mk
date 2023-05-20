@@ -25,9 +25,11 @@ include $(MU0_ROOT_PATH)/mk/inc/mu0_source.mk
 include $(MU0_ROOT_PATH)/mk/inc/mu0_toolchain.mk
 include $(MU0_ROOT_PATH)/mk/inc/mu0_ruleset.mk
 
-all:    rule_all
-static: rule_static
-shared: rule_shared
-clean:  rule_clean
+all       :    rule_all
+static    : rule_static
+shared    : rule_shared
+clean     :  rule_clean
+
+distcheck : rule_all
 
 # EOF
