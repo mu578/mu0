@@ -96,14 +96,14 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 	CC           := clang
 	AR           := ar
 
-	LD           :=     \
-		$(CC)            \
-		-isysroot /      \
+	LD           := \
+		$(CC)        \
+		-isysroot /  \
 		-lm
 
-	LOCAL_CFLAGS +=     \
-		-x c             \
-		-std=gnu11       \
+	LOCAL_CFLAGS += \
+		-x c         \
+		-std=gnu11   \
 		-isysroot /
 else
 
