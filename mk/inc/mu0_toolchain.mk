@@ -105,7 +105,7 @@ LD           :=     \
 
 LOCAL_CFLAGS +=     \
 	-x c             \
-	-std=c11         \
+	-std=gnu11       \
 	$(PLATFORM_ARCH) \
 	-isysroot /
 
