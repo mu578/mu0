@@ -32,8 +32,11 @@
 #	undef  __mu0_strncmp__
 #	define MU0_HAVE_I18NLOCALE 0
 
-#	if !MU0_HAVE_WINDOWS && !MU0_HAVE_ANDROID && !defined(__GLIBC__)
+#	if MU0_HAVE_POSIX1_2001 && !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX
 #	include <xlocale.h>
+#	endif
+#	if MU0_HAVE_POSIX1_2001
+#	include <langinfo.h>
 #	endif
 #	include <locale.h>
 #	include <string.h>
@@ -148,15 +151,20 @@ const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __categ
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 	__mu0_unused__(__category);
-	if (__mu0_not_nullptr__(__locale)) {
+	if (__mu0_is_nullptr__(__locale)) {
 		return setlocale(LC_ALL, __mu0_nullptr__);
 	}
 	return __locale->locinfo->lc_category[LC_ALL].locale;
-#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_LINUX
-	if (__mu0_not_nullptr__(__locale)) {
+#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX
+	if (__mu0_is_nullptr__(__locale)) {
 		return setlocale(__category, __mu0_nullptr__);
 	}
 	return querylocale((__category == LC_ALL ? LC_ALL_MASK : LC_COLLATE_MASK), __locale);
+#	elif MU0_HAVE_POSIX1_2001
+	if (__mu0_is_nullptr__(__locale)) {
+		return setlocale(__category, __mu0_nullptr__);
+	}
+	return nl_langinfo_l(NL_LOCALE_NAME(__category == LC_ALL ? LC_ALL : LC_COLLATE), __locale);
 #	else
 	__mu0_unused__(__category);
 	__mu0_unused__(__locale);
@@ -188,7 +196,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ __locale)
 		return 0;
 	}
 	return -1;
-#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_LINUX
+#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX
 	return freelocale(__locale);
 #	elif MU0_HAVE_POSIX1_2001
 	freelocale(__locale);
