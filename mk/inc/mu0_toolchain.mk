@@ -86,14 +86,14 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		LD           :=               \
 			$(CC)                      \
 			$(PLATFORM_ARCH)           \
-			-mmacosx-version-min=10.13 \
+			-mmacosx-version-min=10.15 \
 			-isysroot $(XCODE_SDK)
 
 		LOCAL_CFLAGS +=               \
 			-x c                       \
 			-std=c11                   \
 			$(PLATFORM_ARCH)           \
-			-mmacosx-version-min=10.13 \
+			-mmacosx-version-min=10.15 \
 			-isysroot $(XCODE_SDK)     \
 			-Wall                      \
 			-Wno-unused-function       \
