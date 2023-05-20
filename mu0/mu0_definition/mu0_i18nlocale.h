@@ -152,7 +152,7 @@ const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __categ
 		return setlocale(LC_ALL, __mu0_nullptr__);
 	}
 	return __locale->locinfo->lc_category[LC_ALL].locale;
-#	elif MU0_HAVE_POSIX1_2001
+#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_LINUX
 	if (__mu0_not_nullptr__(__locale)) {
 		return setlocale(__category, __mu0_nullptr__);
 	}
