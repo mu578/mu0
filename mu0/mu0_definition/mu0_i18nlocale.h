@@ -164,7 +164,7 @@ const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __categ
 	if (__mu0_is_nullptr__(__locale)) {
 		return setlocale(__category, __mu0_nullptr__);
 	}
-	return nl_langinfo_l(NL_LOCALE_NAME(__category == LC_ALL ? LC_ALL : LC_COLLATE), __locale);
+	return nl_langinfo_l(_NL_LOCALE_NAME(__category == LC_ALL ? LC_ALL : LC_COLLATE), __locale);
 #	else
 	__mu0_unused__(__category);
 	__mu0_unused__(__locale);
