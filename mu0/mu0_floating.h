@@ -113,7 +113,7 @@ typedef long double                                    mu0_fpex_t;
 #			if MU0_HAVE_STDCOMPLEX
 			typedef _Float128x _Complex                   mu0_cfp128_t;
 #			endif
-#		elif !__is_identifier(__float128)
+#		elif !__is_identifier(__float128) && defined(FLT128_MAX)
 #		if ((defined(__STDC_IEC_60559_TYPES__) || defined(__STDC_IEC_559__)) && defined(FLT128_MAX)) || defined(__FLOAT128__) || defined(__SIZEOF_FLOAT128__)
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1
@@ -124,7 +124,7 @@ typedef long double                                    mu0_fpex_t;
 #			endif
 #		endif
 #		endif
-#	elif MU0_HAVE_CC_GNUCC
+#	elif MU0_HAVE_CC_GNUCC && defined(FLT128_MAX)
 #		if ((defined(__STDC_IEC_60559_TYPES__) || defined(__STDC_IEC_559__)) && defined(FLT128_MAX)) || defined(__FLOAT128__) || defined(__SIZEOF_FLOAT128__)
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1
@@ -224,7 +224,7 @@ typedef struct { mu0_fp32_t u_re; mu0_fp32_t u_im; }   mu0_cfp32_t;
 #		if MU0_HAVE_STDCOMPLEX
 			typedef _Float16 _Complex                     mu0_cfp16_t;
 #		endif
-#		elif !__is_identifier(__fp16)
+#		elif !__is_identifier(__fp16) && defined(FLT16_MAX)
 #			undef  MU0_HAVE_FLOAT16
 #			define MU0_HAVE_FLOAT16 1
 			__mu0_extension__
