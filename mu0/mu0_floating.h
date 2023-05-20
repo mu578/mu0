@@ -97,7 +97,7 @@ typedef long double                                    mu0_fpex_t;
 
 #	if MU0_USE_FLOAT128
 #	if   MU0_HAVE_CC_CLANG
-#		if   !__is_identifier(_Float128)
+#		if   !__is_identifier(_Float128) && defined(FLT128_MAX)
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1
 			__mu0_extension__
@@ -105,7 +105,7 @@ typedef long double                                    mu0_fpex_t;
 #			if MU0_HAVE_STDCOMPLEX
 			typedef _Float128 _Complex                    mu0_cfp128_t;
 #			endif
-#		elif !__is_identifier(_Float128x)
+#		elif !__is_identifier(_Float128x) && defined(FLT128_MAX)
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1
 			__mu0_extension__
