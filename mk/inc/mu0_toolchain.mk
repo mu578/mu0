@@ -120,8 +120,7 @@ else ifneq (,$(findstring mingw, $(PLATFORM)))
 	LD           :=                   \
 		$(CC)                          \
 		-fuse-ld=lld                   \
-		-target x86_64-pc-windows-msvc \
-		-v
+		-target x86_64-pc-windows-msvc
 
 	LOCAL_CFLAGS +=                   \
 		-x c                           \
