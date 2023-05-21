@@ -18,7 +18,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Run distcheck
-      run: echo "PATH=$PATH:C:\msys64\mingw64\bin" >> $GITHUB_ENV
-      run: cd mk && make -f mu0.mk distcheck
+      run: echo "PATH=$PATH:C:\msys64\mingw64\bin" >> $GITHUB_ENV && cd mk && make -f mu0.mk distcheck
 
 # EOF
