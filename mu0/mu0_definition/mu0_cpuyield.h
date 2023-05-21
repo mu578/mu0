@@ -15,7 +15,7 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
-#include <mu0/mu0_definition/mu0_platform.h>
+#include <mu0/mu0_definition/mu0_language.h>
 
 #ifndef MU0_CPUYIELD_H
 #define MU0_CPUYIELD_H 1
