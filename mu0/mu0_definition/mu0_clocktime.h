@@ -151,7 +151,7 @@
 				return 0U;
 			}
 			ssec = __mu0_const_cast__(__int64, (tv.QuadPart / ts.QuadPart));
-			nsec = __mu0_const_cast__(__int64, (((tv.QuadPart % ts.QuadPart) * 1000000000i64 (ts.QuadPart >> 1U)) / ts.QuadPart));
+			nsec = __mu0_const_cast__(__int64, (((tv.QuadPart % ts.QuadPart) * 1000000000i64 + (ts.QuadPart >> 1U)) / ts.QuadPart));
 			if (nsec >= 1000000000i64) {
 				ssec = ssec + 1i64;
 				nsec = nsec - 1000000000i64;
