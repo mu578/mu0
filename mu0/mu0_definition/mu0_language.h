@@ -147,13 +147,14 @@
 #	define MU0_HAVE_POSIX1_2008 0
 
 #	if MU0_HAVE_CC_MSVCC
+#	include <IntSafe.h>
 #	include <Winbase.h>
 #	if MU0_HAVE_IA64 || MU0_HAVE_AMD64 || MU0_HAVE_ARM64
 		typedef __int64 ssize_t;
 		typedef __int64 off_t
 #	else
 		typedef __int32 ssize_t;
-		typedef __int64 off_t
+		typedef __int32 off_t
 #	endif
 #	else
 #	include <unistd.h>
