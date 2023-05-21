@@ -123,7 +123,7 @@ else ifneq (,$(findstring mingw, $(PLATFORM)))
 
 	LOCAL_CFLAGS += \
 		-x c         \
-		-std=std11   \
+		-std=std11
 else
 
 CC           := clang
