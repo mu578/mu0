@@ -147,6 +147,7 @@
 #	define MU0_HAVE_POSIX1_2008 0
 
 #	if MU0_HAVE_CC_MSVCC
+#	include <Windows.h>
 #	include <Windef.h>
 #	include <IntSafe.h>
 #	include <Winnt.h>
