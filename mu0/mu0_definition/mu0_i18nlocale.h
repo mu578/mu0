@@ -47,35 +47,40 @@
 
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 
-typedef struct localerefcount
+typedef struct __crt_locale_data_public
 {
-	char *    locale;
-	wchar_t * wlocale;
-	int*      refcount;
-	int*      wrefcount;
-} locrefcount;
+		unsigned short const* _locale_pctype;
+	_Field_range_(1, 2) int _locale_mb_cur_max;
+					unsigned int _locale_lc_codepage;
+} __crt_locale_data_public;
+
+typedef struct __crt_locale_refcount
+{
+	char*    locale;
+	wchar_t* wlocale;
+	long*    refcount;
+	long*    wrefcount;
+} __crt_locale_refcount;
 
 typedef struct __crt_locale_data
 {
-	int                     refcount;
-	unsigned int            lc_codepage;
-	unsigned int            lc_collate_cp;
-	unsigned int            lc_time_cp;
-	locrefcount             lc_category[6];
-	int                     lc_clike;
-	int                     mb_cur_max;
-	int *                   lconv_intl_refcount;
-	int *                   lconv_num_refcount;
-	int *                   lconv_mon_refcount;
-	struct lconv *          lconv;
-	int *                   ctype1_refcount;
-	unsigned short *        ctype1;
-	const unsigned short *  pctype;
-	const unsigned char *   pclmap;
-	const unsigned char *   pcumap;
-	struct __lc_time_data * lc_time_curr;
-	wchar_t *               locale_name[6];
-} threadlocinfo;
+	__crt_locale_data_public  _public;
+	long                      refcount;
+	unsigned int              lc_collate_cp;
+	unsigned int              lc_time_cp;
+	int                       lc_clike;
+	__crt_locale_refcount     lc_category[6];
+	long*                     lconv_intl_refcount;
+	long*                     lconv_num_refcount;
+	long*                     lconv_mon_refcount;
+	struct lconv*             lconv;
+	long*                     ctype1_refcount;
+	unsigned short*           ctype1;
+	unsigned char const*      pclmap;
+	unsigned char const*      pcumap;
+	__crt_lc_time_data const* lc_time_curr;
+	wchar_t*                  locale_name[6];
+} __crt_locale_data;
 
 #	endif
 
