@@ -28,7 +28,7 @@
 #define MU0_COMPILER_H 1
 
 #	ifdef __cplusplus
-#		define MU0_BEGIN_CDECL extern "C" {
+#		define MU0_BEGIN_CDECL {
 #		define MU0_END_CDECL   }
 #	else
 #		define MU0_BEGIN_CDECL
