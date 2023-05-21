@@ -83,6 +83,9 @@ rule_objects::
 		fi; \
 		name=$$(basename $${src_file}); \
 		visibility="-fpic -fvisibility=default"; \
+		if [[ $(PLATFORM) == "mingw*" ]]; then \
+			visibility="-fvisibility=default"; \
+		fi; \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= "$${name}; \
 		$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
 			$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*})_$(ARCH).o; \
