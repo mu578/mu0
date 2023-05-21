@@ -50,7 +50,7 @@
 #	undef  __mu0_issame__
 #	define MU0_HAVE_TYPEOF 0
 
-#	if   MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || (MU0_HAVE_CC_CLANG && MU0_HAVE_CC_MSVC)
+#	if   MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_MSVCL
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
 #		define __mu0_typeof__             __typeof__

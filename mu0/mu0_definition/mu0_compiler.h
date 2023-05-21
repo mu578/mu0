@@ -39,7 +39,9 @@
 #	define MU0_HAVE_COMPILER 0
 
 #	undef  MU0_HAVE_CC_MSVCC
+#	undef  MU0_HAVE_CC_MSVCL
 #	define MU0_HAVE_CC_MSVCC 0
+#	define MU0_HAVE_CC_MSVCL 0
 #	if defined(_MSC_VER) && (_MSC_VER >= 1929)
 #		include <intrin.h>
 #		include <BaseTsd.h>
@@ -47,6 +49,10 @@
 #		undef  MU0_HAVE_CC_MSVCC
 #		define MU0_HAVE_COMPILER 1
 #		define MU0_HAVE_CC_MSVCC 1
+#	if defined(__clang__)
+#		undef  MU0_HAVE_CC_MSVCL
+#		define MU0_HAVE_CC_MSVCL 1
+#	endif
 #	endif
 
 #	undef  MU0_HAVE_CC_ITLCC
