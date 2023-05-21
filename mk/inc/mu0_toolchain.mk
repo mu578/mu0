@@ -117,14 +117,14 @@ else ifneq (,$(findstring mingw, $(PLATFORM)))
 	CC           := clang
 	AR           := ar
 
-	LD           := \
-		$(CC)        \
-		-fuse-ld=lld
+	LD           :=                   \
+		$(CC)                          \
+		-fuse-ld=lld                   \
 		-target x86_64-pc-windows-msvc
 
-	LOCAL_CFLAGS += \
-		-x c         \
-		-std=c11     \
+	LOCAL_CFLAGS +=                   \
+		-x c                           \
+		-std=c11                       \
 		-target x86_64-pc-windows-msvc
 else
 
