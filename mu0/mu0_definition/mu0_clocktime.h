@@ -37,7 +37,6 @@
 #	define MU0_HAVE_CLOCKTIME    0
 
 #	include <time.h>
-#	include <unistd.h>
 
 #	if !MU0_HAVE_NANOTIME_ABS
 #	if MU0_HAVE_C11 && defined(TIME_MONOTONIC)
