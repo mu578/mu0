@@ -47,12 +47,31 @@
 
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 
-typedef struct __crt_locale_data_public
+typedef struct __crt_lc_time_data
 {
-		unsigned short const* _locale_pctype;
-	_Field_range_(1, 2) int _locale_mb_cur_max;
-					unsigned int _locale_lc_codepage;
-} __crt_locale_data_public;
+	char*    wday_abbr [ 7];
+	char*    wday      [ 7];
+	char*    month_abbr[12];
+	char*    month     [12];
+	char*    ampm      [ 2];
+	char*    ww_sdatefmt;
+	char*    ww_ldatefmt;
+	char*    ww_timefmt;
+
+	LCID ww_lcid;  //for msvcrt等效_W_ww_locale_name
+
+	int      ww_caltype;
+	long     refcount;
+
+	wchar_t* _W_wday_abbr [ 7];
+	wchar_t* _W_wday      [ 7];
+	wchar_t* _W_month_abbr[12];
+	wchar_t* _W_month     [12];
+	wchar_t* _W_ampm      [ 2];
+	wchar_t* _W_ww_sdatefmt;
+	wchar_t* _W_ww_ldatefmt;
+	wchar_t* _W_ww_timefmt;
+} __crt_lc_time_data;
 
 typedef struct __crt_locale_refcount
 {
