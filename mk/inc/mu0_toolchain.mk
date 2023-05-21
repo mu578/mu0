@@ -118,8 +118,7 @@ else ifneq (,$(findstring mingw, $(PLATFORM)))
 	AR           := ar
 
 	LD           := \
-		$(CC)        \
-		-lm
+		$(CC)
 
 	LOCAL_CFLAGS += \
 		-x c         \
