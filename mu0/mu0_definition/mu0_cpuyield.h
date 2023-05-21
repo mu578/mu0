@@ -39,7 +39,7 @@
 #			pragma intrinsic(__yield)
 #			define __mu0_cpu_yield__()    __yield()
 #		endif
-		__declspec(dllimport) void __stdcall Sleep(DWORD);
+		__declspec(dllimport) void __stdcall Sleep(___mu0_uintx_t___ ms);
 		__declspec(dllimport) int  __stdcall SwitchToThread();
 #		if !MU0_HAVE_CPUYIELD
 #			define __mu0_cpu_yield__() if (!SwitchToThread()) { Sleep(0); } enum { /***/ }
@@ -60,7 +60,7 @@
 #			define __mu0_cpu_yield__() _mm_pause()
 #		endif
 #		if MU0_HAVE_WINDOWS
-			__declspec(dllimport) void __stdcall Sleep(DWORD);
+			__declspec(dllimport) void __stdcall Sleep(___mu0_uintx_t___ ms);
 			__declspec(dllimport) int  __stdcall SwitchToThread();
 #			undef  MU0_HAVE_THRYIELD
 #			define MU0_HAVE_THRYIELD 1
