@@ -113,6 +113,19 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 		-x c         \
 		-std=gnu11   \
 		-isysroot /
+else ifneq (,$(findstring mingw, $(PLATFORM)))
+	CC           := clang
+	AR           := ar
+
+	LD           := \
+		$(CC)        \
+		-isysroot /  \
+		-lm
+
+	LOCAL_CFLAGS += \
+		-x c         \
+		-std=gnu11   \
+		-isysroot /
 else
 
 CC           := clang
