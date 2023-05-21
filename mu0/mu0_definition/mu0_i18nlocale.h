@@ -46,64 +46,6 @@
 #	include <string.h>
 
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
-
-typedef struct __crt_lc_time_data
-{
-	char*    wday_abbr [ 7];
-	char*    wday      [ 7];
-	char*    month_abbr[12];
-	char*    month     [12];
-	char*    ampm      [ 2];
-	char*    ww_sdatefmt;
-	char*    ww_ldatefmt;
-	char*    ww_timefmt;
-
-	LCID ww_lcid;  //for msvcrt等效_W_ww_locale_name
-
-	int      ww_caltype;
-	long     refcount;
-
-	wchar_t* _W_wday_abbr [ 7];
-	wchar_t* _W_wday      [ 7];
-	wchar_t* _W_month_abbr[12];
-	wchar_t* _W_month     [12];
-	wchar_t* _W_ampm      [ 2];
-	wchar_t* _W_ww_sdatefmt;
-	wchar_t* _W_ww_ldatefmt;
-	wchar_t* _W_ww_timefmt;
-} __crt_lc_time_data;
-
-typedef struct __crt_locale_refcount
-{
-	char*    locale;
-	wchar_t* wlocale;
-	long*    refcount;
-	long*    wrefcount;
-} __crt_locale_refcount;
-
-typedef struct __crt_locale_data
-{
-	__crt_locale_data_public  _public;
-	long                      refcount;
-	unsigned int              lc_collate_cp;
-	unsigned int              lc_time_cp;
-	int                       lc_clike;
-	__crt_locale_refcount     lc_category[6];
-	long*                     lconv_intl_refcount;
-	long*                     lconv_num_refcount;
-	long*                     lconv_mon_refcount;
-	struct lconv*             lconv;
-	long*                     ctype1_refcount;
-	unsigned short*           ctype1;
-	unsigned char const*      pclmap;
-	unsigned char const*      pcumap;
-	__crt_lc_time_data const* lc_time_curr;
-	wchar_t*                  locale_name[6];
-} __crt_locale_data;
-
-#	endif
-
-#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
 		typedef _locale_t __mu0_i18nlocale_t__;
@@ -193,6 +135,7 @@ __mu0_static_inline__
 __mu0_i18nlocale_t__ __mu0_i18nlocale_use__(__mu0_i18nlocale_t__ __locale)
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#	if 0
 	_locale_t current = _get_current_locale();
 	if (__mu0_is_nullptr__(__locale)) {
 		return current;
@@ -200,7 +143,10 @@ __mu0_i18nlocale_t__ __mu0_i18nlocale_use__(__mu0_i18nlocale_t__ __locale)
 	_configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
 	setlocale(LC_ALL, __locale->locinfo->lc_category[LC_ALL].locale);
 	return current;
-#	elif MU0_HAVE_POSIX1_2001
+#	endif
+	__mu0_unused__(__locale);
+	return __mu0_nullptr__;
+#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_MINGW
 	return uselocale(__locale);
 #	else
 	__mu0_unused__(__locale);
@@ -212,11 +158,16 @@ __mu0_static_inline__
 const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
 {
 #	if   MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#	if 0
 	__mu0_unused__(__category);
 	if (__mu0_is_nullptr__(__locale)) {
 		return setlocale(LC_ALL, __mu0_nullptr__);
 	}
 	return __locale->locinfo->lc_category[LC_ALL].locale;
+#	endif
+	__mu0_unused__(__category);
+	__mu0_unused__(__locale);
+	return "en_EN.UTF-8";
 #	elif MU0_HAVE_POSIX1_2001 \
 		&& !MU0_HAVE_ANDROID   \
 		&& !MU0_HAVE_LINUX     \
@@ -265,17 +216,17 @@ const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __categ
 		break;
 	}
 	return querylocale(mask, __locale);
-#	elif MU0_HAVE_POSIX1_2001 && defined(NL_LOCALE_NAME)
+#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_MINGW && defined(NL_LOCALE_NAME)
 	if (__mu0_is_nullptr__(__locale)) {
 		return setlocale(__category, __mu0_nullptr__);
 	}
 	return nl_langinfo_l(NL_LOCALE_NAME(__category), __locale);
-#	elif MU0_HAVE_POSIX1_2001 && defined(_NL_LOCALE_NAME)
+#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_MINGW && defined(_NL_LOCALE_NAME)
 	if (__mu0_is_nullptr__(__locale)) {
 		return setlocale(__category, __mu0_nullptr__);
 	}
 	return nl_langinfo_l(_NL_LOCALE_NAME(__category), __locale);
-#	elif MU0_HAVE_POSIX1_2001 && defined(_NL_ITEM) && defined(_NL_ITEM_INDEX)
+#	elif MU0_HAVE_POSIX1_2001 && !MU0_HAVE_MINGW && defined(_NL_ITEM) && defined(_NL_ITEM_INDEX)
 	if (__mu0_is_nullptr__(__locale)) {
 		return setlocale(__category, __mu0_nullptr__);
 	}
