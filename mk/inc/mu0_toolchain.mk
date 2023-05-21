@@ -119,13 +119,11 @@ else ifneq (,$(findstring mingw, $(PLATFORM)))
 
 	LD           := \
 		$(CC)        \
-		-isysroot /  \
 		-lm
 
 	LOCAL_CFLAGS += \
 		-x c         \
-		-std=gnu11   \
-		-isysroot /
+		-std=std11   \
 else
 
 CC           := clang
