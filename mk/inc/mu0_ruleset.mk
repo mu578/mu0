@@ -66,7 +66,7 @@ rule_link_cmds::
 	done
 
 rule_list_objects::
-	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
+	$(eval MU0_BUILD_FILES := $(call walk-dir, $(LOCAL_BUILDDIR)))
 	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 	echo $(MU0_BUILD_FILES)
 	echo $(MU0_OBJ_FILES)
