@@ -23,11 +23,14 @@ ifeq ($(strip $(LOCAL_MODULE_PATH)),)
 $(error LOCAL_MODULE_PATH is not set)
 endif
 
-LOCAL_BUILDDIR  := /tmp/build/$(PLATFORM)
+LOCAL_BUILDDIR     := /tmp/build/$(PLATFORM)
+ifneq (,$(findstring mingw, $(PLATFORM)))
+	LOCAL_BUILDDIR  := ../build/$(PLATFORM)
+endif
 
-MU0_BUILD_FILES :=
-MU0_OBJ_FILES   :=
-MU0_MISC_FILES  :=
+MU0_BUILD_FILES    :=
+MU0_OBJ_FILES      :=
+MU0_MISC_FILES     :=
 
 all:
 
@@ -66,7 +69,7 @@ rule_link_cmds::
 	done
 
 rule_list_objects::
-	$(eval MU0_BUILD_FILES := $(call walk-dir, $(LOCAL_BUILDDIR)))
+	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
 	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 	echo $(MU0_BUILD_FILES)
 	echo $(MU0_OBJ_FILES)
