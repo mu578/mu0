@@ -418,8 +418,8 @@
 		__mu0_static__
 		___mu0_tint1_t___   s_name[48];
 		___mu0_tint1_t___ * variant;
-		___mu0_uint4_t___     have_name = 0;
-		___mu0_uint8_t___    k, l, p   = 0;
+		___mu0_uint4_t___   have_name = 0;
+		___mu0_uint8_t___   k, l, p   = 0;
 
 		//#! XPG syntax:[__lg[___cn[.codeset]][@__md[+variant]]
 		__mu0_memset__(s_name, 0, __mu0_sizeof__(s_name));
