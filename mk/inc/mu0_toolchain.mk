@@ -15,13 +15,6 @@
 # Copyright (C) 2023 mu578. All rights reserved.
 #
 
-MU0_CMD_RMDIR             := rm -Rf
-MU0_CMD_MKDIR             := mkdir -p
-MU0_CMD_MV                := mv -f
-MU0_CMD_CD                := cd
-MU0_CMD_LNS               := ln -s
-MU0_CMD_LS                := ls -la
-
 ifeq ($(strip $(ARCH)),)
 ARCH                      := $(shell uname -m)
 endif

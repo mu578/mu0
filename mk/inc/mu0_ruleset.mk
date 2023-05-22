@@ -28,6 +28,13 @@ ifneq (,$(findstring mingw, $(PLATFORM)))
 	LOCAL_BUILDDIR  := ../build/$(PLATFORM)
 endif
 
+MU0_CMD_RMDIR      := rm -Rf
+MU0_CMD_MKDIR      := mkdir -p
+MU0_CMD_MV         := mv -f
+MU0_CMD_CD         := cd
+MU0_CMD_LNS        := ln -s
+MU0_CMD_LS         := ls -la
+
 MU0_BUILD_FILES    :=
 MU0_OBJ_FILES      :=
 MU0_MISC_FILES     :=
