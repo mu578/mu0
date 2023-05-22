@@ -62,19 +62,19 @@
 		__mu0_static_inline__
 		__mu0_i18nlocale_t__ __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ __base)
 		{
-			__mu0_i18nlocale_t__ locale = malloc(__mu0_sizeof__(___mu0_i18nlocale_t___));
+			__mu0_i18nlocale_t__ locale = malloc(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
 			___mu0_uint8_t___      len;
 			__mu0_unused__(__mask);
 			__mu0_unused__(__base);
 			if (__mu0_not_nullptr__(locale)) {
-				memset(locale, 0, __mu0_sizeof__(___mu0_i18nlocale_t___));
-				len                        = __mu0_const_cast__(___mu0_uint8_t___,  strlen(__locale));
-				locale->u_id               = memcpy(locale->u_id, __locale, len);
-				locale->u_ct               = LC_ALL;
-				locale->u_lc               = _create_locale(locale->u_ct, __locale);
+				memset(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+				len                      = __mu0_const_cast__(___mu0_uint8_t___,  strlen(__locale));
+				memcpy(locale->u_id, __locale, len);
+				locale->u_ct             = LC_ALL;
+				locale->u_lc             = _create_locale(locale->u_ct, __locale);
 				if (__mu0_is_nullptr__(locale->u_lc)) {
 					free(locale);
-					locale                  = __mu0_nullptr__;
+					locale                = __mu0_nullptr__;
 				}
 			}
 			return locale;
