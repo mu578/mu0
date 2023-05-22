@@ -86,7 +86,7 @@ rule_objects::
 		fi; \
 		name=$$(basename $${src_file}); \
 		visibility="-fpic -fvisibility=default"; \
-		if [[ $(PLATFORM) = mingw* ]]; then \
+		if [ "$(PLATFORM)" = 'mingw*z' ]; then \
 			visibility="-fvisibility=default"; \
 		fi; \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= "$${name}; \
