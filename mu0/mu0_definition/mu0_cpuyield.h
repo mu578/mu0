@@ -167,7 +167,7 @@
 #	endif
 #	endif
 
-#	if !MU0_HAVE_CPUYIELD
+#	if !MU0_HAVE_CPUYIELD || !MU0_HAVE_THRYIELD
 #		error mu0_cpuyield.h
 #	endif
 

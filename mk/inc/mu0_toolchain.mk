@@ -100,6 +100,7 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			-Wno-newline-eof           \
 			-pedantic
 	endif
+
 else ifneq (,$(findstring linux, $(PLATFORM)))
 	CC           := clang
 	AR           := ar
@@ -113,6 +114,7 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 		-x c         \
 		-std=gnu11   \
 		-isysroot /
+
 else ifneq (,$(findstring mingw, $(PLATFORM)))
 	CC           := clang
 	AR           := ar
@@ -120,12 +122,14 @@ else ifneq (,$(findstring mingw, $(PLATFORM)))
 	LD           :=                   \
 		$(CC)                          \
 		-fuse-ld=lld                   \
+		-fopenmp=libomp                \
 		-target x86_64-pc-windows-msvc
 
 	LOCAL_CFLAGS +=                   \
 		-x c                           \
 		-std=c11                       \
 		-target x86_64-pc-windows-msvc
+
 else
 
 CC           := clang

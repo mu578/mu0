@@ -21,9 +21,22 @@
 #define MU0_ATOMIC_H 1
 
 #	undef  MU0_HAVE_ATOMIC
-#	define MU0_HAVE_ATOMIC 1
+#	undef  MU0_HAVE_ATSWAP
+#	undef  __mu0_atomic_sub_and_fetch__
+#	undef  __mu0_atomic_or_and_fetch__
+#	undef  __mu0_atomic_and_and_fetch__
+#	undef  __mu0_atomic_xor_and_fetch__
+#	undef  __mu0_atomic_nand_fetch__
+#	undef  __mu0_atomic_bool_compare_and_swap__
+#	undef  __mu0_atomic_val_compare_and_swap__
+#	undef  __mu0_atomic_swap__
+#	define MU0_HAVE_ATOMIC 0
+#	define MU0_HAVE_ATSWAP 0
 
-#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC
+#	if!MU0_HAVE_ATOMIC
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
+#	undef  MU0_HAVE_ATOMIC
+#	define MU0_HAVE_ATOMIC 1
 
 #	define __mu0_atomic_fetch_and_add__(_Sc, __ptr, __value, __result)                    \
 __mu0_scope_begin__                                                                      \
@@ -96,7 +109,12 @@ __mu0_scope_begin__                                                             
 	__result = __sync_val_compare_and_swap(__ptr, __oldval, __newval);                    \
 __mu0_scope_end__
 
-#	else
+#	endif
+#	endif
+
+#	if!MU0_HAVE_ATOMIC
+#	undef  MU0_HAVE_ATOMIC
+#	define MU0_HAVE_ATOMIC 1
 
 #	define __mu0_atomic_fetch_and_op__(_Sc, _Op, __ptr, __value, __result)                \
 __mu0_scope_begin__                                                                      \
@@ -213,29 +231,50 @@ __mu0_scope_end__
 
 #	endif
 
-#	if defined(__clang__) && __has_builtin(__sync_swap)
+
+#	if !MU0_HAVE_ATSWAP
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
+#	if __has_builtin(__sync_swap)
+#	undef  MU0_HAVE_ATSWAP
+#	define MU0_HAVE_ATSWAP 1
 #	define __mu0_atomic_swap__(_Sc, __ptr, __newval, __result)                            \
 __mu0_scope_begin__                                                                      \
 	__result = __sync_swap(__ptr, __newval)                                               \
 __mu0_scope_end__
-#	elif defined(__clang__) && __has_builtin(__atomic_exchange_n)
+#	elif __has_builtin(__atomic_exchange_n)
+#	undef  MU0_HAVE_ATSWAP
+#	define MU0_HAVE_ATSWAP 1
 #	define __mu0_atomic_swap__(_Sc, __ptr, __newval, __result)                            \
 __mu0_scope_begin__                                                                      \
 	__result = __atomic_exchange_n(__ptr, __newval, __ATOMIC_ACQ_REL);                    \
 __mu0_scope_end__
-#	elif defined(__clang__) && __has_builtin(__sync_lock_test_and_set)
+#	elif __has_builtin(__sync_lock_test_and_set)
+#	undef  MU0_HAVE_ATSWAP
+#	define MU0_HAVE_ATSWAP 1
 #	define __mu0_atomic_swap__(_Sc, __ptr, __newval, __result)                            \
 __mu0_scope_begin__                                                                      \
 	__mu0_barrier_acquire__();                                                            \
 		__result = __sync_lock_test_and_set(__ptr, __newval);                              \
 	__mu0_barrier_release__();                                                            \
 __mu0_scope_end__
-#	elif defined(__GNUC_ATOMICS)
+#	endif
+#	endif
+#	endif
+
+#	if !MU0_HAVE_ATSWAP
+#	if MU0_HAVE_CC_GNUCC
+#	if defined(__GNUC_ATOMICS)
+#	undef  MU0_HAVE_ATSWAP
+#	define MU0_HAVE_ATSWAP 1
 #	define __mu0_atomic_swap__(_Sc, __ptr, __newval, __result)                            \
 __mu0_scope_begin__                                                                      \
 	__result = __atomic_exchange_n(__ptr, __newval, __ATOMIC_ACQ_REL);                    \
 __mu0_scope_end__
-#	else
+#	endif
+#	endif
+#	endif
+
+#	if !MU0_HAVE_ATSWAP
 #	define __mu0_atomic_swap__(_Sc, __ptr, __newval, __result)                            \
 __mu0_scope_begin__                                                                      \
 	_Sc tmp;	                                                                             \

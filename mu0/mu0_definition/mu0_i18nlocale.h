@@ -34,15 +34,40 @@
 #	endif
 #	if MU0_HAVE_POSIX1_2001
 #	include <langinfo.h>
+#	include <alloca.h>
 #	endif
 #	if MU0_HAVE_POSIX1_2001 || MU0_HAVE_WINDOWS
 #	include <locale.h>
 #	endif
 #	include <string.h>
 
+#	undef  __mu0_alloca__
+#	undef  __mu0_malloc__
+#	undef  __mu0_free__
+#	undef  __mu0_memset__
+#	undef  __mu0_memcpy__
+
+#	undef  __mu0_strcoll_l__
+#	undef  __mu0_strcoll__
+#	undef  __mu0_strcmp__
+#	undef  __mu0_strlen__
+#	undef  __mu0_strncoll_l__
+#	undef  __mu0_strncoll__
+#	undef  __mu0_strncmp__
+
 #	if MU0_HAVE_WINDOWS
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
+
+#		define __mu0_malloc__      malloc
+#		define __mu0_free__        free
+#		define __mu0_memset__      memset
+#		define __mu0_memcpy__      memcpy
+#		define __mu0_strcoll_l__   _strcoll_l
+#		define __mu0_strcoll__     strcoll
+#		define __mu0_strlen__      strlen
+#		define __mu0_strncoll_l__  _strncoll_l
+#		define __mu0_strncoll__    _strncoll
 
 		struct ___mu0_i18nlocale_t___
 		{
@@ -63,18 +88,18 @@
 		__mu0_static_inline__
 		__mu0_i18nlocale_t__ __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ __base)
 		{
-			__mu0_i18nlocale_t__ locale = malloc(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+			__mu0_i18nlocale_t__ locale = __mu0_malloc__(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
 			___mu0_uint8_t___      len;
 			__mu0_unused__(__mask);
 			__mu0_unused__(__base);
 			if (__mu0_not_nullptr__(locale)) {
-				memset(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
-				len                      = __mu0_const_cast__(___mu0_uint8_t___,  strlen(__locale));
-				memcpy(locale->u_id, __locale, len);
+				__mu0_memset__(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+				len                      = __mu0_const_cast__(___mu0_uint8_t___, __mu0_strlen__(__locale));
+				__mu0_memcpy__(locale->u_id, __locale, len);
 				locale->u_ct             = LC_ALL;
 				locale->u_lc             = _create_locale(locale->u_ct, __locale);
 				if (__mu0_is_nullptr__(locale->u_lc)) {
-					free(locale);
+					__mu0_free__(locale);
 					locale                = __mu0_nullptr__;
 				}
 			}
@@ -120,7 +145,7 @@
 				if (__mu0_not_nullptr__(__locale->u_lc)) {
 					_free_locale(__locale->u_lc);
 				}
-				free(__locale);
+				__mu0_free__(__locale);
 				__locale = __mu0_nullptr__;
 				return 0;
 			}
@@ -133,10 +158,10 @@
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
 					__mu0_not_nullptr__(__locale->u_lc)
-						? _strcoll_l (__lhs, __rhs, __locale->u_lc)
-						: strcoll    (__lhs, __rhs)
+						? __mu0_strcoll_l__ (__lhs, __rhs, __locale->u_lc)
+						: __mu0_strcoll__   (__lhs, __rhs)
 				)
-				: strcoll(__lhs, __rhs)
+				: __mu0_strcoll__ (__lhs, __rhs)
 			);
 			return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 		}
@@ -147,10 +172,10 @@
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
 					__mu0_not_nullptr__(__locale->u_lc)
-						? _strncoll_l (__lhs, __rhs, __n, __locale->u_lc)
-						: _strncoll   (__lhs, __rhs, __n)
+						? __mu0_strncoll_l__ (__lhs, __rhs, __n, __locale->u_lc)
+						: __mu0_strncoll__   (__lhs, __rhs, __n)
 				)
-				: _strncoll(__lhs, __rhs, __n)
+				: __mu0_strncoll__ (__lhs, __rhs, __n)
 			);
 			return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 		}
@@ -158,7 +183,15 @@
 #	elif MU0_HAVE_POSIX1_2001
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
-#		include <alloca.h>
+
+#		define __mu0_alloca__     alloca
+#		define __mu0_memset__     memset
+#		define __mu0_memcpy__     memcpy
+#		define __mu0_strlen__     strlen
+#		define __mu0_strcoll_l__  strcoll_l
+#		define __mu0_strcoll__    strcoll
+#		define __mu0_strncoll_l__ ___mu0_strncoll_l___
+#		define __mu0_strncoll__   ___mu0_strncoll___
 
 		typedef locale_t __mu0_i18nlocale_t__;
 
@@ -169,18 +202,18 @@
 			const ___mu0_uint4_t___ need_b = (__rhs[__n] != '\0') ? 1 : 0;
 			___mu0_tint1_t___ * a, * b;
 			if (need_a) {
-				a      = alloca(__n + 1);
-				memcpy(a, __lhs, __n);
+				a      = __mu0_alloca__(__n + 1);
+				__mu0_memcpy__(a, __lhs, __n);
 				a[__n] = '\0';
 			}
 			if (need_b) {
-				b      = alloca(__n + 1);
-				memcpy(b, __rhs, __n);
+				b      = __mu0_alloca__(__n + 1);
+				__mu0_memcpy__(b, __rhs, __n);
 				b[__n] = '\0';
 			}
 			return __mu0_not_nullptr__(__locale)
-				? strcoll_l(need_a ? a : __lhs, need_b ? b : __rhs, __locale)
-				: strcoll  (need_a ? a : __lhs, need_b ? b : __rhs)
+				? __mu0_strcoll_l__ (need_a ? a : __lhs, need_b ? b : __rhs, __locale)
+				: __mu0_strcoll__   (need_a ? a : __lhs, need_b ? b : __rhs)
 			;
 		}
 
@@ -328,10 +361,10 @@
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
 					__mu0_not_nullptr__(__locale)
-						? strcoll_l (__lhs, __rhs, __locale)
-						: strcoll   (__lhs, __rhs)
+						? __mu0_strcoll_l__ (__lhs, __rhs, __locale)
+						: __mu0_strcoll__   (__lhs, __rhs)
 				)
-				: strcoll(__lhs, __rhs)
+				: __mu0_strcoll__ (__lhs, __rhs)
 			);
 			return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 		}
@@ -342,10 +375,10 @@
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
 					__mu0_not_nullptr__(__locale)
-						? ___mu0_strncoll_l___ (__lhs, __rhs, __n, __locale)
-						: ___mu0_strncoll___   (__lhs, __rhs, __n)
+						? __mu0_strncoll_l__ (__lhs, __rhs, __n, __locale)
+						: __mu0_strncoll__   (__lhs, __rhs, __n)
 				)
-				: ___mu0_strncoll___(__lhs, __rhs, __n)
+				: __mu0_strncoll__(__lhs, __rhs, __n)
 			);
 			return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 		}
@@ -353,6 +386,9 @@
 #	else
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 0
+
+#		define __mu0_strcmp__  strcmp
+#		define __mu0_strncmp__ strncmp
 
 		typedef void * __mu0_i18nlocale_t__;
 
@@ -396,7 +432,7 @@
 		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, __mu0_i18nlocale_t__ __locale __mu0_nullable__)
 		{
 			__mu0_unused__(__locale);
-			const ___mu0_sint4_t___ r = strcmp(__lhs, __rhs);
+			const ___mu0_sint4_t___ r = __mu0_strcmp__ (__lhs, __rhs);
 			return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 		}
 
@@ -404,7 +440,7 @@
 		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, __mu0_i18nlocale_t__  __locale __mu0_nullable__)
 		{
 			__mu0_unused__(__locale);
-			const ___mu0_sint4_t___ r = strncmp(__lhs, __rhs, __n);
+			const ___mu0_sint4_t___ r = __mu0_strncmp__ (__lhs, __rhs, __n);
 			return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 		}
 
@@ -424,22 +460,22 @@
 		//#! XPG syntax:[language[territory[.codeset]][@modifier[+variant]]
 		__mu0_memset__(s_name, 0, __mu0_sizeof__(s_name));
 		if (__mu0_not_nullptr__(__lg)) {
-			k = strlen(__lg);
+			k = __mu0_strlen__(__lg);
 			if (k > 0) {
 				l  = k;
-				memcpy(s_name + p, __lg, l);
+				__mu0_memcpy__(s_name + p, __lg, l);
 				p += l;
 				if (__mu0_not_nullptr__(__cn)) {
-					k  = strlen(__cn);
+					k  = __mu0_strlen__(__cn);
 					if (k > 0) {
 						l  = __mu0_sizeof__(___mu0_tint1_t___);
-						memcpy(s_name + p, "_", __mu0_min__(6, l));
+						__mu0_memcpy__(s_name + p, "_", __mu0_min__(6, l));
 						p += l;
 						l  = k;
-						memcpy(s_name + p, __cn, __mu0_min__(16, l));
+						__mu0_memcpy__(s_name + p, __cn, __mu0_min__(16, l));
 						p += l;
 						l  =  __mu0_sizeof__(___mu0_tint1_t___) * 6;
-						memcpy(s_name + p, ".UTF-8", l);
+						__mu0_memcpy__(s_name + p, ".UTF-8", l);
 						have_name = 1;
 					}
 					if (__mu0_not_nullptr__(__md)) {
@@ -447,15 +483,15 @@
 						if (__mu0_not_nullptr__(variant)) {
 							k = variant - __md;
 						} else {
-							k = strlen(__md);
+							k = __mu0_strlen__(__md);
 						}
 						if (k > 0) {
 							p += l;
 							l  = __mu0_sizeof__(___mu0_tint1_t___);
-							memcpy(s_name + p, "@", l);
+							__mu0_memcpy__(s_name + p, "@", l);
 							p += l;
 							l  = k ;
-							memcpy(s_name + p, __md, __mu0_min__(16, l));
+							__mu0_memcpy__(s_name + p, __md, __mu0_min__(16, l));
 						}
 					}
 				}
