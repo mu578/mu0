@@ -105,15 +105,19 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 	CC           := clang
 	AR           := ar
 
-	LD           := \
-		$(CC)        \
-		-isysroot /  \
+	LD           :=         \
+		$(CC)                \
+		-isysroot /          \
 		-lm
 
-	LOCAL_CFLAGS += \
-		-x c         \
-		-std=gnu11   \
-		-isysroot /
+	LOCAL_CFLAGS +=         \
+		-x c                 \
+		-std=gnu11           \
+		-isysroot /          \
+		-Wall                \
+		-Wno-unused-function \
+		-Wno-newline-eof     \
+		-pedantic
 
 else ifneq (,$(findstring mingw, $(PLATFORM)))
 	CC           := clang
@@ -128,7 +132,11 @@ else ifneq (,$(findstring mingw, $(PLATFORM)))
 	LOCAL_CFLAGS +=                   \
 		-x c                           \
 		-std=c11                       \
-		-target x86_64-pc-windows-msvc
+		-target x86_64-pc-windows-msvc \
+		-Wall                          \
+		-Wno-unused-function           \
+		-Wno-newline-eof               \
+		-pedantic
 
 else
 
