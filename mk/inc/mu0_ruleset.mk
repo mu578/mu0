@@ -94,6 +94,9 @@ rule_objects::
 			$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*})_$(ARCH).o; \
 	done
 
+rule_show_buildir::
+	$(LS) $(LOCAL_BUILDDIR)
+
 rule_clean::
 	@$(RMDIR) $(LOCAL_BUILDDIR)
 	@find .. -name ".DS_Store" -exec rm -f {} \;

@@ -19,6 +19,7 @@ RMDIR                     ?= rm -Rf
 MV                        ?= mv -f
 CD                        ?= cd
 LNS                       ?= ln -s
+LS                        ?= ls -la
 
 ifeq ($(strip $(ARCH)),)
 ARCH                      := $(shell uname -m)
