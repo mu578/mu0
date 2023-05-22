@@ -73,7 +73,7 @@ rule_list_objects::
 	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 
 rule_buildir::
-	@$(MU0_CMD_MKDIR) -p $(LOCAL_BUILDDIR)
+	@$(MU0_CMD_MKDIR) $(LOCAL_BUILDDIR)
 
 rule_objects::
 	-@for src_file in $(LOCAL_SRC_FILES); do \
