@@ -44,7 +44,7 @@
 #		undef  MU0_HAVE_CONSOLE
 #		define MU0_HAVE_CONSOLE 1
 #		include <stdio.h>
-#		if MU0_HAVE_CC_MSVCC
+#		if MU0_HAVE_CC_MSVCC && !MU0_HAVE_CC_MSVCL
 #			define __mu0_console_log__(ARGS...) fprintf(stderr, ##ARGS)
 #			define __mu0_console_info__(...)                                  \
 				__mu0_console_set_color__(__mu0_console_color_green__);        \

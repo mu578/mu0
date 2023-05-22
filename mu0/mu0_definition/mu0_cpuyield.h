@@ -40,7 +40,7 @@
 #			define __mu0_cpu_yield__()    __yield()
 #		endif
 		__declspec(dllimport) void __stdcall Sleep(DWORD);
-		__declspec(dllimport) int  __stdcall SwitchToThread();
+		__declspec(dllimport) int  __stdcall SwitchToThread(void);
 #		if !MU0_HAVE_CPUYIELD
 #			define __mu0_cpu_yield__() if (!SwitchToThread()) { Sleep(0); } enum { /***/ }
 #		endif
@@ -61,7 +61,7 @@
 #		endif
 #		if MU0_HAVE_WINDOWS
 			__declspec(dllimport) void __stdcall Sleep(DWORD);
-			__declspec(dllimport) int  __stdcall SwitchToThread();
+			__declspec(dllimport) int  __stdcall SwitchToThread(void);
 #			undef  MU0_HAVE_THRYIELD
 #			define MU0_HAVE_THRYIELD 1
 #			define __mu0_thr_yield__() if (!SwitchToThread()) { Sleep(1); } enum { /***/ }
