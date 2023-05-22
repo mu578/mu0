@@ -421,7 +421,7 @@
 		___mu0_uint4_t___   have_name = 0;
 		___mu0_uint8_t___   k, l, p   = 0;
 
-		//#! XPG syntax:[__lg[___cn[.codeset]][@__md[+variant]]
+		//#! XPG syntax:[language[territory[.codeset]][@modifier[+variant]]
 		__mu0_memset__(s_name, 0, __mu0_sizeof__(s_name));
 		if (__mu0_not_nullptr__(__lg)) {
 			k = strlen(__lg);
