@@ -253,6 +253,7 @@
 
 #		elif !MU0_HAVE_MINGW && defined(NL_LOCALE_NAME)
 
+		__mu0_static_inline__
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
@@ -263,6 +264,7 @@
 
 #		elif !MU0_HAVE_MINGW && defined(_NL_LOCALE_NAME)
 
+		__mu0_static_inline__
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
@@ -273,6 +275,7 @@
 
 #		elif !MU0_HAVE_MINGW && defined(_NL_ITEM) && defined(_NL_ITEM_INDEX)
 
+		__mu0_static_inline__
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
@@ -283,6 +286,7 @@
 
 #		else
 
+		__mu0_static_inline__
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
 		{
 			__mu0_unused__(__category);
