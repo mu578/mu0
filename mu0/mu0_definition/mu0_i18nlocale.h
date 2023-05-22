@@ -17,6 +17,7 @@
 
 #include <mu0/mu0_definition/mu0_attribute.h>
 #include <mu0/mu0_definition/mu0_language.h>
+#include <mu0/mu0_definition/mu0_numeral.h>
 
 #ifndef MU0_I18NLOCALE_H
 #define MU0_I18NLOCALE_H 1
@@ -406,6 +407,74 @@
 			const ___mu0_sint4_t___ r = strncmp(__lhs, __rhs, __n);
 			return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 		}
+
+#	endif
+
+#	if MU0_HAVE_I18NLOCALE
+
+	__mu0_static_inline__
+	const ___mu0_tint1_t___ * __mu0_i18nlocale_id__(const ___mu0_tint1_t___ * __lg, const ___mu0_tint1_t___ * __cn, const ___mu0_tint1_t___ * __md __mu0_nullable__)
+	{
+		__mu0_static__
+		___mu0_tint1_t___   s_name[48];
+		___mu0_tint1_t___ * variant;
+		___mu0_uint4_t___     have_name = 0;
+		___mu0_uint8_t___    k, l, p   = 0;
+
+		//#! XPG syntax:[__lg[___cn[.codeset]][@__md[+variant]]
+		__mu0_memset__(s_name, 0, __mu0_sizeof__(s_name));
+		if (__mu0_not_nullptr__(__lg)) {
+			k = strlen(__lg);
+			if (k > 0) {
+				l  = k;
+				memcpy(s_name + p, __lg, l);
+				p += l;
+				if (__mu0_not_nullptr__(__cn)) {
+					k  = strlen(__cn);
+					if (k > 0) {
+						l  = __mu0_sizeof__(___mu0_tint1_t___);
+						memcpy(s_name + p, "_", __mu0_min__(6, l));
+						p += l;
+						l  = k;
+						memcpy(s_name + p, __cn, __mu0_min__(16, l));
+						p += l;
+						l  =  __mu0_sizeof__(___mu0_tint1_t___) * 6;
+						memcpy(s_name + p, ".UTF-8", l);
+						have_name = 1;
+					}
+					if (__mu0_not_nullptr__(__md)) {
+						variant = strchr(__md, '+');
+						if (__mu0_not_nullptr__(variant)) {
+							k = variant - __md;
+						} else {
+							k = strlen(__md);
+						}
+						if (k > 0) {
+							p += l;
+							l  = __mu0_sizeof__(___mu0_tint1_t___);
+							memcpy(s_name + p, "@", l);
+							p += l;
+							l  = k ;
+							memcpy(s_name + p, __md, __mu0_min__(16, l));
+						}
+					}
+				}
+			}
+		}
+		return (have_name == 1) ? s_name : __mu0_nullptr__;
+	}
+
+#	else
+
+	__mu0_static_inline__
+	const ___mu0_tint1_t___ * __mu0_i18nlocale_id__(const ___mu0_tint1_t___ * __lg, const ___mu0_tint1_t___ * __cn, const ___mu0_tint1_t___ * __md __mu0_nullable__)
+	{
+		__mu0_unused__(__lg);
+		__mu0_unused__(__cn);
+		__mu0_unused__(__md);
+
+		return __mu0_nullptr__;
+	}
 
 #	endif
 
