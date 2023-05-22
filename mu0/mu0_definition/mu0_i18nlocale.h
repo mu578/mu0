@@ -102,7 +102,7 @@
 			if (__mu0_is_nullptr__(__locale)) {
 				return setlocale(LC_ALL, __mu0_nullptr__);
 			}
-			return locale->u_id;
+			return __locale->u_id;
 		}
 
 		__mu0_static_inline__
