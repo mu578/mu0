@@ -117,7 +117,7 @@
 		{
 			if (__mu0_not_nullptr__(__locale)) {
 				if (__mu0_not_nullptr__(__locale->u_lc)) {
-					_free_locale(__locale->u_lc));
+					_free_locale(__locale->u_lc);
 				}
 				free(__locale);
 				__locale = __mu0_nullptr__;
