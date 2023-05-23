@@ -96,7 +96,7 @@ MU0_BEGIN_CDECL
 typedef long double                                    mu0_fpex_t;
 
 #	if MU0_USE_FLOAT128
-#	if   MU0_HAVE_CC_CLANG
+#	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
 #		if   !__is_identifier(_Float128) && defined(__FLT128_MAX__)
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1
@@ -147,7 +147,7 @@ typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; } mu0_cfp128_t;
 #	endif
 
 #	if MU0_USE_FLOAT64
-#	if   MU0_HAVE_CC_CLANG
+#	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
 #		if !__is_identifier(_Float64)
 #			undef  MU0_HAVE_FLOAT64
 #			define MU0_HAVE_FLOAT64 1
@@ -180,7 +180,7 @@ typedef struct { mu0_fp64_t u_re; mu0_fp64_t u_im; }   mu0_cfp64_t;
 #	endif
 
 #	if MU0_USE_FLOAT32
-#	if   MU0_HAVE_CC_CLANG
+#	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
 #		if !__is_identifier(_Float32)
 #			undef  MU0_HAVE_FLOAT32
 #			define MU0_HAVE_FLOAT32 1
@@ -213,7 +213,7 @@ typedef struct { mu0_fp32_t u_re; mu0_fp32_t u_im; }   mu0_cfp32_t;
 #	endif
 
 #	if MU0_USE_FLOAT16
-#	if   MU0_HAVE_CC_CLANG
+#	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
 #		if !__is_identifier(_Float16) && defined(__FLT16_MAX__)
 #			undef  MU0_HAVE_FLOAT16
 #			define MU0_HAVE_FLOAT16 1
