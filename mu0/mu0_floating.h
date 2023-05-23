@@ -97,7 +97,7 @@ typedef long double                                    mu0_fpex_t;
 
 #	if MU0_USE_FLOAT128
 #	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
-#		if   !__is_identifier(_Float128) && defined(__FLT128_MAX__)
+#		if   !__is_identifier(_Float128) && defined(__FLT128_MAX__) && __clang_major__ >= 16
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1
 			__mu0_extension__
@@ -214,7 +214,7 @@ typedef struct { mu0_fp32_t u_re; mu0_fp32_t u_im; }   mu0_cfp32_t;
 
 #	if MU0_USE_FLOAT16
 #	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
-#		if !__is_identifier(_Float16) && defined(__FLT16_MAX__)
+#		if !__is_identifier(_Float16) && defined(__FLT16_MAX__) && __clang_major__ >= 16
 #			undef  MU0_HAVE_FLOAT16
 #			define MU0_HAVE_FLOAT16 1
 			__mu0_extension__
@@ -222,7 +222,7 @@ typedef struct { mu0_fp32_t u_re; mu0_fp32_t u_im; }   mu0_cfp32_t;
 #		if MU0_HAVE_STDCOMPLEX
 			typedef _Float16 _Complex                     mu0_cfp16_t;
 #		endif
-#		elif !__is_identifier(__fp16) && defined(__FLT16_MAX__)
+#		elif !__is_identifier(__fp16) && defined(__FLT16_MAX__) && __clang_major__ >= 16
 #			undef  MU0_HAVE_FLOAT16
 #			define MU0_HAVE_FLOAT16 1
 			__mu0_extension__
