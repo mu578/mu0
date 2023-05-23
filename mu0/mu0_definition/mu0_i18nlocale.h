@@ -23,6 +23,19 @@
 #define MU0_I18NLOCALE_H 1
 
 #	undef  MU0_HAVE_I18NLOCALE
+#	undef  __mu0_alloca__
+#	undef  __mu0_malloc__
+#	undef  __mu0_free__
+#	undef  __mu0_memset__
+#	undef  __mu0_memcpy__
+
+#	undef  __mu0_strcoll_l__
+#	undef  __mu0_strcoll__
+#	undef  __mu0_strcmp__
+#	undef  __mu0_strlen__
+#	undef  __mu0_strncoll_l__
+#	undef  __mu0_strncoll__
+#	undef  __mu0_strncmp__
 #	define MU0_HAVE_I18NLOCALE 0
 
 #	if MU0_HAVE_POSIX1_2001 \
@@ -41,20 +54,7 @@
 #	endif
 #	include <string.h>
 
-#	undef  __mu0_alloca__
-#	undef  __mu0_malloc__
-#	undef  __mu0_free__
-#	undef  __mu0_memset__
-#	undef  __mu0_memcpy__
-
-#	undef  __mu0_strcoll_l__
-#	undef  __mu0_strcoll__
-#	undef  __mu0_strcmp__
-#	undef  __mu0_strlen__
-#	undef  __mu0_strncoll_l__
-#	undef  __mu0_strncoll__
-#	undef  __mu0_strncmp__
-
+#	if !MU0_HAVE_I18NLOCALE
 #	if MU0_HAVE_WINDOWS
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
@@ -180,7 +180,11 @@
 			return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 		}
 
-#	elif MU0_HAVE_POSIX1_2001
+#	endif
+#	endif
+
+#	if !MU0_HAVE_I18NLOCALE
+#	if MU0_HAVE_POSIX1_2001
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
 
@@ -237,6 +241,7 @@
 		}
 
 #		if !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX && !MU0_HAVE_MINGW
+
 		__mu0_static_inline__
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
 		{
@@ -383,10 +388,10 @@
 			return (r > 0) ? 1 : ((r < 0) ? -1 : 0);
 		}
 
-#	else
-#		undef  MU0_HAVE_I18NLOCALE
-#		define MU0_HAVE_I18NLOCALE 0
+#	endif
+#	endif
 
+#	if !MU0_HAVE_I18NLOCALE
 #		define __mu0_strcmp__  strcmp
 #		define __mu0_strncmp__ strncmp
 
@@ -500,7 +505,9 @@
 		return (have_name == 1) ? s_name : __mu0_nullptr__;
 	}
 
-#	else
+#	endif
+
+#	if !MU0_HAVE_I18NLOCALE
 
 	__mu0_static_inline__
 	const ___mu0_tint1_t___ * __mu0_i18nlocale_id__(const ___mu0_tint1_t___ * __lg, const ___mu0_tint1_t___ * __cn, const ___mu0_tint1_t___ * __md __mu0_nullable__)
