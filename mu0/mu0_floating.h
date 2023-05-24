@@ -146,13 +146,17 @@ typedef long double _Complex                           mu0_cfp128_t;
 #	endif
 
 #	if !MU0_HAVE_STDCOMPLEX
-typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; } mu0_cfp128_t;
-#	define mu0_cfp128(__re, __im) { (mu0_fp128_t)__re, (mu0_fp128_t)__im }
+typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; }   mu0_cfp128_t;
+#	if MU0_HAVE_C11
+#	define mu0_cfp128(__re, __im)                {         __mu0_const_cast__(mu0_fp128_t, __re),         __mu0_const_cast__(mu0_fp128_t, __im) }
+#	else
+#	define mu0_cfp128(__re, __im) (mu0_cfp128_t) { .u_re = __mu0_const_cast__(mu0_fp128_t, __re), .u_im = __mu0_const_cast__(mu0_fp128_t, __im) }
+#	endif
 #	else
 #	if __STDC_IEC_559_COMPLEX__
-#	define mu0_cfp128(__re, __im)  ((mu0_cfp128_t)((mu0_fp128_t)(__re) + _Imaginary_I * (mu0_fp128_t)(__im)))
+#	define mu0_cfp128(__re, __im) (__mu0_cast__(mu0_cfp128_t, (__mu0_const_cast__(mu0_fp128_t, __re) + _Imaginary_I * __mu0_const_cast__(mu0_fp128_t, __im))))
 #	else
-#	define mu0_cfp128(__re, __im)  ((mu0_cfp128_t)((mu0_fp128_t)(__re) + _Complex_I   * (mu0_fp128_t)(__im)))
+#	define mu0_cfp128(__re, __im) (__mu0_cast__(mu0_cfp128_t, (__mu0_const_cast__(mu0_fp128_t, __re) + _Complex_I   * __mu0_const_cast__(mu0_fp128_t, __im))))
 #	endif
 #	endif
 
@@ -187,12 +191,16 @@ typedef double _Complex                                mu0_cfp64_t;
 
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fp64_t u_re; mu0_fp64_t u_im; }   mu0_cfp64_t;
-#	define mu0_cfp64(__re, __im) { (mu0_fp64_t)__re, (mu0_fp64_t)__im }
+#	if MU0_HAVE_C11
+#	define mu0_cfp64(__re, __im)               {         __mu0_const_cast__(mu0_fp64_t, __re),         __mu0_const_cast__(mu0_fp64_t, __im) }
+#	else
+#	define mu0_cfp64(__re, __im) (mu0_cfp64_t) { .u_re = __mu0_const_cast__(mu0_fp64_t, __re), .u_im = __mu0_const_cast__(mu0_fp64_t, __im) }
+#	endif
 #	else
 #	if __STDC_IEC_559_COMPLEX__
-#	define mu0_cfp64(__re, __im)  ((mu0_cfp64_t)((mu0_fp64_t)(__re) + _Imaginary_I * (mu0_fp64_t)(__im)))
+#	define mu0_cfp64(__re, __im) (__mu0_cast__(mu0_cfp64_t, (__mu0_const_cast__(mu0_fp64_t, __re) + _Imaginary_I * __mu0_const_cast__(mu0_fp64_t, __im))))
 #	else
-#	define mu0_cfp64(__re, __im)  ((mu0_cfp64_t)((mu0_fp64_t)(__re) + _Complex_I   * (mu0_fp64_t)(__im)))
+#	define mu0_cfp64(__re, __im) (__mu0_cast__(mu0_cfp64_t, (__mu0_const_cast__(mu0_fp64_t, __re) + _Complex_I   * __mu0_const_cast__(mu0_fp64_t, __im))))
 #	endif
 #	endif
 
@@ -227,12 +235,16 @@ typedef float _Complex                                 mu0_cfp32_t;
 
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fp32_t u_re; mu0_fp32_t u_im; }   mu0_cfp32_t;
-#	define mu0_cfp32(__re, __im) { (mu0_fp32_t)__re, (mu0_fp32_t)__im }
+#	if MU0_HAVE_C11
+#	define mu0_cfp32(__re, __im)               {         __mu0_const_cast__(mu0_fp32_t, __re),         __mu0_const_cast__(mu0_fp32_t, __im) }
+#	else
+#	define mu0_cfp32(__re, __im) (mu0_cfp32_t) { .u_re = __mu0_const_cast__(mu0_fp32_t, __re), .u_im = __mu0_const_cast__(mu0_fp32_t, __im) }
+#	endif
 #	else
 #	if __STDC_IEC_559_COMPLEX__
-#	define mu0_cfp32(__re, __im)  ((mu0_cfp32_t)((mu0_fp32_t)(__re) + _Imaginary_I * (mu0_fp32_t)(__im)))
+#	define mu0_cfp32(__re, __im) (__mu0_cast__(mu0_cfp32_t, (__mu0_const_cast__(mu0_fp32_t, __re) + _Imaginary_I * __mu0_const_cast__(mu0_fp32_t, __im))))
 #	else
-#	define mu0_cfp32(__re, __im)  ((mu0_cfp32_t)((mu0_fp32_t)(__re) + _Complex_I   * (mu0_fp32_t)(__im)))
+#	define mu0_cfp32(__re, __im) (__mu0_cast__(mu0_cfp32_t, (__mu0_const_cast__(mu0_fp32_t, __re) + _Complex_I   * __mu0_const_cast__(mu0_fp32_t, __im))))
 #	endif
 #	endif
 
@@ -277,12 +289,16 @@ typedef float _Complex                                 mu0_cfp16_t;
 
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
-#	define mu0_cfp16(__re, __im) { (mu0_fp16_t)__re, (mu0_fp16_t)__im }
+#	if MU0_HAVE_C11
+#	define mu0_cfp16(__re, __im)               {         __mu0_const_cast__(mu0_fp16_t, __re),         __mu0_const_cast__(mu0_fp16_t, __im) }
+#	else
+#	define mu0_cfp16(__re, __im) (mu0_cfp16_t) { .u_re = __mu0_const_cast__(mu0_fp16_t, __re), .u_im = __mu0_const_cast__(mu0_fp16_t, __im) }
+#	endif
 #	else
 #	if __STDC_IEC_559_COMPLEX__
-#	define mu0_cfp16(__re, __im)  ((mu0_cfp16_t)((mu0_fp16_t)(__re) + _Imaginary_I * (mu0_fp16_t)(__im)))
+#	define mu0_cfp16(__re, __im) (__mu0_cast__(mu0_cfp16_t, (__mu0_const_cast__(mu0_fp16_t, __re) + _Imaginary_I * __mu0_const_cast__(mu0_fp16_t, __im))))
 #	else
-#	define mu0_cfp16(__re, __im)  ((mu0_cfp16_t)((mu0_fp16_t)(__re) + _Complex_I   * (mu0_fp16_t)(__im)))
+#	define mu0_cfp16(__re, __im) (__mu0_cast__(mu0_cfp16_t, (__mu0_const_cast__(mu0_fp16_t, __re) + _Complex_I   * __mu0_const_cast__(mu0_fp16_t, __im))))
 #	endif
 #	endif
 
