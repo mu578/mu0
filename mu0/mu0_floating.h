@@ -369,6 +369,8 @@ __mu0_static__ const mu0_fp128_t mu0_fp128_nan  = NAN;
 __mu0_static__ const mu0_fp128_t mu0_fp128_inf  = INFINITY;
 __mu0_static__ const mu0_fp128_t mu0_fp128_zero = 0;
 __mu0_static__ const mu0_fp128_t mu0_fp128_one  = 1;
+__mu0_static__ const mu0_fp128_t mu0_fp128_two  = 2;
+__mu0_static__ const mu0_fp128_t mu0_fp128_ten  = 10;
 
 #	define __mu0_fp128_const__(c) c
 
@@ -380,6 +382,8 @@ __mu0_static__ const mu0_fp128_t mu0_fp128_nan  = NAN;
 __mu0_static__ const mu0_fp128_t mu0_fp128_inf  = INFINITY;
 __mu0_static__ const mu0_fp128_t mu0_fp128_zero = 0;
 __mu0_static__ const mu0_fp128_t mu0_fp128_one  = 1;
+__mu0_static__ const mu0_fp128_t mu0_fp128_two  = 2;
+__mu0_static__ const mu0_fp128_t mu0_fp128_ten  = 10;
 
 #	define __mu0_fp128_const__(c) c ## L
 
@@ -391,6 +395,8 @@ __mu0_static__ const mu0_fp64_t  mu0_fp64_nan   = NAN;
 __mu0_static__ const mu0_fp64_t  mu0_fp64_inf   = INFINITY;
 __mu0_static__ const mu0_fp64_t  mu0_fp64_zero  = 0;
 __mu0_static__ const mu0_fp64_t  mu0_fp64_one   = 1;
+__mu0_static__ const mu0_fp64_t  mu0_fp64_two   = 2;
+__mu0_static__ const mu0_fp64_t  mu0_fp64_ten   = 10;
 
 #	define __mu0_fp64_const__(c) c
 
@@ -400,6 +406,8 @@ __mu0_static__ const mu0_fp32_t  mu0_fp32_nan   = NAN;
 __mu0_static__ const mu0_fp32_t  mu0_fp32_inf   = INFINITY;
 __mu0_static__ const mu0_fp32_t  mu0_fp32_zero  = 0;
 __mu0_static__ const mu0_fp32_t  mu0_fp32_one   = 1;
+__mu0_static__ const mu0_fp32_t  mu0_fp32_two   = 2;
+__mu0_static__ const mu0_fp32_t  mu0_fp32_ten   = 10;
 
 #	define __mu0_fp32_const__(c) c ## f
 
@@ -411,6 +419,8 @@ __mu0_static__ const mu0_fp16_t  mu0_fp16_nan   = NAN;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_inf   = INFINITY;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_zero  = 0;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_one   = 1;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_two   = 2;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_ten   = 10;
 
 #	define __mu0_fp16_const__(c) c ## f
 
@@ -422,6 +432,8 @@ __mu0_static__ const mu0_fp16_t  mu0_fp16_nan   = NAN;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_inf   = INFINITY;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_zero  = 0;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_one   = 1;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_two   = 2;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_ten   = 10;
 
 #	define __mu0_fp16_const__(c) c ## f
 
