@@ -22,7 +22,7 @@ jobs:
       id: distcheck
       with:
         arch: aarch64
-        distro: ubuntu-latest
+        distro: ubuntu_latest
         githubToken: ${{ github.token }}
         shell: /bin/sh
         run: cd mk && make -f mu0.mk distcheck
