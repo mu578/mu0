@@ -11,9 +11,9 @@ defaults:
     shell: bash
 
 jobs:
-  aarch64_job:
+  build:
 
-    runs-on: ubuntu22.04
+    runs-on: ubuntu-latest
     name: Build on ubuntu22.04 arm64
     steps:
     - uses: actions/checkout@v3
