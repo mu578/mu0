@@ -26,6 +26,6 @@ jobs:
         githubToken: ${{ github.token }}
         run: cd mk && make -f mu0.mk distcheck
     - name: Run distcheck
-    - run: echo distcheck
+      run: echo distcheck
 
 # EOF
