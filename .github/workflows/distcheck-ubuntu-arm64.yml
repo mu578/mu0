@@ -13,8 +13,8 @@ defaults:
 jobs:
   aarch64_job:
 
-    runs-on: ubuntu_latest
-    name: Build on ubuntu_latest arm64
+    runs-on: ubuntu22.04
+    name: Build on ubuntu22.04 arm64
     steps:
     - uses: actions/checkout@v3
     - uses: uraimo/run-on-arch-action@v2.5.0
@@ -22,7 +22,7 @@ jobs:
       id: runcmd
       with:
         arch: aarch64
-        distro: ubuntu_latest
+        distro: ubuntu22.04
         githubToken: ${{ github.token }}
         run: cd mk && make -f mu0.mk distcheck
 
