@@ -1,4 +1,4 @@
-name: distcheck-ubuntu-amd64
+name: distcheck-ubuntu-arm64
 
 on:
   push:
