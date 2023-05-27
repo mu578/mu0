@@ -1,0 +1,29 @@
+name: distcheck-ubuntu-amd64
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  aarch64_job:
+
+    runs-on: ubuntu_latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: uraimo/run-on-arch-action@v2.5.0
+    - name: Run distcheck
+      id: distcheck
+        with:
+          arch: aarch64
+          distro: ubuntu_latest
+          githubToken: ${{ github.token }}
+          run: cd mk && make -f mu0.mk distcheck
+
+# EOF

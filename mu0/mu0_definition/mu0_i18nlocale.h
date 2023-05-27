@@ -31,6 +31,7 @@
 
 #	undef  __mu0_strcoll_l__
 #	undef  __mu0_strcoll__
+#	undef  __mu0_strchr__
 #	undef  __mu0_strcmp__
 #	undef  __mu0_strlen__
 #	undef  __mu0_strncoll_l__
@@ -59,15 +60,16 @@
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
 
-#		define __mu0_malloc__      malloc
-#		define __mu0_free__        free
-#		define __mu0_memset__      memset
-#		define __mu0_memcpy__      memcpy
-#		define __mu0_strcoll_l__   _strcoll_l
-#		define __mu0_strcoll__     strcoll
-#		define __mu0_strlen__      strlen
-#		define __mu0_strncoll_l__  _strncoll_l
-#		define __mu0_strncoll__    _strncoll
+#		define __mu0_malloc__     malloc
+#		define __mu0_free__       free
+#		define __mu0_memset__     memset
+#		define __mu0_memcpy__     memcpy
+#		define __mu0_strcoll_l__  _strcoll_l
+#		define __mu0_strcoll__    strcoll
+#		define __mu0_strchr__     strchr
+#		define __mu0_strlen__     strlen
+#		define __mu0_strncoll_l__ _strncoll_l
+#		define __mu0_strncoll__   _strncoll
 
 		struct ___mu0_i18nlocale_t___
 		{
@@ -194,6 +196,7 @@
 #		define __mu0_strlen__     strlen
 #		define __mu0_strcoll_l__  strcoll_l
 #		define __mu0_strcoll__    strcoll
+#		define __mu0_strchr__     strchr
 #		define __mu0_strncoll_l__ ___mu0_strncoll_l___
 #		define __mu0_strncoll__   ___mu0_strncoll___
 
@@ -484,7 +487,7 @@
 						have_name = 1;
 					}
 					if (__mu0_not_nullptr__(__md)) {
-						variant = strchr(__md, '+');
+						variant = __mu0_strchr__(__md, '+');
 						if (__mu0_not_nullptr__(variant)) {
 							k = variant - __md;
 						} else {
