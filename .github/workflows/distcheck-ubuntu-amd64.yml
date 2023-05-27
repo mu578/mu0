@@ -25,5 +25,6 @@ jobs:
         distro: ubuntu_latest
         githubToken: ${{ github.token }}
         run: cd mk && make -f mu0.mk distcheck
+    - run: echo distcheck
 
 # EOF
