@@ -21,9 +21,9 @@ jobs:
     - name: Run distcheck
       id: distcheck
         with:
-          arch: aarch64
-          distro: ubuntu_latest
-          githubToken: ${{ github.token }}
-          run: cd mk && make -f mu0.mk distcheck
+         arch: aarch64
+         distro: ubuntu_latest
+         githubToken: ${{ github.token }}
+         run: cd mk && make -f mu0.mk distcheck
 
 # EOF
