@@ -14,7 +14,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    name: Build on ubuntu22.04 arm64
+    name: Build on ubuntu-latest arm64
     steps:
     - uses: actions/checkout@v3
     - uses: uraimo/run-on-arch-action@v2.5.0
@@ -22,7 +22,7 @@ jobs:
       id: distcheck
       with:
         arch: aarch64
-        distro: ubuntu22.04
+        distro: ubuntu-latest
         githubToken: ${{ github.token }}
         shell: /bin/sh
         run: cd mk && make -f mu0.mk distcheck
