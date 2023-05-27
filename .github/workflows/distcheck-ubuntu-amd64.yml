@@ -18,14 +18,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: uraimo/run-on-arch-action@v2.5.0
-    - name: Run distcheck
+    - name: Run distcheck 1
       id: runcmd
       with:
         arch: aarch64
         distro: ubuntu_latest
         githubToken: ${{ github.token }}
         run: cd mk && make -f mu0.mk distcheck
-    - name: Run distcheck
-      run: echo distcheck
+
+    - name: Run distcheck 2
+      run: cd mk && make -f mu0.mk distcheck
 
 # EOF
