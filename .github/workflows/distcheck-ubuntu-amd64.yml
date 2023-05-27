@@ -14,11 +14,11 @@ jobs:
   aarch64_job:
 
     runs-on: ubuntu_latest
-
+    name: Build on ubuntu_latest arm64
     steps:
     - uses: actions/checkout@v3
     - uses: uraimo/run-on-arch-action@v2.5.0
-    - name: Run distcheck 1
+      name: Run distcheck 1
       id: runcmd
       with:
         arch: aarch64
