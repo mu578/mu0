@@ -66,6 +66,7 @@
 	|| defined(__ICC)            \
 	|| defined(ICC_VERSION)
 #		include <intrin.h>
+#		include <immintrin.h>
 #		if defined(_WIN32) || defined(_WIN64)
 #			include <BaseTsd.h>
 #		endif

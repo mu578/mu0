@@ -16,19 +16,6 @@
 //
 
 #include <mu0/mu0_random.h>
-#include <time.h>
-
-#	undef  __mu0_time_t__
-#	undef  __mu0_time__
-#	undef  __mu0_clock_t__
-#	undef  __mu0_clock__
-#	undef  __MU0_CLOCKS_PER_SECOND__
-
-#	define __mu0_time_t__            time_t
-#	define __mu0_time__              time
-#	define __mu0_clock_t__           clock_t
-#	define __mu0_clock__             clock
-#	define __MU0_CLOCKS_PER_SECOND__ CLOCKS_PER_SEC
 
 typedef struct
 {
@@ -48,15 +35,12 @@ mu0_uint32_t         g_mu0_pcg32_default = 0U;
 __mu0_static_inline__
 void mu0_pcg32_context_seed_build(mu0_uint64_t * seed, mu0_uint64_t * incr)
 {
-	__mu0_time_t__ tm = 0;
-	if (!(__mu0_time__(&tm))) {
-		tm = mu0_const_cast(
-			  __mu0_time_t__
-			, ((__mu0_clock__() + __mu0_uint32_const__(222111)) * __MU0_CLOCKS_PER_SECOND__)
-		);
-	}
-	*seed = mu0_uint64(tm % 1000);
-	*incr = (*seed >> 1U) | 1U;
+#	if MU0_HAVE_CPUCLICK
+	*seed = __mu0_cpuclick__()     / 100UL;
+#	else
+	*seed = __mu0_nanotime_act__() / 100000UL;
+#	endif
+	*incr = (*seed >> 1UL) | 1UL;
 }
 
 __mu0_static_inline__

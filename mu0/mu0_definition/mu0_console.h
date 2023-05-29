@@ -33,7 +33,7 @@
 		__mu0_static__ char const * const __mu0_console_color_cyan__   = "\033[0;36m";
 		__mu0_static__ char const * const __mu0_console_color_clear__  = "\033[0m";
 
-#		define __mu0_console_set_color__(_c)      fputs(_c, stderr);
+#		define __mu0_console_set_color__(_c)   fputs(_c, stderr);
 
 #	if MU0_HAVE_ANDROID
 #		undef  MU0_HAVE_CONSOLE

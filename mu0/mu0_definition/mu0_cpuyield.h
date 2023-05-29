@@ -22,31 +22,34 @@
 
 #	undef  MU0_HAVE_CPUYIELD
 #	undef  MU0_HAVE_THRYIELD
-#	undef  __mu0_cpu_yield__
-#	undef  __mu0_thr_yield__
+#	undef  MU0_HAVE_CPUCLICK
+#	undef  __mu0_cpuyield__
+#	undef  __mu0_thryield__
+#	undef  __mu0_cpuclick__
 #	define MU0_HAVE_CPUYIELD 0
 #	define MU0_HAVE_THRYIELD 0
+#	define MU0_HAVE_CPUCLICK 0
 
 #	if MU0_HAVE_CC_MSVCC
 #		if defined(_M_AMD64) || defined(_M_IX86)
 #			undef  MU0_HAVE_CPUYIELD
 #			define MU0_HAVE_CPUYIELD 1
 #			pragma intrinsic(_mm_pause)
-#			define __mu0_cpu_yield__()    _mm_pause()
+#			define __mu0_cpuyield__()    _mm_pause()
 #		elif defined(_M_ARM64) || defined(_M_ARM)
 #			undef  MU0_HAVE_CPUYIELD
 #			define MU0_HAVE_CPUYIELD 1
 #			pragma intrinsic(__yield)
-#			define __mu0_cpu_yield__()    __yield()
+#			define __mu0_cpuyield__()    __yield()
 #		endif
 		__declspec(dllimport) void __stdcall Sleep(DWORD);
 		__declspec(dllimport) int  __stdcall SwitchToThread(void);
 #		if !MU0_HAVE_CPUYIELD
-#			define __mu0_cpu_yield__() if (!SwitchToThread()) { Sleep(0); } enum { /***/ }
+#			define __mu0_cpuyield__() if (!SwitchToThread()) { Sleep(0); } enum { /***/ }
 #		endif
 #		undef  MU0_HAVE_THRYIELD
 #		define MU0_HAVE_THRYIELD 1
-#		define __mu0_thr_yield__()    if (!SwitchToThread()) { Sleep(1); } enum { /***/ }
+#		define __mu0_thryield__()    if (!SwitchToThread()) { Sleep(1); } enum { /***/ }
 #	endif
 
 #	if MU0_HAVE_CC_ITLCC
@@ -54,55 +57,55 @@
 #		define MU0_HAVE_CPUYIELD 1
 #		if defined(__MIC__)
 #			pragma intrinsic(_mm_delay_32)
-#			define __mu0_cpu_yield__() _mm_delay_32(128)
+#			define __mu0_cpuyield__() _mm_delay_32(128)
 #		else
 #			pragma intrinsic(_mm_pause)
-#			define __mu0_cpu_yield__() _mm_pause()
+#			define __mu0_cpuyield__() _mm_pause()
 #		endif
 #		if MU0_HAVE_WINDOWS
 			__declspec(dllimport) void __stdcall Sleep(DWORD);
 			__declspec(dllimport) int  __stdcall SwitchToThread(void);
 #			undef  MU0_HAVE_THRYIELD
 #			define MU0_HAVE_THRYIELD 1
-#			define __mu0_thr_yield__() if (!SwitchToThread()) { Sleep(1); } enum { /***/ }
+#			define __mu0_thryield__() if (!SwitchToThread()) { Sleep(1); } enum { /***/ }
 #		endif
 #	endif
 
 #	if MU0_HAVE_CC_ARMCC
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpu_yield__()       __yield()
+#		define __mu0_cpuyield__()       __yield()
 #	endif
 
 #	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG
 #	if   __has_builtin(__builtin_ia32_pause)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpu_yield__()       __builtin_ia32_pause()
+#		define __mu0_cpuyield__()       __builtin_ia32_pause()
 #	elif MU0_HAVE_IA64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpu_yield__()       __asm__ __volatile__ ("hint @pause")
+#		define __mu0_cpuyield__()       __asm__ __volatile__ ("hint @pause")
 #	elif MU0_HAVE_X86 || MU0_HAVE_X64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpu_yield__()       __asm__ __volatile__("pause\n")
+#		define __mu0_cpuyield__()       __asm__ __volatile__("pause\n")
 #	elif MU0_HAVE_ARM32 || MU0_HAVE_ARM64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		if MU0_HAVE_ARM64
-#			define __mu0_cpu_yield__()    __asm__ __volatile__("yield;" ::: "memory")
+#			define __mu0_cpuyield__()    __asm__ __volatile__("yield;" ::: "memory")
 #		else
 #			if __mu0_byte_order__ == __mu0_order_leen__
-#				define __mu0_cpu_yield__() __asm__ __volatile__("yield");
+#				define __mu0_cpuyield__() __asm__ __volatile__("yield");
 #			else
-#				define __mu0_cpu_yield__() __asm__ __volatile__("or 27, 27, 27" ::: "memory")
+#				define __mu0_cpuyield__() __asm__ __volatile__("or 27, 27, 27" ::: "memory")
 #			endif
 #		endif
 #	elif defined(__ppc__) || defined(__powerpc64__) || defined(__mips__)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpu_yield__()       __asm__ __volatile__("sync" ::: "memory");
+#		define __mu0_cpuyield__()       __asm__ __volatile__("sync" ::: "memory");
 #	endif
 #	endif
 
@@ -110,35 +113,35 @@
 #	if   __has_builtin(__builtin_ia32_pause)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpu_yield__()       __builtin_ia32_pause()
+#		define __mu0_cpuyield__()       __builtin_ia32_pause()
 #	elif MU0_HAVE_IA64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpu_yield__()       __asm__ __volatile__ ("hint @pause")
+#		define __mu0_cpuyield__()       __asm__ __volatile__ ("hint @pause")
 #	elif MU0_HAVE_X86 || MU0_HAVE_X64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpu_yield__()       __asm__ __volatile__("pause\n")
+#		define __mu0_cpuyield__()       __asm__ __volatile__("pause\n")
 #	elif MU0_HAVE_ARM32 || MU0_HAVE_ARM64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		if MU0_HAVE_ARM64
-#			define __mu0_cpu_yield__()    __asm__ __volatile__("yield;" ::: "memory")
+#			define __mu0_cpuyield__()    __asm__ __volatile__("yield;" ::: "memory")
 #		else
 #			if __mu0_byte_order__ == __mu0_order_leen__
-#				define __mu0_cpu_yield__() __asm__ __volatile__("yield");
+#				define __mu0_cpuyield__() __asm__ __volatile__("yield");
 #			else
-#				define __mu0_cpu_yield__() __asm__ __volatile__("or 27, 27, 27" ::: "memory")
+#				define __mu0_cpuyield__() __asm__ __volatile__("or 27, 27, 27" ::: "memory")
 #			endif
 #		endif
 #	elif defined(__mips64)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpu_yield__()       __asm__ __volatile__("pause")
+#		define __mu0_cpuyield__()       __asm__ __volatile__("pause")
 #	elif defined(__ppc__) || defined(__powerpc64__) || defined(__mips__) || defined(__mips)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpu_yield__()       __asm__ __volatile__("sync" ::: "memory");
+#		define __mu0_cpuyield__()       __asm__ __volatile__("sync" ::: "memory");
 #	endif
 #	endif
 
@@ -147,7 +150,7 @@
 #		include <threads.h>
 #		undef  MU0_HAVE_THRYIELD
 #		define MU0_HAVE_THRYIELD 1
-#		define __mu0_thr_yield__()       thrd_yield()
+#		define __mu0_thryield__()       thrd_yield()
 #	endif
 #	endif
 
@@ -157,14 +160,54 @@
 #		if !MU0_HAVE_CPUYIELD
 #			undef  MU0_HAVE_CPUYIELD
 #			define MU0_HAVE_CPUYIELD 1
-#			define __mu0_cpu_yield__()    sched_yield()
+#			define __mu0_cpuyield__()    sched_yield()
 #		endif
 #		if !MU0_HAVE_THRYIELD
 #			undef  MU0_HAVE_THRYIELD
 #			define MU0_HAVE_THRYIELD 1
-#			define __mu0_thr_yield__()    sched_yield()
+#			define __mu0_thryield__()    sched_yield()
 #		endif
 #	endif
+#	endif
+
+#	if !MU0_HAVE_CPUCLICK
+#	if MU0_HAVE_CC_MSVCC
+#	if MU0_HAVE_X86 || MU0_HAVE_X64 && !MU0_HAVE_IA64
+#		undef  MU0_HAVE_CPUCLICK
+#		define MU0_HAVE_CPUCLICK 1
+#		pragma intrinsic(__rdtsc)
+#		define __mu0_cpuclick__() __rdtsc()
+#	endif
+#	endif
+#	endif
+
+#	if !MU0_HAVE_CPUCLICK
+#	if MU0_HAVE_CC_ITLCC
+#		undef  MU0_HAVE_CPUCLICK
+#		define MU0_HAVE_CPUCLICK 1
+		__mu0_static_inline__
+		const ___mu0_uint8_t___ ___mu0_cpuclick___(void)
+		{
+			unsigned __int64 rv = 0UL;
+			_rdrand64_step(&rv);
+			return __mu0_const_cast__(___mu0_uint8_t___, rv);
+		}
+#		define __mu0_cpuclick__() ___mu0_cpuclick___()
+#	endif
+#	endif
+
+#	if !MU0_HAVE_CPUCLICK
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
+#	if __has_builtin(__builtin_readcyclecounter)
+#		undef  MU0_HAVE_CPUCLICK
+#		define MU0_HAVE_CPUCLICK 1
+#		define __mu0_cpuclick__() __builtin_readcyclecounter()
+#	endif
+#	endif
+#	endif
+
+#	if !MU0_HAVE_CPUCLICK
+#		define __mu0_cpuclick__() 0xBD1E836D24471959
 #	endif
 
 #	if !MU0_HAVE_CPUYIELD || !MU0_HAVE_THRYIELD
