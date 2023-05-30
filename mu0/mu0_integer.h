@@ -85,10 +85,12 @@ typedef   bool                      mu0_bool_t;
 #	define mu0_false                 false
 
 #	define mu0_uintmax(__x)          __mu0_cast__(mu0_uintmax_t, __x)
-#	define mu0_const_uintmax(__x)    __mu0_const_cast__(mu0_uinmax_t, __x)
+#	define mu0_const_uintmax(__x)    __mu0_const_cast__(mu0_uintmax_t, __x)
 
 #	define mu0_uint128(__x)          __mu0_cast__(mu0_uint128_t, __x)
-#	define mu0_const_uint128(__x)    __mu0_const_cast__(mu0_uin128_t, __x)
+#	define mu0_const_uint128(__x)    __mu0_const_cast__(mu0_uint128_t, __x)
+#	define mu0_sint128(__x)          __mu0_cast__(mu0_sint128_t, __x)
+#	define mu0_const_sint128(__x)    __mu0_const_cast__(mu0_sint128_t, __x)
 
 #	define mu0_uint64(__x)           __mu0_cast__(mu0_uint64_t, __x)
 #	define mu0_const_uint64(__x)     __mu0_const_cast__(mu0_uint64_t, __x)
