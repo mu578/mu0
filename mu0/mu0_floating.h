@@ -155,7 +155,7 @@ typedef long double _Complex                           mu0_cfp128_t;
 #	endif
 
 #	if !MU0_HAVE_STDCOMPLEX
-typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; }   mu0_cfp128_t;
+typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; } mu0_cfp128_t;
 #	if MU0_HAVE_C11
 #	define mu0_cfp128(__re, __im)                {         __mu0_const_cast__(mu0_fp128_t, __re),         __mu0_const_cast__(mu0_fp128_t, __im) }
 #	else
@@ -377,6 +377,7 @@ __mu0_static__ const mu0_fp128_t mu0_fp128_min  = FLT128_MIN;
 __mu0_static__ const mu0_fp128_t mu0_fp128_nan  = NAN;
 __mu0_static__ const mu0_fp128_t mu0_fp128_inf  = INFINITY;
 __mu0_static__ const mu0_fp128_t mu0_fp128_zero = 0;
+__mu0_static__ const mu0_fp128_t mu0_fp128_half = 0.5;
 __mu0_static__ const mu0_fp128_t mu0_fp128_one  = 1;
 __mu0_static__ const mu0_fp128_t mu0_fp128_two  = 2;
 __mu0_static__ const mu0_fp128_t mu0_fp128_ten  = 10;
@@ -390,6 +391,7 @@ __mu0_static__ const mu0_fp128_t mu0_fp128_min  = LDBL_MIN;
 __mu0_static__ const mu0_fp128_t mu0_fp128_nan  = NAN;
 __mu0_static__ const mu0_fp128_t mu0_fp128_inf  = INFINITY;
 __mu0_static__ const mu0_fp128_t mu0_fp128_zero = 0;
+__mu0_static__ const mu0_fp128_t mu0_fp128_half = 0.5L;
 __mu0_static__ const mu0_fp128_t mu0_fp128_one  = 1;
 __mu0_static__ const mu0_fp128_t mu0_fp128_two  = 2;
 __mu0_static__ const mu0_fp128_t mu0_fp128_ten  = 10;
@@ -403,6 +405,7 @@ __mu0_static__ const mu0_fp64_t  mu0_fp64_min   = DBL_MIN;
 __mu0_static__ const mu0_fp64_t  mu0_fp64_nan   = NAN;
 __mu0_static__ const mu0_fp64_t  mu0_fp64_inf   = INFINITY;
 __mu0_static__ const mu0_fp64_t  mu0_fp64_zero  = 0;
+__mu0_static__ const mu0_fp64_t  mu0_fp64_half  = 0.5;
 __mu0_static__ const mu0_fp64_t  mu0_fp64_one   = 1;
 __mu0_static__ const mu0_fp64_t  mu0_fp64_two   = 2;
 __mu0_static__ const mu0_fp64_t  mu0_fp64_ten   = 10;
@@ -414,6 +417,7 @@ __mu0_static__ const mu0_fp32_t  mu0_fp32_min   = FLT_MIN;
 __mu0_static__ const mu0_fp32_t  mu0_fp32_nan   = NAN;
 __mu0_static__ const mu0_fp32_t  mu0_fp32_inf   = INFINITY;
 __mu0_static__ const mu0_fp32_t  mu0_fp32_zero  = 0;
+__mu0_static__ const mu0_fp32_t  mu0_fp32_half  = 0.5f;
 __mu0_static__ const mu0_fp32_t  mu0_fp32_one   = 1;
 __mu0_static__ const mu0_fp32_t  mu0_fp32_two   = 2;
 __mu0_static__ const mu0_fp32_t  mu0_fp32_ten   = 10;
@@ -427,6 +431,7 @@ __mu0_static__ const mu0_fp16_t  mu0_fp16_min   = FLT16_MIN;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_nan   = NAN;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_inf   = INFINITY;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_zero  = 0;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_half  = 0.5;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_one   = 1;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_two   = 2;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_ten   = 10;
@@ -440,6 +445,7 @@ __mu0_static__ const mu0_fp16_t  mu0_fp16_min   = FLT_MIN;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_nan   = NAN;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_inf   = INFINITY;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_zero  = 0;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_half  = 0.5f;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_one   = 1;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_two   = 2;
 __mu0_static__ const mu0_fp16_t  mu0_fp16_ten   = 10;
