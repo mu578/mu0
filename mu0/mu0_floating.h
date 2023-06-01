@@ -62,16 +62,17 @@
 #	include <math.h>
 
 #	if MU0_USE_STDCOMPLEX
-#	if MU0_HAVE_POSIX1_2001 && !defined(__STDC_NO_COMPLEX__)
+#	if MU0_HAVE_POSIX1_2001
+#	if !defined(__STDC_NO_COMPLEX__)
 #		include <complex.h>
-#		undef  MU0_HAVE_STDCOMPLEX
-#		define MU0_HAVE_STDCOMPLEX 1
 #		if __STDC_IEC_559_COMPLEX__
-# 		if !defined(_Imaginary_I) && defined(_Complex_I)
-#			define _Imaginary_I _Complex_I
-#		else
+# 			if !defined(_Imaginary_I) && defined(_Complex_I)
+#				define _Imaginary_I _Complex_I
+#			endif
+#		endif
+# 		if (defined(_Imaginary_I) || defined(_Complex_I))
 #			undef  MU0_HAVE_STDCOMPLEX
-#			define MU0_HAVE_STDCOMPLEX 0
+#			define MU0_HAVE_STDCOMPLEX 1
 #		endif
 #	endif
 #	endif
