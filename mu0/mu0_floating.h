@@ -35,7 +35,7 @@
 #	undef  MU0_USE_STDCOMPLEX
 #	undef  MU0_HAVE_STDCOMPLEX
 
-#	define MU0_HAVE_FASTMATH   0
+#	define MU0_HAVE_FASTMATH   1
 
 #	define MU0_USE_FLOAT128    1
 #	define MU0_HAVE_FLOAT128   0
@@ -49,7 +49,7 @@
 #	define MU0_USE_FLOAT16     1
 #	define MU0_HAVE_FLOAT16    0
 
-#	define MU0_USE_STDCOMPLEX  0
+#	define MU0_USE_STDCOMPLEX  1
 #	define MU0_HAVE_STDCOMPLEX 0
 
 #	if MU0_USE_FLOAT128 || MU0_USE_FLOAT64 || MU0_USE_FLOAT32 || MU0_USE_FLOAT16
@@ -66,6 +66,14 @@
 #		include <complex.h>
 #		undef  MU0_HAVE_STDCOMPLEX
 #		define MU0_HAVE_STDCOMPLEX 1
+#		if __STDC_IEC_559_COMPLEX__
+# 		if !defined(_Imaginary_I) && defined(_Complex_I)
+#			define _Imaginary_I _Complex_I
+#		else
+#			undef  MU0_HAVE_STDCOMPLEX
+#			define MU0_HAVE_STDCOMPLEX 0
+#		endif
+#	endif
 #	endif
 #	endif
 
