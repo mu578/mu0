@@ -102,7 +102,8 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 
 	LD           :=         \
 		$(CC)                \
-		-lm
+		-lm                  \
+		-Wl,-force-load
 
 	LOCAL_CFLAGS +=         \
 		-x c                 \
