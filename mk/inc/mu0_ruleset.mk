@@ -45,7 +45,7 @@ rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE).a
-	@$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).a $(MU0_OBJ_FILES) 2>/dev/null
+	@$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).a $(MU0_OBJ_FILES)
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	-@if [ "$(PLATFORM)" = "darwin" ]; then \
