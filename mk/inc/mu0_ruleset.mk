@@ -35,9 +35,9 @@ MU0_CMD_CD         := cd
 MU0_CMD_LNS        := ln -s
 MU0_CMD_LS         := ls -la
 
-MU0_BUILD_FILES    :=
-MU0_OBJ_FILES      :=
-MU0_MISC_FILES     :=
+MU0_BUILD_FILES    := ""
+MU0_OBJ_FILES      := ""
+MU0_MISC_FILES     := ""
 
 all:
 
