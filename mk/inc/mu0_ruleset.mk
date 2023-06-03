@@ -73,7 +73,7 @@ rule_objects_cmds::
 			$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo; \
 	done
 
-rule_link_cmds::
+rule_link_cmds:
 	-@if [[ "$(ARCH)" -ne "fat" ]]; then \
 		$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(MU0_OBJ_FILES); \
 	fi
