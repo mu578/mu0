@@ -41,7 +41,7 @@ MU0_MISC_FILES     := ""
 
 all:
 
-rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds
+rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_link_cmds
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE).a
@@ -50,7 +50,7 @@ rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	-@if [ "$(PLATFORM)" = "darwin" ]; then \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE)-1.0.0.dylib; \
-		$(LD) $(LOCAL_LDFLAGS) -dynamiclib $(MU0_OBJ_FILES) \
+		$(LD) -dynamiclib $(MU0_OBJ_FILES) \
 			-install_name @rpath/lib$(LOCAL_MODULE).dylib \
 			-compatibility_version 1.0 \
 			-current_version       1.0.0 \
@@ -69,14 +69,10 @@ rule_objects_cmds::
 	done
 
 rule_link_cmds::
-	echo $(MU0_OBJ_FILES)
-	echo $(MU0_MISC_FILES)
-	echo $(LD)
-	echo $(LOCAL_LDFLAGS)
-	-@for cmd_file in $(MU0_MISC_FILES); do \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${cmd_file%.*}).cmd; \
-		echo $(LD) $(LOCAL_LDFLAGS) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${cmd_file%.*}).o \
-			-o $(LOCAL_BUILDDIR)/$$(basename $${cmd_file%.*}).cmd; \
+	-@for src_file in $(MU0_MISC_FILES); do \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
+		$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o \
+			-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 	done
 
 rule_list_objects::
