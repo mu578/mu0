@@ -41,7 +41,7 @@ MU0_MISC_FILES     := ""
 
 all:
 
-rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_link_cmds
+rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE).a
@@ -72,6 +72,7 @@ rule_link_cmds::
 	echo $(MU0_OBJ_FILES)
 	echo $(MU0_MISC_FILES)
 	echo $(LD)
+	echo $(LOCAL_LDFLAGS)
 	-@for cmd_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${cmd_file%.*}).cmd; \
 		echo $(LD) $(LOCAL_LDFLAGS) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${cmd_file%.*}).o \
