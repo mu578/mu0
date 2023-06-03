@@ -74,26 +74,24 @@ rule_objects_cmds::
 	done
 
 rule_linker_cmds::
-	@$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(MU0_OBJ_FILES)
-	-@if ["$(ARCH)" != "fat" ]; then \
+	-@if [ "$(ARCH)" != "fat" ]; then \
 		$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(MU0_OBJ_FILES); \
 	fi
-
-#	-@for src_file in $(MU0_MISC_FILES); do \
-#		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
-#		if [[ "$(ARCH)" -ne "fat" ]]; then \
-#			if case $(PLATFORM) in linu*) ;; *) false;; esac; then \
-#				$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
-#					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
-#			else \
-#				$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
-#					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
-#			fi; \
-#		else \
-#			$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
-#				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
-#		fi \
-#	done
+	-@for src_file in $(MU0_MISC_FILES); do \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
+		if [ "$(ARCH)" != "fat" ]; then \
+			if case $(PLATFORM) in linu*) ;; *) false;; esac; then \
+				$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+			else \
+				$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+			fi; \
+		else \
+			$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+		fi \
+	done
 
 rule_list_objects::
 	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
