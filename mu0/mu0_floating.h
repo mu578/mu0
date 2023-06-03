@@ -35,7 +35,7 @@
 #	undef  MU0_USE_STDCOMPLEX
 #	undef  MU0_HAVE_STDCOMPLEX
 
-#	define MU0_HAVE_FASTMATH   1
+#	define MU0_HAVE_FASTMATH   0
 
 #	define MU0_USE_FLOAT128    1
 #	define MU0_HAVE_FLOAT128   0
