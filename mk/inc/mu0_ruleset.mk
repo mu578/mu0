@@ -29,6 +29,7 @@ ifneq (,$(findstring mingw, $(PLATFORM)))
 endif
 
 MU0_CMD_RMDIR      := rm -Rf
+MU0_CMD_RMFILE     := rm -f
 MU0_CMD_MKDIR      := mkdir -p
 MU0_CMD_MV         := mv -f
 MU0_CMD_CD         := cd
@@ -41,11 +42,13 @@ MU0_MISC_FILES     := ""
 
 all:
 
-rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_link_cmds2
+rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_link_cmds
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE).a
-	@$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).a $(MU0_OBJ_FILES)
+	-@if [ "$(ARCH)" != "fat" ]; then \
+		$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).a $(MU0_OBJ_FILES); \
+	fi
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	-@if [ "$(PLATFORM)" = "darwin" ]; then \
@@ -65,22 +68,22 @@ rule_objects_cmds::
 	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file}); \
 		$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o \
-			$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o; \
+			$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo; \
 	done
 
 rule_link_cmds::
+	-@if [ "$(ARCH)" != "fat" ]; then \
+		$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(MU0_OBJ_FILES); \
+	fi
 	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
-		$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o \
-			-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
-	done
-
-rule_link_cmds2::
-	-@for src_file in $(MU0_MISC_FILES); do \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
-		@$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_obj.a $(MU0_OBJ_FILES); \
-		$(LD) -L$(LOCAL_BUILDDIR) -l$(LOCAL_MODULE)_obj $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o \
-			-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+		if [ "$(ARCH)" != "fat" ]; then \
+			$(LD) -L$(LOCAL_BUILDDIR) -l$(LOCAL_MODULE)_linker $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+		else \
+			$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+		fi \
 	done
 
 rule_list_objects::

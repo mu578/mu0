@@ -198,7 +198,7 @@
 
 #	if !MU0_HAVE_CPUCLICK
 #	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
-#	if __has_builtin(__builtin_readcyclecounter)
+#	if __has_builtin(__builtin_readcyclecounter_BUG)
 #		undef  MU0_HAVE_CPUCLICK
 #		define MU0_HAVE_CPUCLICK 1
 #		define __mu0_cpuclick__() __builtin_readcyclecounter()
