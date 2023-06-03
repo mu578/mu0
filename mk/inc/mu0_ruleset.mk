@@ -80,8 +80,13 @@ rule_link_cmds::
 	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
 		if [ "$(ARCH)" != "fat" ]; then \
-			$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
-				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+			if case $(PLATFORM) in linu*) ;; *) false;; esac; then \
+				$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+			else \
+				$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+			fi; \
 		else \
 			$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \

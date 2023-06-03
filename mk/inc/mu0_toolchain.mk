@@ -102,12 +102,13 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 
 	LD           :=         \
 		$(CC)                \
-		-lm                  \
-		-Wl,-force-load
+		-isysroot /          \
+		-lm
 
 	LOCAL_CFLAGS +=         \
 		-x c                 \
 		-std=gnu11           \
+		-isysroot /          \
 		-Wall                \
 		-Wno-unused-function \
 		-Wno-newline-eof     \
