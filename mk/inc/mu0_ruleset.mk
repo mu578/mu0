@@ -69,9 +69,10 @@ rule_objects_cmds::
 	done
 
 rule_link_cmds::
+	echo $(MU0_OBJ_FILES)
 	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
-		$(LD) -v $(LOCAL_LDFLAGS) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o \
+		$(LD) $(LOCAL_LDFLAGS) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o \
 			-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 	done
 
