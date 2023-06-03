@@ -48,6 +48,8 @@ rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE).a
 	-@if [ "$(ARCH)" != "fat" ]; then \
 		$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).a $(MU0_OBJ_FILES); \
+	else \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding."; \
 	fi
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
