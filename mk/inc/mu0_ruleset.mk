@@ -74,7 +74,8 @@ rule_objects_cmds::
 	done
 
 rule_linker_cmds::
-	-@if [[ "$(ARCH)" -ne "fat" ]]; then \
+	@$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(MU0_OBJ_FILES)
+	-@if ["$(ARCH)" != "fat" ]; then \
 		$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(MU0_OBJ_FILES); \
 	fi
 
