@@ -80,11 +80,9 @@ rule_link_cmds::
 	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
 		if [ "$(ARCH)" != "fat" ]; then \
-			echo $(LD); \
-			$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+			$(LD) -L$(LOCAL_BUILDDIR) -l$(LOCAL_MODULE)_linker $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 		else \
-			echo $(LD); \
 			$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 		fi \
