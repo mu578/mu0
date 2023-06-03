@@ -72,10 +72,10 @@ rule_link_cmds::
 	echo $(MU0_OBJ_FILES)
 	echo $(MU0_MISC_FILES)
 	echo $(LD)
-	-@for src_file in $(MU0_MISC_FILES); do \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
-		echo $(LD) $(LOCAL_LDFLAGS) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).o \
-			-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+	-@for cmd_file in $(MU0_MISC_FILES); do \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${cmd_file%.*}).cmd; \
+		echo $(LD) $(LOCAL_LDFLAGS) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${cmd_file%.*}).o \
+			-o $(LOCAL_BUILDDIR)/$$(basename $${cmd_file%.*}).cmd; \
 	done
 
 rule_list_objects::
