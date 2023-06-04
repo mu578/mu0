@@ -74,7 +74,7 @@ rule_objects_cmds::
 	done;
 
 rule_linker_cmds::
-	$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES); \
+	$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES)
 	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
 		if [ "$(ARCH)" = "fat" ]; then \
