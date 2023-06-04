@@ -46,11 +46,11 @@ rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= lib"$(LOCAL_MODULE).a
-	@if [ "$(ARCH)" = "fat" ]; then \
+	-@if [ "$(ARCH)" = "fat" ]; then \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding."; \
 	else \
 		$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)".a" $(MU0_OBJ_FILES); \
-	fi;
+	fi
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	-@if [ "$(PLATFORM)" = "darwin" ]; then \
@@ -60,7 +60,7 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 			-compatibility_version 1.0 \
 			-current_version       1.0.0 \
 			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
-	fi;
+	fi
 
 rule_list_cmds::
 	$(eval MU0_BUILD_FILES :=$(call walk-dir-recursive, $(LOCAL_MODULE_PATH)/misc))
@@ -71,10 +71,14 @@ rule_objects_cmds::
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= '"$$(basename $${src_file})"'"; \
 		$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o \
 			$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo; \
-	done;
+	done
 
 rule_linker_cmds::
-	$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES)
+	-@if [ "$(ARCH)" = "fat" ]; then \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding."; \
+	else \
+		$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES); \
+	fi;
 	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
 		if [ "$(ARCH)" = "fat" ]; then \
@@ -89,7 +93,7 @@ rule_linker_cmds::
 					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 			fi; \
 		fi; \
-	done;
+	done
 
 rule_list_objects::
 	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
@@ -115,7 +119,7 @@ rule_objects::
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$${name}"'"; \
 		$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
 			$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*})_$(ARCH).o; \
-	done;
+	done
 
 rule_show_buildir::
 	@$(MU0_CMD_LS) $(LOCAL_BUILDDIR)
