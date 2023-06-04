@@ -49,7 +49,7 @@ rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	-@if [ "$(ARCH)" = "fat" ]; then \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding."; \
 	else \
-		$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE).a $(MU0_OBJ_FILES); \
+		$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)".a" $(MU0_OBJ_FILES); \
 	fi
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
@@ -77,7 +77,7 @@ rule_linker_cmds::
 	-@if [ "$(ARCH)" = "fat" ]; then \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding."; \
 	else \
-		$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(MU0_OBJ_FILES); \
+		$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES); \
 	fi
 	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
