@@ -68,7 +68,7 @@ rule_list_cmds::
 
 rule_objects_cmds::
 	-@for src_file in $(MU0_MISC_FILES); do \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file}); \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= '"$$(basename $${src_file})"'"; \
 		$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o \
 			$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo; \
 	done
@@ -101,6 +101,7 @@ rule_buildir::
 	@$(MU0_CMD_MKDIR) $(LOCAL_BUILDDIR)
 
 rule_objects::
+	@echo $(LOCAL_SRC_FILES)
 	-@for src_file in $(LOCAL_SRC_FILES); do \
 		base=$${src_file#"$(LOCAL_MODULE_PATH)/sdk/vendor/"}; \
 		prefix=$${base%%/*}; \
@@ -114,7 +115,7 @@ rule_objects::
 		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
 			visibility="-fvisibility=default"; \
 		fi; \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= "$${name}; \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$${name}"'"; \
 		$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
 			$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*})_$(ARCH).o; \
 	done
