@@ -23,9 +23,9 @@ ifeq ($(strip $(LOCAL_MODULE_PATH)),)
 $(error LOCAL_MODULE_PATH is not set)
 endif
 
-LOCAL_BUILDDIR     := /tmp/build/$(PLATFORM)
+LOCAL_BUILDDIR     := /tmp/build/$(PLATFORM)/$(LOCAL_MODULE)
 ifneq (,$(findstring mingw, $(PLATFORM)))
-	LOCAL_BUILDDIR  := ../build/$(PLATFORM)
+	LOCAL_BUILDDIR  := ../Q
 endif
 
 MU0_CMD_RMDIR      := rm -Rf
