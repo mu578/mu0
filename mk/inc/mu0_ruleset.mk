@@ -25,7 +25,7 @@ endif
 
 LOCAL_BUILDDIR     := /tmp/build/$(PLATFORM)/$(LOCAL_MODULE)
 ifneq (,$(findstring mingw, $(PLATFORM)))
-	LOCAL_BUILDDIR  := ../Q
+	LOCAL_BUILDDIR  := ../build
 endif
 
 MU0_CMD_RMDIR      := rm -Rf
