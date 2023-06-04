@@ -46,10 +46,10 @@ rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE).a
-	-@if [ "$(ARCH)" != "fat" ]; then \
-		$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).a $(MU0_OBJ_FILES); \
-	else \
+	-@if [ "$(ARCH)" == "fat" ]; then \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding."; \
+	else \
+		$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).a $(MU0_OBJ_FILES); \
 	fi
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
@@ -74,12 +74,17 @@ rule_objects_cmds::
 	done
 
 rule_linker_cmds::
-	-@if [ "$(ARCH)" != "fat" ]; then \
+	-@if [ "$(ARCH)" == "fat" ]; then \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding."; \
+	else \
 		$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(MU0_OBJ_FILES); \
 	fi
 	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
-		if [ "$(ARCH)" != "fat" ]; then \
+		if [ "$(ARCH)" == "fat" ]; then \
+			$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+		else \
 			if case $(PLATFORM) in linu*) ;; *) false;; esac; then \
 				$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
@@ -87,9 +92,6 @@ rule_linker_cmds::
 				$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 			fi; \
-		else \
-			$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
-				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 		fi \
 	done
 
@@ -101,7 +103,6 @@ rule_buildir::
 	@$(MU0_CMD_MKDIR) $(LOCAL_BUILDDIR)
 
 rule_objects::
-	@echo $(LOCAL_SRC_FILES)
 	-@for src_file in $(LOCAL_SRC_FILES); do \
 		base=$${src_file#"$(LOCAL_MODULE_PATH)/sdk/vendor/"}; \
 		prefix=$${base%%/*}; \
