@@ -60,6 +60,14 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 			-compatibility_version 1.0 \
 			-current_version       1.0.0 \
 			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
+		otool -L    $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
+		lipo  -info $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
+	elif [ "$(PLATFORM)" = "linux" ]; then \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE).so.1.0.0; \
+		$(LD) -shared $(MU0_OBJ_FILES) \
+			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
+		ldd        $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
+		objdump -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
 	fi
 
 rule_list_cmds::
@@ -112,9 +120,15 @@ rule_objects::
 			prefix="$(LOCAL_MODULE)_$${prefix}_"; \
 		fi; \
 		name=$$(basename $${src_file}); \
-		visibility="-fpic -fvisibility=default"; \
-		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
+		if case $${name} in $(LOCAL_MODULE)*) ;; *) false;; esac; then \
 			visibility="-fvisibility=default"; \
+		else \
+			visibility="-fvisibility=hidden"; \
+		fi; \
+		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
+			visibility=$${visibility}; \
+		else \
+			visibility="-fpic "$${visibility}; \
 		fi; \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$${name}"'"; \
 		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
