@@ -25,7 +25,7 @@ endif
 
 LOCAL_BUILDDIR     := /tmp/build/$(PLATFORM)/$(LOCAL_MODULE)
 ifneq (,$(findstring mingw, $(PLATFORM)))
-	LOCAL_BUILDDIR  := ../build
+	LOCAL_BUILDDIR  := ../tmp
 endif
 
 MU0_CMD_RMDIR      := rm -Rf
@@ -117,8 +117,13 @@ rule_objects::
 			visibility="-fvisibility=default"; \
 		fi; \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$${name}"'"; \
-		$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
-			$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*})_$(ARCH).o; \
+		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
+			$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
+				$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*}).o; \
+		else \
+			$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
+				$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*})_$(ARCH).o; \
+		fi; \
 	done
 
 rule_show_buildir::
