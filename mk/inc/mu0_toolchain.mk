@@ -100,7 +100,7 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 	CC           := clang
 	AR           := ar
 
-	ifneq ("$(wildcard /usr/lib/libomp.so)","")
+	ifneq ("$(wildcard /usr/lib/libomp.so)", "")
 		LD        :=         \
 			$(CC)             \
 			-isysroot /       \
@@ -115,6 +115,25 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 	LOCAL_CFLAGS +=         \
 		-x c                 \
 		-std=gnu11           \
+		-isysroot /          \
+		-Wall                \
+		-Wno-unused-function \
+		-Wno-newline-eof     \
+		-pedantic
+
+else ifneq (,$(findstring freebsd, $(PLATFORM)))
+	CC           := clang
+	AR           := ar
+
+	LD        :=            \
+		$(CC)                \
+		-isysroot /          \
+		-fopenmp=libomp      \
+		-lm
+
+	LOCAL_CFLAGS +=         \
+		-x c                 \
+		-std=c11             \
 		-isysroot /          \
 		-Wall                \
 		-Wno-unused-function \
