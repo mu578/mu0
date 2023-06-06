@@ -67,7 +67,12 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 		$(LD) -shared $(MU0_OBJ_FILES) \
 			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
 		ldd        $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
+		objdump -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0 | grep 'NEEDED'; \
 		objdump -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
+	elif case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE)-1.0.0.dll; \
+		$(LD) -shared $(MU0_OBJ_FILES) \
+			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
 	fi
 
 rule_list_cmds::
