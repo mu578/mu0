@@ -100,12 +100,18 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 	CC           := clang
 	AR           := ar
 
-	LD           :=         \
-		$(CC)                \
-		-isysroot /          \
-		-fopenmp=libomp      \
-		-lm
-
+	ifneq ("$(wildcard /usr/lib/libomp.so)","")
+		LD        :=         \
+			$(CC)             \
+			-isysroot /       \
+			-fopenmp=libomp   \
+			-lm
+	else
+		LD        :=         \
+			$(CC)             \
+			-isysroot /       \
+			-lm
+	endif
 	LOCAL_CFLAGS +=         \
 		-x c                 \
 		-std=gnu11           \

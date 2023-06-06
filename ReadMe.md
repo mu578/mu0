@@ -28,7 +28,7 @@ llvm-14 is current on apt-get and does not support half-precision floating-point
 >$ sudo rm -f /usr/bin/clang
 >$ sudo ln -s /usr/bin/clang-16 /usr/bin/clang
 >$ sudo rm -f /usr/lib/libomp.so
->$ sudo ln -s /usr/lib/llvm-16/libomptarget.so.16 /usr/lib/libomp.so
+>$ sudo ln -s /usr/lib/llvm-16/lib/libomp.so /usr/lib/libomp.so
 ```
 
 # EOF

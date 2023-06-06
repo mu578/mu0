@@ -54,7 +54,7 @@ rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	-@if [ "$(PLATFORM)" = "darwin" ]; then \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE)-1.0.0.dylib; \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= 'lib"$(LOCAL_MODULE)"-1.0.0.dylib'"; \
 		$(LD) -dynamiclib $(MU0_OBJ_FILES) \
 			-install_name @rpath/lib$(LOCAL_MODULE).dylib \
 			-compatibility_version 1.0 \
@@ -63,14 +63,14 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 		otool -L    $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
 		lipo  -info $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
 	elif [ "$(PLATFORM)" = "linux" ]; then \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE).so.1.0.0; \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= 'lib"$(LOCAL_MODULE)".so.1.0.0'"; \
 		$(LD) -shared $(MU0_OBJ_FILES) \
 			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
 		ldd        $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
 		objdump -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0 | grep 'NEEDED'; \
 		objdump -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
 	elif case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE)-1.0.0.dll; \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= 'lib"$(LOCAL_MODULE)"-1.0.0.dll'"; \
 		$(LD) -shared $(MU0_OBJ_FILES) \
 			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
 		objdump -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
