@@ -103,7 +103,7 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 	LD           :=         \
 		$(CC)                \
 		-isysroot /          \
-		-fopenmp=libomp      \
+		-fopenmp=libiomp5    \
 		-lm
 
 	LOCAL_CFLAGS +=         \
