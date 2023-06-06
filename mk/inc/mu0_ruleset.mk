@@ -73,7 +73,7 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= "lib$(LOCAL_MODULE)-1.0.0.dll; \
 		$(LD) -shared $(MU0_OBJ_FILES) \
 			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
-		objdump -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll | grep 'NEEDED'; \
+		objdump -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
 		objdump -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
 	fi
 
