@@ -106,7 +106,7 @@ rule_show_buildir::
 else
 
 rule_list_objects::
-	$(eval MU0_BUILD_FILES := $(call walk-dir-recursigit statve, $(LOCAL_BUILDDIR)))
+	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_MODULE_PATH)/misc))
 	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 
 rule_objects::
