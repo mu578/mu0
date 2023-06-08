@@ -195,6 +195,7 @@ rule_linker_cmds::
 				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 		else \
 			if case $(PLATFORM) in linu*) ;; *) false;; esac; then \
+				echo "linux"; \
 				$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 			else \
