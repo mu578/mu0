@@ -58,26 +58,24 @@ rule_objects::
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo $(PLATFORM_VARIANT) 
-	@echo "LOCAL_PATH      := \044(call my-dir)"    >  $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
-	@echo "include \044(CLEAR_VARS)"                >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
-	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)"" >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
-	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""    >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
-	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""    >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
-	@echo "LOCAL_LDLIBS    := "                     >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
-	@echo "include \044(BUILD_STATIC_LIBRARY)"      >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
-	@$(NDK_BUILD)      $(NDK_ARGS)    APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
-	@$(MU0_CMD_RMFILE)                                 $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
+	@echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk" >  $(LOCAL_BUILDDIR)"/android-static.mk"
+	@echo "include \044(CLEAR_VARS)"                     >> $(LOCAL_BUILDDIR)"/android-static.mk"
+	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""      >> $(LOCAL_BUILDDIR)"/android-static.mk"
+	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""         >> $(LOCAL_BUILDDIR)"/android-static.mk"
+	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""         >> $(LOCAL_BUILDDIR)"/android-static.mk"
+	@echo "LOCAL_LDLIBS    := "                          >> $(LOCAL_BUILDDIR)"/android-static.mk"
+	@echo "include \044(BUILD_STATIC_LIBRARY)"           >> $(LOCAL_BUILDDIR)"/android-static.mk"
+	@$(NDK_BUILD)      $(NDK_ARGS)         APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-static.mk"
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
-	@echo "LOCAL_PATH      := \044(call my-dir)"    >  $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
-	@echo "include \044(CLEAR_VARS)"                >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
-	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)"" >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
-	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""    >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
-	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""    >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
-	@echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""   >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
-	@echo "include \044(BUILD_SHARED_LIBRARY)"      >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
-	@$(NDK_BUILD)      $(NDK_ARGS)    APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
-	@$(MU0_CMD_RMFILE)                                 $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
+	@echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk" >  $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "include \044(CLEAR_VARS)"                     >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""      >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""         >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""         >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""        >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "include \044(BUILD_SHARED_LIBRARY)"           >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@$(NDK_BUILD)      $(NDK_ARGS)         APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-shared.mk"
 
 rule_list_cmds::
 	$(eval MU0_BUILD_FILES :=$(call walk-dir-recursive, $(LOCAL_MODULE_PATH)/misc))
@@ -87,16 +85,15 @@ rule_objects_cmds::
 
 rule_linker_cmds::
 	-@i=1 ; for src_file in $(MU0_MISC_FILES); do \
-		echo "LOCAL_PATH      := \044(call my-dir)"                  >  $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
-		echo "include \044(CLEAR_VARS)"                              >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
-		echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""               >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
-		echo "LOCAL_SRC_FILES += "$${src_file}""                     >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
-		echo "LOCAL_MODULE    := "$$(basename $${src_file%.*}).cmd"" >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
-		echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""                  >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
-		echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""                 >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
-		echo "include \044(BUILD_EXECUTABLE)"                        >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
-		$(NDK_BUILD)       $(NDK_ARGS)                 APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
-		$(MU0_CMD_RMFILE)                                               $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
+		echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk"          >  $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
+		echo "include \044(CLEAR_VARS)"                              >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
+		echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""               >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
+		echo "LOCAL_SRC_FILES += "$${src_file}""                     >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
+		echo "LOCAL_MODULE    := "$$(basename $${src_file%.*}).cmd"" >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
+		echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""                  >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
+		echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""                 >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
+		echo "include \044(BUILD_EXECUTABLE)"                        >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
+		$(NDK_BUILD)       $(NDK_ARGS)                 APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
 		((i = i + 1)) ; \
 	done
 
@@ -191,14 +188,17 @@ rule_linker_cmds::
 	-@for src_file in $(MU0_MISC_FILES); do \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
 		if [ "$(ARCH)" = "fat" ]; then \
-			$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+			$(LD) $(MU0_OBJ_FILES) \
+				   $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 		else \
 			if case $(PLATFORM) in linu*) ;; *) false;; esac; then \
-				$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+				$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive \
+					   $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 			else \
-				$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+				$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a \
+					   $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 			fi; \
 		fi; \
