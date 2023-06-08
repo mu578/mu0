@@ -15,6 +15,14 @@
 # Copyright (C) 2023 mu578. All rights reserved.
 #
 
+ifeq ($(strip $(LOCAL_MODULE)),)
+	$(error LOCAL_MODULE is not set)
+endif
+
+ifeq ($(strip $(LOCAL_MODULE_PATH)),)
+	$(error LOCAL_MODULE_PATH is not set)
+endif
+
 ifeq ($(strip $(ARCH)),)
 ARCH                      := $(shell uname -m)
 endif
@@ -32,6 +40,14 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			PLATFORM_VARIANT := macos_xcode
 		endif
 	endif
+	ifneq (,$(findstring macos_android, $(PLATFORM_VARIANT)))
+		PLATFORM_VARIANT    := macos_android
+	endif
+endif
+
+LOCAL_BUILDDIR            := /tmp/build/$(PLATFORM)/$(LOCAL_MODULE)
+ifneq (,$(findstring mingw, $(PLATFORM)))
+	LOCAL_BUILDDIR         := ../tmp
 endif
 
 PLATFORM_ARCH             := -arch $(ARCH)
@@ -94,6 +110,37 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			-Wno-unused-function       \
 			-Wno-newline-eof           \
 			-pedantic
+	else ifneq (,$(findstring macos_android, $(PLATFORM_VARIANT)))
+		ifeq ($(strip $(NDK_BUILD)),)
+			ifeq ($(strip $(NDK_PATH)),)
+				NDK_PATH := $(LOCAL_MODULE_PATH)/../toolchains/android-ndk
+			endif
+			NDK_BUILD   := $(NDK_PATH)/ndk-build
+		endif
+		ifeq ("$(wildcard $(NDK_BUILD))", "")
+			$(error NDK_BUILD is not set)
+		endif
+
+		LOCAL_BUILDDIR := ../tmp
+		LOCAL_LDFLAGS  += -fopenmp=libomp -lm
+
+		LOCAL_CFLAGS   +=                    \
+			-x c                              \
+			-std=c11                          \
+			-fopenmp                          \
+			-Wall                             \
+			-Wno-unused-function              \
+			-Wno-newline-eof                  \
+			-pedantic
+
+		ifeq ($(strip $(NDK_ARGS)),)
+			NDK_ARGS    :=                    \
+				NDK_PROJECT_PATH=.             \
+				NDK_LIBS_OUT=$(LOCAL_BUILDDIR) \
+				NDK_OUT=$(LOCAL_BUILDDIR)      \
+				NDK_TOOLCHAIN_VERSION=clang    \
+				APP_PLATFORM=android-29
+		endif
 	endif
 
 else ifneq (,$(findstring linux, $(PLATFORM)))

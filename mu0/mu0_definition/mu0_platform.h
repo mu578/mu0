@@ -88,10 +88,10 @@
 #		undef  MU0_HAVE_NETBSD
 #		define MU0_HAVE_NETBSD       1
 #	elif defined(__DragonFly__)
-#		undef  MU0_HAVE_DRAGONFLYBSD 0
+#		undef  MU0_HAVE_DRAGONFLYBSD
 #		define MU0_HAVE_DRAGONFLYBSD 1
 #	elif defined(ANDROID) || defined(__ANDROID__)
-#		undef  MU0_HAVE_ANDROID      0
+#		undef  MU0_HAVE_ANDROID
 #		define MU0_HAVE_ANDROID      1
 #	elif defined(__linux__)
 #		undef  MU0_HAVE_LINUX
@@ -276,7 +276,7 @@
 #		define MU0_HAVE_ARCH  1
 #		define MU0_HAVE_ARMTB 0
 #		define MU0_HAVE_ARM32 1
-#		define MU0_HAVE_ARMV7 0
+#		define MU0_HAVE_ARMV6 0
 #		define MU0_HAVE_ARMV7 1
 #	endif
 

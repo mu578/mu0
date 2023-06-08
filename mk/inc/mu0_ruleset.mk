@@ -15,34 +15,116 @@
 # Copyright (C) 2023 mu578. All rights reserved.
 #
 
+ifeq ($(strip $(PLATFORM)),)
+	$(error PLATFORM is not set)
+endif
+
+ifeq ($(strip $(ARCH)),)
+	$(error ARCH is not set)
+endif
+
 ifeq ($(strip $(LOCAL_MODULE)),)
-$(error LOCAL_MODULE is not set)
+	$(error LOCAL_MODULE is not set)
 endif
 
 ifeq ($(strip $(LOCAL_MODULE_PATH)),)
-$(error LOCAL_MODULE_PATH is not set)
+	$(error LOCAL_MODULE_PATH is not set)
 endif
 
-LOCAL_BUILDDIR     := /tmp/build/$(PLATFORM)/$(LOCAL_MODULE)
-ifneq (,$(findstring mingw, $(PLATFORM)))
-	LOCAL_BUILDDIR  := ../tmp
+ifeq ($(strip $(LOCAL_BUILDDIR)),)
+	$(error LOCAL_BUILDDIR is not set)
 endif
 
-MU0_CMD_RMDIR      := rm -Rf
-MU0_CMD_RMFILE     := rm -f
-MU0_CMD_MKDIR      := mkdir -p
-MU0_CMD_MV         := mv -f
-MU0_CMD_CD         := cd
-MU0_CMD_LNS        := ln -s
-MU0_CMD_LS         := ls -la
+MU0_CMD_RMDIR     := rm -Rf
+MU0_CMD_RMFILE    := rm -f
+MU0_CMD_MKDIR     := mkdir -p
+MU0_CMD_MV        := mv -f
+MU0_CMD_CD        := cd
+MU0_CMD_LNS       := ln -s
+MU0_CMD_LS        := ls -la
 
-MU0_BUILD_FILES    := ""
-MU0_OBJ_FILES      := ""
-MU0_MISC_FILES     := ""
+MU0_BUILD_FILES   := ""
+MU0_OBJ_FILES     := ""
+MU0_MISC_FILES    := ""
 
 all:
+rule_list_cmds::
+rule_objects_cmds::
+rule_linker_cmds::
+rule_list_objects::
 
 rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_linker_cmds
+
+ifneq (,$(findstring macos_android, $(PLATFORM_VARIANT)))
+
+rule_list_objects::
+rule_objects::
+
+rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
+	@echo $(PLATFORM_VARIANT) 
+	@echo "LOCAL_PATH      := \044(call my-dir)"        >  $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
+	@echo "include \044(CLEAR_VARS)"                    >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
+	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""     >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
+	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""        >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
+	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""        >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
+	@echo "LOCAL_LDLIBS    := "                         >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
+	@echo "include \044(BUILD_STATIC_LIBRARY)"          >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
+	@$(NDK_BUILD)      $(NDK_ARGS) APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/.android-static.mk" clean
+	@$(NDK_BUILD) -B   $(NDK_ARGS) APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
+	@$(MU0_CMD_RMFILE) $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
+
+rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
+	@echo "LOCAL_PATH      := \044(call my-dir)"        >  $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
+	@echo "include \044(CLEAR_VARS)"                    >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
+	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""     >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
+	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""        >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
+	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""        >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
+	@echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""       >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
+	@echo "LOCAL_LDLIBS    := -landroid -llog"          >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
+	@echo "include \044(BUILD_SHARED_LIBRARY)"          >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
+	@$(NDK_BUILD)      $(NDK_ARGS) APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/.android-shared.mk" clean
+	@$(NDK_BUILD) -B   $(NDK_ARGS) APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
+	@$(MU0_CMD_RMFILE) $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
+
+rule_list_cmds::
+rule_objects_cmds::
+rule_linker_cmds::
+
+else
+
+rule_list_objects::
+	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
+	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
+
+rule_objects::
+	-@for src_file in $(LOCAL_SRC_FILES); do \
+		base=$${src_file#"$(LOCAL_MODULE_PATH)/sdk/vendor/"}; \
+		prefix=$${base%%/*}; \
+		if [ "$${#prefix}" -le 3 ]; then \
+			prefix=""; \
+		else \
+			prefix="$(LOCAL_MODULE)_$${prefix}_"; \
+		fi; \
+		name=$$(basename $${src_file}); \
+		if case $${name} in $(LOCAL_MODULE)*) ;; *) false;; esac; then \
+			visibility="-fvisibility=default"; \
+		else \
+			visibility="-fvisibility=hidden"; \
+		fi; \
+		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
+			visibility=$${visibility}; \
+		else \
+			visibility="-fpic "$${visibility}; \
+		fi; \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$${name}"'"; \
+		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
+			$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
+				$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*}).o; \
+		else \
+			$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
+				$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*})_$(ARCH).o; \
+		fi; \
+	done
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= lib"$(LOCAL_MODULE).a
@@ -109,42 +191,10 @@ rule_linker_cmds::
 		fi; \
 	done
 
-rule_list_objects::
-	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
-	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
+endif
 
 rule_buildir::
 	@$(MU0_CMD_MKDIR) $(LOCAL_BUILDDIR)
-
-rule_objects::
-	-@for src_file in $(LOCAL_SRC_FILES); do \
-		base=$${src_file#"$(LOCAL_MODULE_PATH)/sdk/vendor/"}; \
-		prefix=$${base%%/*}; \
-		if [ "$${#prefix}" -le 3 ]; then \
-			prefix=""; \
-		else \
-			prefix="$(LOCAL_MODULE)_$${prefix}_"; \
-		fi; \
-		name=$$(basename $${src_file}); \
-		if case $${name} in $(LOCAL_MODULE)*) ;; *) false;; esac; then \
-			visibility="-fvisibility=default"; \
-		else \
-			visibility="-fvisibility=hidden"; \
-		fi; \
-		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
-			visibility=$${visibility}; \
-		else \
-			visibility="-fpic "$${visibility}; \
-		fi; \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$${name}"'"; \
-		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
-			$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
-				$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*}).o; \
-		else \
-			$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
-				$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*})_$(ARCH).o; \
-		fi; \
-	done
 
 rule_show_buildir::
 	@$(MU0_CMD_LS) $(LOCAL_BUILDDIR)
