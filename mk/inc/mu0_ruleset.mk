@@ -106,7 +106,7 @@ rule_show_buildir::
 else
 
 rule_list_objects::
-	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_MODULE_PATH)/misc))
+	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
 	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 
 rule_objects::
@@ -195,7 +195,6 @@ rule_linker_cmds::
 				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 		else \
 			if case $(PLATFORM) in linu*) ;; *) false;; esac; then \
-				echo "linux"; \
 				$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 			else \
