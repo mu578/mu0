@@ -87,6 +87,7 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			-Wno-unused-function      \
 			-Wno-newline-eof          \
 			-pedantic
+
 	else ifneq (,$(findstring macos_xcode, $(PLATFORM_VARIANT)))
 		XCODE_VERS   := $(shell xcodebuild -sdk -version | grep "\- macOS " | cut -d "-" -f 1 | tr -d '[:space:]')
 		XCODE_PATH   := $(shell dirname `xcrun -f clang`)
@@ -110,6 +111,7 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			-Wno-unused-function       \
 			-Wno-newline-eof           \
 			-pedantic
+
 	else ifneq (,$(findstring macos_android, $(PLATFORM_VARIANT)))
 		ifeq ($(strip $(NDK_BUILD)),)
 			ifeq ($(strip $(NDK_PATH)),)
@@ -144,29 +146,42 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 	endif
 
 else ifneq (,$(findstring linux, $(PLATFORM)))
-	CC           := clang
-	AR           := ar
+	CC              := clang
+	AR              := ar
 
 	ifneq ("$(wildcard /usr/lib/libomp.so)", "")
-		LD        :=         \
-			$(CC)             \
-			-isysroot /       \
-			-fopenmp=libomp   \
+		LD           :=         \
+			$(CC)                \
+			-isysroot /          \
+			-fopenmp=libomp      \
 			-lm
+
+		LOCAL_CFLAGS +=         \
+			-x c                 \
+			-std=gnu11           \
+			-fopenmp             \
+			-isysroot /          \
+			-Wall                \
+			-Wno-unused-function \
+			-Wno-newline-eof     \
+			-pedantic
+
 	else
-		LD        :=         \
-			$(CC)             \
-			-isysroot /       \
+		LD           :=         \
+			$(CC)                \
+			-isysroot /          \
 			-lm
+
+		LOCAL_CFLAGS +=         \
+			-x c                 \
+			-std=gnu11           \
+			-isysroot /          \
+			-Wall                \
+			-Wno-unused-function \
+			-Wno-newline-eof     \
+			-pedantic
+
 	endif
-	LOCAL_CFLAGS +=         \
-		-x c                 \
-		-std=gnu11           \
-		-isysroot /          \
-		-Wall                \
-		-Wno-unused-function \
-		-Wno-newline-eof     \
-		-pedantic
 
 else ifneq (,$(findstring freebsd, $(PLATFORM)))
 	CC           := clang
