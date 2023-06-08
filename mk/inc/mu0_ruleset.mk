@@ -48,10 +48,6 @@ MU0_OBJ_FILES     := ""
 MU0_MISC_FILES    := ""
 
 all:
-rule_list_cmds::
-rule_objects_cmds::
-rule_linker_cmds::
-rule_list_objects::
 
 rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_linker_cmds
 
@@ -62,38 +58,55 @@ rule_objects::
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo $(PLATFORM_VARIANT) 
-	@echo "LOCAL_PATH      := \044(call my-dir)"        >  $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
-	@echo "include \044(CLEAR_VARS)"                    >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
-	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""     >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
-	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""        >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
-	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""        >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
-	@echo "LOCAL_LDLIBS    := "                         >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
-	@echo "include \044(BUILD_STATIC_LIBRARY)"          >> $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
-	@$(NDK_BUILD)      $(NDK_ARGS) APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/.android-static.mk" clean
-	@$(NDK_BUILD) -B   $(NDK_ARGS) APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
-	@$(MU0_CMD_RMFILE) $(LOCAL_MODULE_PATH)"/mk/.android-static.mk"
+	@echo "LOCAL_PATH      := \044(call my-dir)"    >  $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
+	@echo "include \044(CLEAR_VARS)"                >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
+	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)"" >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
+	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""    >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
+	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""    >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
+	@echo "LOCAL_LDLIBS    := "                     >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
+	@echo "include \044(BUILD_STATIC_LIBRARY)"      >> $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
+	@$(NDK_BUILD)      $(NDK_ARGS)    APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
+	@$(MU0_CMD_RMFILE)                                 $(LOCAL_MODULE_PATH)"/mk/._android-static.mk"
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
-	@echo "LOCAL_PATH      := \044(call my-dir)"        >  $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
-	@echo "include \044(CLEAR_VARS)"                    >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
-	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""     >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
-	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""        >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
-	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""        >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
-	@echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""       >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
-	@echo "LOCAL_LDLIBS    := -landroid -llog"          >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
-	@echo "include \044(BUILD_SHARED_LIBRARY)"          >> $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
-	@$(NDK_BUILD)      $(NDK_ARGS) APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/.android-shared.mk" clean
-	@$(NDK_BUILD) -B   $(NDK_ARGS) APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
-	@$(MU0_CMD_RMFILE) $(LOCAL_MODULE_PATH)"/mk/.android-shared.mk"
+	@echo "LOCAL_PATH      := \044(call my-dir)"    >  $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
+	@echo "include \044(CLEAR_VARS)"                >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
+	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)"" >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
+	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""    >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
+	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""    >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
+	@echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""   >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
+	@echo "include \044(BUILD_SHARED_LIBRARY)"      >> $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
+	@$(NDK_BUILD)      $(NDK_ARGS)    APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
+	@$(MU0_CMD_RMFILE)                                 $(LOCAL_MODULE_PATH)"/mk/._android-shared.mk"
 
 rule_list_cmds::
+	$(eval MU0_BUILD_FILES :=$(call walk-dir-recursive, $(LOCAL_MODULE_PATH)/misc))
+	$(eval MU0_MISC_FILES  :=$(filter %-main.c, $(MU0_BUILD_FILES)))
+
 rule_objects_cmds::
+
 rule_linker_cmds::
+	-@i=1 ; for src_file in $(MU0_MISC_FILES); do \
+		echo "LOCAL_PATH      := \044(call my-dir)"                  >  $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
+		echo "include \044(CLEAR_VARS)"                              >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
+		echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""               >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
+		echo "LOCAL_SRC_FILES += "$${src_file}""                     >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
+		echo "LOCAL_MODULE    := "$$(basename $${src_file%.*}).cmd"" >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
+		echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""                  >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
+		echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""                 >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
+		echo "include \044(BUILD_EXECUTABLE)"                        >> $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
+		$(NDK_BUILD)       $(NDK_ARGS)                 APP_BUILD_SCRIPT=$(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
+		$(MU0_CMD_RMFILE)                                               $(LOCAL_MODULE_PATH)"/mk/._android-cmd"$${i}".mk"; \
+		((i = i + 1)) ; \
+	done
+
+rule_show_buildir::
+	@$(MU0_CMD_LS) $(LOCAL_BUILDDIR)/android/local
 
 else
 
 rule_list_objects::
-	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
+	$(eval MU0_BUILD_FILES := $(call walk-dir-recursigit statve, $(LOCAL_BUILDDIR)))
 	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 
 rule_objects::
@@ -191,13 +204,13 @@ rule_linker_cmds::
 		fi; \
 	done
 
+rule_show_buildir::
+	@$(MU0_CMD_LS) $(LOCAL_BUILDDIR)
+
 endif
 
 rule_buildir::
 	@$(MU0_CMD_MKDIR) $(LOCAL_BUILDDIR)
-
-rule_show_buildir::
-	@$(MU0_CMD_LS) $(LOCAL_BUILDDIR)
 
 rule_clean::
 	@$(MU0_CMD_RMDIR) $(LOCAL_BUILDDIR)

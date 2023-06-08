@@ -41,7 +41,9 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		endif
 	endif
 	ifneq (,$(findstring macos_android, $(PLATFORM_VARIANT)))
-		PLATFORM_VARIANT    := macos_android
+		ifeq ("$(wildcard $(LOCAL_MODULE_PATH)/../toolchains/android-ndk)", "")
+			PLATFORM_VARIANT := macos_xcode
+		endif
 	endif
 endif
 
@@ -113,36 +115,25 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			-pedantic
 
 	else ifneq (,$(findstring macos_android, $(PLATFORM_VARIANT)))
-		ifeq ($(strip $(NDK_BUILD)),)
-			ifeq ($(strip $(NDK_PATH)),)
-				NDK_PATH := $(LOCAL_MODULE_PATH)/../toolchains/android-ndk
-			endif
-			NDK_BUILD   := $(NDK_PATH)/ndk-build
-		endif
-		ifeq ("$(wildcard $(NDK_BUILD))", "")
-			$(error NDK_BUILD is not set)
-		endif
-
-		LOCAL_BUILDDIR := ../tmp
-		LOCAL_LDFLAGS  += -fopenmp=libomp -lm
-
-		LOCAL_CFLAGS   +=                    \
-			-x c                              \
-			-std=c11                          \
-			-fopenmp                          \
-			-Wall                             \
-			-Wno-unused-function              \
-			-Wno-newline-eof                  \
+		NDK_PATH      := $(LOCAL_MODULE_PATH)/../toolchains/android-ndk
+		NDK_BUILD     := $(NDK_PATH)/ndk-build
+		LOCAL_LDFLAGS += -landroid -llog -fopenmp=libomp -lm
+		LOCAL_CFLAGS  +=                          \
+			-x c                                   \
+			-std=c11                               \
+			-fopenmp                               \
+			-Wall                                  \
+			-Wno-unused-function                   \
+			-Wno-newline-eof                       \
 			-pedantic
 
-		ifeq ($(strip $(NDK_ARGS)),)
-			NDK_ARGS    :=                    \
-				NDK_PROJECT_PATH=.             \
-				NDK_LIBS_OUT=$(LOCAL_BUILDDIR) \
-				NDK_OUT=$(LOCAL_BUILDDIR)      \
-				NDK_TOOLCHAIN_VERSION=clang    \
-				APP_PLATFORM=android-29
-		endif
+		NDK_ARGS     :=                           \
+			NDK_PROJECT_PATH=$(LOCAL_MODULE_PATH)  \
+			NDK_OUT=$(LOCAL_BUILDDIR)/android      \
+			NDK_LIBS_OUT=$(LOCAL_BUILDDIR)/android \
+			NDK_TOOLCHAIN_VERSION=clang            \
+			APP_PLATFORM=android-29
+
 	endif
 
 else ifneq (,$(findstring linux, $(PLATFORM)))
