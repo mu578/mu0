@@ -49,15 +49,15 @@ MU0_MISC_FILES    := ""
 
 all:
 
-rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_linker_cmds
-
 ifneq (,$(findstring macos_android, $(PLATFORM_VARIANT)))
 
+rule_all:: rule_static rule_linker_cmds
+
 rule_list_objects::
+
 rule_objects::
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
-	@echo $(PLATFORM_VARIANT) 
 	@echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk" >  $(LOCAL_BUILDDIR)"/android-static.mk"
 	@echo "include \044(CLEAR_VARS)"                     >> $(LOCAL_BUILDDIR)"/android-static.mk"
 	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""      >> $(LOCAL_BUILDDIR)"/android-static.mk"
@@ -85,6 +85,9 @@ rule_objects_cmds::
 
 rule_linker_cmds::
 	-@i=1 ; for src_file in $(MU0_MISC_FILES); do \
+		if [ -z "$${src_file}" ]; then \
+			break; \
+		fi; \
 		echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk"          >  $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
 		echo "include \044(CLEAR_VARS)"                              >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
 		echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""               >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
@@ -102,12 +105,17 @@ rule_show_buildir::
 
 else
 
+rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_linker_cmds
+
 rule_list_objects::
 	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
 	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 
 rule_objects::
 	-@for src_file in $(LOCAL_SRC_FILES); do \
+		if [ -z "$${src_file}" ]; then \
+			break; \
+		fi; \
 		base=$${src_file#"$(LOCAL_MODULE_PATH)/sdk/vendor/"}; \
 		prefix=$${base%%/*}; \
 		if [ "$${#prefix}" -le 3 ]; then \
@@ -174,6 +182,9 @@ rule_list_cmds::
 
 rule_objects_cmds::
 	-@for src_file in $(MU0_MISC_FILES); do \
+		if [ -z "$${src_file}" ]; then \
+			break; \
+		fi; \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= '"$$(basename $${src_file})"'"; \
 		$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o \
 			$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo; \
@@ -186,6 +197,9 @@ rule_linker_cmds::
 		$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES); \
 	fi;
 	-@for src_file in $(MU0_MISC_FILES); do \
+		if [ -z "$${src_file}" ]; then \
+			break; \
+		fi; \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
 		if [ "$(ARCH)" = "fat" ]; then \
 			$(LD) $(MU0_OBJ_FILES) \

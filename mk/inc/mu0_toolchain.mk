@@ -47,6 +47,12 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 	endif
 endif
 
+ifeq (,$(findstring darwin, $(PLATFORM)))
+	ifneq (,$(findstring macos, $(PLATFORM_VARIANT)))
+		PLATFORM_VARIANT    :=
+	endif
+endif
+
 LOCAL_BUILDDIR            := /tmp/build/$(PLATFORM)/$(LOCAL_MODULE)
 ifneq (,$(findstring mingw, $(PLATFORM)))
 	LOCAL_BUILDDIR         := ../tmp

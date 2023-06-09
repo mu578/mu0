@@ -1,6 +1,6 @@
 # mu0
 
-Current toolchain Mac-M2 host:
+Getting current toolchain Mac-M2 host:
 
 ```
 >$ sudo port install clang-16
@@ -9,7 +9,27 @@ Current toolchain Mac-M2 host:
 >$ sudo port select --set clang mp-clang-16
 ```
 
-Current toolchain Ubuntu-arm64 host:
+Makefile platform variants on Mac-M2 host:
+
+```
+PLATFORM_VARIANT := macos_macport
+PLATFORM_VARIANT := macos_macport.arm64
+PLATFORM_VARIANT := macos_macport.x86_64
+PLATFORM_VARIANT := macos_macport.fat
+
+# Default openmp disabled, no half-precision floating-point.
+PLATFORM_VARIANT := macos_xcode
+
+# Expecting install-path mu0/../toolchains/android-ndk
+PLATFORM_VARIANT := macos_android
+PLATFORM_VARIANT := macos_android.arm64
+PLATFORM_VARIANT := macos_android.armv7
+PLATFORM_VARIANT := macos_android.x86_64
+PLATFORM_VARIANT := macos_android.all
+
+```
+
+Getting current toolchain Ubuntu-arm64 host:
 
 ```
 >$ sudo apt-get install make
@@ -17,8 +37,7 @@ Current toolchain Ubuntu-arm64 host:
 >$ sudo apt-get install libomp-dev
 ```
 
-or for a newer LLVM toolchain (recommended). 
-llvm-14 is current on apt-get and does not support half-precision floating-point.
+Or for a newer LLVM toolchain (recommended). llvm-14 is current on apt-get and does not support half-precision floating-point.
 
 ```
 >$ sudo apt-get install make
@@ -27,6 +46,8 @@ llvm-14 is current on apt-get and does not support half-precision floating-point
 >$ sudo bash ./llvm.sh 16 all
 >$ sudo rm -f /usr/bin/clang
 >$ sudo ln -s /usr/bin/clang-16 /usr/bin/clang
+>$ sudo rm -f /usr/bin/clang++
+>$ sudo ln -s /usr/bin/clang++-16 /usr/bin/clang++
 >$ sudo rm -f /usr/lib/libomp.so
 >$ sudo ln -s /usr/lib/llvm-16/lib/libomp.so /usr/lib/libomp.so
 ```
