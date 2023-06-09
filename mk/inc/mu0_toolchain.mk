@@ -121,12 +121,36 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			-pedantic
 
 	else ifneq (,$(findstring macos_android, $(PLATFORM_VARIANT)))
-		NDK_PATH      := $(LOCAL_MODULE_PATH)/../toolchains/macos-android-ndk
-		NDK_BUILD     := $(NDK_PATH)/ndk-build
-		NDK_OBJDUMP   := $(shell $(NDK_PATH)/ndk-which objdump)
-		NDK_ARCH      := arm64-v8a armeabi-v7a x86 x86_64
-		LOCAL_LDFLAGS += -llog -fopenmp=libomp -lm
-		LOCAL_CFLAGS  +=                         \
+		NDK_PATH            := $(LOCAL_MODULE_PATH)/../toolchains/macos-android-ndk
+		NDK_BUILD           := $(NDK_PATH)/ndk-build
+		NDK_OBJDUMP         := $(shell $(NDK_PATH)/ndk-which objdump)
+		NDK_ARCH            :=
+		ifneq (,$(findstring .arm64, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			NDK_ARCH         := arm64-v8a
+		else ifneq (,$(findstring .armv7, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			NDK_ARCH         := armeabi-v7a
+		else ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			NDK_ARCH         := x86_64
+		else ifneq (,$(findstring .all, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			NDK_ARCH         := arm64-v8a armeabi-v7a x86_64 x86
+		else
+			NDK_ARCH         := arm64-v8a armeabi-v7a
+		endif
+		NDK_ARGS            :=                   \
+			NDK_PROJECT_PATH=$(LOCAL_MODULE_PATH) \
+			NDK_OUT=$(LOCAL_BUILDDIR)             \
+			NDK_LIBS_OUT=$(LOCAL_BUILDDIR)        \
+			NDK_TOOLCHAIN_VERSION=clang           \
+			APP_ABI="$(NDK_ARCH)"                 \
+			APP_STL=none                          \
+			APP_PLATFORM=android-29
+
+		LOCAL_LDFLAGS       += -llog -fopenmp=libomp -lm
+		LOCAL_CFLAGS        +=                   \
 			-x c                                  \
 			-std=c11                              \
 			-fopenmp                              \
@@ -134,14 +158,6 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			-Wno-unused-function                  \
 			-Wno-newline-eof                      \
 			-pedantic
-
-		NDK_ARGS     :=                          \
-			NDK_PROJECT_PATH=$(LOCAL_MODULE_PATH) \
-			NDK_OUT=$(LOCAL_BUILDDIR)             \
-			NDK_LIBS_OUT=$(LOCAL_BUILDDIR)        \
-			NDK_TOOLCHAIN_VERSION=clang           \
-			APP_STL=none                          \
-			APP_PLATFORM=android-29
 
 	endif
 

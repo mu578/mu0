@@ -12,15 +12,15 @@ Getting current toolchain Mac-M2 host:
 Makefile platform variants on Mac-M2 host:
 
 ```
+# Default openmp disabled, no half-precision floating-point.
+PLATFORM_VARIANT := macos_xcode
+
 PLATFORM_VARIANT := macos_macport
 PLATFORM_VARIANT := macos_macport.arm64
 PLATFORM_VARIANT := macos_macport.x86_64
 PLATFORM_VARIANT := macos_macport.fat
 
-# Default openmp disabled, no half-precision floating-point.
-PLATFORM_VARIANT := macos_xcode
-
-# Expecting install-path mu0/../toolchains/android-ndk
+# Expecting NDK install-path: ${project_root}/../toolchains/macos-android-ndk
 PLATFORM_VARIANT := macos_android
 PLATFORM_VARIANT := macos_android.arm64
 PLATFORM_VARIANT := macos_android.armv7
@@ -29,7 +29,7 @@ PLATFORM_VARIANT := macos_android.all
 
 ```
 
-Getting current toolchain Ubuntu-arm64 host:
+Getting current toolchain Ubuntu arm64 and x86_64 hosts:
 
 ```
 >$ sudo apt-get install make

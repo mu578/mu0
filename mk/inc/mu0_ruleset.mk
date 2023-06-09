@@ -66,7 +66,7 @@ rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""         >> $(LOCAL_BUILDDIR)"/android-static.mk"
 	@echo "LOCAL_LDLIBS    := "                          >> $(LOCAL_BUILDDIR)"/android-static.mk"
 	@echo "include \044(BUILD_STATIC_LIBRARY)"           >> $(LOCAL_BUILDDIR)"/android-static.mk"
-	@$(NDK_BUILD)      $(NDK_ARGS)         APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-static.mk"
+	@$(NDK_BUILD) $(NDK_ARGS)              APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-static.mk"
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk" >  $(LOCAL_BUILDDIR)"/android-shared.mk"
@@ -76,7 +76,7 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""         >> $(LOCAL_BUILDDIR)"/android-shared.mk"
 	@echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""        >> $(LOCAL_BUILDDIR)"/android-shared.mk"
 	@echo "include \044(BUILD_SHARED_LIBRARY)"           >> $(LOCAL_BUILDDIR)"/android-shared.mk"
-	@$(NDK_BUILD)      $(NDK_ARGS)         APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-shared.mk"
+	@$(NDK_BUILD) $(NDK_ARGS)              APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-shared.mk"
 	-@for ndk_arch in $(NDK_ARCH); do \
 		$(NDK_OBJDUMP) -a $(LOCAL_BUILDDIR)/$${ndk_arch}/lib$(LOCAL_MODULE).so; \
 		$(NDK_OBJDUMP) -p $(LOCAL_BUILDDIR)/$${ndk_arch}/lib$(LOCAL_MODULE).so | grep 'NEEDED'; \
@@ -101,12 +101,9 @@ rule_linker_cmds::
 		echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""                  >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
 		echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""                 >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
 		echo "include \044(BUILD_EXECUTABLE)"                        >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
-		$(NDK_BUILD)       $(NDK_ARGS)                 APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
+		$(NDK_BUILD) $(NDK_ARGS)                       APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
 		((i = i + 1)) ; \
 	done
-
-rule_show_buildir::
-	@$(MU0_CMD_LS) $(LOCAL_BUILDDIR)/android/local
 
 else
 
@@ -223,13 +220,13 @@ rule_linker_cmds::
 		fi; \
 	done
 
-rule_show_buildir::
-	@$(MU0_CMD_LS) $(LOCAL_BUILDDIR)
-
 endif
 
 rule_buildir::
 	@$(MU0_CMD_MKDIR) $(LOCAL_BUILDDIR)
+
+rule_show_buildir::
+	@$(MU0_CMD_LS) $(LOCAL_BUILDDIR)
 
 rule_clean::
 	@$(MU0_CMD_RMDIR) $(LOCAL_BUILDDIR)
