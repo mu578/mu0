@@ -26,7 +26,7 @@ PLATFORM_VARIANT := macos_macport.fat
 # Expecting NDK install-path: ${project_root}/../toolchains/macos-android-ndk
 PLATFORM_VARIANT := macos_android
 PLATFORM_VARIANT := macos_android.arm64
-PLATFORM_VARIANT := macos_android.armv7
+PLATFORM_VARIANT := macos_android.arm32
 PLATFORM_VARIANT := macos_android.x86_64
 PLATFORM_VARIANT := macos_android.all
 ```
@@ -52,6 +52,15 @@ Or for a newer LLVM toolchain (recommended). llvm-14 is current on apt-get and d
 >$ sudo ln -s /usr/bin/clang++-16 /usr/bin/clang++
 >$ sudo rm -f /usr/lib/libomp.so
 >$ sudo ln -s /usr/lib/llvm-16/lib/libomp.so /usr/lib/libomp.so
+```
+
+Known to build c99/c11 pedandic on:
+```
+- macos   x86_64, arm64
+- ubuntu  x86_64, arm64
+- android x86_64, arm64, arm32
+- freebsd x86_64, arm64
+- windows x86_64 (clang-msvc and clang-gnu)
 ```
 
 # EOF

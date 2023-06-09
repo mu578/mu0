@@ -128,7 +128,7 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		ifneq (,$(findstring .arm64, $(PLATFORM_VARIANT)))
 			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
 			NDK_ARCH         := arm64-v8a
-		else ifneq (,$(findstring .armv7, $(PLATFORM_VARIANT)))
+		else ifneq (,$(findstring .arm32, $(PLATFORM_VARIANT)))
 			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
 			NDK_ARCH         := armeabi-v7a
 		else ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
