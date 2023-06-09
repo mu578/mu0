@@ -78,6 +78,9 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		PORT_PATH    := /opt/local/bin
 		CC           := $(PORT_PATH)/clang
 		AR           := $(PORT_PATH)/ar
+		OBJDUMP      := $(PORT_PATH)/objdump
+		OTOOL        := $(PORT_PATH)/otool
+		LIPO         := $(PORT_PATH)/lipo
 
 		LD           :=              \
 			$(CC)                     \
@@ -102,6 +105,9 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		XCODE_SDK    := $(shell xcrun --show-sdk-path)
 		CC           := $(XCODE_PATH)/clang
 		AR           := $(XCODE_PATH)/ar
+		OBJDUMP      := $(XCODE_PATH)/objdump
+		OTOOL        := $(XCODE_PATH)/otool
+		LIPO         := $(XCODE_PATH)/lipo
 
 		LD           :=               \
 			$(CC)                      \
@@ -164,6 +170,9 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 else ifneq (,$(findstring linux, $(PLATFORM)))
 	CC              := clang
 	AR              := ar
+	OBJDUMP         := objdump
+	OTOOL           :=
+	LIPO            :=
 
 	ifneq ("$(wildcard /usr/lib/libomp.so)", "")
 		LD           :=         \
@@ -202,6 +211,9 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 else ifneq (,$(findstring freebsd, $(PLATFORM)))
 	CC           := clang
 	AR           := ar
+	OBJDUMP      := objdump
+	OTOOL        :=
+	LIPO         :=
 
 	LD        :=            \
 		$(CC)                \
@@ -221,6 +233,9 @@ else ifneq (,$(findstring freebsd, $(PLATFORM)))
 else ifneq (,$(findstring mingw, $(PLATFORM)))
 	CC           := clang
 	AR           := ar
+	OBJDUMP      := objdump
+	OTOOL        :=
+	LIPO         :=
 
 	LD           :=                   \
 		$(CC)                          \
@@ -242,6 +257,9 @@ else
 
 CC           := clang
 AR           := ar
+OBJDUMP      := objdump
+OTOOL        :=
+LIPO         :=
 
 LD           :=     \
 	$(CC)            \

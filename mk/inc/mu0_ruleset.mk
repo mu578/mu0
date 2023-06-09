@@ -42,6 +42,7 @@ MU0_CMD_MV        := mv -f
 MU0_CMD_CD        := cd
 MU0_CMD_LNS       := ln -s
 MU0_CMD_LS        := ls -la
+MU0_CMD_GREP      := grep
 
 MU0_BUILD_FILES   := ""
 MU0_OBJ_FILES     := ""
@@ -79,7 +80,7 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	@$(NDK_BUILD) $(NDK_ARGS)              APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-shared.mk"
 	-@for ndk_arch in $(NDK_ARCH); do \
 		$(NDK_OBJDUMP) -a $(LOCAL_BUILDDIR)/$${ndk_arch}/lib$(LOCAL_MODULE).so; \
-		$(NDK_OBJDUMP) -p $(LOCAL_BUILDDIR)/$${ndk_arch}/lib$(LOCAL_MODULE).so | grep 'NEEDED'; \
+		$(NDK_OBJDUMP) -p $(LOCAL_BUILDDIR)/$${ndk_arch}/lib$(LOCAL_MODULE).so | $(MU0_CMD_GREP) 'NEEDED'; \
 	done
 
 rule_list_cmds::
@@ -162,20 +163,21 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 			-compatibility_version 1.0 \
 			-current_version       1.0.0 \
 			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
-		otool -L    $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
-		lipo  -info $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
+		echo ""; \
+		$(LIPO)  -info $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
+		echo ""; \
+		$(OTOOL) -L    $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
 	elif [ "$(PLATFORM)" = "linux" ] || [ "$(PLATFORM)" = "freebsd" ]; then \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= 'lib"$(LOCAL_MODULE)".so.1.0.0'"; \
 		$(LD) -shared $(MU0_OBJ_FILES) \
 			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
-		ldd        $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
-		objdump -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
-		objdump -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0 | grep 'NEEDED'; \
+		$(OBJDUMP) -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
+		$(OBJDUMP) -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0 | $(MU0_CMD_GREP) 'NEEDED'; \
 	elif case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= 'lib"$(LOCAL_MODULE)"-1.0.0.dll'"; \
 		$(LD) -shared $(MU0_OBJ_FILES) \
 			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
-		objdump -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
+		$(OBJDUMP) -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
 	fi
 
 rule_list_cmds::
