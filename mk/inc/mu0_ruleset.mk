@@ -45,6 +45,7 @@ MU0_CMD_LS        := ls -la
 
 MU0_BUILD_FILES   := ""
 MU0_OBJ_FILES     := ""
+MU0_LIB_FILES     := ""
 MU0_MISC_FILES    := ""
 
 all:
@@ -76,6 +77,10 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	@echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""        >> $(LOCAL_BUILDDIR)"/android-shared.mk"
 	@echo "include \044(BUILD_SHARED_LIBRARY)"           >> $(LOCAL_BUILDDIR)"/android-shared.mk"
 	@$(NDK_BUILD)      $(NDK_ARGS)         APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-shared.mk"
+	-@for ndk_arch in $(NDK_ARCH); do \
+		$(NDK_OBJDUMP) -a $(LOCAL_BUILDDIR)/$${ndk_arch}/lib$(LOCAL_MODULE).so; \
+		$(NDK_OBJDUMP) -p $(LOCAL_BUILDDIR)/$${ndk_arch}/lib$(LOCAL_MODULE).so | grep 'NEEDED'; \
+	done
 
 rule_list_cmds::
 	$(eval MU0_BUILD_FILES :=$(call walk-dir-recursive, $(LOCAL_MODULE_PATH)/misc))
@@ -167,8 +172,8 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 		$(LD) -shared $(MU0_OBJ_FILES) \
 			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
 		ldd        $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
-		objdump -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0 | grep 'NEEDED'; \
 		objdump -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
+		objdump -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0 | grep 'NEEDED'; \
 	elif case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= 'lib"$(LOCAL_MODULE)"-1.0.0.dll'"; \
 		$(LD) -shared $(MU0_OBJ_FILES) \
