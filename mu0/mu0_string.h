@@ -55,6 +55,9 @@ typedef ___mu0_tchar1_t___       mu0_tchar8_t;
 #	define mu0_tchar8(__x)        __mu0_cast__(mu0_tchar8_t, __x)
 #	define mu0_const_tchar8(__x)  __mu0_const_cast__(mu0_tchar8_t, __x)
 
+#	define mu0_string_length(_CharT, __src, __len) __mu0_slength__(_CharT, __src, __len)
+#	define mu0_string_size(_CharT, __src, __len)   __mu0_slength__(_CharT, __src, __len); ++__len
+
 mu0_usize_t mu0_string8_length (const mu0_tchar8_t * src);
 mu0_usize_t mu0_string8_size   (const mu0_tchar8_t * src);
 mu0_usize_t mu0_string8_count  (const mu0_tchar8_t * src);

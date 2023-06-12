@@ -28,11 +28,6 @@
 #	include <limits.h>
 #	include <string.h>
 
-#	undef  __mu0_memset__
-#	undef  __mu0_memcpy__
-#	define __mu0_memset__ memset
-#	define __mu0_memcpy__ memcpy
-
 #	define ___mu0_bit_rev___(_Tp, __x)                                                                    \
 	__mu0_scope_begin__                                                                                   \
 		___mu0_uint4_t___ ___mu0_bit_rev__d___ = __mu0_cast__(___mu0_uint4_t___, __mu0_bit_digits__(__x)); \
@@ -945,13 +940,13 @@ const ___mu0_uint1_t___ __mu0_bit_floor_u1__(const ___mu0_uint1_t___ __x)
 			(__a) = __builtin_bit_cast(__mu0_typeof__((__mu0_typeof__(__x))(__x)), __b)
 #		else
 #			define __mu0_bit_cast__(__a, __b)                                                      \
-			__mu0_memset__(__mu0_addressof__(__b), 0                     , __mu0_sizeof__((__b))); \
-			__mu0_memcpy__(__mu0_addressof__(__b), __mu0_addressof__(__a), __mu0_sizeof__((__b)))
+			memset(__mu0_addressof__(__b), 0                     , __mu0_sizeof__((__b))); \
+			memcpy(__mu0_addressof__(__b), __mu0_addressof__(__a), __mu0_sizeof__((__b)))
 #		endif
 #	else
 #	define __mu0_bit_cast__(__a, __b)                                                      \
-	__mu0_memset__(__mu0_addressof__(__b), 0                     , __mu0_sizeof__((__b))); \
-	__mu0_memcpy__(__mu0_addressof__(__b), __mu0_addressof__(__a), __mu0_sizeof__((__b)))
+	memset(__mu0_addressof__(__b), 0                     , __mu0_sizeof__((__b))); \
+	memcpy(__mu0_addressof__(__b), __mu0_addressof__(__a), __mu0_sizeof__((__b)))
 #	endif
 
 #	if !MU0_HAVE_BITOPERATOR

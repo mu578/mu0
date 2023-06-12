@@ -35,11 +35,7 @@ mu0_uint32_t         g_mu0_pcg32_default = 0U;
 __mu0_static_inline__
 void mu0_pcg32_context_seed_build(mu0_uint64_t * seed, mu0_uint64_t * incr)
 {
-#	if MU0_HAVE_CPUCLICK
-	*seed = __mu0_cpuclick__()     / 100UL;
-#	else
 	*seed = __mu0_nanotime_act__() / 100000UL;
-#	endif
 	*incr = (*seed >> 1UL) | 1UL;
 }
 

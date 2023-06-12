@@ -86,11 +86,13 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			$(CC)                     \
 			$(PLATFORM_ARCH)          \
 			-fopenmp=libomp           \
+			-lm                       \
 			-mmacosx-version-min=13.0
 
 		LOCAL_CFLAGS +=              \
 			-x c                      \
 			-std=c11                  \
+			-O3                       \
 			-fopenmp                  \
 			$(PLATFORM_ARCH)          \
 			-mmacosx-version-min=13.0 \
@@ -112,12 +114,14 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		LD           :=               \
 			$(CC)                      \
 			$(PLATFORM_ARCH)           \
+			-lm                        \
 			-mmacosx-version-min=10.15 \
 			-isysroot $(XCODE_SDK)
 
 		LOCAL_CFLAGS +=               \
 			-x c                       \
 			-std=c11                   \
+			-O3                        \
 			$(PLATFORM_ARCH)           \
 			-mmacosx-version-min=10.15 \
 			-isysroot $(XCODE_SDK)     \
@@ -159,6 +163,7 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		LOCAL_CFLAGS        +=                   \
 			-x c                                  \
 			-std=c11                              \
+			-O3                                   \
 			-fopenmp                              \
 			-Wall                                 \
 			-Wno-unused-function                  \
@@ -184,6 +189,7 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 		LOCAL_CFLAGS +=         \
 			-x c                 \
 			-std=gnu11           \
+			-O3                  \
 			-fopenmp             \
 			-isysroot /          \
 			-Wall                \
@@ -200,6 +206,7 @@ else ifneq (,$(findstring linux, $(PLATFORM)))
 		LOCAL_CFLAGS +=         \
 			-x c                 \
 			-std=gnu11           \
+			-O3                  \
 			-isysroot /          \
 			-Wall                \
 			-Wno-unused-function \
@@ -224,6 +231,7 @@ else ifneq (,$(findstring freebsd, $(PLATFORM)))
 	LOCAL_CFLAGS +=         \
 		-x c                 \
 		-std=c11             \
+		-O3                  \
 		-isysroot /          \
 		-Wall                \
 		-Wno-unused-function \
@@ -246,6 +254,7 @@ else ifneq (,$(findstring mingw, $(PLATFORM)))
 	LOCAL_CFLAGS +=                   \
 		-x c                           \
 		-std=c11                       \
+		-O3                            \
 		-target x86_64-pc-windows-msvc \
 		-Wall                          \
 		-Wno-unused-function           \
@@ -270,6 +279,7 @@ LD           :=     \
 LOCAL_CFLAGS +=     \
 	-x c             \
 	-std=c11         \
+	-O3              \
 	$(PLATFORM_ARCH) \
 	-isysroot /
 
