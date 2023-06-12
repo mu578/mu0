@@ -193,7 +193,7 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 		$(LD) -shared $(MU0_OBJ_FILES)                                                                              \
 			-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll;                                                       \
 		$(OBJDUMP) -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll;                                               \
-		$(OBJDUMP) -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll | $(MU0_CMD_GREP) 'DLL';                       \
+		$(OBJDUMP) -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll | $(MU0_CMD_GREP) 'DLL Name';                  \
 	fi
 
 rule_list_cmds::
