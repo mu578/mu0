@@ -39,6 +39,7 @@
 #	if MU0_HAVE_POSIX1_2001 || MU0_HAVE_WINDOWS
 #	include <locale.h>
 #	endif
+#	include <ctype.h>
 #	include <string.h>
 
 #	if !MU0_HAVE_I18NLOCALE
@@ -61,22 +62,6 @@
 #		define LC_MONETARY_MASK 0
 #		define LC_NUMERIC_MASK  0
 #		define LC_TIME_MASK     0
-
-		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(void)
-		{
-			__mu0_static__ ___mu0_tint1_t___ s_id[12]                     = { 0 };
-			               WCHAR             buff[LOCALE_NAME_MAX_LENGTH] = { 0 };
-			if (0 != GetUserDefaultLocaleName(buff, LOCALE_NAME_MAX_LENGTH)) {
-				WideCharToMultiByte(CP_UTF8, 0, buff, 5, s_id, 12, __mu0_nullptr__, __mu0_nullptr__);
-				if (s_id[2] == '-') {
-					s_id[2]  = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
-					return s_id;
-				}
-			}
-			memcpy(s_id, "en_EN.UTF-8", 11); s_id[11] = '\0';
-			return s_id;
-		}
 
 		__mu0_static_inline__
 		__mu0_i18nlocale_t__ __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ __base)
@@ -119,9 +104,48 @@
 		{
 			__mu0_unused__(__category);
 			if (__mu0_is_nullptr__(__locale)) {
-				return setlocale(LC_ALL, __mu0_nullptr__);
+				return setlocale(LC_ALL, "");
 			}
 			return __locale->u_id;
+		}
+
+		__mu0_static_inline__
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(void)
+		{
+			__mu0_static__ ___mu0_tint1_t___ s_id[12];
+			               WCHAR             buff[LOCALE_NAME_MAX_LENGTH] = { 0 };
+			if (0 != GetUserDefaultLocaleName(buff, LOCALE_NAME_MAX_LENGTH)) {
+				memset(s_id, 0, sizeof(s_id));
+				WideCharToMultiByte(CP_UTF8, 0, buff, 5, s_id, 12, __mu0_nullptr__, __mu0_nullptr__);
+				if (s_id[2] == '-') {
+					s_id[2]                      = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
+					const ___mu0_tint1_t___ * id = setlocale(LC_ALL, "");
+					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
+						setlocale(LC_ALL, id);
+						return s_id;
+					}
+					___mu0_tint1_t___ wk[12]     = { 0 };
+					memcpy(wk, s_id, sizeof(s_id));
+					wk[3] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[0]));
+					wk[4] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[1]));
+					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
+						setlocale(LC_ALL, id);
+						memcpy(s_id, wk, sizeof(wk));
+						return s_id;
+					}
+					memcpy(wk, s_id, sizeof(s_id));
+					wk[0] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[3]));
+					wk[1] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[4]));
+					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
+						setlocale(LC_ALL, id);
+						memcpy(s_id, wk, sizeof(wk));
+						return s_id;
+					}
+					setlocale(LC_ALL, id);
+				}
+			}
+			memcpy(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
+			return s_id;
 		}
 
 		__mu0_static_inline__
@@ -231,7 +255,7 @@
 		{
 			___mu0_sint4_t___ mask;
 			if (__mu0_is_nullptr__(__locale)) {
-				return setlocale(__category, __mu0_nullptr__);
+				return setlocale(__category, "");
 			}
 			switch (__category)
 			{
@@ -280,7 +304,7 @@
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
-				return setlocale(__category, __mu0_nullptr__);
+				return setlocale(__category, "");
 			}
 			return nl_langinfo_l(NL_LOCALE_NAME(__category), __locale);
 		}
@@ -291,7 +315,7 @@
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
-				return setlocale(__category, __mu0_nullptr__);
+				return setlocale(__category, "");
 			}
 			return nl_langinfo_l(_NL_LOCALE_NAME(__category), __locale);
 		}
@@ -302,7 +326,7 @@
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
-				return setlocale(__category, __mu0_nullptr__);
+				return setlocale(__category, "");
 			}
 			return nl_langinfo_l(_NL_ITEM((__category), _NL_ITEM_INDEX(-1)), __locale);
 		}
@@ -314,10 +338,64 @@
 		{
 			__mu0_unused__(__category);
 			__mu0_unused__(__locale);
-			return "en_EN.UTF-8";
+			return "en_US.UTF-8";
 		}
 
 #		endif
+
+
+#	if MU0_HAVE_MACOSX
+
+		__mu0_static_inline__
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(void)
+		{
+			__mu0_static__ ___mu0_tint1_t___ s_id[12];
+			               FILE *            fp;
+			if ((fp = popen("defaults read .GlobalPreferences AppleLocale", "r"))) {
+				memset(s_id, 0, sizeof(s_id));
+				fgets(s_id, sizeof(s_id) - 1U, fp);
+				if (s_id[2] == '_') {
+					pclose(fp);
+					s_id[2]                      = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
+					const ___mu0_tint1_t___ * id = setlocale(LC_ALL, "");
+					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
+						setlocale(LC_ALL, id);
+						return s_id;
+					}
+					___mu0_tint1_t___ wk[12]     = { 0 };
+					memcpy(wk, s_id, sizeof(s_id));
+					wk[3] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[0]));
+					wk[4] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[1]));
+					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
+						setlocale(LC_ALL, id);
+						memcpy(s_id, wk, sizeof(wk));
+						return s_id;
+					}
+					memcpy(wk, s_id, sizeof(s_id));
+					wk[0] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[3]));
+					wk[1] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[4]));
+					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
+						setlocale(LC_ALL, id);
+						memcpy(s_id, wk, sizeof(wk));
+						return s_id;
+					}
+					setlocale(LC_ALL, id);
+				}
+				pclose(fp);
+			}
+			memcpy(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
+			return s_id;
+		}
+
+#	else
+
+		__mu0_static_inline__
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(void)
+		{
+			return __mu0_i18nlocale_get__(LC_ALL, __mu0_nullptr__);
+		}
+
+#	endif
 
 		__mu0_static_inline__
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_set__(const ___mu0_sint4_t___ __category, const ___mu0_tint1_t___ * __locale)
@@ -399,13 +477,21 @@
 		{
 			__mu0_unused__(__category);
 			__mu0_unused__(__locale);
-			return "en_EN.UTF-8";
+			return "en_US.UTF-8";
+		}
+
+		__mu0_static_inline__
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(void)
+		{
+			__mu0_unused__(__category);
+			__mu0_unused__(__locale);
+			return "en_US.UTF-8";
 		}
 
 		__mu0_static_inline__
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_set__(const ___mu0_sint4_t___ __category, const ___mu0_tint1_t___ * __locale)
 		{
-			return "en_EN.UTF-8";
+			return "en_US.UTF-8";
 		}
 
 		__mu0_static_inline__

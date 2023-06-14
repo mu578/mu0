@@ -64,6 +64,11 @@ mu0_sint32_t mu0_locale_global(
 	return -1;
 }
 
+const mu0_tchar8_t * mu0_locale_interface(void)
+{
+	return __mu0_i18nlocale_user__();
+}
+
 const mu0_tchar8_t * mu0_locale_identifier(
 	  const mu0_bool_t   collator
 	, const mu0_locale_t locale   __mu0_nullable__

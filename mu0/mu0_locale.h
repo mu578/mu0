@@ -39,6 +39,7 @@ mu0_sint32_t mu0_locale_global(
 	, const mu0_bool_t     collator
 );
 
+const mu0_tchar8_t * mu0_locale_interface(void);
 const mu0_tchar8_t * mu0_locale_identifier(
 	  const mu0_bool_t   collator
 	, const mu0_locale_t locale   __mu0_nullable__

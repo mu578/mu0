@@ -53,12 +53,19 @@
 #	define MU0_HAVE_MINIX           0
 
 #	if defined(__APPLE__) && defined(__MACH__)
+#		include <TargetConditionals.h>
 #		if defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE
 #			undef  MU0_HAVE_DARWIN
 #			undef  MU0_HAVE_IOS
 #			define MU0_HAVE_DARWIN    1
 #			define MU0_HAVE_IOS       1
+#		elif defined(TARGET_OS_OSX) && TARGET_OS_OSX
+#			undef  MU0_HAVE_DARWIN
+#			undef  MU0_HAVE_MACOSX
+#			define MU0_HAVE_DARWIN    1
+#			define MU0_HAVE_MACOSX    1
 #		else
+#			warning MU0_HAVE_MACOSX
 #			undef  MU0_HAVE_DARWIN
 #			undef  MU0_HAVE_MACOSX
 #			define MU0_HAVE_DARWIN    1
