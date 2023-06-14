@@ -53,7 +53,7 @@ all:
 
 ifneq (,$(findstring macos_android, $(PLATFORM_VARIANT)))
 
-rule_all:: rule_static rule_linker_cmds
+rule_all:: rule_static rule_list_cmds rule_linker_cmds
 
 rule_list_objects::
 
@@ -247,6 +247,7 @@ rule_show_buildir::
 	@$(MU0_CMD_LS) $(LOCAL_BUILDDIR)
 
 rule_clean::
+	@echo rmdir $(LOCAL_BUILDDIR)
 	@$(MU0_CMD_RMDIR) $(LOCAL_BUILDDIR)
 	@find .. -name ".DS_Store" -exec rm -f {} \;
 

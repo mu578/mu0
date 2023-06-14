@@ -40,6 +40,9 @@
 #		define MU0_HAVE_CONSOLE 1
 #		include <android/log.h>
 #		define __mu0_console_log__(...)        __android_log_print(ANDROID_LOG_DEBUG, "mu0", __VA_ARGS__)
+#		define __mu0_console_info__(...)       __android_log_print(ANDROID_LOG_INFO , "mu0", __VA_ARGS__)
+#		define __mu0_console_warn__(...)       __android_log_print(ANDROID_LOG_WARN , "mu0", __VA_ARGS__)
+#		define __mu0_console_error__(...)      __android_log_print(ANDROID_LOG_ERROR, "mu0", __VA_ARGS__)
 #	else
 #		undef  MU0_HAVE_CONSOLE
 #		define MU0_HAVE_CONSOLE 1
