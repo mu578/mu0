@@ -55,6 +55,8 @@
 		};
 		typedef struct ___mu0_i18nlocale_t___ * __mu0_i18nlocale_t__;
 
+#		define LC_MESSAGES      LC_ALL
+
 #		define LC_ALL_MASK      0
 #		define LC_COLLATE_MASK  0
 #		define LC_CTYPE_MASK    0
