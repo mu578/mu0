@@ -28,21 +28,7 @@
 #	define MU0_HAVE_BYTESWAP 0
 
 #	if !MU0_HAVE_BYTESWAP
-#	if MU0_HAVE_CC_ARMCC
-#		undef  MU0_HAVE_BYTESWAP
-#		define MU0_HAVE_BYTESWAP        1
-#		define __mu0_bswap_16__(__x)    __builtin_bswap16(__x)
-#		define __mu0_bswap_32__(__x)    __builtin_bswap32(__x)
-#		define __mu0_bswap_64__(__x)    __builtin_bswap64(__x)
-#	elif MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG
-#		if (__has_builtin(__builtin_bswap64))
-#			undef  MU0_HAVE_BYTESWAP
-#			define MU0_HAVE_BYTESWAP     1
-#			define __mu0_bswap_16__(__x) __builtin_bswap16(__x)
-#			define __mu0_bswap_32__(__x) __builtin_bswap32(__x)
-#			define __mu0_bswap_64__(__x) __builtin_bswap64(__x)
-#		endif
-#	elif MU0_HAVE_CC_GNUCC
+#	if MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC || MU0_HAVE_CC_MSVCL
 #		undef  MU0_HAVE_BYTESWAP
 #		define MU0_HAVE_BYTESWAP        1
 #		define __mu0_bswap_16__(__x)    __builtin_bswap16(__x)
