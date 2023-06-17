@@ -41,6 +41,6 @@ MU0_BEGIN_CDECL
 
 MU0_END_CDECL
 
-#endif /* !MU0_ALIASING_H */
+#endif /* !MU0_ARITHMETIC_H */
 
 /* EOF */

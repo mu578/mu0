@@ -274,7 +274,6 @@ rule_show_buildir::
 	@$(MU0_CMD_LS) $(LOCAL_BUILDDIR)
 
 rule_clean::
-	@echo rmdir $(LOCAL_BUILDDIR)
 	@$(MU0_CMD_RMDIR) $(LOCAL_BUILDDIR)
 	@find .. -name ".DS_Store" -exec rm -f {} \;
 

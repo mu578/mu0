@@ -49,7 +49,7 @@
 
 		struct ___mu0_i18nlocale_t___
 		{
-			___mu0_tint1_t___ u_id[64];
+			___mu0_tint1_t___ u_id[48];
 			___mu0_sint4_t___ u_ct;
 			_locale_t         u_lc;
 		};
@@ -89,7 +89,7 @@
 		{
 			__mu0_i18nlocale_t__ locale = __mu0_i18nlocale_new__(
 				  LC_ALL_MASK
-				, setlocale(LC_ALL, __mu0_nullptr__)
+				, setlocale(LC_ALL, "")
 				, __mu0_nullptr__
 			);
 			if (__mu0_not_nullptr__(__locale)) {
@@ -97,6 +97,19 @@
 				setlocale(LC_ALL, __locale->u_id);
 			}
 			return locale;
+		}
+
+		__mu0_static_inline__
+		const ___mu0_sint4_t___ __mu0_i18nlocale_exists__(const ___mu0_tint1_t___ * __id)
+		{
+			const char * id = setlocale(LC_MESSAGES, "");
+			_configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
+			if (__mu0_not_nullptr__(setlocale(LC_MESSAGES, __id))) {
+				setlocale(LC_MESSAGES, id);
+				return 0;
+			}
+			setlocale(LC_MESSAGES, id);
+			return -1;
 		}
 
 		__mu0_static_inline__
@@ -118,8 +131,19 @@
 				memset(s_id, 0, sizeof(s_id));
 				WideCharToMultiByte(CP_UTF8, 0, buff, 5, s_id, 12, __mu0_nullptr__, __mu0_nullptr__);
 				if (s_id[2] == '-') {
+					_configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
+					___mu0_tint1_t___ id[48]     = { 0 };
 					s_id[2]                      = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
-					const ___mu0_tint1_t___ * id = setlocale(LC_ALL, "");
+					___mu0_tint1_t___ * s        = setlocale(LC_ALL, "");
+					if (__mu0_not_nullptr__(s)) {
+						memcpy(id, s, sizeof(id));
+					} else {
+#						if MU0_HAVE_POSIX1_2001
+						memcpy(id, "C.UTF-8"    ,  7); id[7]  = '\0';
+#						else
+						memcpy(id, "en_US.UTF-8", 11); id[11] = '\0';
+#						endif
+					}
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
 						setlocale(LC_ALL, id);
 						return s_id;
@@ -144,7 +168,11 @@
 					setlocale(LC_ALL, id);
 				}
 			}
+#			if MU0_HAVE_POSIX1_2001
+			memcpy(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
+#			else
 			memcpy(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
+#			endif
 			return s_id;
 		}
 
@@ -248,6 +276,18 @@
 			return duplocale(locale);
 		}
 
+		__mu0_static_inline__
+		const ___mu0_sint4_t___ __mu0_i18nlocale_exists__(const ___mu0_tint1_t___ * __id)
+		{
+			const char * id = setlocale(LC_MESSAGES, "");
+			if (__mu0_not_nullptr__(setlocale(LC_MESSAGES, __id))) {
+				setlocale(LC_MESSAGES, id);
+				return 0;
+			}
+			setlocale(LC_MESSAGES, id);
+			return -1;
+		}
+
 #		if !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX && !MU0_HAVE_MINGW
 
 		__mu0_static_inline__
@@ -338,7 +378,11 @@
 		{
 			__mu0_unused__(__category);
 			__mu0_unused__(__locale);
+#			if MU0_HAVE_POSIX1_2001
+			return "C.UTF-8";
+#			else
 			return "en_US.UTF-8";
+#			endif
 		}
 
 #		endif
@@ -356,13 +400,23 @@
 				fgets(s_id, sizeof(s_id) - 1U, fp);
 				if (s_id[2] == '_') {
 					pclose(fp);
-					s_id[2]                      = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
-					const ___mu0_tint1_t___ * id = setlocale(LC_ALL, "");
+					___mu0_tint1_t___ id[48] = { 0 };
+					s_id[2]                  = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
+					___mu0_tint1_t___ * s    = setlocale(LC_ALL, "");
+					if (__mu0_not_nullptr__(s)) {
+						memcpy(id, s, sizeof(id));
+					} else {
+#						if MU0_HAVE_POSIX1_2001
+						memcpy(id, "C.UTF-8"    ,  7); id[7]  = '\0';
+#						else
+						memcpy(id, "en_US.UTF-8", 11); id[11] = '\0';
+#						endif
+					}
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
 						setlocale(LC_ALL, id);
 						return s_id;
 					}
-					___mu0_tint1_t___ wk[12]     = { 0 };
+					___mu0_tint1_t___ wk[12] = { 0 };
 					memcpy(wk, s_id, sizeof(s_id));
 					wk[3] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[0]));
 					wk[4] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[1]));
@@ -383,7 +437,11 @@
 				}
 				pclose(fp);
 			}
+#			if MU0_HAVE_POSIX1_2001
+			memcpy(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
+#			else
 			memcpy(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
+#			endif
 			return s_id;
 		}
 
@@ -473,11 +531,23 @@
 			return __mu0_nullptr__;
 		}
 
+		__mu0_static_inline__
+		const ___mu0_sint4_t___ __mu0_i18nlocale_exists__(const ___mu0_tint1_t___ * __id)
+		{
+			__mu0_unused__(__id);
+			return -1;
+		}
+
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
 		{
 			__mu0_unused__(__category);
 			__mu0_unused__(__locale);
+
+#			if MU0_HAVE_POSIX1_2001
+			return "C.UTF-8";
+#			else
 			return "en_US.UTF-8";
+#			endif
 		}
 
 		__mu0_static_inline__
@@ -485,13 +555,21 @@
 		{
 			__mu0_unused__(__category);
 			__mu0_unused__(__locale);
+#			if MU0_HAVE_POSIX1_2001
+			return "C.UTF-8";
+#			else
 			return "en_US.UTF-8";
+#			endif
 		}
 
 		__mu0_static_inline__
 		const ___mu0_tint1_t___ * __mu0_i18nlocale_set__(const ___mu0_sint4_t___ __category, const ___mu0_tint1_t___ * __locale)
 		{
+#			if MU0_HAVE_POSIX1_2001
+			return "C.UTF-8";
+#			else
 			return "en_US.UTF-8";
+#			endif
 		}
 
 		__mu0_static_inline__

@@ -32,7 +32,7 @@ int main(int argc, const char * argv[])
 
 	mu0_console_log("\n");
 
-	mu0_console_log("%p \n", (locale = mu0_locale_create("fr", "FR", mu0_nullptr, mu0_true)));
+	mu0_console_log("%p \n", (locale = mu0_locale_create("fr", "FR", mu0_nullptr, mu0_false)));
 	mu0_console_log("%02d s1 <> s1\n", mu0_locale_compare(s1, s1, locale));
 	mu0_console_log("%02d s1 <> s2\n", mu0_locale_compare(s1, s2, locale));
 	mu0_console_log("%02d s1 <> s2\n", mu0_locale_compare(s2, s1, locale));
@@ -59,9 +59,7 @@ int main(int argc, const char * argv[])
 	mu0_console_log("%02d s4 <> s3\n", mu0_locale_compare(s4, s3, mu0_nullptr));
 
 	mu0_console_log("\n");
-
 	mu0_console_log("%s \n", mu0_locale_interface());
-
 	mu0_console_log("\n");
 
 	return 0;

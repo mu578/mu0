@@ -25,37 +25,37 @@ MU0_BEGIN_CDECL
 
 typedef void * mu0_locale_t;
 
-mu0_locale_t mu0_locale_create(
+mu0_locale_t         mu0_locale_create(
 	  const mu0_tchar8_t * language
 	, const mu0_tchar8_t * territory
 	, const mu0_tchar8_t * modifier  __mu0_nullable__
 	, const mu0_bool_t     collator
 );
 
-mu0_sint32_t mu0_locale_global(
+mu0_sint32_t         mu0_locale_global(
 	  const mu0_tchar8_t * language
 	, const mu0_tchar8_t * territory
 	, const mu0_tchar8_t * modifier  __mu0_nullable__
 	, const mu0_bool_t     collator
 );
 
-const mu0_tchar8_t * mu0_locale_interface(void);
+const mu0_tchar8_t * mu0_locale_interface (void);
 const mu0_tchar8_t * mu0_locale_identifier(
 	  const mu0_bool_t   collator
 	, const mu0_locale_t locale   __mu0_nullable__
 );
 
-mu0_sint32_t mu0_locale_delete(
+mu0_sint32_t         mu0_locale_delete(
 	mu0_locale_t locale
 );
 
-enum mu0_ordering mu0_locale_compare(
+enum mu0_ordering    mu0_locale_compare(
 	  const mu0_tchar8_t * lhs
 	, const mu0_tchar8_t * rhs
 	, const mu0_locale_t   locale __mu0_nullable__
 );
 
-enum mu0_ordering mu0_locale_compare_n(
+enum mu0_ordering    mu0_locale_compare_n(
 	  const mu0_tchar8_t * lhs
 	, const mu0_tchar8_t * rhs
 	, const mu0_uint32_t   n
