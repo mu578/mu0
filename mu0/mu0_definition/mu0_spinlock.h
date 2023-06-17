@@ -53,7 +53,7 @@ const ___mu0_sint4_t___ __mu0_spinlock_lock__(__mu0_spinlock_t__ * __s)
 	while (!__mu0_spinlock_trylock__(__s) && g0 > 0) {
 		--g0; __mu0_cpuyield__(); --g0;
 	}
-	return g0 ? 0 : -1;
+	return g0 > 0 ? 0 : -1;
 }
 
 __mu0_static_inline__
