@@ -247,7 +247,7 @@ __mu0_static__ const mu0_sint16_t  mu0_sint16_max  = INT16_MAX;
 __mu0_static__ const mu0_sint16_t  mu0_sint16_min  = INT16_MIN;
 
 #	define __mu0_uint8_const__(__c) UINT8_C(__c)
-#	define __mu0_sint9_const__(__c)  INT8_C(__c)
+#	define __mu0_sint8_const__(__c)  INT8_C(__c)
 
 __mu0_static__ const mu0_uint8_t   mu0_uint8_max   = UINT8_MAX;
 __mu0_static__ const mu0_uint8_t   mu0_uint8_min   = __mu0_uint8_const__(0);
