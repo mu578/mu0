@@ -193,7 +193,7 @@ typedef   mu0_ptrdiff_t             mu0_distance_t;
 #	if MU0_HAVE_INT128
 
 #	define __mu0_uint128_const__(__c) UINT128_C(__c)
-#	define __mu0_sint128_const__(__c) INT128_C(__c)
+#	define __mu0_sint128_const__(__c)  INT128_C(__c)
 
 __mu0_static__ const mu0_uint128_t mu0_uint128_max = UINT128_MAX;
 __mu0_static__ const mu0_uint128_t mu0_uint128_min = __mu0_uint128_const__(0);
