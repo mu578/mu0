@@ -374,18 +374,18 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 
 #	define __mu0_fp128_const__(__c) __c
 
-__mu0_static__ const mu0_fp128_t mu0_fp128_max_exp  = FLT128_MAX_EXP;
-__mu0_static__ const mu0_fp128_t mu0_fp128_log_max  = __mu0_fp128_const__(11356.0);
+__mu0_static__ const mu0_fp128_t mu0_fp128_max_exp = FLT128_MAX_EXP;
+__mu0_static__ const mu0_fp128_t mu0_fp128_log_max = __mu0_fp128_const__(11356.0);
 
-__mu0_static__ const mu0_fp128_t mu0_fp128_max      = FLT128_MAX;
-__mu0_static__ const mu0_fp128_t mu0_fp128_min      = FLT128_MIN;
-__mu0_static__ const mu0_fp128_t mu0_fp128_nan      = NAN;
-__mu0_static__ const mu0_fp128_t mu0_fp128_inf      = INFINITY;
-__mu0_static__ const mu0_fp128_t mu0_fp128_zero     = __mu0_fp128_const__(0.0);
-__mu0_static__ const mu0_fp128_t mu0_fp128_half     = __mu0_fp128_const__(0.5);
-__mu0_static__ const mu0_fp128_t mu0_fp128_one      = __mu0_fp128_const__(1.0);
-__mu0_static__ const mu0_fp128_t mu0_fp128_two      = __mu0_fp128_const__(2.0);
-__mu0_static__ const mu0_fp128_t mu0_fp128_ten      = __mu0_fp128_const__(10.0);
+__mu0_static__ const mu0_fp128_t mu0_fp128_max     = FLT128_MAX;
+__mu0_static__ const mu0_fp128_t mu0_fp128_min     = FLT128_MIN;
+__mu0_static__ const mu0_fp128_t mu0_fp128_nan     = NAN;
+__mu0_static__ const mu0_fp128_t mu0_fp128_inf     = INFINITY;
+__mu0_static__ const mu0_fp128_t mu0_fp128_zero    = __mu0_fp128_const__(0.0);
+__mu0_static__ const mu0_fp128_t mu0_fp128_half    = __mu0_fp128_const__(0.5);
+__mu0_static__ const mu0_fp128_t mu0_fp128_one     = __mu0_fp128_const__(1.0);
+__mu0_static__ const mu0_fp128_t mu0_fp128_two     = __mu0_fp128_const__(2.0);
+__mu0_static__ const mu0_fp128_t mu0_fp128_ten     = __mu0_fp128_const__(10.0);
 
 #	else
 
