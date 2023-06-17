@@ -457,17 +457,17 @@ __mu0_static__ const mu0_fp16_t  mu0_fp16_ten      = __mu0_fp16_const__(10.0);
 
 #	define __mu0_fp16_const__(__c) __c ## f
 
-__mu0_static__ const mu0_fp16_t  mu0_fp16_max_exp = FLT_MAX_EXP;
-__mu0_static__ const mu0_fp16_t  mu0_fp16_log_max = __mu0_fp16_const__(88.0);
-__mu0_static__ const mu0_fp16_t  mu0_fp16_max     = FLT_MAX;
-__mu0_static__ const mu0_fp16_t  mu0_fp16_min     = FLT_MIN;
-__mu0_static__ const mu0_fp16_t  mu0_fp16_nan     = NAN;
-__mu0_static__ const mu0_fp16_t  mu0_fp16_inf     = INFINITY;
-__mu0_static__ const mu0_fp16_t  mu0_fp16_zero    = __mu0_fp16_const__(0.0);
-__mu0_static__ const mu0_fp16_t  mu0_fp16_half    = __mu0_fp16_const__(0.5);
-__mu0_static__ const mu0_fp16_t  mu0_fp16_one     = __mu0_fp16_const__(1.0);
-__mu0_static__ const mu0_fp16_t  mu0_fp16_two     = __mu0_fp16_const__(2.0);
-__mu0_static__ const mu0_fp16_t  mu0_fp16_ten     = __mu0_fp16_const__(10.0);
+__mu0_static__ const mu0_fp16_t  mu0_fp16_max_exp  = FLT_MAX_EXP;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_log_max  = __mu0_fp16_const__(88.0);
+__mu0_static__ const mu0_fp16_t  mu0_fp16_max      = FLT_MAX;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_min      = FLT_MIN;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_nan      = NAN;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_inf      = INFINITY;
+__mu0_static__ const mu0_fp16_t  mu0_fp16_zero     = __mu0_fp16_const__(0.0);
+__mu0_static__ const mu0_fp16_t  mu0_fp16_half     = __mu0_fp16_const__(0.5);
+__mu0_static__ const mu0_fp16_t  mu0_fp16_one      = __mu0_fp16_const__(1.0);
+__mu0_static__ const mu0_fp16_t  mu0_fp16_two      = __mu0_fp16_const__(2.0);
+__mu0_static__ const mu0_fp16_t  mu0_fp16_ten      = __mu0_fp16_const__(10.0);
 
 #	endif
 
