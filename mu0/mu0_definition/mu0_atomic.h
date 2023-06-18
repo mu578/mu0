@@ -22,6 +22,8 @@
 
 #	undef  MU0_HAVE_ATOMIC
 #	undef  MU0_HAVE_ATSWAP
+#	undef  MU0_HAVE_ATLOAD
+#	undef  MU0_HAVE_ATSTORE
 #	undef  __mu0_atomic_fetch_and_add__
 #	undef  __mu0_atomic_fetch_and_sub__
 #	undef  __mu0_atomic_fetch_and_or__
@@ -39,8 +41,10 @@
 #	undef  __mu0_atomic_swap__
 #	undef  __mu0_atomic_load__
 #	undef  __mu0_atomic_store__
-#	define MU0_HAVE_ATOMIC 0
-#	define MU0_HAVE_ATSWAP 0
+#	define MU0_HAVE_ATOMIC  0
+#	define MU0_HAVE_ATSWAP  0
+#	define MU0_HAVE_ATLOAD  0
+#	define MU0_HAVE_ATSTORE 0
 
 #	if!MU0_HAVE_ATOMIC
 #	if MU0_HAVE_CC_GNUCC
@@ -376,17 +380,40 @@ __mu0_scope_begin__                                                             
 __mu0_scope_end__
 #	endif
 
-#	define __mu0_atomic_load__(_Sc, __ptr)                                                \
-__mu0_scope_begin__                                                                      \
-	_Sc __mu0_atomic_load__r__;	                                                        \
-	__mu0_atomic_val_compare_and_swap__(_Sc, __ptr, 0, 0, __mu0_atomic_load__r__);        \
-__mu0_scope_end__
+#	if MU0_HAVE_CC_GNUCC
+#	if defined(__GNUC_ATOMICS)
+#	undef  MU0_HAVE_ATLOAD
+#	define MU0_HAVE_ATLOAD 1
+#	define __mu0_atomic_load__(_Sc, __ptr, __result)                                      \
+	__atomic_load(__ptr, &__result, __ATOMIC_SEQ_CST)
+#	endif
+#	endif
 
+#	if !MU0_HAVE_ATLOAD
+#	undef  MU0_HAVE_ATLOAD
+#	define MU0_HAVE_ATLOAD 1
+#	define __mu0_atomic_load__(_Sc, __ptr, __result)                                      \
+	__mu0_atomic_val_compare_and_swap__(_Sc, __ptr, 0, 0, __result)
+#	endif
+
+#	if MU0_HAVE_CC_GNUCC
+#	if defined(__GNUC_ATOMICS)
+#	undef  MU0_HAVE_ATSTORE
+#	define MU0_HAVE_ATSTORE 1
+#	define __mu0_atomic_store__(_Sc, __ptr, __val)                                        \
+	__atomic_store(__ptr, &__val, __ATOMIC_SEQ_CST)
+#	endif
+#	endif
+
+#	if !MU0_HAVE_ATSTORE
+#	undef  MU0_HAVE_ATSTORE
+#	define MU0_HAVE_ATSTORE 1
 #	define __mu0_atomic_store__(_Sc, __ptr, __val)                                        \
 __mu0_scope_begin__                                                                      \
 	_Sc __mu0_atomic_store__r__;	                                                        \
 	__mu0_atomic_swap__(_Sc, __ptr, __val, __mu0_atomic_store__r__);                      \
 __mu0_scope_end__
+#	endif
 
 #	if !MU0_HAVE_ATOMIC
 #		error mu0_atomic.h
