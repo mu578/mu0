@@ -371,10 +371,10 @@ __mu0_scope_begin__                                                             
 	__mu0_atomic_val_compare_and_swap__(_Sc, __ptr, 0, 0, __mu0_atomic_load__r__);        \
 __mu0_scope_end__
 
-#	define __mu0_atomic_store__(_Sc, __ptr, _val)                                         \
+#	define __mu0_atomic_store__(_Sc, __ptr, __val)                                        \
 __mu0_scope_begin__                                                                      \
 	_Sc __mu0_atomic_store__r__;	                                                        \
-	__mu0_atomic_swap__(_Sc, __ptr, _val, __mu0_atomic_store__r__);                       \
+	__mu0_atomic_swap__(_Sc, __ptr, __val, __mu0_atomic_store__r__);                      \
 __mu0_scope_end__
 
 #	if !MU0_HAVE_ATOMIC
