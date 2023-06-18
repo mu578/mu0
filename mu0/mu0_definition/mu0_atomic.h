@@ -43,85 +43,8 @@
 #	define MU0_HAVE_ATSWAP 0
 
 #	if!MU0_HAVE_ATOMIC
-#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
-#	undef  MU0_HAVE_ATOMIC
-#	define MU0_HAVE_ATOMIC 1
-
-#	define __mu0_atomic_fetch_and_add__(_Sc, __ptr, __value, __result)                    \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_fetch_and_add(__ptr, __value);                                      \
-__mu0_scope_end__
-
-#	define __mu0_atomic_fetch_and_sub__(_Sc, __ptr, __value, __result)                    \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_fetch_and_sub(__ptr, __value);                                      \
-__mu0_scope_end__
-
-#	define __mu0_atomic_fetch_and_or__(_Sc, __ptr, __value, __result)                     \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_fetch_and_or(__ptr, __value)                                        \
-__mu0_scope_end__
-
-#	define __mu0_atomic_fetch_and_and__(_Sc, __ptr, __value, __result)                    \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_fetch_and_and(__ptr, __value);                                      \
-__mu0_scope_end__
-
-#	define __mu0_atomic_fetch_and_xor__(_Sc, __ptr, __value, __result)                    \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_fetch_and_xor(__ptr, __value);                                      \
-__mu0_scope_end__
-
-#	define __mu0_atomic_fetch_and_nand__(_Sc, __ptr, __value, __result)                   \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_fetch_and_nand(__ptr, __value);                                     \
-__mu0_scope_end__
-
-#	define __mu0_atomic_add_and_fetch__(_Sc, __ptr, __value, __result)                    \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_add_and_fetch(__ptr, __value);                                      \
-__mu0_scope_end__
-
-#	define __mu0_atomic_sub_and_fetch__(_Sc, __ptr, __value, __result)                    \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_sub_and_fetch(__ptr, __value);                                      \
-__mu0_scope_end__
-
-#	define __mu0_atomic_or_and_fetch__(_Sc, __ptr, __value, __result)                     \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_or_and_fetch(__ptr, __value);                                       \
-__mu0_scope_end__
-
-#	define __mu0_atomic_and_and_fetch__(_Sc, __ptr, __value, __result)                    \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_and_and_fetch(__ptr, __value);                                      \
-__mu0_scope_end__
-
-#	define __mu0_atomic_xor_and_fetch__(_Sc, __ptr, __value, __result)                    \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_xor_and_fetch(__ptr, __value);                                      \
-__mu0_scope_end__
-
-#	define __mu0_atomic_nand_and_fetch__(_Sc, __ptr, __value, __result)                   \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_nand_and_fetch(__ptr, __value);                                     \
-__mu0_scope_end__
-
-#	define __mu0_atomic_bool_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result) \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_bool_compare_and_swap(__ptr, __oldval, __newval) ? 1 : 0;           \
-__mu0_scope_end__
-
-#	define __mu0_atomic_val_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result)  \
-__mu0_scope_begin__                                                                      \
-	__result = __sync_val_compare_and_swap(__ptr, __oldval, __newval);                    \
-__mu0_scope_end__
-
-#	endif
-#	endif
-
-#	if!MU0_HAVE_ATOMIC
 #	if MU0_HAVE_CC_GNUCC
+#	if defined(__GNUC_ATOMICS)
 #	undef  MU0_HAVE_ATOMIC
 #	define MU0_HAVE_ATOMIC 1
 #	define __mu0_atomic_fetch_and_add__(_Sc, __ptr, __value, __result)                    \
@@ -191,6 +114,85 @@ __mu0_scope_begin__                                                             
 		, __ATOMIC_SEQ_CST                                                                 \
 		, __ATOMIC_SEQ_CST                                                                 \
 	) ? 1 : 0;                                                                            \
+__mu0_scope_end__
+
+#	define __mu0_atomic_val_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result)  \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_val_compare_and_swap(__ptr, __oldval, __newval);                    \
+__mu0_scope_end__
+
+#	endif
+#	endif
+#	endif
+
+#	if!MU0_HAVE_ATOMIC
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL || MU0_HAVE_CC_GNUCC
+#	undef  MU0_HAVE_ATOMIC
+#	define MU0_HAVE_ATOMIC 1
+
+#	define __mu0_atomic_fetch_and_add__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_fetch_and_add(__ptr, __value);                                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_sub__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_fetch_and_sub(__ptr, __value);                                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_or__(_Sc, __ptr, __value, __result)                     \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_fetch_and_or(__ptr, __value)                                        \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_and__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_fetch_and_and(__ptr, __value);                                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_xor__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_fetch_and_xor(__ptr, __value);                                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_nand__(_Sc, __ptr, __value, __result)                   \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_fetch_and_nand(__ptr, __value);                                     \
+__mu0_scope_end__
+
+#	define __mu0_atomic_add_and_fetch__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_add_and_fetch(__ptr, __value);                                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_sub_and_fetch__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_sub_and_fetch(__ptr, __value);                                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_or_and_fetch__(_Sc, __ptr, __value, __result)                     \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_or_and_fetch(__ptr, __value);                                       \
+__mu0_scope_end__
+
+#	define __mu0_atomic_and_and_fetch__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_and_and_fetch(__ptr, __value);                                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_xor_and_fetch__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_xor_and_fetch(__ptr, __value);                                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_nand_and_fetch__(_Sc, __ptr, __value, __result)                   \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_nand_and_fetch(__ptr, __value);                                     \
+__mu0_scope_end__
+
+#	define __mu0_atomic_bool_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result) \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_bool_compare_and_swap(__ptr, __oldval, __newval) ? 1 : 0;           \
 __mu0_scope_end__
 
 #	define __mu0_atomic_val_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result)  \
