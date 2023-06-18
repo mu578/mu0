@@ -356,14 +356,26 @@ __mu0_scope_end__
 #	if !MU0_HAVE_ATSWAP
 #	define __mu0_atomic_swap__(_Sc, __ptr, __newval, __result)                            \
 __mu0_scope_begin__                                                                      \
-	_Sc tmp;	                                                                             \
+	_Sc __mu0_atomic_swap__tmp__;	                                                        \
 	__mu0_barrier_acquire__();                                                            \
-	tmp      = *__ptr;                                                                    \
-	*__ptr   = __newval;                                                                  \
-	__result = tmp;                                                                       \
+	__mu0_atomic_swap__tmp__ = *__ptr;                                                    \
+	*__ptr                   = __newval;                                                  \
+	__result                 = __mu0_atomic_swap__tmp__;                                  \
 	__mu0_barrier_release__();                                                            \
 __mu0_scope_end__
 #	endif
+
+#	define __mu0_atomic_load__(_Sc, __ptr)                                                \
+__mu0_scope_begin__                                                                      \
+	_Sc __mu0_atomic_load__r__;	                                                        \
+	__mu0_atomic_val_compare_and_swap__(_Sc, __ptr, 0, 0, __mu0_atomic_load__r__);        \
+__mu0_scope_end__
+
+#	define __mu0_atomic_store__(_Sc, __ptr, _val)                                         \
+__mu0_scope_begin__                                                                      \
+	_Sc __mu0_atomic_store__r__;	                                                        \
+	__mu0_atomic_swap__(_Sc, __ptr, _val, __mu0_atomic_store__r__);                       \
+__mu0_scope_end__
 
 #	if !MU0_HAVE_ATOMIC
 #		error mu0_atomic.h

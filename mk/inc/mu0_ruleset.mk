@@ -70,7 +70,6 @@ rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 		echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""      >> $(LOCAL_BUILDDIR)"/android-static.mk";               \
 		echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""         >> $(LOCAL_BUILDDIR)"/android-static.mk";               \
 		echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""         >> $(LOCAL_BUILDDIR)"/android-static.mk";               \
-		echo "LOCAL_LDLIBS    := "                          >> $(LOCAL_BUILDDIR)"/android-static.mk";               \
 		echo "include \044(BUILD_STATIC_LIBRARY)"           >> $(LOCAL_BUILDDIR)"/android-static.mk";               \
 		$(NDK_BUILD) $(NDK_ARGS)              APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-static.mk";               \
 	fi
