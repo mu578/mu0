@@ -59,6 +59,8 @@
 #	define MU0_HAVE_CC_ITLCC 0
 #	undef  MU0_HAVE_CC_ITLGC
 #	define MU0_HAVE_CC_ITLGC 0
+#	undef  MU0_HAVE_CC_ITLCL
+#	define MU0_HAVE_CC_ITLCL 0
 #	if                           \
 	   defined(__INTEL_COMPILER) \
 	|| defined(__ECC)            \
@@ -75,9 +77,15 @@
 #		define MU0_HAVE_COMPILER 1
 #		define MU0_HAVE_CC_ITLCC 1
 #		ifdef __GNUC__
-#		undef  MU0_HAVE_CC_ITLGC
-#		define MU0_HAVE_CC_ITLGC 1
-#	endif
+#			undef  MU0_HAVE_CC_ITLGC
+#			define MU0_HAVE_CC_ITLGC 1
+#		endif
+#		if defined(SYCL_LANGUAGE_VERSION) && defined(__INTEL_LLVM_COMPILER)
+#			undef  MU0_HAVE_CC_ITLGC
+#			undef  MU0_HAVE_CC_ITLCL
+#			define MU0_HAVE_CC_ITLGC 0
+#			define MU0_HAVE_CC_ITLCL 1
+#		endif
 #	endif
 
 #	undef  MU0_HAVE_CC_ARMCC

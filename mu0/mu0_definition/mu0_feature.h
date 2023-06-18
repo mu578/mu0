@@ -58,6 +58,35 @@
 #		define __mu0_isoftype__(_Tp, __x) ((__builtin_types_compatible_p(_Tp, __mu0_typeof__(__x))) ? 1 : 0)
 #		define __mu0_isofkind__(_Tp, __x) ((__builtin_types_compatible_p(_Tp, __mu0_kindof__(__x))) ? 1 : 0)
 #		define __mu0_issame__(_T, _U)     ((__builtin_types_compatible_p(__mu0_typeof__(_T), __mu0_typeof__(_U))) ? 1 : 0)
+# 		define __mu0_decay__(__x)                                        \
+		__mu0_typeof__(                                                  \
+			__builtin_choose_expr(                                        \
+					__mu0_isoftype__(               ___mu0_sint1_t___, __x) \
+				|| __mu0_isoftype__(const          ___mu0_sint1_t___, __x) \
+				|| __mu0_isoftype__(volatile       ___mu0_sint1_t___, __x) \
+				|| __mu0_isoftype__(const volatile ___mu0_sint1_t___, __x) \
+				, (___mu0_sint1_t___)1                                     \
+			, __builtin_choose_expr(                                      \
+					__mu0_isoftype__(               ___mu0_uint1_t___, __x) \
+				|| __mu0_isoftype__(const          ___mu0_uint1_t___, __x) \
+				|| __mu0_isoftype__(volatile       ___mu0_uint1_t___, __x) \
+				|| __mu0_isoftype__(const volatile ___mu0_uint1_t___, __x) \
+				, (___mu0_uint1_t___)1                                     \
+			, __builtin_choose_expr(                                      \
+					__mu0_isoftype__(               ___mu0_sint2_t___, __x) \
+				|| __mu0_isoftype__(const          ___mu0_sint2_t___, __x) \
+				|| __mu0_isoftype__(volatile       ___mu0_sint2_t___, __x) \
+				|| __mu0_isoftype__(const volatile ___mu0_sint2_t___, __x) \
+				, (___mu0_sint2_t___)1                                     \
+			, __builtin_choose_expr(                                      \
+					__mu0_isoftype__(               ___mu0_uint2_t___, __x) \
+				|| __mu0_isoftype__(const          ___mu0_uint2_t___, __x) \
+				|| __mu0_isoftype__(volatile       ___mu0_uint2_t___, __x) \
+				|| __mu0_isoftype__(const volatile ___mu0_uint2_t___, __x) \
+				, (___mu0_uint2_t___)1                                     \
+			, ((__x) + 0)                                                 \
+			))))                                                          \
+		)
 #	elif MU0_HAVE_C23
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
@@ -66,6 +95,7 @@
 #		define __mu0_isoftype__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x)) ? 1 : 0)
 #		define __mu0_isofkind__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x) || __mu0_typeof__(_Tp) == __mu0_kindof__(__x))  ? 1 : 0)
 #		define __mu0_issame__(_T, _U)     (__mu0_generic__(((_T){0}), _U: 1, default: 0) && __mu0_generic__(((_U){0}), _T: 1, default: 0))
+# 		define __mu0_decay__(__x)         typeof_unequal(__x)
 #	elif MU0_HAVE_CC_ITLGC && MU0_HAVE_GENERIC
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
@@ -75,6 +105,7 @@
 #		define __mu0_isofkind__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
 #		define ___mu0_issame___(_T, _U)   __mu0_generic__(((_T){0} ), _U: 1, default: 0)
 #		define __mu0_issame__(_T, _U)     (__mu0_generic__(((_T){0}), _U: 1, default: 0) && __mu0_generic__(((_U){0}), _T: 1, default: 0))
+# 		define __mu0_decay__(__x)         __mu0_kindof__(__x)
 #	endif
 
 #	if !MU0_HAVE_TYPEOF && MU0_HAVE_CPP11
@@ -86,6 +117,7 @@
 #		define __mu0_isoftype__(_Tp, x)   ((::std::is_same<_Tp , __mu0_typeof__(__x)>::value == true) ? 1 : 0)
 #		define __mu0_isofkind__(_Tp, x)   ((::std::is_same<_Tp , __mu0_typeof__(__x)>::value == true || ::std::is_same<_Tp , __mu0_kindof__(__x) >::value == true) ? 1 : 0)
 #		define __mu0_issame__(_T, _U)     ((::std::is_same<_T  , _U>::value == true) ? 1 : 0)
+# 		define __mu0_decay__(__x)         __mu0_kindof__(__x)
 #	endif
 
 #	if MU0_HAVE_TYPEOF
