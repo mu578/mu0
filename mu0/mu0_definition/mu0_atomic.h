@@ -22,14 +22,23 @@
 
 #	undef  MU0_HAVE_ATOMIC
 #	undef  MU0_HAVE_ATSWAP
+#	undef  __mu0_atomic_fetch_and_add__
+#	undef  __mu0_atomic_fetch_and_sub__
+#	undef  __mu0_atomic_fetch_and_or__
+#	undef  __mu0_atomic_fetch_and_and__
+#	undef  __mu0_atomic_fetch_and_xor__
+#	undef  __mu0_atomic_fetch_and_nand__
+#	undef  __mu0_atomic_add_and_fetch__
 #	undef  __mu0_atomic_sub_and_fetch__
 #	undef  __mu0_atomic_or_and_fetch__
 #	undef  __mu0_atomic_and_and_fetch__
 #	undef  __mu0_atomic_xor_and_fetch__
-#	undef  __mu0_atomic_nand_fetch__
+#	undef  __mu0_atomic_nand_and_fetch__
 #	undef  __mu0_atomic_bool_compare_and_swap__
 #	undef  __mu0_atomic_val_compare_and_swap__
 #	undef  __mu0_atomic_swap__
+#	undef  __mu0_atomic_load__
+#	undef  __mu0_atomic_store__
 #	define MU0_HAVE_ATOMIC 0
 #	define MU0_HAVE_ATSWAP 0
 
@@ -93,7 +102,7 @@ __mu0_scope_begin__                                                             
 	__result = __sync_xor_and_fetch(__ptr, __value);                                      \
 __mu0_scope_end__
 
-#	define __mu0_atomic_nand_fetch__(_Sc, __ptr, __value, __result)                       \
+#	define __mu0_atomic_nand_and_fetch__(_Sc, __ptr, __value, __result)                   \
 __mu0_scope_begin__                                                                      \
 	__result = __sync_nand_and_fetch(__ptr, __value);                                     \
 __mu0_scope_end__
@@ -170,7 +179,7 @@ __mu0_scope_begin__                                                             
 	__result = __atomic_xor_fetch(__ptr, __value, __ATOMIC_SEQ_CST);                      \
 __mu0_scope_end__
 
-#	define __mu0_atomic_nand_fetch__(_Sc, __ptr, __value, __result)                       \
+#	define __mu0_atomic_nand_and_fetch__(_Sc, __ptr, __value, __result)                   \
 __mu0_scope_begin__                                                                      \
 	__result = __atomic_nand_fetch(__ptr, __value, __ATOMIC_SEQ_CST);                     \
 __mu0_scope_end__
@@ -254,7 +263,7 @@ __mu0_scope_end__
 #	define __mu0_atomic_xor_and_fetch__(_Sc, __ptr, __value, __result)                    \
 	__mu0_atomic_op_and_fetch__(_Sc, ^=, __ptr, __value, __result)
 
-#	define __mu0_atomic_nand_fetch__(_Sc, __ptr, __value, __result)                       \
+#	define __mu0_atomic_nand_and_fetch__(_Sc, __ptr, __value, __result)                   \
 __mu0_scope_begin__                                                                      \
 	__mu0_barrier_acquire__();                                                            \
 	*__ptr   = ~*ptr & __value                                                            \
