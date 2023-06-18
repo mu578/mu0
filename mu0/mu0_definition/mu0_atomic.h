@@ -113,7 +113,10 @@ __mu0_scope_end__
 
 #	define __mu0_atomic_bool_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result) \
 __mu0_scope_begin__                                                                      \
-	__result = __atomic_compare_exchange(__ptr, &__oldval, &__newval                      \
+	_Sc __mu0_atomic_bool_compare_and_swap__tmp__ = __oldval;                             \
+	__result                                      = __atomic_compare_exchange_n(__ptr     \
+		, &__mu0_atomic_bool_compare_and_swap__tmp__                                       \
+		, __newval                                                                         \
 		, 0                                                                                \
 		, __ATOMIC_SEQ_CST                                                                 \
 		, __ATOMIC_SEQ_CST                                                                 \
@@ -213,11 +216,11 @@ __mu0_scope_end__
 
 #	define __mu0_atomic_fetch_and_op__(_Sc, _Op, __ptr, __value, __result)                \
 __mu0_scope_begin__                                                                      \
-	_Sc tmp;                                                                              \
+	_Sc __mu0_atomic_fetch_and_op__tmp__;                                                 \
 	__mu0_barrier_acquire__();                                                            \
-	tmp      = *__ptr;                                                                    \
-	*__ptr _Op __value;                                                                   \
-	__result = tmp;                                                                       \
+	__mu0_atomic_fetch_and_op__tmp__  = *__ptr;                                           \
+	*__ptr                          _Op __value;                                          \
+	__result                          = __mu0_atomic_fetch_and_op__tmp__;                 \
 	__mu0_barrier_release__();                                                            \
 __mu0_scope_end__
 
@@ -238,11 +241,11 @@ __mu0_scope_end__
 
 #	define __mu0_atomic_fetch_and_nand__(_Sc, __ptr, __value, __result)                   \
 __mu0_scope_begin__                                                                      \
-	_Sc tmp;                                                                              \
+	_Sc __mu0_atomic_fetch_and_nand__tmp__;                                               \
 	__mu0_barrier_acquire__();                                                            \
-	tmp      = *__ptr;                                                                    \
-	*ptr     = ~tmp & __value;                                                            \
-	__result = tmp;                                                                       \
+	__mu0_atomic_fetch_and_nand__tmp__ = *__ptr;                                          \
+	*ptr                               = ~__mu0_atomic_fetch_and_nand__tmp__ & __value;   \
+	__result                           = __mu0_atomic_fetch_and_nand__tmp__;              \
 	__mu0_barrier_release__();                                                            \
 __mu0_scope_end__
 
@@ -401,7 +404,7 @@ __mu0_scope_end__
 #	undef  MU0_HAVE_ATSTORE
 #	define MU0_HAVE_ATSTORE 1
 #	define __mu0_atomic_store__(_Sc, __ptr, __val)                                        \
-	__atomic_store(__ptr, &__val, __ATOMIC_SEQ_CST)
+	__atomic_store_n(__ptr, __val, __ATOMIC_SEQ_CST)
 #	endif
 #	endif
 
