@@ -80,7 +80,7 @@ __mu0_scope_end__
 
 #	define __mu0_atomic_or_and_fetch__(_Sc, __ptr, __value, __result)                     \
 __mu0_scope_begin__                                                                      \
-	__result = __sync_sync_or_and_fetch(__ptr, __value);                                  \
+	__result = __sync_or_and_fetch(__ptr, __value);                                       \
 __mu0_scope_end__
 
 #	define __mu0_atomic_and_and_fetch__(_Sc, __ptr, __value, __result)                    \
@@ -95,13 +95,93 @@ __mu0_scope_end__
 
 #	define __mu0_atomic_nand_fetch__(_Sc, __ptr, __value, __result)                       \
 __mu0_scope_begin__                                                                      \
-	__result = __sync_nand_fetch(__ptr, __value);                                         \
+	__result = __sync_nand_and_fetch(__ptr, __value);                                     \
 __mu0_scope_end__
-
 
 #	define __mu0_atomic_bool_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result) \
 __mu0_scope_begin__                                                                      \
 	__result = __sync_bool_compare_and_swap(__ptr, __oldval, __newval) ? 1 : 0;           \
+__mu0_scope_end__
+
+#	define __mu0_atomic_val_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result)  \
+__mu0_scope_begin__                                                                      \
+	__result = __sync_val_compare_and_swap(__ptr, __oldval, __newval);                    \
+__mu0_scope_end__
+
+#	endif
+#	endif
+
+#	if!MU0_HAVE_ATOMIC
+#	if MU0_HAVE_CC_GNUCC
+#	undef  MU0_HAVE_ATOMIC
+#	define MU0_HAVE_ATOMIC 1
+#	define __mu0_atomic_fetch_and_add__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_fetch_add(__ptr, __value, __ATOMIC_SEQ_CST);                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_sub__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_fetch_sub(__ptr, __value, __ATOMIC_SEQ_CST);                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_or__(_Sc, __ptr, __value, __result)                     \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_fetch_or(__ptr, __value, __ATOMIC_SEQ_CST)                        \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_and__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_fetch_and(__ptr, __value, __ATOMIC_SEQ_CST);                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_xor__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_fetch_xor(__ptr, __value, __ATOMIC_SEQ_CST);                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_nand__(_Sc, __ptr, __value, __result)                   \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_fetch_nand(__ptr, __value, __ATOMIC_SEQ_CST);                     \
+__mu0_scope_end__
+
+#	define __mu0_atomic_add_and_fetch__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_add_fetch(__ptr, __value, __ATOMIC_SEQ_CST);                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_sub_and_fetch__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_sub_fetch(__ptr, __value, __ATOMIC_SEQ_CST);                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_or_and_fetch__(_Sc, __ptr, __value, __result)                     \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_or_fetch(__ptr, __value, __ATOMIC_SEQ_CST);                       \
+__mu0_scope_end__
+
+#	define __mu0_atomic_and_and_fetch__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_and_fetch(__ptr, __value, __ATOMIC_SEQ_CST);                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_xor_and_fetch__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_xor_fetch(__ptr, __value, __ATOMIC_SEQ_CST);                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_nand_fetch__(_Sc, __ptr, __value, __result)                       \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_nand_fetch(__ptr, __value, __ATOMIC_SEQ_CST);                     \
+__mu0_scope_end__
+
+#	define __mu0_atomic_bool_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result) \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_compare_exchange(__ptr, &__oldval, &__newval                      \
+		, 0                                                                                \
+		, __ATOMIC_SEQ_CST                                                                 \
+		, __ATOMIC_SEQ_CST                                                                 \
+	) ? 1 : 0;                                                                            \
 __mu0_scope_end__
 
 #	define __mu0_atomic_val_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result)  \
@@ -230,7 +310,6 @@ __mu0_scope_begin__                                                             
 __mu0_scope_end__
 
 #	endif
-
 
 #	if !MU0_HAVE_ATSWAP
 #	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL

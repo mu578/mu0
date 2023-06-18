@@ -19,7 +19,19 @@ LOCAL_MODULE      := mu0
 LOCAL_MODULE_PATH := ../../$(LOCAL_MODULE)
 MU0_ROOT_PATH     := $(LOCAL_MODULE_PATH)
 
-PLATFORM_VARIANT  := macos_macport.fat
+# PLATFORM_VARIANT := macos_xcode
+# PLATFORM_VARIANT := macos_xcode.arm64
+# PLATFORM_VARIANT := macos_xcode.x86_64
+# PLATFORM_VARIANT := macos_xcode.fat
+# PLATFORM_VARIANT := macos_macport
+# PLATFORM_VARIANT := macos_macport.arm64
+# PLATFORM_VARIANT := macos_macport.x86_64
+# PLATFORM_VARIANT := macos_macport.fat
+# PLATFORM_VARIANT := macos_android
+# PLATFORM_VARIANT := macos_android.arm64
+# PLATFORM_VARIANT := macos_android.arm32
+# PLATFORM_VARIANT := macos_android.x86_64
+# PLATFORM_VARIANT := macos_android.all
 
 include $(MU0_ROOT_PATH)/mk/inc/mu0_source.mk
 include $(MU0_ROOT_PATH)/mk/inc/mu0_toolchain.mk
