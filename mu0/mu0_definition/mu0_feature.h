@@ -95,7 +95,7 @@
 #		define __mu0_isoftype__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x)) ? 1 : 0)
 #		define __mu0_isofkind__(_Tp, x)   ((__mu0_typeof__(_Tp) == __mu0_typeof__(__x) || __mu0_typeof__(_Tp) == __mu0_kindof__(__x))  ? 1 : 0)
 #		define __mu0_issame__(_T, _U)     (__mu0_generic__(((_T){0}), _U: 1, default: 0) && __mu0_generic__(((_U){0}), _T: 1, default: 0))
-# 		define __mu0_decay__(__x)         typeof_unequal(__x)
+# 		define __mu0_decay__(__x)         __mu0_kindof__(__x)
 #	elif MU0_HAVE_CC_ITLGC && MU0_HAVE_GENERIC
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
@@ -144,7 +144,7 @@
 #	if 1
 #		undef  MU0_HAVE_ADDRESSOF
 #		define MU0_HAVE_ADDRESSOF         1
-#		if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCC
+#		if   MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_MSVCL
 #			if (__has_builtin(__builtin_addressof))
 #				define __mu0_addressof__(__x) __builtin_addressof(__x)
 #			else
@@ -153,7 +153,7 @@
 #		elif MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ITLGC
 #			define __mu0_addressof__(__x) __builtin_addressof(__x)
 #		else
-#			define __mu0_addressof__(__x)    (&(__x))
+#			define __mu0_addressof__(__x) (&(__x))
 #		endif
 #	endif
 
