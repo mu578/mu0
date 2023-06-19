@@ -124,7 +124,7 @@ rule_list_objects::
 	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 
 rule_objects::
-	echo echo  $(LOCAL_SRC_FILES)
+	echo $(LOCAL_SRC_FILES)
 	@for src_file in $(LOCAL_SRC_FILES); do                                                                       \
 		if [ -z "$${src_file}" ]; then                                                                              \
 			break;                                                                                                   \
@@ -170,7 +170,7 @@ rule_simple_objects::
 		fi;                                                                                                         \
 	done
 
-rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
+rule_static:: rule_clean rule_buildir rule_simple_objects rule_list_objects
 	-@if [ -z "$(MU0_OBJ_FILES)" ]; then                                                                           \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Nothing to be done.";                        \
 	else                                                                                                           \
@@ -182,7 +182,7 @@ rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 		fi;                                                                                                         \
 	fi
 
-rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
+rule_shared:: rule_clean rule_buildir rule_simple_objects rule_list_objects
 	-@if [ -z "$(MU0_OBJ_FILES)" ]; then                                                                           \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= Nothing to be done.";                        \
 	else                                                                                                           \
