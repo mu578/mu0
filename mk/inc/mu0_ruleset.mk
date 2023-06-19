@@ -125,9 +125,6 @@ rule_list_objects::
 
 rule_objects::
 	-@for src_file in $(LOCAL_SRC_FILES); do \
-		if [ -z "$${src_file}" ]; then \
-			break; \
-		fi; \
 		base=$${src_file#"$(LOCAL_MODULE_PATH)/sdk/vendor/"}; \
 		prefix=$${base%%/*}; \
 		if [ "$${#prefix}" -le 3 ]; then \
@@ -146,21 +143,16 @@ rule_objects::
 		else \
 			visibility="-fpic "$${visibility}; \
 		fi; \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$${name}"'"; \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= $${visibility} '"$${name}"'"; \
 		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
-			$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
-				$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*}).o; \
+			$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*}).o; \
 		else \
-			$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o \
-				$(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*})_$(ARCH).o; \
+			$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*})_$(ARCH).o; \
 		fi; \
 	done
 
 rule_simple_objects::
 	-@for src_file in $(LOCAL_SRC_FILES); do \
-		if [ -z "$${src_file}" ]; then \
-			break; \
-		fi; \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$$(basename $${src_file})"'"; \
 		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
 			$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).o; \
@@ -187,25 +179,18 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	else \
 		if [ "$(PLATFORM)" = "darwin" ]; then \
 			echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= 'lib"$(LOCAL_MODULE)"-1.0.0.dylib'"; \
-			$(LD) -dynamiclib $(MU0_OBJ_FILES) \
-				-install_name @rpath/lib$(LOCAL_MODULE).dylib \
-				-compatibility_version 1.0 \
-				-current_version       1.0.0 \
+			$(LD) -dynamiclib $(MU0_OBJ_FILES) -install_name @rpath/lib$(LOCAL_MODULE).dylib -compatibility_version 1.0 -current_version 1.0.0 \
 				-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
-			echo ""; \
-			$(LIPO)  -info $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
-			echo ""; \
-			$(OTOOL) -L    $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
+			echo ""; $(LIPO)  -info $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
+			echo ""; $(OTOOL) -L    $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dylib; \
 		elif [ "$(PLATFORM)" = "linux" ] || [ "$(PLATFORM)" = "freebsd" ]; then \
 			echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= 'lib"$(LOCAL_MODULE)".so.1.0.0'"; \
-			$(LD) -shared $(MU0_OBJ_FILES) \
-				-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
+			$(LD) -shared $(MU0_OBJ_FILES) -o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
 			$(OBJDUMP) -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0; \
 			$(OBJDUMP) -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE).so.1.0.0 | $(MU0_CMD_GREP) 'NEEDED'; \
 		elif case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
 			echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= 'lib"$(LOCAL_MODULE)"-1.0.0.dll'"; \
-			$(LD) -shared $(MU0_OBJ_FILES) \
-				-o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
+			$(LD) -shared $(MU0_OBJ_FILES) -o $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
 			$(OBJDUMP) -a $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll; \
 			$(OBJDUMP) -p $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)-1.0.0.dll | $(MU0_CMD_GREP) 'DLL Name'; \
 		fi; \
@@ -216,24 +201,18 @@ rule_list_cmds::
 	$(eval MU0_MISC_FILES  :=$(filter %-main.c, $(MU0_BUILD_FILES)))
 
 rule_objects_cmds::
-	-@for src_file in $(MU0_MISC_FILES); do \
-		if [ -z "$${src_file}" ]; then \
-			break; \
-		fi; \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= '"$$(basename $${src_file})"'"; \
-		$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o \
-			$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo; \
-	done
+	-@if [ -n "$(MU0_MISC_FILES)" ]; then \
+		for src_file in $(MU0_MISC_FILES); do \
+			echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= '"$$(basename $${src_file})"'"; \
+			$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo; \
+		done; \
+	fi
 
 rule_linker_cmds::
 	-@if [ -z "$(MU0_OBJ_FILES)" ]; then \
 		for src_file in $(MU0_MISC_FILES); do \
-			if [ -z "$${src_file}" ]; then \
-				break; \
-			fi; \
 			echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
-			$(LD) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
-				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
+			$(LD) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo -o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 		done; \
 	else \
 		if [ "$(ARCH)" = "fat" ]; then \
@@ -242,22 +221,16 @@ rule_linker_cmds::
 			$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES); \
 		fi; \
 		for src_file in $(MU0_MISC_FILES); do \
-			if [ -z "$${src_file}" ]; then \
-				break; \
-			fi; \
 			echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd; \
 			if [ "$(ARCH)" = "fat" ]; then \
-				$(LD) $(MU0_OBJ_FILES) \
-						$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+				$(LD) $(MU0_OBJ_FILES) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 			else \
 				if case $(PLATFORM) in linu*) ;; *) false;; esac; then \
-					$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive \
-							$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+					$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 						-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 				else \
-					$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a \
-							$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
+					$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo \
 						-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd; \
 				fi; \
 			fi; \
