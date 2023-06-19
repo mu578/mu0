@@ -139,7 +139,7 @@
 #	endif
 
 #	define __mu0_nullable__
-#	define __mu0_delineate__ enum { /***/ }
+#	define __mu0_delineate__ void __mu0_foobar__(void)
 
 #endif /* !MU0_ATTRIBUTE_H */
 
