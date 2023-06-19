@@ -242,9 +242,7 @@ rule_linker_cmds::
 			$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES);                          \
 		fi;                                                                                                        \
 		for src_file in $(MU0_MISC_FILES); do                                                                      \
-			if [ "x$${src_file}" = "x" ]; then                                                                      \
-				break;                                                                                               \
-			fi;                                                                                                     \
+			echo  "toto";                                                                                           \
 		done;                                                                                                      \
 	fi
 
