@@ -55,14 +55,14 @@
 #	endif
 #	endif
 
-typedef __mu0_atomic__(___mu0_uint8_t___) ___mu0_atomic_uint8___;
-typedef __mu0_atomic__(___mu0_sint8_t___) ___mu0_atomic_sint8___;
-typedef __mu0_atomic__(___mu0_uint4_t___) ___mu0_atomic_uint4___;
-typedef __mu0_atomic__(___mu0_sint4_t___) ___mu0_atomic_sint4___;
-typedef __mu0_atomic__(___mu0_uint2_t___) ___mu0_atomic_uint2___;
-typedef __mu0_atomic__(___mu0_sint2_t___) ___mu0_atomic_sint2___;
-typedef __mu0_atomic__(___mu0_uint1_t___) ___mu0_atomic_uint1___;
-typedef __mu0_atomic__(___mu0_sint1_t___) ___mu0_atomic_sint1___;
+typedef __mu0_atomic__(___mu0_uint8_t___) __mu0_atomic_uint8_t___;
+typedef __mu0_atomic__(___mu0_sint8_t___) __mu0_atomic_sint8_t___;
+typedef __mu0_atomic__(___mu0_uint4_t___) __mu0_atomic_uint4_t___;
+typedef __mu0_atomic__(___mu0_sint4_t___) __mu0_atomic_sint4_t___;
+typedef __mu0_atomic__(___mu0_uint2_t___) __mu0_atomic_uint2_t___;
+typedef __mu0_atomic__(___mu0_sint2_t___) __mu0_atomic_sint2_t___;
+typedef __mu0_atomic__(___mu0_uint1_t___) __mu0_atomic_uint1_t___;
+typedef __mu0_atomic__(___mu0_sint1_t___) __mu0_atomic_sint1_t___;
 
 #	if!MU0_HAVE_ATOMIC
 #	if MU0_HAVE_CC_GNUCC
