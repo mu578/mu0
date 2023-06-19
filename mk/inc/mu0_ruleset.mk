@@ -117,15 +117,14 @@ rule_linker_cmds::
 
 else
 
-rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_linker_cmds
+rule_all:: rule_clean rule_buildir rule_simple_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_linker_cmds
 
 rule_list_objects::
 	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
 	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 
 rule_objects::
-	echo $(LOCAL_SRC_FILES)
-	@for src_file in $(LOCAL_SRC_FILES); do                                                                       \
+	-@for src_file in $(LOCAL_SRC_FILES); do                                                                       \
 		if [ -z "$${src_file}" ]; then                                                                              \
 			break;                                                                                                   \
 		fi;                                                                                                         \
