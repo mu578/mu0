@@ -235,6 +235,12 @@ rule_linker_cmds::
 			$(LD) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo                                 \
 				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd;                                               \
 		done;                                                                                                      \
+	else                                                                                                          \
+		if [ "$(ARCH)" = "fat" ]; then                                                                             \
+			echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding.";          \
+		else                                                                                                       \
+			$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES);                          \
+		fi;                                                                                                        \
 	fi
 
 rule_linker_cmds2::
