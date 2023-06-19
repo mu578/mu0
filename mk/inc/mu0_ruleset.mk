@@ -62,7 +62,7 @@ rule_objects::
 rule_simple_objects::
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
-	-@if [ -z "$(LOCAL_SRC_FILES)" ]; then                                                                         \
+	-@if [ "x$(LOCAL_SRC_FILES)" = "x" ]; then                                                                     \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Nothing to be done.";                        \
 	else                                                                                                           \
 		echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk" >  $(LOCAL_BUILDDIR)"/android-static.mk";               \
@@ -75,7 +75,7 @@ rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
 	fi
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
-	-@if [ -z "$(LOCAL_SRC_FILES)" ]; then                                                                         \
+	-@if [ "x$(LOCAL_SRC_FILES)" = "x" ]; then                                                                     \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= Nothing to be done.";                        \
 	else                                                                                                           \
 		echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk" >  $(LOCAL_BUILDDIR)"/android-shared.mk";               \
@@ -100,7 +100,7 @@ rule_objects_cmds::
 
 rule_linker_cmds::
 	-@i=1 ; for src_file in $(MU0_MISC_FILES); do                                                                  \
-		if [ -z "$${src_file}" ]; then                                                                              \
+		if [ "x$${src_file}" = "x" ]; then                                                                          \
 			break;                                                                                                   \
 		fi;                                                                                                         \
 		echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk"          >  $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk";  \
@@ -125,7 +125,7 @@ rule_list_objects::
 
 rule_objects::
 	-@for src_file in $(LOCAL_SRC_FILES); do                                                                       \
-		if [ -z "$${src_file}" ]; then                                                                              \
+		if [ "x$${src_file}" = "x" ]; then                                                                          \
 			break;                                                                                                   \
 		fi;                                                                                                         \
 		base=$${src_file#"$(LOCAL_MODULE_PATH)/sdk/vendor/"};                                                       \
@@ -158,7 +158,7 @@ rule_objects::
 
 rule_simple_objects::
 	-@for src_file in $(LOCAL_SRC_FILES); do                                                                       \
-		if [ -z "$${src_file}" ]; then                                                                              \
+		if [ "x$${src_file}" = "x" ]; then                                                                              \
 			break;                                                                                                   \
 		fi;                                                                                                         \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$$(basename $${src_file})"'";              \
@@ -217,7 +217,7 @@ rule_list_cmds::
 
 rule_objects_cmds::
 	-@for src_file in $(MU0_MISC_FILES); do                                                                       \
-		if [ -z "$${src_file}" ]; then                                                                             \
+		if [ "x$${src_file}" = "x" ]; then                                                                             \
 			break;                                                                                                  \
 		fi;                                                                                                        \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= '"$$(basename $${src_file})"'";        \
@@ -226,9 +226,9 @@ rule_objects_cmds::
 	done
 
 rule_linker_cmds::
-	-@if [ -z "$(MU0_OBJ_FILES)" ]; then                                                                          \
+	-@if [ "x$(MU0_OBJ_FILES)" = "x" ]; then                                                                      \
 		for src_file in $(MU0_MISC_FILES); do                                                                      \
-			if [ -z "$${src_file}" ]; then                                                                          \
+			if [ "x$${src_file}" = "x" ]; then                                                                      \
 				break;                                                                                               \
 			fi;                                                                                                     \
 			echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc2" <= "$$(basename $${src_file%.*}).cmd; \
@@ -242,7 +242,7 @@ rule_linker_cmds::
 			$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES);                          \
 		fi;                                                                                                        \
 		for src_file in $(MU0_MISC_FILES); do                                                                      \
-			if [ -z "$${src_file}" ]; then                                                                          \
+			if [ "x$${src_file}" = "x" ]; then                                                                      \
 				break;                                                                                               \
 			fi;                                                                                                     \
 			echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd;  \
