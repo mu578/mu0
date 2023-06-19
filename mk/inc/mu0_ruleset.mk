@@ -170,7 +170,7 @@ rule_simple_objects::
 	done
 
 rule_static:: rule_clean rule_buildir rule_simple_objects rule_list_objects
-	-@if [ -z "$(MU0_OBJ_FILES)" ]; then                                                                           \
+	-@if [[ -z "$(MU0_OBJ_FILES)" ]]; then                                                                         \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Nothing to be done.";                        \
 	else                                                                                                           \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= lib"$(LOCAL_MODULE).a;                       \
@@ -182,7 +182,7 @@ rule_static:: rule_clean rule_buildir rule_simple_objects rule_list_objects
 	fi
 
 rule_shared:: rule_clean rule_buildir rule_simple_objects rule_list_objects
-	-@if [ -z "$(MU0_OBJ_FILES)" ]; then                                                                           \
+	-@if [[ -z "$(MU0_OBJ_FILES)" ]]; then                                                                         \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= Nothing to be done.";                        \
 	else                                                                                                           \
 		if [ "$(PLATFORM)" = "darwin" ]; then                                                                       \
@@ -226,7 +226,7 @@ rule_objects_cmds::
 	done
 
 rule_linker_cmds::
-	-@if [ -z "$(MU0_OBJ_FILES)" ]; then                                                                          \
+	-@if [[ -z "$(MU0_OBJ_FILES)" ]]; then                                                                        \
 		for src_file in $(MU0_MISC_FILES); do                                                                      \
 			if [ -z "$${src_file}" ]; then                                                                          \
 				break;                                                                                               \
