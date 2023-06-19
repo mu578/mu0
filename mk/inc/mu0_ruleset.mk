@@ -226,63 +226,44 @@ rule_objects_cmds::
 	done
 
 rule_linker_cmds::
-	if [ "x$(MU0_OBJ_FILES)" = "x" ]; then                                                                      \
-		for src_file in $(MU0_MISC_FILES); do                                                                      \
-			if [ "x$${src_file}" = "x" ]; then                                                                      \
-				break;                                                                                               \
-			fi;                                                                                                     \
-			echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd;  \
-			$(LD) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo                                 \
-				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd;                                               \
-		done;                                                                                                      \
-	else                                                                                                          \
-		if [ "$(ARCH)" = "fat" ]; then                                                                             \
-			echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding.";          \
-		else                                                                                                       \
-			$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES);                          \
-		fi                                                                                                         \
-		for src_file in $(MU0_MISC_FILES); do                                                                      \
-			echo  "toto";                                                                                           \
-		done;                                                                                                      \
-	fi
-
-rule_linker_cmds2::
-	-@if [ "x$(MU0_OBJ_FILES)" = "x" ]; then                                                                      \
-		for src_file in $(MU0_MISC_FILES); do                                                                      \
-			if [ "x$${src_file}" = "x" ]; then                                                                      \
-				break;                                                                                               \
-			fi;                                                                                                     \
-			echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd;  \
-			$(LD) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo                                 \
-				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd;                                               \
-		done;                                                                                                      \
-	else                                                                                                          \
-		if [ "$(ARCH)" = "fat" ]; then                                                                             \
-			echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding.";          \
-		else                                                                                                       \
-			$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES);                          \
-		fi;                                                                                                        \
-		for src_file in $(MU0_MISC_FILES); do                                                                      \
-			if [ "x$${src_file}" = "x" ]; then                                                                      \
-				break;                                                                                               \
-			fi;                                                                                                     \
-			echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd;  \
-			if [ "$(ARCH)" = "fat" ]; then                                                                          \
-				$(LD) $(MU0_OBJ_FILES)                                                                               \
-						$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo                              \
-					-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd;                                            \
-			else                                                                                                    \
-				if case $(PLATFORM) in linu*) ;; *) false;; esac; then                                               \
-					$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive    \
-							$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo                           \
-						-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd;                                         \
-				else                                                                                                 \
-					$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a                                               \
-							$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo                           \
-						-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd;                                         \
-				fi;                                                                                                  \
-			fi;                                                                                                     \
-		done;                                                                                                      \
+	-@if [ "x$(MU0_OBJ_FILES)" = "x" ]; then                                                                         \
+		for src_file in $(MU0_MISC_FILES); do                                                                         \
+			if [ "x$${src_file}" = "x" ]; then                                                                         \
+				break;                                                                                                  \
+			fi;                                                                                                        \
+			echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd;     \
+			$(LD) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo                                    \
+				-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd;                                                  \
+		done;                                                                                                         \
+	else                                                                                                             \
+		if [ "$(ARCH)" = "fat" ]; then                                                                                \
+			echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding.";             \
+		else                                                                                                          \
+			$(AR) -crv $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a $(MU0_OBJ_FILES);                                 \
+		fi;                                                                                                           \
+		if [ "x$(MU0_MISC_FILES)" = "x" ]; then                                                                       \
+			for src_file in $(MU0_MISC_FILES); do                                                                      \
+				if [ "x$${src_file}" = "x" ]; then                                                                      \
+					break;                                                                                               \
+				fi;                                                                                                     \
+				echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).cmd;  \
+				if [ "$(ARCH)" = "fat" ]; then                                                                          \
+					$(LD) $(MU0_OBJ_FILES)                                                                               \
+							$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo                              \
+						-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd;                                            \
+				else                                                                                                    \
+					if case $(PLATFORM) in linu*) ;; *) false;; esac; then                                               \
+						$(LD) -Wl,--whole-archive $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a -Wl,--no-whole-archive    \
+								$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo                           \
+							-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd;                                         \
+					else                                                                                                 \
+						$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.a                                               \
+								$(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo                           \
+							-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).cmd;                                         \
+					fi;                                                                                                  \
+				fi;                                                                                                     \
+			done;                                                                                                      \
+		fi;                                                                                                           \
 	fi
 
 endif
