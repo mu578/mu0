@@ -124,6 +124,7 @@ rule_list_objects::
 	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 
 rule_objects::
+	echo echo  $(LOCAL_SRC_FILES)
 	@for src_file in $(LOCAL_SRC_FILES); do                                                                       \
 		if [ -z "$${src_file}" ]; then                                                                              \
 			break;                                                                                                   \
