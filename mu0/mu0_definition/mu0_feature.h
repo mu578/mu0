@@ -23,7 +23,7 @@
 #	undef  MU0_HAVE_EXTENSION
 #	undef  __mu0_extension__
 #	define MU0_HAVE_EXTENSION 0
-#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC  || MU0_HAVE_CC_ARMCC
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC  || MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_MSVCL
 #		undef  MU0_HAVE_EXTENSION
 #		define MU0_HAVE_EXTENSION 1
 #		define __mu0_extension__  __extension__

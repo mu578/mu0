@@ -25,7 +25,7 @@
 #	if 1
 #		undef  MU0_HAVE_PRAGMA
 #		define MU0_HAVE_PRAGMA 1
-#		if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC
+#		if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_MSVCL
 #			undef  __mu0_pragma__
 #			define __mu0_pragma__(__m) _Pragma(#__m)
 #		elif MU0_HAVE_CC_ITLCC || MU0_HAVE_CC_MSVCC
@@ -82,7 +82,7 @@
 #			undef  MU0_HAVE_INLINE_ALWAYS
 #			define MU0_HAVE_INLINE_ALWAYS 1
 #			define __mu0_inline_always__ __forceinline
-#		elif MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC
+#		elif MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_MSVCL
 #			undef  MU0_HAVE_INLINE_ALWAYS
 #			define MU0_HAVE_INLINE_ALWAYS 1
 #			define __mu0_inline_always__ __inline__ __attribute__((always_inline))
@@ -101,7 +101,7 @@
 #			undef  MU0_HAVE_INLINE_NEVER
 #			define MU0_HAVE_INLINE_NEVER 1
 #			define __mu0_inline_never__ __declspec(noinline)
-#		elif MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC
+#		elif MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_MSVCL
 #			undef  MU0_HAVE_INLINE_NEVER
 #			define MU0_HAVE_INLINE_NEVER 1
 #			define __mu0_inline_never__ __attribute__((noinline))
@@ -126,7 +126,7 @@
 #	undef  MU0_HAVE_OVERLOAD
 #	undef  __mu0_overload__
 #	define MU0_HAVE_OVERLOAD 0
-#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCC
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_MSVCL
 #		if __has_attribute(__overloadable__)
 #			undef  MU0_HAVE_OVERLOAD
 #			define MU0_HAVE_OVERLOAD 1
