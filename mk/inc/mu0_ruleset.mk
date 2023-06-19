@@ -158,7 +158,7 @@ rule_objects::
 
 rule_simple_objects::
 	-@for src_file in $(LOCAL_SRC_FILES); do                                                                       \
-		if [ "x$${src_file}" = "x" ]; then                                                                              \
+		if [ "x$${src_file}" = "x" ]; then                                                                          \
 			break;                                                                                                   \
 		fi;                                                                                                         \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$$(basename $${src_file})"'";              \
@@ -217,7 +217,7 @@ rule_list_cmds::
 
 rule_objects_cmds::
 	-@for src_file in $(MU0_MISC_FILES); do                                                                       \
-		if [ "x$${src_file}" = "x" ]; then                                                                             \
+		if [ "x$${src_file}" = "x" ]; then                                                                         \
 			break;                                                                                                  \
 		fi;                                                                                                        \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= '"$$(basename $${src_file})"'";        \
@@ -226,7 +226,7 @@ rule_objects_cmds::
 	done
 
 rule_linker_cmds::
-	-@if [ "x$(MU0_OBJ_FILES)" = "x" ]; then                                                                      \
+	if [ "x$(MU0_OBJ_FILES)" = "x" ]; then                                                                      \
 		for src_file in $(MU0_MISC_FILES); do                                                                      \
 			if [ "x$${src_file}" = "x" ]; then                                                                      \
 				break;                                                                                               \
@@ -240,7 +240,7 @@ rule_linker_cmds::
 			echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Arch is "$(ARCH)" discarding.";          \
 		else                                                                                                       \
 			$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES);                          \
-		fi;                                                                                                        \
+		fi                                                                                                         \
 		for src_file in $(MU0_MISC_FILES); do                                                                      \
 			echo  "toto";                                                                                           \
 		done;                                                                                                      \
