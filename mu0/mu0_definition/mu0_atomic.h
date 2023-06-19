@@ -25,6 +25,7 @@
 #	undef  MU0_HAVE_ATSWAP
 #	undef  MU0_HAVE_ATLOAD
 #	undef  MU0_HAVE_ATSTORE
+#	undef  MU0_HAVE_ATINIT
 #	undef  __mu0_atomic_fetch_and_add__
 #	undef  __mu0_atomic_fetch_and_sub__
 #	undef  __mu0_atomic_fetch_and_or__
@@ -46,6 +47,7 @@
 #	define MU0_HAVE_ATSWAP  0
 #	define MU0_HAVE_ATLOAD  0
 #	define MU0_HAVE_ATSTORE 0
+#	define MU0_HAVE_ATINIT  0
 
 #	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
 #	if __has_feature(c_atomic)
@@ -580,6 +582,26 @@ __mu0_scope_begin__                                                             
 	_Sc __mu0_atomic_store__r__;	                                                             \
 	__mu0_atomic_swap__(_Sc, __ptr, __val, __mu0_atomic_store__r__);                           \
 	__mu0_unused__(__mu0_atomic_store__r__);                                                   \
+__mu0_scope_end__
+#	endif
+
+#	if !MU0_HAVE_ATINIT
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
+#	if __has_feature(c_atomic)
+#	undef  MU0_HAVE_ATINIT
+#	define MU0_HAVE_ATINIT 1
+#	define __mu0_atomic_init__(_Sc, __ptr, __val)                                             \
+	__c11_atomic_init(__ptr, __val)
+#	endif
+#	endif
+#	endif
+
+#	if !MU0_HAVE_ATINIT
+#	undef  MU0_HAVE_ATINIT
+#	define MU0_HAVE_ATINIT 1
+#	define __mu0_atomic_init__(_Sc, __ptr, __val)                                              \
+__mu0_scope_begin__                                                                           \
+	*__ptr = __val;                                                                            \
 __mu0_scope_end__
 #	endif
 

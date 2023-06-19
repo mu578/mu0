@@ -30,19 +30,13 @@ typedef struct __mu0_spinlock__        __mu0_spinlock_t__;
 
 __mu0_static_inline__
 void __mu0_spinlock_init__(__mu0_spinlock_t__ * __s)
-{ __s->u_r0 = 0U; }
+{ __mu0_atomic_init__(__mu0_atomic_uint4_t___, &__s->u_r0, 0U); }
 
 __mu0_static_inline__
 ___mu0_uint4_t___ __mu0_spinlock_trylock__(__mu0_spinlock_t__ * __s)
 {
 	___mu0_uint4_t___ r0;
-	__mu0_atomic_bool_compare_and_swap__(
-		  __mu0_atomic_uint4_t___
-		, &__s->u_r0
-		, 0U
-		, 1U
-		, r0
-	);
+	__mu0_atomic_bool_compare_and_swap__(__mu0_atomic_uint4_t___, &__s->u_r0, 0U, 1U, r0);
 	return r0;
 }
 
@@ -50,9 +44,7 @@ __mu0_static_inline__
 const ___mu0_sint4_t___ __mu0_spinlock_lock__(__mu0_spinlock_t__ * __s)
 {
 	___mu0_sint4_t___ g0 = 256;
-	while (!__mu0_spinlock_trylock__(__s) && g0 > 0) {
-		--g0; __mu0_cpuyield__(); --g0;
-	}
+	while (!__mu0_spinlock_trylock__(__s) && g0 > 0) { --g0; __mu0_cpuyield__(); --g0; }
 	return g0 > 0 ? 0 : -1;
 }
 
