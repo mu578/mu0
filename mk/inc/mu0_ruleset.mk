@@ -241,6 +241,11 @@ rule_linker_cmds::
 		else                                                                                                       \
 			$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.a" $(MU0_OBJ_FILES);                          \
 		fi;                                                                                                        \
+		for src_file in $(MU0_MISC_FILES); do                                                                      \
+			if [ "x$${src_file}" = "x" ]; then                                                                      \
+				break;                                                                                               \
+			fi;                                                                                                     \
+		done;                                                                                                      \
 	fi
 
 rule_linker_cmds2::
