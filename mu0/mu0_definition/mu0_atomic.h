@@ -48,8 +48,8 @@
 #	define MU0_HAVE_ATSTORE 0
 
 #	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
-#	if __has_feature(c_atomic_NOTYET)
-#		define __mu0_atomic__ _Atomic
+#	if __has_feature(c_atomic)
+#		define __mu0_atomic__      _Atomic
 #	else
 #		define __mu0_atomic__(_Sc) __mu0_volatile__ _Sc
 #	endif
@@ -64,11 +64,130 @@ typedef __mu0_atomic__(___mu0_sint2_t___) __mu0_atomic_sint2_t___;
 typedef __mu0_atomic__(___mu0_uint1_t___) __mu0_atomic_uint1_t___;
 typedef __mu0_atomic__(___mu0_sint1_t___) __mu0_atomic_sint1_t___;
 
+#	if !MU0_HAVE_ATOMIC
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
+#	if __has_feature(c_atomic)
+#	undef  MU0_HAVE_ATOMIC
+#	define MU0_HAVE_ATOMIC 1
+
+#	define __mu0_atomic_fetch_and_add__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __atomic_fetch_add(__ptr, __value, __ATOMIC_SEQ_CST);                      \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_sub__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __c11_atomic_fetch_sub(__ptr, __value, __ATOMIC_SEQ_CST);                  \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_or__(_Sc, __ptr, __value, __result)                     \
+__mu0_scope_begin__                                                                      \
+	__result = __c11_atomic_fetch_or(__ptr, __value, __ATOMIC_SEQ_CST)                    \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_and__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __c11_atomic_fetch_and(__ptr, __value, __ATOMIC_SEQ_CST);                  \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_xor__(_Sc, __ptr, __value, __result)                    \
+__mu0_scope_begin__                                                                      \
+	__result = __c11_atomic_fetch_xor(__ptr, __value, __ATOMIC_SEQ_CST);                  \
+__mu0_scope_end__
+
+#	define __mu0_atomic_fetch_and_nand__(_Sc, __ptr, __value, __result)                   \
+__mu0_scope_begin__                                                                      \
+	__result = __c11_atomic_fetch_nand(__ptr, __value, __ATOMIC_SEQ_CST);                 \
+__mu0_scope_end__
+
+#	define __mu0_atomic_op_and_fetch__(_Sc, _Op, __ptr, __value, __result)                \
+__mu0_scope_begin__                                                                      \
+	__mu0_barrier_acquire__();                                                            \
+	*__ptr   _Op __value;                                                                 \
+	__result  = *__ptr;                                                                   \
+	__mu0_barrier_release__();                                                            \
+__mu0_scope_end__
+
+#	define __mu0_atomic_add_and_fetch__(_Sc, __ptr, __value, __result)                    \
+	__mu0_atomic_op_and_fetch__(_Sc, +=, __ptr, __value, __result)
+
+#	define __mu0_atomic_sub_and_fetch__(_Sc, __ptr, __value, __result)                    \
+	__mu0_atomic_op_and_fetch__(_Sc, -=, __ptr, __value, __result)
+
+#	define __mu0_atomic_or_and_fetch__(_Sc, __ptr, __value, __result)                     \
+	__mu0_atomic_op_and_fetch__(_Sc, |=, __ptr, __value, __result)
+
+#	define __mu0_atomic_and_and_fetch__(_Sc, __ptr, __value, __result)                    \
+	__mu0_atomic_op_and_fetch__(_Sc, &=, __ptr, __value, __result)
+
+#	define __mu0_atomic_xor_and_fetch__(_Sc, __ptr, __value, __result)                    \
+	__mu0_atomic_op_and_fetch__(_Sc, ^=, __ptr, __value, __result)
+
+#	define __mu0_atomic_nand_and_fetch__(_Sc, __ptr, __value, __result)                   \
+__mu0_scope_begin__                                                                      \
+	__mu0_barrier_acquire__();                                                            \
+	*__ptr   = ~*ptr & __value                                                            \
+	__result = *__ptr;                                                                    \
+	__mu0_barrier_release__();                                                            \
+__mu0_scope_end__
+
+#	define __mu0_atomic_bool_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result) \
+__mu0_scope_begin__                                                                      \
+	_Sc               __mu0_atomic_bool_compare_and_swap__tmp__;                          \
+	___mu0_uint4_t___ __mu0_atomic_bool_compare_and_swap__bar__;                          \
+	__mu0_barrier_acquire__();                                                            \
+	__result                                  = 0;                                        \
+	__mu0_atomic_bool_compare_and_swap__tmp__ = *__ptr;                                   \
+	__mu0_atomic_bool_compare_and_swap__bar__ = 64;                                       \
+	while (                                                                               \
+		   __mu0_atomic_bool_compare_and_swap__bar__ > 0                                   \
+		&& __mu0_atomic_bool_compare_and_swap__tmp__ == __oldval                           \
+	) {                                                                                   \
+		if (__mu0_atomic_bool_compare_and_swap__tmp__ == __oldval) {                       \
+			__mu0_barrier_release__();                                                      \
+			__mu0_barrier_acquire__();                                                      \
+			*__ptr   = __newval;                                                            \
+			__result = 1;                                                                   \
+		}                                                                                  \
+		__mu0_atomic_bool_compare_and_swap__tmp__ = *__ptr;                                \
+		--__mu0_atomic_bool_compare_and_swap__bar__;                                       \
+	}                                                                                     \
+	__mu0_barrier_release__();                                                            \
+__mu0_scope_end__
+
+#	define __mu0_atomic_val_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result)  \
+__mu0_scope_begin__                                                                      \
+	_Sc               __mu0_atomic_val_compare_and_swap__tmp__;                           \
+	___mu0_uint4_t___ __mu0_atomic_val_compare_and_swap__bar__;                           \
+	__mu0_barrier_acquire__();                                                            \
+	__mu0_atomic_val_compare_and_swap__tmp__ = *__ptr;                                    \
+	__mu0_atomic_val_compare_and_swap__bar__ = 64;                                        \
+	while (                                                                               \
+		   __mu0_atomic_val_compare_and_swap__bar__ > 0                                    \
+		&& __mu0_atomic_val_compare_and_swap__tmp__ == __oldval                            \
+	) {                                                                                   \
+		if (__mu0_atomic_val_compare_and_swap__tmp__ == __oldval) {                        \
+			__mu0_barrier_release__();                                                      \
+			__mu0_barrier_acquire__();                                                      \
+			*__ptr = __newval;                                                              \
+		}                                                                                  \
+		__mu0_atomic_val_compare_and_swap__tmp__ = *__ptr;                                 \
+		--__mu0_atomic_val_compare_and_swap__bar__;                                        \
+	}                                                                                     \
+	__result = __mu0_atomic_val_compare_and_swap__tmp__;                                  \
+	__mu0_barrier_release__();                                                            \
+__mu0_scope_end__
+
+#	endif
+#	endif
+#	endif
+
 #	if!MU0_HAVE_ATOMIC
 #	if MU0_HAVE_CC_GNUCC
 #	if defined(__GNUC_ATOMICS)
 #	undef  MU0_HAVE_ATOMIC
 #	define MU0_HAVE_ATOMIC 1
+
 #	define __mu0_atomic_fetch_and_add__(_Sc, __ptr, __value, __result)                    \
 __mu0_scope_begin__                                                                      \
 	__result = __atomic_fetch_add(__ptr, __value, __ATOMIC_SEQ_CST);                      \
@@ -414,7 +533,7 @@ __mu0_scope_end__
 
 #	if !MU0_HAVE_ATLOAD
 #	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
-#	if __has_feature(c_atomic_NOTYET)
+#	if __has_feature(c_atomic)
 #	undef  MU0_HAVE_ATLOAD
 #	define MU0_HAVE_ATLOAD 1
 #	define __mu0_atomic_load__(_Sc, __ptr, __result)                                      \
@@ -443,7 +562,7 @@ __mu0_scope_end__
 
 #	if !MU0_HAVE_ATSTORE
 #	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
-#	if __has_feature(c_atomic_NOTYET)
+#	if __has_feature(c_atomic)
 #	undef  MU0_HAVE_ATSTORE
 #	define MU0_HAVE_ATSTORE 1
 #	define __mu0_atomic_store__(_Sc, __ptr, __val)                                        \
