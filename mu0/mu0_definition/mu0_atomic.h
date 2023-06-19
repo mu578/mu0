@@ -15,6 +15,7 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
+#include <mu0/mu0_definition/mu0_attribute.h>
 #include <mu0/mu0_definition/mu0_barrier.h>
 
 #ifndef MU0_ATOMIC_H
@@ -45,6 +46,23 @@
 #	define MU0_HAVE_ATSWAP  0
 #	define MU0_HAVE_ATLOAD  0
 #	define MU0_HAVE_ATSTORE 0
+
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
+#	if __has_feature(c_atomic_NOTYET)
+#		define __mu0_atomic__ _Atomic
+#	else
+#		define __mu0_atomic__(_Sc) __mu0_volatile__ _Sc
+#	endif
+#	endif
+
+typedef __mu0_atomic__(___mu0_uint8_t___) ___mu0_atomic_uint8___;
+typedef __mu0_atomic__(___mu0_sint8_t___) ___mu0_atomic_sint8___;
+typedef __mu0_atomic__(___mu0_uint4_t___) ___mu0_atomic_uint4___;
+typedef __mu0_atomic__(___mu0_sint4_t___) ___mu0_atomic_sint4___;
+typedef __mu0_atomic__(___mu0_uint2_t___) ___mu0_atomic_uint2___;
+typedef __mu0_atomic__(___mu0_sint2_t___) ___mu0_atomic_sint2___;
+typedef __mu0_atomic__(___mu0_uint1_t___) ___mu0_atomic_uint1___;
+typedef __mu0_atomic__(___mu0_sint1_t___) ___mu0_atomic_sint1___;
 
 #	if!MU0_HAVE_ATOMIC
 #	if MU0_HAVE_CC_GNUCC
@@ -336,7 +354,7 @@ __mu0_scope_end__
 #	define MU0_HAVE_ATSWAP 1
 #	define __mu0_atomic_swap__(_Sc, __ptr, __newval, __result)                            \
 __mu0_scope_begin__                                                                      \
-	__result = __sync_swap(__ptr, __newval)                                               \
+	__result = __sync_swap(__ptr, __newval);                                              \
 __mu0_scope_end__
 #	elif __has_builtin(__atomic_exchange_n)
 #	undef  MU0_HAVE_ATSWAP
@@ -383,12 +401,25 @@ __mu0_scope_begin__                                                             
 __mu0_scope_end__
 #	endif
 
+#	if !MU0_HAVE_ATLOAD
 #	if MU0_HAVE_CC_GNUCC
 #	if defined(__GNUC_ATOMICS)
 #	undef  MU0_HAVE_ATLOAD
 #	define MU0_HAVE_ATLOAD 1
 #	define __mu0_atomic_load__(_Sc, __ptr, __result)                                      \
 	__atomic_load(__ptr, &__result, __ATOMIC_SEQ_CST)
+#	endif
+#	endif
+#	endif
+
+#	if !MU0_HAVE_ATLOAD
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
+#	if __has_feature(c_atomic_NOTYET)
+#	undef  MU0_HAVE_ATLOAD
+#	define MU0_HAVE_ATLOAD 1
+#	define __mu0_atomic_load__(_Sc, __ptr, __result)                                      \
+	__result = __c11_atomic_load(__ptr, __ATOMIC_SEQ_CST)
+#	endif
 #	endif
 #	endif
 
@@ -399,12 +430,25 @@ __mu0_scope_end__
 	__mu0_atomic_val_compare_and_swap__(_Sc, __ptr, 0, 0, __result)
 #	endif
 
+#	if !MU0_HAVE_ATSTORE
 #	if MU0_HAVE_CC_GNUCC
 #	if defined(__GNUC_ATOMICS)
 #	undef  MU0_HAVE_ATSTORE
 #	define MU0_HAVE_ATSTORE 1
 #	define __mu0_atomic_store__(_Sc, __ptr, __val)                                        \
 	__atomic_store_n(__ptr, __val, __ATOMIC_SEQ_CST)
+#	endif
+#	endif
+#	endif
+
+#	if !MU0_HAVE_ATSTORE
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
+#	if __has_feature(c_atomic_NOTYET)
+#	undef  MU0_HAVE_ATSTORE
+#	define MU0_HAVE_ATSTORE 1
+#	define __mu0_atomic_store__(_Sc, __ptr, __val)                                        \
+	__c11_atomic_store(__ptr, __val, __ATOMIC_SEQ_CST)
+#	endif
 #	endif
 #	endif
 
@@ -415,6 +459,7 @@ __mu0_scope_end__
 __mu0_scope_begin__                                                                      \
 	_Sc __mu0_atomic_store__r__;	                                                        \
 	__mu0_atomic_swap__(_Sc, __ptr, __val, __mu0_atomic_store__r__);                      \
+	__mu0_unused__(__mu0_atomic_store__r__);                                              \
 __mu0_scope_end__
 #	endif
 
