@@ -6,7 +6,7 @@
 #                                            _   _  _   _ | | | |                                          #
 #                                           | | | || | | || | | |                                          #
 #                                           | |_| || |_| || |_| |                                          #
-#                                           | ._,_| \___/ \___/                                           #
+#                                           | ._,_| \___/  \___/                                           #
 #                                           | |                                                            #
 #                                           |_|                                                            #
 
@@ -62,35 +62,27 @@ rule_objects::
 rule_simple_objects::
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
-	-@if [ -z "$(LOCAL_SRC_FILES)" ]; then \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Archive : "$(LOCAL_MODULE)" <= Nothing to be done."; \
-	else \
-		echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk" >  $(LOCAL_BUILDDIR)"/android-static.mk"; \
-		echo "include \044(CLEAR_VARS)"                     >> $(LOCAL_BUILDDIR)"/android-static.mk"; \
-		echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""      >> $(LOCAL_BUILDDIR)"/android-static.mk"; \
-		echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""         >> $(LOCAL_BUILDDIR)"/android-static.mk"; \
-		echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""         >> $(LOCAL_BUILDDIR)"/android-static.mk"; \
-		echo "include \044(BUILD_STATIC_LIBRARY)"           >> $(LOCAL_BUILDDIR)"/android-static.mk"; \
-		$(NDK_BUILD) $(NDK_ARGS)              APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-static.mk"; \
-	fi
+	@echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk" >  $(LOCAL_BUILDDIR)"/android-static.mk"
+	@echo "include \044(CLEAR_VARS)"                     >> $(LOCAL_BUILDDIR)"/android-static.mk"
+	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""      >> $(LOCAL_BUILDDIR)"/android-static.mk"
+	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""         >> $(LOCAL_BUILDDIR)"/android-static.mk"
+	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""         >> $(LOCAL_BUILDDIR)"/android-static.mk"
+	@echo "include \044(BUILD_STATIC_LIBRARY)"           >> $(LOCAL_BUILDDIR)"/android-static.mk"
+	$(NDK_BUILD) $(NDK_ARGS)               APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-static.mk"
 
 rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
-	-@if [ -z "$(LOCAL_SRC_FILES)" ]; then \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Library : "$(LOCAL_MODULE)" <= Nothing to be done."; \
-	else \
-		echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk" >  $(LOCAL_BUILDDIR)"/android-shared.mk"; \
-		echo "include \044(CLEAR_VARS)"                     >> $(LOCAL_BUILDDIR)"/android-shared.mk"; \
-		echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""      >> $(LOCAL_BUILDDIR)"/android-shared.mk"; \
-		echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""         >> $(LOCAL_BUILDDIR)"/android-shared.mk"; \
-		echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""         >> $(LOCAL_BUILDDIR)"/android-shared.mk"; \
-		echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""        >> $(LOCAL_BUILDDIR)"/android-shared.mk"; \
-		echo "include \044(BUILD_SHARED_LIBRARY)"           >> $(LOCAL_BUILDDIR)"/android-shared.mk"; \
-		$(NDK_BUILD) $(NDK_ARGS)              APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-shared.mk"; \
-		for ndk_arch in $(NDK_ARCH); do \
-			$(NDK_OBJDUMP) -a $(LOCAL_BUILDDIR)/$${ndk_arch}/lib$(LOCAL_MODULE).so; \
-			$(NDK_OBJDUMP) -p $(LOCAL_BUILDDIR)/$${ndk_arch}/lib$(LOCAL_MODULE).so | $(MU0_CMD_GREP) 'NEEDED'; \
-		done; \
-	fi
+	@echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk" >  $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "include \044(CLEAR_VARS)"                     >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""      >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "LOCAL_MODULE    := "$(LOCAL_MODULE)""         >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "LOCAL_CFLAGS    := "$(LOCAL_CFLAGS)""         >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "LOCAL_LDFLAGS   := "$(LOCAL_LDFLAGS)""        >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	@echo "include \044(BUILD_SHARED_LIBRARY)"           >> $(LOCAL_BUILDDIR)"/android-shared.mk"
+	$(NDK_BUILD) $(NDK_ARGS)               APP_BUILD_SCRIPT=$(LOCAL_BUILDDIR)"/android-shared.mk"
+	-@for ndk_arch in $(NDK_ARCH); do \
+		$(NDK_OBJDUMP) -a $(LOCAL_BUILDDIR)/$${ndk_arch}/lib$(LOCAL_MODULE).so; \
+		$(NDK_OBJDUMP) -p $(LOCAL_BUILDDIR)/$${ndk_arch}/lib$(LOCAL_MODULE).so | $(MU0_CMD_GREP) 'NEEDED'; \
+	done
 
 rule_list_cmds::
 	$(eval MU0_BUILD_FILES :=$(call walk-dir-recursive, $(LOCAL_MODULE_PATH)/misc))
@@ -100,9 +92,6 @@ rule_objects_cmds::
 
 rule_linker_cmds::
 	-@i=1 ; for src_file in $(MU0_MISC_FILES); do \
-		if [ -z "$${src_file}" ]; then \
-			break; \
-		fi; \
 		echo "LOCAL_PATH      := "$(LOCAL_MODULE_PATH)"/mk"          >  $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
 		echo "include \044(CLEAR_VARS)"                              >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
 		echo "LOCAL_SRC_FILES := "$(LOCAL_SRC_FILES)""               >> $(LOCAL_BUILDDIR)"/android-cmd"$${i}".mk"; \
@@ -143,7 +132,7 @@ rule_objects::
 		else \
 			visibility="-fpic "$${visibility}; \
 		fi; \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= $${visibility} '"$${name}"'"; \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$${name}"'"; \
 		if case $(PLATFORM) in mingw*) ;; *) false;; esac; then \
 			$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*}).o; \
 		else \

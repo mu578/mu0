@@ -35,7 +35,6 @@ int main(int argc, const char * argv[])
 
 	mu0_console_log("\n");
 
-
 	__mu0_cfind_n__(mu0_tchar8_t, s5, 0, 10, 'i', r0);
 	__mu0_cfind__(mu0_tchar8_t, s5, s5 + 10, 'i', r0);
 
