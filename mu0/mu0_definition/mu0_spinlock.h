@@ -37,7 +37,7 @@ ___mu0_uint4_t___ __mu0_spinlock_trylock__(__mu0_spinlock_t__ * __s)
 {
 	___mu0_uint4_t___ r0;
 	__mu0_atomic_bool_compare_and_swap__(
-		  __mu0_volatile__ ___mu0_uint4_t___
+		  ___mu0_atomic_uint4___
 		, &__s->u_r0
 		, 0U
 		, 1U
