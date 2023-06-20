@@ -113,22 +113,22 @@ rule_list_objects::
 	$(eval MU0_OBJ_FILES   := $(filter %.obj, $(MU0_BUILD_FILES)))
 
 rule_objects::
-	-@for src_file in $(LOCAL_SRC_FILES); do                                                                                              \
-		base=$${src_file#"$(LOCAL_MODULE_PATH)/sdk/vendor/"};                                                                              \
-		prefix=$${base%%/*};                                                                                                               \
-		if [ "$${#prefix}" -le 3 ]; then                                                                                                   \
-			prefix="";                                                                                                                      \
-		else                                                                                                                               \
-			prefix="$(LOCAL_MODULE)_$${prefix}_";                                                                                           \
-		fi;                                                                                                                                \
-		name=$$(basename $${src_file});                                                                                                    \
-		if case $${name} in $(LOCAL_MODULE)*) ;; *) false;; esac; then                                                                     \
-			visibility="-fvisibility=default";                                                                                              \
-		else                                                                                                                               \
-			visibility="-fvisibility=hidden";                                                                                               \
-		fi;                                                                                                                                \
-		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$${name}"'";                                                      \
-		$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*}).obj;              \
+	-@for src_file in $(LOCAL_SRC_FILES); do \
+		base=$${src_file#"$(LOCAL_MODULE_PATH)/sdk/vendor/"}; \
+		prefix=$${base%%/*}; \
+		if [ "$${#prefix}" -le 3 ]; then \
+			prefix=""; \
+		else \
+			prefix="$(LOCAL_MODULE)_$${prefix}_"; \
+		fi; \
+		name=$$(basename $${src_file}); \
+		if case $${name} in $(LOCAL_MODULE)*) ;; *) false;; esac; then \
+			visibility="-fvisibility=default"; \
+		else \
+			visibility="-fvisibility=hidden"; \
+		fi; \
+		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$${name}"'"; \
+		$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*}).obj; \
 	done
 
 rule_simple_objects::
