@@ -110,7 +110,7 @@ rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds
 
 rule_list_objects::
 	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
-	$(eval MU0_OBJ_FILES   := $(filter %.obj, $(MU0_BUILD_FILES)))
+	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
 
 rule_objects::
 	-@for src_file in $(LOCAL_SRC_FILES); do \
@@ -128,13 +128,13 @@ rule_objects::
 			visibility="-fvisibility=hidden"; \
 		fi; \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$${name}"'"; \
-		$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*}).obj; \
+		$(CC) $${visibility} $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$${prefix}$$(basename $${src_file%.*}).o; \
 	done
 
 rule_simple_objects::
 	-@for src_file in $(LOCAL_SRC_FILES); do                                                                                              \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)" <= '"$$(basename $${src_file})"'";                                     \
-		$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).obj;                                       \
+		$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).o;                                         \
 	done
 
 rule_static:: rule_clean rule_buildir rule_objects rule_list_objects
@@ -154,14 +154,14 @@ rule_list_cmds::
 rule_objects_cmds::
 	-@for src_file in $(MU0_MISC_FILES); do                                                                                               \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= '"$$(basename $${src_file})"'";                                \
-		$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lobj;                      \
+		$(CC) $(LOCAL_CFLAGS) -c $${src_file} -o $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo;                        \
 	done
 
 rule_linker_cmds::
-	@$(AR) -crv $(LOCAL_BUILDDIR)"/lib"$(LOCAL_MODULE)"_linker.lib" $(MU0_OBJ_FILES)
+	@$(AR) -crv $(LOCAL_BUILDDIR)"/"$(LOCAL_MODULE)"_linker.lib" $(MU0_OBJ_FILES)
 	-@for src_file in $(MU0_MISC_FILES); do                                                                                               \
 		echo "["$(PLATFORM)"-"$(ARCH)"] Compile : "$(LOCAL_MODULE)-misc" <= "$$(basename $${src_file%.*}).exe;                             \
-		$(LD) $(LOCAL_BUILDDIR)/lib$(LOCAL_MODULE)_linker.lib $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lobj          \
+		$(LD) $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)_linker.lib $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-$$(basename $${src_file%.*}).lo               \
 			-o $(LOCAL_BUILDDIR)/$$(basename $${src_file%.*}).exe;                                                                          \
 	done
 

@@ -55,7 +55,7 @@ endif
 
 LOCAL_BUILDDIR            := /tmp/build/$(PLATFORM)/$(LOCAL_MODULE)
 ifneq (,$(findstring mingw, $(PLATFORM)))
-	LOCAL_BUILDDIR         := ../tmp
+	LOCAL_BUILDDIR         := ../_
 endif
 
 PLATFORM_ARCH             := -arch $(ARCH)
