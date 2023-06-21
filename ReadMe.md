@@ -29,6 +29,7 @@ PLATFORM_VARIANT := macos_android.arm64
 PLATFORM_VARIANT := macos_android.arm32
 PLATFORM_VARIANT := macos_android.x86_64
 PLATFORM_VARIANT := macos_android.all
+
 ```
 
 Getting current toolchain Ubuntu arm64 and x86_64 hosts:

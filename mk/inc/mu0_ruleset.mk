@@ -44,9 +44,7 @@ MU0_CMD_LNS     := ln -s
 MU0_CMD_LS      := ls -la
 MU0_CMD_GREP    := grep
 
-MU0_BUILD_FILES :=
 MU0_OBJ_FILES   :=
-MU0_LIB_FILES   :=
 MU0_MISC_FILES  :=
 
 all:
@@ -109,8 +107,7 @@ else ifneq (,$(findstring mingw, $(PLATFORM)))
 rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_linker_cmds
 
 rule_list_objects::
-	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
-	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
+	$(eval MU0_OBJ_FILES := $(call filter-dir, %.o, $(LOCAL_BUILDDIR)))
 
 rule_objects::
 	-@for src_file in $(LOCAL_SRC_FILES); do base=$${src_file#"$(LOCAL_MODULE_PATH)/sdk/vendor/"};                                        \
@@ -138,8 +135,7 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	@$(OBJDUMP) -p $(LOCAL_BUILDDIR)/$(LOCAL_MODULE)-1.0.0.dll | $(MU0_CMD_GREP) 'DLL Name'
 
 rule_list_cmds::
-	$(eval MU0_BUILD_FILES :=$(call walk-dir-recursive, $(LOCAL_MODULE_PATH)/misc))
-	$(eval MU0_MISC_FILES  :=$(filter %-main.c, $(MU0_BUILD_FILES)))
+	$(eval MU0_MISC_FILES := $(call filter-dir, %-main.c, $(LOCAL_MODULE_PATH)/misc))
 
 rule_objects_cmds::
 	-@for src_file in $(MU0_MISC_FILES); do                                                                                               \
@@ -160,8 +156,7 @@ else
 rule_all:: rule_clean rule_buildir rule_objects rule_list_objects rule_list_cmds rule_objects_cmds rule_linker_cmds
 
 rule_list_objects::
-	$(eval MU0_BUILD_FILES := $(call walk-dir-recursive, $(LOCAL_BUILDDIR)))
-	$(eval MU0_OBJ_FILES   := $(filter %.o, $(MU0_BUILD_FILES)))
+	$(eval MU0_OBJ_FILES := $(call filter-dir, %.o, $(LOCAL_BUILDDIR)))
 
 rule_objects::
 	-@for src_file in $(LOCAL_SRC_FILES); do                                                                                              \
@@ -211,8 +206,7 @@ rule_shared:: rule_clean rule_buildir rule_objects rule_list_objects
 	fi
 
 rule_list_cmds::
-	$(eval MU0_BUILD_FILES :=$(call walk-dir-recursive, $(LOCAL_MODULE_PATH)/misc))
-	$(eval MU0_MISC_FILES  :=$(filter %-main.c, $(MU0_BUILD_FILES)))
+	$(eval MU0_MISC_FILES := $(call filter-dir, %-main.c, $(LOCAL_MODULE_PATH)/misc))
 
 rule_objects_cmds::
 	-@for src_file in $(MU0_MISC_FILES); do \

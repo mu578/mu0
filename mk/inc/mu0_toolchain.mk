@@ -53,9 +53,12 @@ ifeq (,$(findstring darwin, $(PLATFORM)))
 	endif
 endif
 
-LOCAL_BUILDDIR            := /tmp/build/$(PLATFORM)/$(LOCAL_MODULE)
-ifneq (,$(findstring mingw, $(PLATFORM)))
-	LOCAL_BUILDDIR         := ../_
+ifeq ($(strip $(LOCAL_BUILDDIR)),)
+	ifneq (,$(findstring mingw, $(PLATFORM)))
+		LOCAL_BUILDDIR      := ../_
+	else
+		LOCAL_BUILDDIR      := /tmp/build/$(PLATFORM)/$(LOCAL_MODULE)
+	endif
 endif
 
 PLATFORM_ARCH             := -arch $(ARCH)
@@ -154,7 +157,6 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			NDK_PROJECT_PATH=$(LOCAL_MODULE_PATH) \
 			NDK_OUT=$(LOCAL_BUILDDIR)             \
 			NDK_LIBS_OUT=$(LOCAL_BUILDDIR)        \
-			NDK_TOOLCHAIN_VERSION=clang           \
 			APP_ABI="$(NDK_ARCH)"                 \
 			APP_STL=none                          \
 			APP_PLATFORM=android-29

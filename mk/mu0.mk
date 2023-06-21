@@ -33,6 +33,7 @@ MU0_ROOT_PATH     := $(LOCAL_MODULE_PATH)
 # PLATFORM_VARIANT := macos_android.x86_64
 # PLATFORM_VARIANT := macos_android.all
 
+include $(MU0_ROOT_PATH)/mk/inc/mu0_function.mk
 include $(MU0_ROOT_PATH)/mk/inc/mu0_source.mk
 include $(MU0_ROOT_PATH)/mk/inc/mu0_toolchain.mk
 include $(MU0_ROOT_PATH)/mk/inc/mu0_ruleset.mk

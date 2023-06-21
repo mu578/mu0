@@ -10,16 +10,25 @@
 #                                           | |                                                            #
 #                                           |_|                                                            #
 
-# mu0_source.mk
+# mu0_function.mk
 #
 # Copyright (C) 2023 mu578. All rights reserved.
 #
 
-ifeq ($(strip $(MU0_ROOT_PATH)),)
-$(error MU0_ROOT_PATH is not set)
-endif
+define walk-dir-recursive
+	$(wildcard $(1)) $(foreach e, $(wildcard $(1)/*), $(call walk-dir-recursive, $(e)))
+endef
 
-LOCAL_SRC_FILES += $(call filter-dir-recursive, %.c, $(MU0_ROOT_PATH)/source)
-LOCAL_CFLAGS    += -I$(MU0_ROOT_PATH)
+define walk-dir
+	$(wildcard $(1)) $(foreach e, $(wildcard $(1)/*), $(e))
+endef
+
+define filter-dir
+	$(filter $(1), $(call walk-dir, $(2)))
+endef
+
+define filter-dir-recursive
+	$(filter $(1), $(call walk-dir-recursive, $(2)))
+endef
 
 # EOF

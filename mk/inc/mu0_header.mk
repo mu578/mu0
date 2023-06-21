@@ -19,8 +19,6 @@ ifeq ($(strip $(MU0_ROOT_PATH)),)
 $(error MU0_ROOT_PATH is not set)
 endif
 
-MU0_MODULE_NAME ?= mu0
-MU0_MODULE_PATH ?= $(MU0_ROOT_PATH)
-LOCAL_CFLAGS    += -I$(MU0_MODULE_PATH)
+LOCAL_CFLAGS += -I$(MU0_ROOT_PATH)
 
 # EOF
