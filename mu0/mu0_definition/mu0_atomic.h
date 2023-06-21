@@ -138,20 +138,20 @@ __mu0_scope_begin__                                                             
 	_Sc               __mu0_atomic_bool_compare_and_swap__tmp__;                                          \
 	___mu0_uint4_t___ __mu0_atomic_bool_compare_and_swap__bar__;                                          \
 	__result                                  = 0;                                                        \
-	__c11_atomic_store(&__mu0_atomic_bool_compare_and_swap__tmp__, *__ptr, __ATOMIC_RELAXED);             \
+	__c11_atomic_store(&__mu0_atomic_bool_compare_and_swap__tmp__, *__ptr, __ATOMIC_SEQ_CST);             \
 	__mu0_atomic_bool_compare_and_swap__bar__ = 64;                                                       \
 	while (                                                                                               \
 		   __mu0_atomic_bool_compare_and_swap__bar__ > 0                                                   \
 		&& __c11_atomic_load(&__mu0_atomic_bool_compare_and_swap__tmp__, __ATOMIC_RELAXED) == __oldval     \
 	) {                                                                                                   \
 		if (__c11_atomic_load(&__mu0_atomic_bool_compare_and_swap__tmp__, __ATOMIC_RELAXED) == __oldval) { \
-			__c11_atomic_store(__ptr, __newval, __ATOMIC_SEQ_CST);                                          \
+			__c11_atomic_store(__ptr, __newval, __ATOMIC_RELAXED);                                          \
 			__result = 1;                                                                                   \
 		}                                                                                                  \
 		__c11_atomic_store(                                                                                \
 			  &__mu0_atomic_bool_compare_and_swap__tmp__                                                    \
 			, *__ptr                                                                                        \
-			, __ATOMIC_RELAXED                                                                              \
+			, __ATOMIC_SEQ_CST                                                                              \
 		);                                                                                                 \
 		--__mu0_atomic_bool_compare_and_swap__bar__;                                                       \
 	}                                                                                                     \
@@ -161,19 +161,19 @@ __mu0_scope_end__
 __mu0_scope_begin__                                                                                      \
 	_Sc               __mu0_atomic_val_compare_and_swap__tmp__;                                           \
 	___mu0_uint4_t___ __mu0_atomic_val_compare_and_swap__bar__;                                           \
-	__c11_atomic_store(&__mu0_atomic_val_compare_and_swap__tmp__, *__ptr, __ATOMIC_RELAXED);              \
+	__c11_atomic_store(&__mu0_atomic_val_compare_and_swap__tmp__, *__ptr, __ATOMIC_SEQ_CST);              \
 	__mu0_atomic_val_compare_and_swap__bar__ = 64;                                                        \
 	while (                                                                                               \
 		   __mu0_atomic_val_compare_and_swap__bar__ > 0                                                    \
 		&& __c11_atomic_load(&__mu0_atomic_bool_compare_and_swap__tmp__, __ATOMIC_RELAXED) == __oldval     \
 	) {                                                                                                   \
 		if (__c11_atomic_load(&__mu0_atomic_bool_compare_and_swap__tmp__, __ATOMIC_RELAXED) == __oldval) { \
-			__c11_atomic_store(__ptr, __newval, __ATOMIC_SEQ_CST);                                          \
+			__c11_atomic_store(__ptr, __newval, __ATOMIC_RELAXED);                                          \
 		}                                                                                                  \
 		__c11_atomic_store(                                                                                \
 			  &__mu0_atomic_val_compare_and_swap__tmp__                                                     \
 			, *__ptr                                                                                        \
-			, __ATOMIC_RELAXED                                                                              \
+			, __ATOMIC_SEQ_CST                                                                              \
 		);                                                                                                 \
 		--__mu0_atomic_val_compare_and_swap__bar__;                                                        \
 	}                                                                                                     \
