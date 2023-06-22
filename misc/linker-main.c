@@ -15,7 +15,6 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
-#include <mu0/mu0_arithmetic.h>
 #include <mu0/mu0_definition.h>
 #include <mu0/mu0_floating.h>
 #include <mu0/mu0_integer.h>
