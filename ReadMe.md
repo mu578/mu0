@@ -23,6 +23,13 @@ PLATFORM_VARIANT := macos_macport.arm64
 PLATFORM_VARIANT := macos_macport.x86_64
 PLATFORM_VARIANT := macos_macport.fat
 
+# openmp disabled, no half-precision floating-point.
+PLATFORM_VARIANT := macos_ios
+PLATFORM_VARIANT := macos_ios.arm64
+PLATFORM_VARIANT := macos_ios.arm32
+PLATFORM_VARIANT := macos_ios.x86_64
+PLATFORM_VARIANT := macos_ios.all
+
 # Expecting NDK install-path: ${project_root}/../toolchains/macos-android-ndk
 PLATFORM_VARIANT := macos_android
 PLATFORM_VARIANT := macos_android.arm64
@@ -58,6 +65,7 @@ Or for a newer LLVM toolchain (recommended). llvm-14 is current on apt-get and d
 Known to build c99/c11 pedandic on:
 ```
 - macos   x86_64, arm64
+- ios     x86_64, arm64, arm32
 - ubuntu  x86_64, arm64
 - android x86_64, arm64, arm32
 - freebsd x86_64, arm64
