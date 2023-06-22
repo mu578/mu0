@@ -64,35 +64,34 @@ endif
 PLATFORM_ARCH             := -arch $(ARCH)
 
 ifneq (,$(findstring darwin, $(PLATFORM)))
-	ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
-		PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
-		PLATFORM_ARCH    := -arch x86_64
-		ARCH             := x86_64
-	else ifneq (,$(findstring .fat, $(PLATFORM_VARIANT)))
-		PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
-		ifeq (,$(findstring x86_64, $(ARCH)))
-			PLATFORM_ARCH := -arch $(ARCH) -arch x86_64
-			ARCH          := fat
-		else
-			PLATFORM_ARCH := -arch $(ARCH)
-		endif
-	endif
 	ifneq (,$(findstring macos_macport, $(PLATFORM_VARIANT)))
-		PORT_PATH    := /opt/local/bin
-		CC           := $(PORT_PATH)/clang
-		AR           := $(PORT_PATH)/ar
-		OBJDUMP      := $(PORT_PATH)/objdump
-		OTOOL        := $(PORT_PATH)/otool
-		LIPO         := $(PORT_PATH)/lipo
-
-		LD           :=              \
+		PORT_PATH           := /opt/local/bin
+		CC                  := $(PORT_PATH)/clang
+		AR                  := $(PORT_PATH)/ar
+		OBJDUMP             := $(PORT_PATH)/objdump
+		OTOOL               := $(PORT_PATH)/otool
+		LIPO                := $(PORT_PATH)/lipo
+		ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_ARCH    := -arch x86_64
+			ARCH             := x86_64
+		else ifneq (,$(findstring .fat, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			ifeq (,$(findstring x86_64, $(ARCH)))
+				PLATFORM_ARCH := -arch $(ARCH) -arch x86_64
+				ARCH          := fat
+			else
+				PLATFORM_ARCH := -arch $(ARCH)
+			endif
+		endif
+		LD                  :=       \
 			$(CC)                     \
 			$(PLATFORM_ARCH)          \
 			-fopenmp=libomp           \
 			-lm                       \
 			-mmacosx-version-min=13.0
 
-		LOCAL_CFLAGS +=              \
+		LOCAL_CFLAGS        +=       \
 			-x c                      \
 			-std=c11                  \
 			-O3                       \
@@ -105,28 +104,95 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			-pedantic
 
 	else ifneq (,$(findstring macos_xcode, $(PLATFORM_VARIANT)))
-		XCODE_VERS   := $(shell xcodebuild -sdk -version | grep "\- macOS " | cut -d "-" -f 1 | tr -d '[:space:]')
-		XCODE_PATH   := $(shell dirname `xcrun -f clang`)
-		XCODE_SDK    := $(shell xcrun --show-sdk-path)
-		CC           := $(XCODE_PATH)/clang
-		AR           := $(XCODE_PATH)/ar
-		OBJDUMP      := $(XCODE_PATH)/objdump
-		OTOOL        := $(XCODE_PATH)/otool
-		LIPO         := $(XCODE_PATH)/lipo
-
-		LD           :=               \
+		XCODE_VERS          := $(shell xcodebuild -sdk -version | grep "\- macOS " | cut -d "-" -f 1 | tr -d '[:space:]')
+		XCODE_PATH          := $(shell dirname `xcrun -f clang`)
+		XCODE_SDK           := $(shell xcrun --show-sdk-path)
+		CC                  := $(XCODE_PATH)/clang
+		AR                  := $(XCODE_PATH)/ar
+		OBJDUMP             := $(XCODE_PATH)/objdump
+		OTOOL               := $(XCODE_PATH)/otool
+		LIPO                := $(XCODE_PATH)/lipo
+		ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_ARCH    := -arch x86_64
+			ARCH             := x86_64
+		else ifneq (,$(findstring .fat, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			ifeq (,$(findstring x86_64, $(ARCH)))
+				PLATFORM_ARCH := -arch $(ARCH) -arch x86_64
+				ARCH          := fat
+			else
+				PLATFORM_ARCH := -arch $(ARCH)
+			endif
+		endif
+		LD                  :=        \
 			$(CC)                      \
 			$(PLATFORM_ARCH)           \
 			-lm                        \
+			-framework CoreFoundation  \
 			-mmacosx-version-min=10.15 \
 			-isysroot $(XCODE_SDK)
 
-		LOCAL_CFLAGS +=               \
+		LOCAL_CFLAGS        +=        \
 			-x c                       \
 			-std=c11                   \
 			-O3                        \
 			$(PLATFORM_ARCH)           \
 			-mmacosx-version-min=10.15 \
+			-isysroot $(XCODE_SDK)     \
+			-Wall                      \
+			-Wno-unused-function       \
+			-Wno-newline-eof           \
+			-pedantic
+
+	else ifneq (,$(findstring macos_ios, $(PLATFORM_VARIANT)))
+		XCODE_VERS          := $(shell xcodebuild -sdk -version | grep "iphoneos"  | cut -d "-" -f 1 | tr -d '[:space:]')
+		XCODE_PATH          := $(shell dirname `xcrun -f clang`)
+		ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
+		XCODE_SDK           := $(shell xcrun --sdk iphonesimulator --show-sdk-path)
+		else
+		XCODE_SDK           := $(shell xcrun --sdk iphoneos --show-sdk-path)
+		endif
+		CC                  := $(XCODE_PATH)/clang
+		AR                  := $(XCODE_PATH)/ar
+		OBJDUMP             := $(XCODE_PATH)/objdump
+		OTOOL               := $(XCODE_PATH)/otool
+		LIPO                := $(XCODE_PATH)/lipo
+		ifneq (,$(findstring .arm64, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_ARCH    := -arch arm64
+			ARCH             := arm64
+		else ifneq (,$(findstring .arm32, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_ARCH    := -arch armv7s
+			ARCH             := armv7s
+		else ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_ARCH    := -arch x86_64
+			ARCH             := x86_64
+		else ifneq (,$(findstring .all, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_ARCH    := -arch arm64 -arch armv7 -arch armv7s
+			ARCH             := fat
+		else
+			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_ARCH    := -arch arm64 -arch armv7s
+			ARCH             := fat
+		endif
+		LD                  :=        \
+			$(CC)                      \
+			$(PLATFORM_ARCH)           \
+			-lm                        \
+			-framework CoreFoundation  \
+			-mios-version-min=8.0      \
+			-isysroot $(XCODE_SDK)
+
+		LOCAL_CFLAGS        +=        \
+			-x c                       \
+			-std=c11                   \
+			-O3                        \
+			$(PLATFORM_ARCH)           \
+			-mios-version-min=8.0      \
 			-isysroot $(XCODE_SDK)     \
 			-Wall                      \
 			-Wno-unused-function       \

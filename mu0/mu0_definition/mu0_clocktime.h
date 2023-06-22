@@ -41,6 +41,10 @@
 
 #	if !MU0_HAVE_NANOTIME_ABS
 #	if MU0_HAVE_C11 && defined(TIME_MONOTONIC)
+#	if MU0_HAVE_IOS && !MU0_HAVE_IOS13
+#		undef  MU0_HAVE_NANOTIME_ABS
+#		define MU0_HAVE_NANOTIME_ABS 0
+#	else
 #		undef  MU0_HAVE_NANOTIME_ABS
 #		define MU0_HAVE_NANOTIME_ABS 1
 		__mu0_static_inline__
@@ -52,6 +56,7 @@
 			}
 			return 0U;
 		}
+#	endif
 #	endif
 #	endif
 
@@ -164,6 +169,10 @@
 
 #	if !MU0_HAVE_NANOTIME_UTC
 #	if MU0_HAVE_C11 && defined(TIME_UTC)
+#	if MU0_HAVE_IOS && !MU0_HAVE_IOS13
+#		undef  MU0_HAVE_NANOTIME_UTC
+#		define MU0_HAVE_NANOTIME_UTC 0
+#	else
 #		undef  MU0_HAVE_NANOTIME_UTC
 #		define MU0_HAVE_NANOTIME_UTC 1
 		__mu0_static_inline__
@@ -175,6 +184,7 @@
 			}
 			return 0U;
 		}
+#	endif
 #	endif
 #	endif
 
@@ -249,6 +259,10 @@
 
 #	if !MU0_HAVE_NANOTIME_ACT
 #	if MU0_HAVE_C11 && defined(TIME_ACTIVE)
+#	if MU0_HAVE_IOS && !MU0_HAVE_IOS13
+#		undef  MU0_HAVE_NANOTIME_ACT
+#		define MU0_HAVE_NANOTIME_ACT 0
+#	else
 #		undef  MU0_HAVE_NANOTIME_ACT
 #		define MU0_HAVE_NANOTIME_ACT 1
 		__mu0_static_inline__
@@ -260,6 +274,7 @@
 			}
 			return 0U;
 		}
+#	endif
 #	endif
 #	endif
 
@@ -344,6 +359,10 @@
 
 #	if !MU0_HAVE_NANOTIME_THR
 #	if MU0_HAVE_C11 && defined(TIME_THREAD_ACTIVE)
+#	if MU0_HAVE_IOS && !MU0_HAVE_IOS13
+#		undef  MU0_HAVE_NANOTIME_THR
+#		define MU0_HAVE_NANOTIME_THR 0
+#	else
 #		undef  MU0_HAVE_NANOTIME_THR
 #		define MU0_HAVE_NANOTIME_THR 1
 		__mu0_static_inline__
@@ -355,6 +374,7 @@
 			}
 			return 0U;
 		}
+#	endif
 #	endif
 #	endif
 

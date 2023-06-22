@@ -132,7 +132,7 @@
 			if (0 != GetUserDefaultLocaleName(buff, LOCALE_NAME_MAX_LENGTH)) {
 				memset(s_id, 0, sizeof(s_id));
 				WideCharToMultiByte(CP_UTF8, 0, buff, 5, s_id, 12, __mu0_nullptr__, __mu0_nullptr__);
-				if (s_id[2] == '-') {
+				if (s_id[2] == '_' || s_id[2] == '-') {
 					_configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
 					___mu0_tint1_t___ id[48]     = { 0 };
 					s_id[2]                      = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
@@ -400,7 +400,7 @@
 			if ((fp = popen("defaults read .GlobalPreferences AppleLocale", "r"))) {
 				memset(s_id, 0, sizeof(s_id));
 				fgets(s_id, sizeof(s_id) - 1U, fp);
-				if (s_id[2] == '_') {
+				if (s_id[2] == '_' || s_id[2] == '-') {
 					pclose(fp);
 					___mu0_tint1_t___ id[48] = { 0 };
 					s_id[2]                  = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
@@ -438,6 +438,60 @@
 					setlocale(LC_ALL, id);
 				}
 				pclose(fp);
+			}
+#			if MU0_HAVE_POSIX1_2001
+			memcpy(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
+#			else
+			memcpy(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
+#			endif
+			return s_id;
+		}
+
+#	elif MU0_HAVE_IOS
+
+		__mu0_static_inline__
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(void)
+		{
+			__mu0_static__ ___mu0_tint1_t___ s_id[12];
+
+			memset(s_id, 0, sizeof(s_id));
+			if (CFStringGetCString(CFLocaleGetValue(CFLocaleCopyCurrent(), kCFLocaleIdentifier), s_id, sizeof(s_id) - 1U, kCFStringEncodingUTF8)) {
+				if (s_id[2] == '_' || s_id[2] == '-') {
+					___mu0_tint1_t___ id[48] = { 0 };
+					s_id[2]                  = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
+					___mu0_tint1_t___ * s    = setlocale(LC_ALL, "");
+					if (__mu0_not_nullptr__(s)) {
+						memcpy(id, s, sizeof(id));
+					} else {
+#						if MU0_HAVE_POSIX1_2001
+						memcpy(id, "C.UTF-8"    ,  7); id[7]  = '\0';
+#						else
+						memcpy(id, "en_US.UTF-8", 11); id[11] = '\0';
+#						endif
+					}
+					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
+						setlocale(LC_ALL, id);
+						return s_id;
+					}
+					___mu0_tint1_t___ wk[12] = { 0 };
+					memcpy(wk, s_id, sizeof(s_id));
+					wk[3] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[0]));
+					wk[4] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[1]));
+					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
+						setlocale(LC_ALL, id);
+						memcpy(s_id, wk, sizeof(wk));
+						return s_id;
+					}
+					memcpy(wk, s_id, sizeof(s_id));
+					wk[0] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[3]));
+					wk[1] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[4]));
+					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
+						setlocale(LC_ALL, id);
+						memcpy(s_id, wk, sizeof(wk));
+						return s_id;
+					}
+					setlocale(LC_ALL, id);
+				}
 			}
 #			if MU0_HAVE_POSIX1_2001
 			memcpy(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';

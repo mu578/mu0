@@ -25,6 +25,7 @@
 #	undef  MU0_HAVE_DARWIN
 #	undef  MU0_HAVE_MACOSX
 #	undef  MU0_HAVE_IOS
+#	undef  MU0_HAVE_IOS13
 #	undef  MU0_HAVE_WINDOWS
 #	undef  MU0_HAVE_MINGW
 #	undef  MU0_HAVE_SOLARIS
@@ -40,6 +41,7 @@
 #	define MU0_HAVE_DARWIN          0
 #	define MU0_HAVE_MACOSX          0
 #	define MU0_HAVE_IOS             0
+#	define MU0_HAVE_IOS13           0
 #	define MU0_HAVE_WINDOWS         0
 #	define MU0_HAVE_MINGW           0
 #	define MU0_HAVE_SOLARIS         0
@@ -53,12 +55,22 @@
 #	define MU0_HAVE_MINIX           0
 
 #	if defined(__APPLE__) && defined(__MACH__)
+#		include <Availability.h>
 #		include <TargetConditionals.h>
 #		if defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE
+#			include <CoreFoundation/CoreFoundation.h>
 #			undef  MU0_HAVE_DARWIN
 #			undef  MU0_HAVE_IOS
+#			undef  MU0_HAVE_IOS13
 #			define MU0_HAVE_DARWIN    1
 #			define MU0_HAVE_IOS       1
+#			if defined(__IPHONE_OS_VERSION_MIN_ALLOWED)
+#			if defined(__IPHONE_13_0)
+#			if __IPHONE_OS_VERSION_MIN_ALLOWED >= __IPHONE_13_0
+#			define MU0_HAVE_IOS13     1
+#			endif
+#			endif
+#			endif
 #		elif defined(TARGET_OS_OSX) && TARGET_OS_OSX
 #			undef  MU0_HAVE_DARWIN
 #			undef  MU0_HAVE_MACOSX
