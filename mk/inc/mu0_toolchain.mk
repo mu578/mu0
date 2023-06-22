@@ -129,7 +129,6 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			$(CC)                      \
 			$(PLATFORM_ARCH)           \
 			-lm                        \
-			-framework CoreFoundation  \
 			-mmacosx-version-min=10.15 \
 			-isysroot $(XCODE_SDK)
 
@@ -179,24 +178,24 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			PLATFORM_ARCH    := -arch arm64 -arch armv7s
 			ARCH             := fat
 		endif
-		LD                  :=        \
-			$(CC)                      \
-			$(PLATFORM_ARCH)           \
-			-lm                        \
-			-framework CoreFoundation  \
-			-mios-version-min=8.0      \
+		LD                  :=       \
+			$(CC)                     \
+			$(PLATFORM_ARCH)          \
+			-lm                       \
+			-framework CoreFoundation \
+			-mios-version-min=8.0     \
 			-isysroot $(XCODE_SDK)
 
-		LOCAL_CFLAGS        +=        \
-			-x c                       \
-			-std=c11                   \
-			-O3                        \
-			$(PLATFORM_ARCH)           \
-			-mios-version-min=8.0      \
-			-isysroot $(XCODE_SDK)     \
-			-Wall                      \
-			-Wno-unused-function       \
-			-Wno-newline-eof           \
+		LOCAL_CFLAGS        +=       \
+			-x c                      \
+			-std=c11                  \
+			-O3                       \
+			$(PLATFORM_ARCH)          \
+			-mios-version-min=8.0     \
+			-isysroot $(XCODE_SDK)    \
+			-Wall                     \
+			-Wno-unused-function      \
+			-Wno-newline-eof          \
 			-pedantic
 
 	else ifneq (,$(findstring macos_android, $(PLATFORM_VARIANT)))
