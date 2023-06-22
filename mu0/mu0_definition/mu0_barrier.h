@@ -38,7 +38,7 @@
 #		pragma intrinsic(_ReadBarrier)
 #		pragma intrinsic(_WriteBarrier)
 #		define __mu0_barrier_acquire__() _ReadWriteBarrier()
-#		define __mu0_barrier_release__()
+#		define __mu0_barrier_release__() _ReadBarrier(); (void)0
 #		define __mu0_barrier_full__()    _ReadWriteBarrier()
 #		define __mu0_barrier_read__()    _ReadBarrier()
 #		define __mu0_barrier_write__()   _WriteBarrier()
@@ -46,7 +46,7 @@
 #		undef  MU0_HAVE_BARRIER
 #		define MU0_HAVE_BARRIER 1
 #		define __mu0_barrier_acquire__() MemoryBarrier()
-#		define __mu0_barrier_release__()
+#		define __mu0_barrier_release__() MemoryBarrier(); (void)0
 #		define __mu0_barrier_full__()    MemoryBarrier()
 #		define __mu0_barrier_read__()    MemoryBarrier()
 #		define __mu0_barrier_write__()   MemoryBarrier()
@@ -60,7 +60,7 @@
 #		define MU0_HAVE_BARRIER 1
 # 		pragma intrinsic(_mm_mfence)
 #		define __mu0_barrier_acquire__() _mm_mfence()
-#		define __mu0_barrier_release__()
+#		define __mu0_barrier_release__() _mm_lfence(); (void)0
 #		define __mu0_barrier_full__()    _mm_mfence()
 #		define __mu0_barrier_read__()    _mm_lfence()
 #		define __mu0_barrier_write__()   _mm_sfence()
@@ -72,7 +72,7 @@
 #		undef  MU0_HAVE_BARRIER
 #		define MU0_HAVE_BARRIER 1
 #		define __mu0_barrier_acquire__() __sync_synchronize()
-#		define __mu0_barrier_release__()
+#		define __mu0_barrier_release__() __sync_synchronize(); (void)0
 #		define __mu0_barrier_full__()    __sync_synchronize()
 #		define __mu0_barrier_read__()    __sync_synchronize()
 #		define __mu0_barrier_write__()   __sync_synchronize()
