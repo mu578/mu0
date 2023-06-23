@@ -39,6 +39,95 @@
 
 #	include <time.h>
 
+#	if (MU0_HAVE_MACOSX && !MU0_HAVE_MACOSX12) || (MU0_HAVE_IOS && !MU0_HAVE_IOS10) && !defined(_POSIX_TIMERS)
+#		include <mach/clock.h>
+#		include <mach/mach.h>
+#		include <mach/mach_time.h>
+#		include <sched.h>
+
+#		ifndef CLOCK_REALTIME
+#			define CLOCK_REALTIME           0
+#			endif
+#		ifndef CLOCK_MONOTONIC
+#			define CLOCK_MONOTONIC          1
+#		endif
+#		ifndef CLOCK_MONOTONIC_RAW
+#			define CLOCK_MONOTONIC_RAW      2
+#		endif
+#		ifndef CLOCK_PROCESS_CPUTIME_ID
+#			define CLOCK_PROCESS_CPUTIME_ID 3
+#		endif
+#		ifndef CLOCK_THREAD_CPUTIME_ID
+#			define CLOCK_THREAD_CPUTIME_ID  4
+#		endif
+
+#	if !defined(_POSIX_TIMERS)
+	typedef int clockid_t;
+#	endif
+
+#	pragma weak clock_gettime
+	int clock_gettime(clockid_t clk_id, struct timespec * tp)
+	{
+		static mach_timebase_info_data_t s_info;
+
+		kern_return_t                    kret;
+		clock_serv_t                     clk;
+		clock_id_t                       cid;
+		mach_timespec_t                  tm;
+
+		unsigned long long start, end, delta, nano;
+
+		int ret = -1;
+
+		switch (clk_id)
+		{
+			case CLOCK_REALTIME      :
+			case CLOCK_MONOTONIC     :
+			case CLOCK_MONOTONIC_RAW :
+			{
+				cid = clk_id == CLOCK_REALTIME ? CALENDAR_CLOCK : SYSTEM_CLOCK;
+				if (KERN_SUCCESS == (kret = host_get_clock_service(mach_host_self(), cid, &clk))) {
+					if (KERN_SUCCESS == (kret = clock_get_time(clk, &tm))) {
+						tp->tv_sec  = tm.tv_sec;
+						tp->tv_nsec = tm.tv_nsec;
+						ret = 0;
+					}
+				}
+				if (KERN_SUCCESS != kret) {
+					errno = EINVAL;
+					ret = -1;
+				}
+			}
+			break;
+			case CLOCK_PROCESS_CPUTIME_ID :
+			case CLOCK_THREAD_CPUTIME_ID  :
+			{
+				start = mach_absolute_time();
+				if (clk_id == CLOCK_PROCESS_CPUTIME_ID) {
+					getpid();
+				} else {
+					sched_yield();
+				}
+				end = mach_absolute_time();
+				delta = end - start;	
+				if (0 == s_info.denom) {
+					mach_timebase_info(&s_info);
+				}
+				nano        = delta * s_info.numer / s_info.denom;
+				tp->tv_sec  = nano * 1000000000;
+				tp->tv_nsec = nano - (tp->tv_sec * 1000000000);
+				ret = 0;
+			}
+			break;
+			default:
+				errno = EINVAL;
+				ret = -1;
+		}
+		return ret;
+	}
+
+#	endif
+
 #	if !MU0_HAVE_NANOTIME_ABS
 #	if MU0_HAVE_C11 && defined(TIME_MONOTONIC)
 #	if MU0_HAVE_IOS && !MU0_HAVE_IOS13

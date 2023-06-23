@@ -24,7 +24,9 @@
 
 #	undef  MU0_HAVE_DARWIN
 #	undef  MU0_HAVE_MACOSX
+#	undef  MU0_HAVE_MACOSX12
 #	undef  MU0_HAVE_IOS
+#	undef  MU0_HAVE_IOS10
 #	undef  MU0_HAVE_IOS13
 #	undef  MU0_HAVE_WINDOWS
 #	undef  MU0_HAVE_MINGW
@@ -61,21 +63,31 @@
 #			include <CoreFoundation/CoreFoundation.h>
 #			undef  MU0_HAVE_DARWIN
 #			undef  MU0_HAVE_IOS
+#			undef  MU0_HAVE_IOS10
 #			undef  MU0_HAVE_IOS13
 #			define MU0_HAVE_DARWIN    1
 #			define MU0_HAVE_IOS       1
-#			if defined(__IPHONE_OS_VERSION_MIN_ALLOWED)
+#			if defined(__IPHONE_10_0)
+#			if __IPHONE_OS_VERSION_MIN_ALLOWED >= __IPHONE_10_0
+#			define MU0_HAVE_IOS10     1
+#			endif
+#			endif
 #			if defined(__IPHONE_13_0)
 #			if __IPHONE_OS_VERSION_MIN_ALLOWED >= __IPHONE_13_0
 #			define MU0_HAVE_IOS13     1
 #			endif
 #			endif
-#			endif
 #		elif defined(TARGET_OS_OSX) && TARGET_OS_OSX
 #			undef  MU0_HAVE_DARWIN
 #			undef  MU0_HAVE_MACOSX
+#			undef  MU0_HAVE_MACOSX12
 #			define MU0_HAVE_DARWIN    1
 #			define MU0_HAVE_MACOSX    1
+#			if defined(__MAC_10_12)
+#			if __MAC_OS_X_VERSION_MIN_REQUIRED >= __MAC_10_12
+#			define MU0_HAVE_MACOSX12  1
+#			endif
+#			endif
 #		else
 #			warning MU0_HAVE_MACOSX
 #			undef  MU0_HAVE_DARWIN

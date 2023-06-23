@@ -72,11 +72,11 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		OTOOL               := $(PORT_PATH)/otool
 		LIPO                := $(PORT_PATH)/lipo
 		ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch x86_64
 			ARCH             := x86_64
 		else ifneq (,$(findstring .fat, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			ifeq (,$(findstring x86_64, $(ARCH)))
 				PLATFORM_ARCH := -arch $(ARCH) -arch x86_64
 				ARCH          := fat
@@ -113,11 +113,11 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		OTOOL               := $(XCODE_PATH)/otool
 		LIPO                := $(XCODE_PATH)/lipo
 		ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch x86_64
 			ARCH             := x86_64
 		else ifneq (,$(findstring .fat, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			ifeq (,$(findstring x86_64, $(ARCH)))
 				PLATFORM_ARCH := -arch $(ARCH) -arch x86_64
 				ARCH          := fat
@@ -159,23 +159,23 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		OTOOL               := $(XCODE_PATH)/otool
 		LIPO                := $(XCODE_PATH)/lipo
 		ifneq (,$(findstring .arm64, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch arm64
 			ARCH             := arm64
 		else ifneq (,$(findstring .arm32, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch armv7s
 			ARCH             := armv7s
 		else ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch x86_64
 			ARCH             := x86_64
 		else ifneq (,$(findstring .fat, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch arm64 -arch armv7 -arch armv7s
 			ARCH             := fat
 		else
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch arm64 -arch armv7s
 			ARCH             := fat
 		endif
@@ -205,16 +205,16 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		NDK_OBJDUMP         := $(shell $(NDK_PATH)/ndk-which objdump)
 		NDK_ARCH            :=
 		ifneq (,$(findstring .arm64, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			NDK_ARCH         := arm64-v8a
 		else ifneq (,$(findstring .arm32, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			NDK_ARCH         := armeabi-v7a
 		else ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			NDK_ARCH         := x86_64
 		else ifneq (,$(findstring .all, $(PLATFORM_VARIANT)))
-			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			NDK_ARCH         := arm64-v8a armeabi-v7a x86_64 x86
 		else
 			NDK_ARCH         := arm64-v8a armeabi-v7a
