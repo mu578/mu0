@@ -80,6 +80,16 @@ typedef __mu0_atomic__(___mu0_sint1_t___) __mu0_atomic_sint1_t___;
 #	define __mu0_atomic_mb_acquire__() __c11_atomic_thread_fence(__ATOMIC_ACQUIRE)
 #	define __mu0_atomic_mb_release__() __c11_atomic_thread_fence(__ATOMIC_RELEASE)
 
+#	define __mu0_atomic_read__(_Sc, __ptr, __result)                                                      \
+__mu0_scope_begin__                                                                                      \
+	__result = __c11_atomic_load(__ptr, __ATOMIC_RELAXED);                                                \
+__mu0_scope_end__
+
+#	define __mu0_atomic_write__(_Sc, __ptr, __val)                                                        \
+__mu0_scope_begin__                                                                                      \
+	__c11_atomic_store(__ptr, __val, __ATOMIC_RELAXED);                                                   \
+__mu0_scope_end__
+
 #	define __mu0_atomic_fetch_and_add__(_Sc, __ptr, __value, __result)                                    \
 __mu0_scope_begin__                                                                                      \
 	__result = __c11_atomic_fetch_add(__ptr, __value, __ATOMIC_SEQ_CST);                                  \
@@ -197,6 +207,16 @@ __mu0_scope_end__
 #	define __mu0_atomic_mb_acquire__() __atomic_thread_fence(__ATOMIC_ACQUIRE)
 #	define __mu0_atomic_mb_release__() __atomic_thread_fence(__ATOMIC_RELEASE)
 
+#	define __mu0_atomic_read__(_Sc, __ptr, __result)                                                      \
+__mu0_scope_begin__                                                                                      \
+	__result = *__ptr;                                                                                    \
+__mu0_scope_end__
+
+#	define __mu0_atomic_write__(_Sc, __ptr, __val)                                                        \
+__mu0_scope_begin__                                                                                      \
+	*__ptr = __val;                                                                                       \
+__mu0_scope_end__
+
 #	define __mu0_atomic_fetch_and_add__(_Sc, __ptr, __value, __result)                                    \
 __mu0_scope_begin__                                                                                      \
 	__result = __atomic_fetch_add(__ptr, __value, __ATOMIC_SEQ_CST);                                      \
@@ -287,6 +307,16 @@ __mu0_scope_end__
 #	define __mu0_atomic_mb_acquire__() __mu0_barrier_acquire__()
 #	define __mu0_atomic_mb_release__() __mu0_barrier_release__()
 
+#	define __mu0_atomic_read__(_Sc, __ptr, __result)                                                      \
+__mu0_scope_begin__                                                                                      \
+	__result = *__ptr;                                                                                    \
+__mu0_scope_end__
+
+#	define __mu0_atomic_write__(_Sc, __ptr, __val)                                                        \
+__mu0_scope_begin__                                                                                      \
+	*__ptr = __val;                                                                                       \
+__mu0_scope_end__
+
 #	define __mu0_atomic_fetch_and_add__(_Sc, __ptr, __value, __result)                                    \
 __mu0_scope_begin__                                                                                      \
 	__result = __sync_fetch_and_add(__ptr, __value);                                                      \
@@ -367,6 +397,16 @@ __mu0_scope_end__
 #	define __mu0_atomic_mb_full__()    __mu0_barrier_full__()
 #	define __mu0_atomic_mb_acquire__() __mu0_barrier_acquire__()
 #	define __mu0_atomic_mb_release__() __mu0_barrier_release__()
+
+#	define __mu0_atomic_read__(_Sc, __ptr, __result)                                                      \
+__mu0_scope_begin__                                                                                      \
+	__result = *__ptr;                                                                                    \
+__mu0_scope_end__
+
+#	define __mu0_atomic_write__(_Sc, __ptr, __val)                                                        \
+__mu0_scope_begin__                                                                                      \
+	*__ptr = __val;                                                                                       \
+__mu0_scope_end__
 
 #	define __mu0_atomic_fetch_and_op__(_Sc, _Op, __ptr, __value, __result)                                \
 __mu0_scope_begin__                                                                                      \
@@ -597,7 +637,7 @@ __mu0_scope_end__
 #	if __has_feature(c_atomic)
 #	undef  MU0_HAVE_ATINIT
 #	define MU0_HAVE_ATINIT 1
-#	define __mu0_atomic_init__(_Sc, __ptr, __val)                                                        \
+#	define __mu0_atomic_init__(_Sc, __ptr, __val)                                                         \
 	__c11_atomic_init(__ptr, __val)
 #	endif
 #	endif

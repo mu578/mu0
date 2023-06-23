@@ -147,10 +147,11 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 	else ifneq (,$(findstring macos_ios, $(PLATFORM_VARIANT)))
 		XCODE_VERS          := $(shell xcodebuild -sdk -version | grep "iphoneos"  | cut -d "-" -f 1 | tr -d '[:space:]')
 		XCODE_PATH          := $(shell dirname `xcrun -f clang`)
+		XCODE_SDK           := 
 		ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
-		XCODE_SDK           := $(shell xcrun --sdk iphonesimulator --show-sdk-path)
+			XCODE_SDK        := $(shell xcrun --sdk iphonesimulator --show-sdk-path)
 		else
-		XCODE_SDK           := $(shell xcrun --sdk iphoneos --show-sdk-path)
+			XCODE_SDK        := $(shell xcrun --sdk iphoneos --show-sdk-path)
 		endif
 		CC                  := $(XCODE_PATH)/clang
 		AR                  := $(XCODE_PATH)/ar
@@ -169,7 +170,7 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch x86_64
 			ARCH             := x86_64
-		else ifneq (,$(findstring .all, $(PLATFORM_VARIANT)))
+		else ifneq (,$(findstring .fat, $(PLATFORM_VARIANT)))
 			PLATFORM_VARIANT := $(basename  $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch arm64 -arch armv7 -arch armv7s
 			ARCH             := fat

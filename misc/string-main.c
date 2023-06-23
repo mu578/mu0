@@ -23,22 +23,16 @@ int main(int argc, const char * argv[])
 	      mu0_sint32_t width;
 	const mu0_tchar8_t * glyph;
 
-         mu0_tchar8_t * r0;
-	const mu0_tchar8_t * s1   = __mu0_literal_utf8__("éducation");
-	const mu0_tchar8_t * s2   = __mu0_literal_utf8__("Education");
-	const mu0_tchar8_t * s3   = __mu0_literal_utf8__("她就心緒翻湧惡意難消");
-	const mu0_tchar8_t * s4   = __mu0_literal_utf8__("Un ciel étoilé");
-	      mu0_tchar8_t s5[17] = __mu0_literal_utf8__("Un ciel étoilé\0");
+	const mu0_tchar8_t * s1   = mu0_utf8_const("éducation");
+	const mu0_tchar8_t * s2   = mu0_utf8_const("Education");
+	const mu0_tchar8_t * s3   = mu0_utf8_const("她就心緒翻湧惡意難消");
+	const mu0_tchar8_t * s4   = mu0_utf8_const("Un ciel étoilé");
+	      mu0_tchar8_t s5[17] = mu0_utf8_const("Un ciel étoilé\0");
 
 	mu0_unused(argc);
 	mu0_unused(argv);
 
 	mu0_console_log("\n");
-
-	__mu0_cfind_n__(mu0_tchar8_t, s5, 0, 10, 'i', r0);
-	__mu0_cfind__(mu0_tchar8_t, s5, s5 + 10, 'i', r0);
-
-	__mu0_slength__(mu0_tchar8_t, s5, i);
 
 	mu0_console_log("s1.length : %zu\n", mu0_string8_length(s1));
 	mu0_console_log("s1.size   : %zu\n", mu0_string8_size(s1)  );

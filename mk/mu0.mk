@@ -31,8 +31,8 @@ MU0_ROOT_PATH     := $(LOCAL_MODULE_PATH)
 # PLATFORM_VARIANT := macos_ios
 # PLATFORM_VARIANT := macos_ios.arm64
 # PLATFORM_VARIANT := macos_ios.arm32
-PLATFORM_VARIANT := macos_ios.x86_64
-# PLATFORM_VARIANT := macos_ios.all
+# PLATFORM_VARIANT := macos_ios.x86_64
+PLATFORM_VARIANT := macos_ios.all
 
 # PLATFORM_VARIANT := macos_android
 # PLATFORM_VARIANT := macos_android.arm64

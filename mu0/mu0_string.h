@@ -55,6 +55,10 @@ typedef ___mu0_tchar1_t___                        mu0_tchar8_t;
 #	define mu0_tchar8(__x)                         __mu0_cast__(mu0_tchar8_t, __x)
 #	define mu0_const_tchar8(__x)                   __mu0_const_cast__(mu0_tchar8_t, __x)
 
+#	define mu0_utf8_const(__s)                     __mu0_literal_utf8__(__s)
+#	define mu0_utf16_const(__s)                    __mu0_literal_utf16__(__s)
+#	define mu0_utf32_const(__s)                    __mu0_literal_utf32__(__s)
+
 #	define mu0_string_length(_CharT, __src, __len) __mu0_slength__(_CharT, __src, __len)
 #	define mu0_string_size(_CharT, __src, __size)  __mu0_slength__(_CharT, __src, __size); ++__size
 

@@ -28,7 +28,7 @@ PLATFORM_VARIANT := macos_ios
 PLATFORM_VARIANT := macos_ios.arm64
 PLATFORM_VARIANT := macos_ios.arm32
 PLATFORM_VARIANT := macos_ios.x86_64
-PLATFORM_VARIANT := macos_ios.all
+PLATFORM_VARIANT := macos_ios.fat
 
 # Expecting NDK install-path: ${project_root}/../toolchains/macos-android-ndk
 PLATFORM_VARIANT := macos_android

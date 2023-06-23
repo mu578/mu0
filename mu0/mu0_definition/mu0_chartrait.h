@@ -227,7 +227,7 @@ __mu0_scope_end__
 #	define __mu0_sutf8_utf32_width__(_Char8T, __src_first, __src_last, __r) \
 	__mu0_sutf8_width__(_Char8T, __src_first, __src_last, __r)
 
-#	define __mu0_sutf8_to_utf32__(_Char8T, _Char32T, __src_first, __src_last, __dest_first)                         \
+#	define __mu0_sutf8_to_utf32__(_Char8T, _Char32T, __src_first, __src_last, __dest_first, __endian)               \
 __mu0_scope_begin__                                                                                                \
 	const _Char8T  *        __mu0_sutf8_to_utf32__i__ = __mu0_const_cast__(_Char8T  *, __src_first);                \
 	const _Char32T *        __mu0_sutf8_to_utf32__j__ = __mu0_const_cast__(_Char32T *, __dest_first);               \
@@ -295,6 +295,10 @@ __mu0_scope_begin__                                                             
 			break;                                                                                                    \
 		}                                                                                                            \
 		__mu0_sutf8_to_utf32__i__ = __mu0_sutf8_to_utf32__i__ + __mu0_sutf8_to_utf32__k__;                           \
+		__mu0_sutf8_to_utf32__j__ = (__endian != __mu0_byte_order__                                                  \
+			? __mu0_bswap_32__(__mu0_sutf8_to_utf32__j__)                                                             \
+			: __mu0_sutf8_to_utf32__j__                                                                               \
+		);                                                                                                           \
 		++__mu0_sutf8_to_utf32__j__;                                                                                 \
 	}                                                                                                               \
 __mu0_scope_end__
