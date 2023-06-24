@@ -29,6 +29,7 @@
 #	include <mu0/mu0_definition/mu0_console.h>
 #	include <mu0/mu0_definition/mu0_cpuyield.h>
 #	include <mu0/mu0_definition/mu0_feature.h>
+#	include <mu0/mu0_definition/mu0_i18ndatetime.h>
 #	include <mu0/mu0_definition/mu0_i18nlocale.h>
 #	include <mu0/mu0_definition/mu0_language.h>
 #	include <mu0/mu0_definition/mu0_barrier.h>
@@ -41,16 +42,26 @@ MU0_BEGIN_CDECL
 
 enum mu0_endian
 {
-	  mu0_endian_little    = __mu0_order_leen__
-	, mu0_endian_big       = __mu0_order_been__
-	, mu0_endian_native    = __mu0_byte_order__
+	  mu0_endian_little           = __mu0_order_leen__
+	, mu0_endian_big              = __mu0_order_been__
+	, mu0_endian_native           = __mu0_byte_order__
 };
 
 enum mu0_ordering
 {
-	  mu0_ordering_less    = -1
-	, mu0_ordering_equal   =  0
-	, mu0_ordering_greater =  1
+	  mu0_ordering_less           = -1
+	, mu0_ordering_equal          =  0
+	, mu0_ordering_greater        =  1
+};
+
+enum mu0_dateformat
+{
+	  mu0_dateformat_iso8601_full = __mu0_dateformat_iso8601_full__
+	, mu0_dateformat_iso8601_long = __mu0_dateformat_iso8601_long__
+	, mu0_dateformat_iso8601_zulu = __mu0_dateformat_iso8601_zulu__
+	, mu0_dateformat_rfc3339_full = __mu0_dateformat_rfc3339_full__
+	, mu0_dateformat_rfc3339_long = __mu0_dateformat_rfc3339_long__
+	, mu0_dateformat_rfc3339_zulu = __mu0_dateformat_rfc3339_zulu__
 };
 
 #	define mu0_min(__a, __b)           __mu0_inline_min__(__a, __b)

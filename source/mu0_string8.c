@@ -10,12 +10,12 @@
 //                                           | |                                                            //
 //                                           |_|                                                            //
 
-// mu0_string.c
+// mu0_string8.c
 //
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
-#include <mu0/mu0_string.h>
+#include <mu0/mu0_string8.h>
 
 __mu0_static_inline__
 void mu0_string8_reverse_body(mu0_tchar8_t * first, mu0_tchar8_t * last)

@@ -22,37 +22,75 @@
 #define MU0_I18NDATETIME_H 1
 
 #	undef  MU0_HAVE_I18NDATETIME
-#	define MU0_HAVE_I18NDATETIME 0
+#	define MU0_HAVE_I18NDATETIME 1
+
+#	define __mu0_dateformat_iso8601_full__ 0
+#	define __mu0_dateformat_iso8601_long__ 1
+#	define __mu0_dateformat_iso8601_zulu__ 2
+
+#	define __mu0_dateformat_rfc3339_full__ 3
+#	define __mu0_dateformat_rfc3339_long__ 4
+#	define __mu0_dateformat_rfc3339_zulu__ 5
+
+__mu0_static__ const char * __g_mu0_dateformat__[] =
+{
+	  "%Y-%m-%dT%H:%M:%OS%z"
+	, "%Y-%m-%dT%H:%M:%S%z"
+	, "%Y-%m-%dT%H:%M:%SZ"
+	, "%Y-%m-%d %H:%M:%OS%z"
+	, "%Y-%m-%d %H:%M:%S%z"
+	, "%Y-%m-%d %H:%M:%SZ"
+};
 
 typedef struct tm __mu0_calendar_date_t__;
 
-#	define __mu0_layout_iso8601_full__      "%Y-%m-%dT%H:%M:%OS%z"
-#	define __mu0_layout_iso8601__           "%Y-%m-%dT%H:%M:%S%z"
-#	define __mu0_layout_iso8601_full_utc__  "%Y-%m-%dT%H:%M:%OSZ"
-#	define __mu0_layout_iso8601_utc__       "%Y-%m-%dT%H:%M:%SZ"
+__mu0_static_inline__
+void __mu0_i18ndatetime_localtime__(__mu0_calendar_date_t__ * __date)
+{
+	time_t utc = time(NULL);
+	memcpy(__date, localtime(&utc), __mu0_sizeof__(__mu0_calendar_date_t__));
+}
 
-#	define __mu0_layout_rfc3339_full__      "%Y-%m-%d %H:%M:%OS%z"
-#	define __mu0_layout_rfc3339__           "%Y-%m-%d %H:%M:%S%z"
-#	define __mu0_layout_rfc3339_full_utc__  "%Y-%m-%d %H:%M:%OSZ"
-#	define __mu0_layout_rfc3339_utc__       "%Y-%m-%d %H:%M:%SZ"
-
-#	define __mu0_format_iso8601_full__      0
-#	define __mu0_format_iso8601__           1
-#	define __mu0_format_iso8601_full_utc__  2
-#	define __mu0_format_iso8601_utc__       3
-
-#	define __mu0_format_rfc3339_full__      4
-#	define __mu0_format_rfc3339__           5
-#	define __mu0_format_rfc3339_full_utc__  6
-#	define __mu0_format_rfc3339_utc__       7
+__mu0_static_inline__
+void __mu0_i18ndatetime_zulutime__(__mu0_calendar_date_t__ * __date)
+{
+	time_t utc = time(NULL);
+	memcpy(__date, gmtime(&utc)  , __mu0_sizeof__(__mu0_calendar_date_t__));
+}
 
 __mu0_static_inline__
 const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 	  const __mu0_calendar_date_t__ * __date
-	, const ___mu0_sint4_t___         __format
+	, const ___mu0_uint4_t___         __format
 	, const __mu0_i18nlocale_t__      __locale __mu0_nullable__
-	, ___mu0_tint1_t___               __dest[64]
+	, ___mu0_tint1_t___               __dest[32]
 ) {
+	memset(__dest, 0, 32);
+	if (__mu0_is_nullptr__(__locale)) {
+		strftime(__dest, 32 - 1
+			, (__format >= 0 && __format < 6)
+				? __g_mu0_dateformat__[__format]
+				: __g_mu0_dateformat__[0]
+			, __date
+		);
+	}
+#	if MU0_HAVE_WINDOWS
+	_strftime_l(__dest, 32 - 1
+		, (__format >= 0 && __format < 6)
+			? __g_mu0_dateformat__[__format]
+			: __g_mu0_dateformat__[0]
+		, __date
+		, __locale->u_lc
+	);
+#	else
+	strftime_l(__dest, 32 - 1
+		, (__format >= 0 && __format < 6)
+			? __g_mu0_dateformat__[__format]
+			: __g_mu0_dateformat__[0]
+		, __date
+		, __locale
+	);
+#	endif
 	return 0;
 }
 

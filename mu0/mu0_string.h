@@ -15,7 +15,7 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
-#include <mu0/mu0_integer.h>
+#include <mu0/mu0_definition.h>
 
 #ifndef MU0_STRING_H
 #define MU0_STRING_H 1
@@ -61,34 +61,6 @@ typedef ___mu0_tchar1_t___                        mu0_tchar8_t;
 
 #	define mu0_string_length(_CharT, __src, __len) __mu0_slength__(_CharT, __src, __len)
 #	define mu0_string_size(_CharT, __src, __size)  __mu0_slength__(_CharT, __src, __size); ++__size
-
-mu0_usize_t          mu0_string8_length (const mu0_tchar8_t * src);
-mu0_usize_t          mu0_string8_size   (const mu0_tchar8_t * src);
-mu0_usize_t          mu0_string8_count  (const mu0_tchar8_t * src);
-mu0_bool_t           mu0_string8_isUTF8 (const mu0_tchar8_t * src);
-
-const mu0_tchar8_t * mu0_string8_at(
-	  const mu0_tchar8_t * src
-	, const mu0_index_t    index
-	,       mu0_sint32_t * width
-);
-
-const mu0_tchar8_t * mu0_string8_reverse(
-	  const mu0_tchar8_t * src
-	,       mu0_tchar8_t * dest
-);
-
-const mu0_tchar8_t * mu0_string8_range_at(
-	  const mu0_tchar8_t * first
-	, const mu0_tchar8_t * last
-	, const mu0_index_t    index
-	,       mu0_sint32_t * width
-);
-
-const mu0_tchar8_t * mu0_string8_range_reverse(
-	  mu0_tchar8_t * first
-	, mu0_tchar8_t * last
-);
 
 MU0_END_CDECL
 

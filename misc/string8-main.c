@@ -10,12 +10,12 @@
 //                                           | |                                                            //
 //                                           |_|                                                            //
 
-// string-main.h
+// string8-main.h
 //
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
-#include <mu0/mu0_string.h>
+#include <mu0/mu0_string8.h>
 
 int main(int argc, const char * argv[])
 {
