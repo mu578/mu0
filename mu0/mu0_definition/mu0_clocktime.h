@@ -62,7 +62,7 @@
 #		endif
 
 #	if !defined(_POSIX_TIMERS)
-	typedef int clockid_t;
+	typedef ___mu0_sint4_t___ clockid_t;
 #	endif
 
 #	pragma weak clock_gettime
