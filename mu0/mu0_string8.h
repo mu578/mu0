@@ -24,9 +24,9 @@
 MU0_BEGIN_CDECL
 
 mu0_usize_t          mu0_string8_length (const mu0_tchar8_t * src);
-mu0_usize_t          mu0_string8_size   (const mu0_tchar8_t * src);
+mu0_usize_t          mu0_string8_width  (const mu0_tchar8_t * src);
 mu0_usize_t          mu0_string8_count  (const mu0_tchar8_t * src);
-mu0_bool_t           mu0_string8_isUTF8 (const mu0_tchar8_t * src);
+mu0_bool_t           mu0_string8_check  (const mu0_tchar8_t * src);
 
 const mu0_tchar8_t * mu0_string8_at(
 	  const mu0_tchar8_t * src

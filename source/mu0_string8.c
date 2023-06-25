@@ -50,7 +50,7 @@ mu0_usize_t mu0_string8_length(const mu0_tchar8_t * src)
 	return strlen(src);
 }
 
-mu0_usize_t mu0_string8_size(const mu0_tchar8_t * src)
+mu0_usize_t mu0_string8_width(const mu0_tchar8_t * src)
 {
 	return strlen(src) + 1U;
 }
@@ -73,7 +73,7 @@ mu0_usize_t mu0_string8_count(const mu0_tchar8_t * src)
 	return j;
 }
 
-mu0_bool_t mu0_string8_isUTF8(
+mu0_bool_t mu0_string8_check(
 	const mu0_tchar8_t * src
 ) {
 	      mu0_bool_t     r = mu0_false;

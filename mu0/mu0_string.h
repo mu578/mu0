@@ -59,8 +59,17 @@ typedef ___mu0_tchar1_t___                        mu0_tchar8_t;
 #	define mu0_utf16_const(__s)                    __mu0_literal_utf16__(__s)
 #	define mu0_utf32_const(__s)                    __mu0_literal_utf32__(__s)
 
-#	define mu0_string_length(_CharT, __src, __len) __mu0_slength__(_CharT, __src, __len)
-#	define mu0_string_size(_CharT, __src, __size)  __mu0_slength__(_CharT, __src, __size); ++__size
+#	define mu0_string_length(_CharT, __src, __len) \
+	__mu0_slength__(_CharT, __src, __len)
+
+#	define mu0_string_width(_CharT, __src, __size) \
+	__mu0_swidth__(_CharT, __src, __size)
+
+#	define mu0_string_find(_CharT, __src_first, __src_last, __char, __d_pos) \
+	__mu0_cfind__(_CharT, __src_first, __src_last, __char, __d_pos)
+
+#	define mu0_string_find_n(_CharT, __src, __n, __char, __d_pos) \
+	__mu0_cfind_n__(_CharT, __src, __n, __char, __d_pos)
 
 MU0_END_CDECL
 

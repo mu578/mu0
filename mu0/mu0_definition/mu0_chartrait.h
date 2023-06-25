@@ -90,6 +90,8 @@ __mu0_scope_begin__                                                             
 	}                                                                                  \
 __mu0_scope_end__
 
+#	define __mu0_swidth__(_CharT, __src, __r) __mu0_slength__(_CharT, __src, __size) ++__r
+
 #	define ___mu0_sutfxxto8_n___(_CharxxT, _Char8T, __src, __n, __dest, __endian, __swap_xx, __r)                                    \
 __mu0_scope_begin__                                                                                                                 \
 	const ___mu0_uint4_t___ ___mu0_sutfxxto8_n___x__ = __mu0_not_nullptr__(__dest) ? 1U : 0U;                                        \

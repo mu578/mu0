@@ -141,6 +141,18 @@
 #	endif
 #	endif
 
+#	if MU0_HAVE_C11 && MU0_HAVE_CPP11
+#	if MU0_HAVE_CC_MSVCC
+#	if !defined(__STDC_WANT_SECURE_LIB__)
+#		define __STDC_WANT_SECURE_LIB__ 1
+#	endif
+#	endif
+#	if !defined(__STDC_WANT_LIB_EXT1__)
+#		define __STDC_WANT_LIB_EXT1__ 1
+#	endif
+#	endif
+
+
 #	undef  MU0_HAVE_POSIX1_2001
 #	undef  MU0_HAVE_POSIX1_2008
 #	define MU0_HAVE_POSIX1_2001 0

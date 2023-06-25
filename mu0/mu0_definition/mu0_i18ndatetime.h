@@ -48,14 +48,22 @@ __mu0_static_inline__
 void __mu0_i18ndatetime_localtime__(__mu0_calendar_date_t__ * __date)
 {
 	time_t utc = time(NULL);
+#	if MU0_HAVE_WINDOWS
+	localtime_s(__date, &utc);
+#	else
 	memcpy(__date, localtime(&utc), __mu0_sizeof__(__mu0_calendar_date_t__));
+#	endif
 }
 
 __mu0_static_inline__
 void __mu0_i18ndatetime_zulutime__(__mu0_calendar_date_t__ * __date)
 {
 	time_t utc = time(NULL);
+#	if MU0_HAVE_WINDOWS
+	gmtime_s(__date, &utc);
+#	else
 	memcpy(__date, gmtime(&utc)  , __mu0_sizeof__(__mu0_calendar_date_t__));
+#	endif
 }
 
 __mu0_static_inline__
