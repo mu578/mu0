@@ -66,62 +66,61 @@
 #	endif
 
 #	pragma weak clock_gettime
-	int clock_gettime(clockid_t clk_id, struct timespec * tp)
+	___mu0_sint4_t___ clock_gettime(clockid_t __clk_id, struct timespec * __tp)
 	{
 		static mach_timebase_info_data_t s_info;
 
 		kern_return_t                    kret;
 		clock_serv_t                     clk;
 		clock_id_t                       cid;
-		mach_timespec_t                  tm;
+		mach_timespec_t                  mtp;
 
-		unsigned long long start, end, delta, nano;
+		___mu0_uint8_t___ start, end, delta, nano;
+		___mu0_sint4_t___ ret = -1;
 
-		int ret = -1;
-
-		switch (clk_id)
+		switch (__clk_id)
 		{
 			case CLOCK_REALTIME      :
 			case CLOCK_MONOTONIC     :
 			case CLOCK_MONOTONIC_RAW :
 			{
-				cid = clk_id == CLOCK_REALTIME ? CALENDAR_CLOCK : SYSTEM_CLOCK;
+				cid = __clk_id == CLOCK_REALTIME ? CALENDAR_CLOCK : SYSTEM_CLOCK;
 				if (KERN_SUCCESS == (kret = host_get_clock_service(mach_host_self(), cid, &clk))) {
-					if (KERN_SUCCESS == (kret = clock_get_time(clk, &tm))) {
-						tp->tv_sec  = tm.tv_sec;
-						tp->tv_nsec = tm.tv_nsec;
-						ret = 0;
+					if (KERN_SUCCESS == (kret = clock_get_time(clk, &mtp))) {
+						__tp->tv_sec  = mtp.tv_sec;
+						__tp->tv_nsec = mtp.tv_nsec;
+						ret           = 0;
 					}
 				}
 				if (KERN_SUCCESS != kret) {
 					errno = EINVAL;
-					ret = -1;
+					ret   = -1;
 				}
 			}
 			break;
 			case CLOCK_PROCESS_CPUTIME_ID :
 			case CLOCK_THREAD_CPUTIME_ID  :
 			{
-				start = mach_absolute_time();
-				if (clk_id == CLOCK_PROCESS_CPUTIME_ID) {
+				start         = mach_absolute_time();
+				if (__clk_id == CLOCK_PROCESS_CPUTIME_ID) {
 					getpid();
 				} else {
 					sched_yield();
 				}
-				end = mach_absolute_time();
-				delta = end - start;	
+				end           = mach_absolute_time();
+				delta         = end - start;	
 				if (0 == s_info.denom) {
 					mach_timebase_info(&s_info);
 				}
-				nano        = delta * s_info.numer / s_info.denom;
-				tp->tv_sec  = nano * 1000000000;
-				tp->tv_nsec = nano - (tp->tv_sec * 1000000000);
+				nano          = delta * s_info.numer / s_info.denom;
+				__tp->tv_sec  = nano * 1000000000;
+				__tp->tv_nsec = nano - (tp->tv_sec * 1000000000);
 				ret = 0;
 			}
 			break;
 			default:
 				errno = EINVAL;
-				ret = -1;
+				ret   = -1;
 		}
 		return ret;
 	}

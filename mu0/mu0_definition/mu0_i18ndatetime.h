@@ -32,7 +32,7 @@
 #	define __mu0_dateformat_rfc3339_long__ 4
 #	define __mu0_dateformat_rfc3339_zulu__ 5
 
-__mu0_static__ const char * __g_mu0_dateformat__[] =
+__mu0_static__ const ___mu0_tint1_t___ * __g_mu0_dateformat__[6] =
 {
 	  "%Y-%m-%dT%H:%M:%OS%z"
 	, "%Y-%m-%dT%H:%M:%S%z"
@@ -47,7 +47,7 @@ typedef struct tm __mu0_calendar_date_t__;
 __mu0_static_inline__
 void __mu0_i18ndatetime_localtime__(__mu0_calendar_date_t__ * __date)
 {
-	time_t utc = time(NULL);
+	const time_t utc = time(NULL);
 #	if MU0_HAVE_WINDOWS
 	localtime_s(__date, &utc);
 #	else
@@ -58,7 +58,7 @@ void __mu0_i18ndatetime_localtime__(__mu0_calendar_date_t__ * __date)
 __mu0_static_inline__
 void __mu0_i18ndatetime_zulutime__(__mu0_calendar_date_t__ * __date)
 {
-	time_t utc = time(NULL);
+	const time_t utc = time(NULL);
 #	if MU0_HAVE_WINDOWS
 	gmtime_s(__date, &utc);
 #	else
@@ -70,7 +70,7 @@ __mu0_static_inline__
 const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 	  const __mu0_calendar_date_t__ * __date
 	, const ___mu0_uint4_t___         __format
-	, const __mu0_i18nlocale_t__      __locale __mu0_nullable__
+	, const __mu0_i18nlocale_t__      __locale   __mu0_nullable__
 	, ___mu0_tint1_t___               __dest[32]
 ) {
 	memset(__dest, 0, 32);
