@@ -68,15 +68,14 @@
 #	pragma weak clock_gettime
 	___mu0_sint4_t___ clock_gettime(clockid_t __clk_id, struct timespec * __tp)
 	{
-		static mach_timebase_info_data_t s_info;
+		__mu0_static__ mach_timebase_info_data_t s_info;
+		clock_id_t                               cid;
+		clock_serv_t                             clk;
+		mach_timespec_t                          mtp;
+		kern_return_t                            kret;
 
-		kern_return_t                    kret;
-		clock_serv_t                     clk;
-		clock_id_t                       cid;
-		mach_timespec_t                  mtp;
-
-		___mu0_uint8_t___ start, end, delta, nano;
 		___mu0_sint4_t___ ret = -1;
+		___mu0_uint8_t___ start, end, delta, nano;
 
 		switch (__clk_id)
 		{
@@ -113,8 +112,8 @@
 					mach_timebase_info(&s_info);
 				}
 				nano          = delta * s_info.numer / s_info.denom;
-				__tp->tv_sec  = nano * 1000000000;
-				__tp->tv_nsec = nano - (tp->tv_sec * 1000000000);
+				__tp->tv_sec  = nano  * 1000000000UL;
+				__tp->tv_nsec = nano  - (__tp->tv_sec * 1000000000UL);
 				ret = 0;
 			}
 			break;
