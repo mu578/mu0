@@ -33,7 +33,7 @@
 MU0_BEGIN_CDECL
 
 #	if MU0_USE_INT128
-#	if   MU0_HAVE_CC_CLANG
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
 #		if !__is_identifier(__int128_t)
 #			undef  MU0_HAVE_INT128
 #			define MU0_HAVE_INT128 1
@@ -174,7 +174,7 @@ typedef   mu0_ptrdiff_t             mu0_distance_t;
 		|| __mu0_isofkind__(mu0_sint32_t  , __x) \
 		|| __mu0_isofkind__(mu0_sint16_t  , __x) \
 		|| __mu0_isofkind__(mu0_sint8_t   , __x) \
-		|| __mu0_isofkind__(mu0_ptrdiff_t, __x)  \
+		|| __mu0_isofkind__(mu0_ptrdiff_t , __x) \
 	) ? 1 : 0)
 
 #	define mu0_is_uinteger(__x)                \
@@ -190,15 +190,21 @@ typedef   mu0_ptrdiff_t             mu0_distance_t;
 #	define mu0_is_uinteger(__x) (1)
 #	endif
 
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL || MU0_HAVE_CC_GNUC
+#		define mu0_integral_constant(_T, _V, __v) __mu0_static__ const _T _V = { __v }
+#	else
+#		define mu0_integral_constant(_T, _V, __v) __mu0_static__ const _T _V = __v
+#	endif
+
 #	if MU0_HAVE_INT128
 
 #	define __mu0_uint128_const__(__c) UINT128_C(__c)
 #	define __mu0_sint128_const__(__c)  INT128_C(__c)
 
-__mu0_static__ const mu0_uint128_t mu0_uint128_max = UINT128_MAX;
-__mu0_static__ const mu0_uint128_t mu0_uint128_min = __mu0_uint128_const__(0);
-__mu0_static__ const mu0_sint128_t mu0_sint128_max = INT128_MAX;
-__mu0_static__ const mu0_sint128_t mu0_sint128_min = INT128_MIN;
+mu0_integral_constant(mu0_uint128_t, mu0_uint128_max, UINT128_MAX);
+mu0_integral_constant(mu0_uint128_t, mu0_uint128_min, __mu0_uint128_const__(0));
+mu0_integral_constant(mu0_sint128_t, mu0_sint128_max, INT128_MAX);
+mu0_integral_constant(mu0_sint128_t, mu0_sint128_min, INT128_MIN);
 
 #	else
 
@@ -210,10 +216,10 @@ __mu0_static__ const mu0_sint128_t mu0_sint128_min = INT128_MIN;
 #	define __mu0_sint128_const__(__c) __c
 #	endif
 
-__mu0_static__ const mu0_uint128_t mu0_uint128_max = UINT64_MAX;
-__mu0_static__ const mu0_uint128_t mu0_uint128_min = __mu0_uint128_const__(0);
-__mu0_static__ const mu0_sint128_t mu0_sint128_max = INT64_MAX;
-__mu0_static__ const mu0_sint128_t mu0_sint128_min = INT64_MIN;
+mu0_integral_constant(mu0_uint128_t, mu0_uint128_max, UINT64_MAX);
+mu0_integral_constant(mu0_uint128_t, mu0_uint128_min, __mu0_uint128_const__(0));
+mu0_integral_constant(mu0_sint128_t, mu0_sint128_max, INT64_MAX);
+mu0_integral_constant(mu0_sint128_t, mu0_sint128_min, INT64_MIN);
 
 #	endif
 
@@ -225,34 +231,34 @@ __mu0_static__ const mu0_sint128_t mu0_sint128_min = INT64_MIN;
 #	define __mu0_sint64_const__(__c) __c
 #	endif
 
-__mu0_static__ const mu0_uint64_t  mu0_uint64_max  = UINT64_MAX;
-__mu0_static__ const mu0_uint64_t  mu0_uint64_min  = __mu0_uint64_const__(0);
-__mu0_static__ const mu0_sint64_t  mu0_sint64_max  = INT64_MAX;
-__mu0_static__ const mu0_sint64_t  mu0_sint64_min  = INT64_MIN;
+mu0_integral_constant(mu0_uint64_t , mu0_uint64_max , UINT64_MAX);
+mu0_integral_constant(mu0_uint64_t , mu0_uint64_min , __mu0_uint64_const__(0));
+mu0_integral_constant(mu0_sint64_t , mu0_sint64_max , INT64_MAX);
+mu0_integral_constant(mu0_sint64_t , mu0_sint64_min , INT64_MIN);
 
 #	define __mu0_uint32_const__(__c) UINT32_C(__c)
 #	define __mu0_sint32_const__(__c)  INT32_C(__c)
 
-__mu0_static__ const mu0_uint32_t  mu0_uint32_max  = UINT32_MAX;
-__mu0_static__ const mu0_uint32_t  mu0_uint32_min  = __mu0_uint32_const__(0);
-__mu0_static__ const mu0_sint32_t  mu0_sint32_max  = INT32_MAX;
-__mu0_static__ const mu0_sint32_t  mu0_sint32_min  = INT32_MIN;
+mu0_integral_constant(mu0_uint32_t , mu0_uint32_max , UINT32_MAX);
+mu0_integral_constant(mu0_uint32_t , mu0_uint32_min , __mu0_uint32_const__(0));
+mu0_integral_constant(mu0_sint32_t , mu0_sint32_max , INT32_MAX);
+mu0_integral_constant(mu0_sint32_t , mu0_sint32_min , INT32_MIN);
 
 #	define __mu0_uint16_const__(__c) UINT16_C(__c)
 #	define __mu0_sint16_const__(__c)  INT16_C(__c)
 
-__mu0_static__ const mu0_uint16_t  mu0_uint16_max  = UINT16_MAX;
-__mu0_static__ const mu0_uint16_t  mu0_uint16_min  = __mu0_uint16_const__(0);
-__mu0_static__ const mu0_sint16_t  mu0_sint16_max  = INT16_MAX;
-__mu0_static__ const mu0_sint16_t  mu0_sint16_min  = INT16_MIN;
+mu0_integral_constant(mu0_uint16_t , mu0_uint16_max , UINT16_MAX);
+mu0_integral_constant(mu0_uint16_t , mu0_uint16_min , __mu0_uint16_const__(0));
+mu0_integral_constant(mu0_sint16_t , mu0_sint16_max , INT16_MAX);
+mu0_integral_constant(mu0_sint16_t , mu0_sint16_min , INT16_MIN);
 
 #	define __mu0_uint8_const__(__c) UINT8_C(__c)
 #	define __mu0_sint8_const__(__c)  INT8_C(__c)
 
-__mu0_static__ const mu0_uint8_t   mu0_uint8_max   = UINT8_MAX;
-__mu0_static__ const mu0_uint8_t   mu0_uint8_min   = __mu0_uint8_const__(0);
-__mu0_static__ const mu0_sint8_t   mu0_sint8_max   = INT8_MAX;
-__mu0_static__ const mu0_sint8_t   mu0_sint8_min   = INT8_MIN;
+mu0_integral_constant(mu0_uint8_t  , mu0_uint8_max  , UINT8_MAX);
+mu0_integral_constant(mu0_uint8_t  , mu0_uint8_min  , __mu0_uint8_const__(0));
+mu0_integral_constant(mu0_sint8_t  , mu0_sint8_max  , INT8_MAX);
+mu0_integral_constant(mu0_sint8_t  , mu0_sint8_min  , INT8_MIN);
 
 MU0_END_CDECL
 

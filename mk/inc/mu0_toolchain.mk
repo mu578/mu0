@@ -45,11 +45,15 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			PLATFORM_VARIANT := macos_xcode
 		endif
 	endif
+else
+	ifeq ($(strip $(PLATFORM_VARIANT)),)
+		PLATFORM_VARIANT    := $(PLATFORM)
+	endif
 endif
 
 ifeq (,$(findstring darwin, $(PLATFORM)))
 	ifneq (,$(findstring macos, $(PLATFORM_VARIANT)))
-		PLATFORM_VARIANT    :=
+		PLATFORM_VARIANT    := $(PLATFORM)
 	endif
 endif
 
@@ -57,7 +61,7 @@ ifeq ($(strip $(LOCAL_BUILDDIR)),)
 	ifneq (,$(findstring mingw, $(PLATFORM)))
 		LOCAL_BUILDDIR      := ../_
 	else
-		LOCAL_BUILDDIR      := /tmp/build/$(PLATFORM)/$(LOCAL_MODULE)
+		LOCAL_BUILDDIR      := /tmp/build/$(basename $(PLATFORM_VARIANT))/$(LOCAL_MODULE)
 	endif
 endif
 
@@ -75,6 +79,10 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch x86_64
 			ARCH             := x86_64
+		else ifneq (,$(findstring .arm64, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
+			PLATFORM_ARCH    := -arch arm64
+			ARCH             := arm64
 		else ifneq (,$(findstring .fat, $(PLATFORM_VARIANT)))
 			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			ifeq (,$(findstring x86_64, $(ARCH)))
@@ -116,6 +124,10 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch x86_64
 			ARCH             := x86_64
+		else ifneq (,$(findstring .arm64, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
+			PLATFORM_ARCH    := -arch arm64
+			ARCH             := arm64
 		else ifneq (,$(findstring .fat, $(PLATFORM_VARIANT)))
 			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			ifeq (,$(findstring x86_64, $(ARCH)))

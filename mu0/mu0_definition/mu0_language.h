@@ -152,7 +152,6 @@
 #	endif
 #	endif
 
-
 #	undef  MU0_HAVE_POSIX1_2001
 #	undef  MU0_HAVE_POSIX1_2008
 #	define MU0_HAVE_POSIX1_2001 0
@@ -212,13 +211,13 @@
 #	define __mu0_unused__(__x)          __mu0_cast__(void, __x)
 
 #	if MU0_HAVE_C11 || MU0_HAVE_CPP11
-#	define __mu0_literal_utf8__(__s)  u8 ## __s
-#	define __mu0_literal_utf16__(__s) u  ## __s
-#	define __mu0_literal_utf32__(__s) U  ## __s
+#	define __mu0_literal_utf8__(__s)    u8 ## __s
+#	define __mu0_literal_utf16__(__s)   u  ## __s
+#	define __mu0_literal_utf32__(__s)   U  ## __s
 #	else
-#	define __mu0_literal_utf8__(__s)  __s
-#	define __mu0_literal_utf16__(__s) __s
-#	define __mu0_literal_utf32__(__s) __s
+#	define __mu0_literal_utf8__(__s)    __s
+#	define __mu0_literal_utf16__(__s)   __s
+#	define __mu0_literal_utf32__(__s)   __s
 #	endif
 
 #endif /* !MU0_LANGUAGE_H */

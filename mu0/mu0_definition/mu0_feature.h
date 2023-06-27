@@ -157,6 +157,29 @@
 #		endif
 #	endif
 
+#	undef  MU0_HAVE_ALIGNOF
+#	undef  __mu0_alignof__
+#	define MU0_HAVE_ALIGNOF 0
+#	if 1
+#		undef  MU0_HAVE_ALIGNOF
+#		define MU0_HAVE_ALIGNOF         1
+#		if   MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_MSVCL
+#			if   (__has_builtin(__builtin_alignof))
+#				define __mu0_alignof__(__x) __builtin_alignof(__x)
+#			elif (__has_feature(c_alignof))
+#				define __mu0_alignof__(__x) _Alignof(__x)
+#			else
+#				define __mu0_alignof__(__x) __alignof__(__x)
+#			endif
+#		elif MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ITLGC
+#			define __mu0_alignof__(__x) __alignof__(__x)
+#		elif MU0_HAVE_CC_MSVC || MU0_HAVE_CC_ITLCC
+#			define __mu0_alignof__(__x) __alignof(__x)
+#		else
+#			define __mu0_alignof__(__x) (__mu0_sizeof__(__x) <= 8U ? __mu0_sizeof__(__x) : 16U)
+#		endif
+#	endif
+
 #endif /* !MU0_FEATURE_H */
 
 /* EOF */

@@ -21,6 +21,7 @@
 #include <mu0/mu0_random.h>
 #include <mu0/mu0_locale.h>
 #include <mu0/mu0_string.h>
+#include <mu0/mu0_string8.h>
 
 int main(int argc, const char * argv[])
 {
