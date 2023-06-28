@@ -64,6 +64,9 @@ enum mu0_dateformat
 	, mu0_dateformat_rfc3339_zulu = __mu0_dateformat_rfc3339_zulu__
 };
 
+typedef __mu0_i18nlocale_t__          mu0_locale_t;
+typedef __mu0_calendar_date_t__       mu0_calendar_date_t;
+
 #	define mu0_min(__a, __b)           __mu0_inline_min__(__a, __b)
 #	define mu0_max(__a, __b)           __mu0_inline_max__(__a, __b)
 #	define mu0_abs(__a)                __mu0_inline_abs__(__a)

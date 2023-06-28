@@ -70,8 +70,8 @@ __mu0_static_inline__
 const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 	  const __mu0_calendar_date_t__ * __date
 	, const ___mu0_uint4_t___         __format
-	, const __mu0_i18nlocale_t__      __locale   __mu0_nullable__
-	, ___mu0_tint1_t___               __dest[32]
+	,       __mu0_i18nlocale_t__      __locale   __mu0_nullable__
+	,       ___mu0_tint1_t___         __dest[32]
 ) {
 	memset(__dest, 0, 32);
 	if (__mu0_is_nullptr__(__locale)) {
