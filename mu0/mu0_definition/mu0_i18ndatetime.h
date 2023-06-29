@@ -70,7 +70,7 @@ __mu0_static_inline__
 const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 	  const __mu0_calendar_date_t__ * __date
 	, const ___mu0_uint4_t___         __format
-	,       __mu0_i18nlocale_t__      __locale   __mu0_nullable__
+	,       __mu0_i18nlocale_t__    * __locale   __mu0_nullable__
 	,       ___mu0_tint1_t___         __dest[32]
 ) {
 	memset(__dest, 0, 32);
@@ -96,7 +96,7 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 			? __g_mu0_dateformat__[__format]
 			: __g_mu0_dateformat__[0]
 		, __date
-		, __locale
+		, __locale->u_lc
 	);
 #	endif
 	return 0;

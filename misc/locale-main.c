@@ -25,7 +25,7 @@ int main(int argc, const char * argv[])
 	const mu0_tchar8_t * s3 = mu0_utf8_const("érudition");
 	const mu0_tchar8_t * s4 = mu0_utf8_const("Érudition");
 
-	mu0_locale_t locale;
+	mu0_locale_t * locale;
 
 	mu0_unused(argc);
 	mu0_unused(argv);

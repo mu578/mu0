@@ -26,7 +26,7 @@ const mu0_tchar8_t * mu0_locale_name(
 	return __mu0_i18nlocale_id__(language, territory, modifier);
 }
 
-mu0_locale_t mu0_locale_create(
+mu0_locale_t * mu0_locale_create(
 	  const mu0_tchar8_t * language
 	, const mu0_tchar8_t * territory
 	, const mu0_tchar8_t * modifier  __mu0_nullable__
@@ -70,15 +70,15 @@ const mu0_tchar8_t * mu0_locale_interface(void)
 }
 
 const mu0_tchar8_t * mu0_locale_identifier(
-	  const mu0_bool_t   collator
-	, const mu0_locale_t locale   __mu0_nullable__
+	  const mu0_bool_t     collator
+	, const mu0_locale_t * locale   __mu0_nullable__
 ) {
 	const mu0_sint32_t category = ((collator == mu0_true) ? LC_COLLATE : LC_ALL);
 	return __mu0_i18nlocale_get__(category, locale);
 }
 
 mu0_sint32_t mu0_locale_delete(
-	mu0_locale_t locale
+	mu0_locale_t * locale
 ) {
 	return __mu0_i18nlocale_free__(locale);
 }
@@ -86,14 +86,14 @@ mu0_sint32_t mu0_locale_delete(
 enum mu0_ordering mu0_locale_compare(
 	  const mu0_tchar8_t * lhs
 	, const mu0_tchar8_t * rhs
-	, const mu0_locale_t   locale __mu0_nullable__
+	, const mu0_locale_t * locale __mu0_nullable__
 ) { return __mu0_i18nlocale_compare__(lhs, rhs, locale); }
 
 enum mu0_ordering mu0_locale_compare_n(
 	  const mu0_tchar8_t * lhs
 	, const mu0_tchar8_t * rhs
 	, const mu0_uint32_t   n
-	, const mu0_locale_t   locale __mu0_nullable__
+	, const mu0_locale_t * locale __mu0_nullable__
 ) { return __mu0_i18nlocale_compare_n__(lhs, rhs, n, locale); }
 
 /* EOF */

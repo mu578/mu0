@@ -27,7 +27,7 @@ void mu0_datetime_zulutime  (mu0_calendar_date_t * date);
 void mu0_datetime_formatting(
 	  const      mu0_calendar_date_t * date
 	, const enum mu0_dateformat        format
-	,            mu0_locale_t          locale   __mu0_nullable__
+	,            mu0_locale_t        * locale   __mu0_nullable__
 	,            mu0_tchar8_t          dest[32]
 );
 

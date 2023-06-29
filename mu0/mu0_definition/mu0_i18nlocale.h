@@ -39,6 +39,9 @@
 #	if MU0_HAVE_POSIX1_2001 || MU0_HAVE_WINDOWS
 #	include <locale.h>
 #	endif
+#	if !MU0_HAVE_WINDOWS
+#	include <stdlib.h>
+#	endif
 #	include <ctype.h>
 #	include <string.h>
 
@@ -53,7 +56,7 @@
 			___mu0_sint4_t___ u_ct;
 			_locale_t         u_lc;
 		};
-		typedef struct ___mu0_i18nlocale_t___ * __mu0_i18nlocale_t__;
+		typedef struct ___mu0_i18nlocale_t___ __mu0_i18nlocale_t__;
 
 #		define LC_MESSAGES      LC_ALL
 
@@ -66,30 +69,30 @@
 #		define LC_TIME_MASK     0
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ __base)
+		__mu0_i18nlocale_t__ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, const __mu0_i18nlocale_t__ * __base __mu0_nullable__)
 		{
-			__mu0_i18nlocale_t__ locale = malloc(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+			__mu0_i18nlocale_t__ * locale = malloc(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
 			___mu0_uint8_t___      len;
 			__mu0_unused__(__mask);
 			__mu0_unused__(__base);
 			if (__mu0_not_nullptr__(locale)) {
 				memset(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
-				len                      = __mu0_const_cast__(___mu0_uint8_t___, strlen(__locale));
+				len                        = __mu0_const_cast__(___mu0_uint8_t___, strlen(__locale));
 				memcpy(locale->u_id, __locale, len);
-				locale->u_ct             = LC_ALL;
-				locale->u_lc             = _create_locale(locale->u_ct, __locale);
+				locale->u_ct               = LC_ALL;
+				locale->u_lc               = _create_locale(locale->u_ct, __locale);
 				if (__mu0_is_nullptr__(locale->u_lc)) {
 					free(locale);
-					locale                = __mu0_nullptr__;
+					locale                  = __mu0_nullptr__;
 				}
 			}
 			return locale;
 		}
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ __mu0_i18nlocale_usecopy__(__mu0_i18nlocale_t__ __locale)
+		__mu0_i18nlocale_t__ * __mu0_i18nlocale_usecopy__(const __mu0_i18nlocale_t__ * __locale)
 		{
-			__mu0_i18nlocale_t__ locale = __mu0_i18nlocale_new__(
+			__mu0_i18nlocale_t__ * locale = __mu0_i18nlocale_new__(
 				  LC_ALL_MASK
 				, setlocale(LC_ALL, "")
 				, __mu0_nullptr__
@@ -104,7 +107,7 @@
 		__mu0_static_inline__
 		const ___mu0_sint4_t___ __mu0_i18nlocale_exists__(const ___mu0_tint1_t___ * __id)
 		{
-			const char * id = setlocale(LC_MESSAGES, "");
+			const ___mu0_tint1_t___ * id = setlocale(LC_MESSAGES, "");
 			_configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
 			if (__mu0_not_nullptr__(setlocale(LC_MESSAGES, __id))) {
 				setlocale(LC_MESSAGES, id);
@@ -115,7 +118,7 @@
 		}
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
 		{
 			__mu0_unused__(__category);
 			if (__mu0_is_nullptr__(__locale)) {
@@ -186,7 +189,7 @@
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ __locale)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ * __locale)
 		{
 			if (__mu0_not_nullptr__(__locale)) {
 				if (__mu0_not_nullptr__(__locale->u_lc)) {
@@ -200,7 +203,7 @@
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, __mu0_i18nlocale_t__ __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
 		{
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
@@ -214,7 +217,7 @@
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, __mu0_i18nlocale_t__ __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
 		{
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
@@ -235,10 +238,14 @@
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
 
-		typedef locale_t __mu0_i18nlocale_t__;
+		struct ___mu0_i18nlocale_t___
+		{
+			locale_t u_lc;
+		};
+		typedef struct ___mu0_i18nlocale_t___ __mu0_i18nlocale_t__;
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_strncoll_l__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, __mu0_i18nlocale_t__ __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_strncoll_l__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
 		{
 			const ___mu0_uint4_t___ need_a = (__lhs[__n] != '\0') ? 1 : 0;
 			const ___mu0_uint4_t___ need_b = (__rhs[__n] != '\0') ? 1 : 0;
@@ -253,10 +260,14 @@
 				memcpy(b, __rhs, __n);
 				b[__n] = '\0';
 			}
-			return __mu0_not_nullptr__(__locale)
-				? strcoll_l (need_a ? a : __lhs, need_b ? b : __rhs, __locale)
-				: strcoll   (need_a ? a : __lhs, need_b ? b : __rhs)
-			;
+			return (__mu0_not_nullptr__(__locale)
+				? (
+					__mu0_not_nullptr__(__locale->u_lc)
+						? strcoll_l (need_a ? a : __lhs, need_b ? b : __rhs, __locale->u_lc)
+						: strcoll   (need_a ? a : __lhs, need_b ? b : __rhs)
+				)
+				: strcoll (__lhs, __rhs)
+			);
 		}
 
 		__mu0_static_inline__
@@ -266,22 +277,43 @@
 		}
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ __base)
+		__mu0_i18nlocale_t__ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ * __base __mu0_nullable__)
 		{
-			return newlocale(__mask, __locale, __base);
+			__mu0_i18nlocale_t__ * locale = malloc(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+			if (__mu0_not_nullptr__(locale)) {
+				memset(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+				locale->u_lc               = newlocale(__mask, __locale, __mu0_not_nullptr__(__base) ? __base->u_lc : __mu0_nullptr__);
+				if (__mu0_is_nullptr__(locale->u_lc)) {
+					free(locale);
+					locale                  = __mu0_nullptr__;
+				}
+			}
+			return locale;
 		}
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ __mu0_i18nlocale_usecopy__(__mu0_i18nlocale_t__ __locale)
+		__mu0_i18nlocale_t__ * __mu0_i18nlocale_usecopy__(const __mu0_i18nlocale_t__ * __locale)
 		{
-			__mu0_i18nlocale_t__ locale = uselocale(__locale);
-			return duplocale(locale);
+			__mu0_i18nlocale_t__ * locale = __mu0_nullptr__;
+			if (__mu0_not_nullptr__(__locale)) {
+				if (__mu0_not_nullptr__(__locale->u_lc)) {
+					locale = malloc(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+					if (__mu0_not_nullptr__(locale)) {
+						locale->u_lc         = duplocale(uselocale(__locale->u_lc));
+						if (__mu0_is_nullptr__(locale->u_lc)) {
+							free(locale);
+							locale            = __mu0_nullptr__;
+						}
+					}
+				}
+			}
+			return locale;
 		}
 
 		__mu0_static_inline__
 		const ___mu0_sint4_t___ __mu0_i18nlocale_exists__(const ___mu0_tint1_t___ * __id)
 		{
-			const char * id = setlocale(LC_MESSAGES, "");
+			const ___mu0_tint1_t___ * id = setlocale(LC_MESSAGES, "");
 			if (__mu0_not_nullptr__(setlocale(LC_MESSAGES, __id))) {
 				setlocale(LC_MESSAGES, id);
 				return 0;
@@ -293,10 +325,13 @@
 #		if !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX && !MU0_HAVE_MINGW
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category,  const __mu0_i18nlocale_t__ * __locale)
 		{
 			___mu0_sint4_t___ mask;
 			if (__mu0_is_nullptr__(__locale)) {
+				return setlocale(__category, "");
+			}
+			if (__mu0_is_nullptr__(__locale->u_lc)) {
 				return setlocale(__category, "");
 			}
 			switch (__category)
@@ -337,46 +372,55 @@
 				}
 				break;
 			}
-			return querylocale(mask, __locale);
+			return querylocale(mask, __locale->u_lc);
 		}
 
 #		elif !MU0_HAVE_MINGW && defined(NL_LOCALE_NAME)
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
 				return setlocale(__category, "");
 			}
-			return nl_langinfo_l(NL_LOCALE_NAME(__category), __locale);
+			if (__mu0_is_nullptr__(__locale->u_lc)) {
+				return setlocale(__category, "");
+			}
+			return nl_langinfo_l(NL_LOCALE_NAME(__category), __locale->u_lc);
 		}
 
 #		elif !MU0_HAVE_MINGW && defined(_NL_LOCALE_NAME)
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
 				return setlocale(__category, "");
 			}
-			return nl_langinfo_l(_NL_LOCALE_NAME(__category), __locale);
+			if (__mu0_is_nullptr__(__locale->u_lc)) {
+				return setlocale(__category, "");
+			}
+			return nl_langinfo_l(_NL_LOCALE_NAME(__category), __locale->u_lc);
 		}
 
 #		elif !MU0_HAVE_MINGW && defined(_NL_ITEM) && defined(_NL_ITEM_INDEX)
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
 				return setlocale(__category, "");
 			}
-			return nl_langinfo_l(_NL_ITEM((__category), _NL_ITEM_INDEX(-1)), __locale);
+			if (__mu0_is_nullptr__(__locale->u_lc)) {
+				return setlocale(__category, "");
+			}
+			return nl_langinfo_l(_NL_ITEM((__category), _NL_ITEM_INDEX(-1)), __locale->u_lc);
 		}
 
 #		else
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
 		{
 			__mu0_unused__(__category);
 			__mu0_unused__(__locale);
@@ -520,29 +564,39 @@
 #		if !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX && !MU0_HAVE_MINGW
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ __locale)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ * __locale)
 		{
-			return freelocale(__locale);
+			if (__mu0_not_nullptr__(__locale)) {
+				if (__mu0_not_nullptr__(__locale->u_lc)) {
+					return freelocale(__locale->u_lc);
+				}
+			}
+			return -1;
 		}
 
 #		else
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ __locale)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ * __locale)
 		{
-			freelocale(__locale);
-			return 0;
+			if (__mu0_not_nullptr__(__locale)) {
+				if (__mu0_not_nullptr__(__locale->u_lc)) {
+					freelocale(__locale->u_lc);
+					return 0;
+				}
+			}
+			return -1;
 		}
 
 #		endif
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, __mu0_i18nlocale_t__ __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
 		{
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
-					__mu0_not_nullptr__(__locale)
-						? strcoll_l (__lhs, __rhs, __locale)
+					__mu0_not_nullptr__(__locale->u_lc)
+						? strcoll_l (__lhs, __rhs, __locale->u_lc)
 						: strcoll   (__lhs, __rhs)
 				)
 				: strcoll (__lhs, __rhs)
@@ -551,11 +605,11 @@
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, __mu0_i18nlocale_t__ __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
 		{
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
-					__mu0_not_nullptr__(__locale)
+					__mu0_not_nullptr__(__locale->u_lc)
 						? __mu0_strncoll_l__ (__lhs, __rhs, __n, __locale)
 						: __mu0_strncoll__   (__lhs, __rhs, __n)
 				)
@@ -572,7 +626,7 @@
 		typedef void * __mu0_i18nlocale_t__;
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ __base)
+		__mu0_i18nlocale_t__ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, const __mu0_i18nlocale_t__ * __base __mu0_nullable__)
 		{
 			__mu0_unused__(__mask);
 			__mu0_unused__(__locale);
@@ -581,7 +635,7 @@
 		}
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ __mu0_i18nlocale_usecopy__(__mu0_i18nlocale_t__ __locale)
+		__mu0_i18nlocale_t__ * __mu0_i18nlocale_usecopy__(const __mu0_i18nlocale_t__ * __locale)
 		{
 			__mu0_unused__(__locale);
 			return __mu0_nullptr__;
@@ -594,7 +648,7 @@
 			return -1;
 		}
 
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, __mu0_i18nlocale_t__ __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
 		{
 			__mu0_unused__(__category);
 			__mu0_unused__(__locale);
@@ -629,14 +683,14 @@
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ __locale)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ * __locale)
 		{
 			__mu0_unused__(__locale);
 			return 0;
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, __mu0_i18nlocale_t__ __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
 		{
 			__mu0_unused__(__locale);
 			const ___mu0_sint4_t___ r = strcmp (__lhs, __rhs);
@@ -644,7 +698,7 @@
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, __mu0_i18nlocale_t__  __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
 		{
 			__mu0_unused__(__locale);
 			const ___mu0_sint4_t___ r = strncmp (__lhs, __rhs, __n);

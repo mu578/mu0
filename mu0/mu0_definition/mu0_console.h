@@ -25,13 +25,13 @@
 
 #	if !MU0_HAVE_CONSOLE
 
-		__mu0_static__ char const * const __mu0_console_color_red__    = "\033[0;31m";
-		__mu0_static__ char const * const __mu0_console_color_green__  = "\033[0;32m";
-		__mu0_static__ char const * const __mu0_console_color_yellow__ = "\033[0;33m";
-		__mu0_static__ char const * const __mu0_console_color_blue__   = "\033[0;34m";
-		__mu0_static__ char const * const __mu0_console_color_purple__ = "\033[0;35m";
-		__mu0_static__ char const * const __mu0_console_color_cyan__   = "\033[0;36m";
-		__mu0_static__ char const * const __mu0_console_color_clear__  = "\033[0m";
+		__mu0_static__ ___mu0_tint1_t___ const * const __mu0_console_color_red__    = "\033[0;31m";
+		__mu0_static__ ___mu0_tint1_t___ const * const __mu0_console_color_green__  = "\033[0;32m";
+		__mu0_static__ ___mu0_tint1_t___ const * const __mu0_console_color_yellow__ = "\033[0;33m";
+		__mu0_static__ ___mu0_tint1_t___ const * const __mu0_console_color_blue__   = "\033[0;34m";
+		__mu0_static__ ___mu0_tint1_t___ const * const __mu0_console_color_purple__ = "\033[0;35m";
+		__mu0_static__ ___mu0_tint1_t___ const * const __mu0_console_color_cyan__   = "\033[0;36m";
+		__mu0_static__ ___mu0_tint1_t___ const * const __mu0_console_color_clear__  = "\033[0m";
 
 #		define __mu0_console_set_color__(_c)   fputs(_c, stderr);
 
