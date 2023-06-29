@@ -22,9 +22,9 @@
 
 MU0_BEGIN_CDECL
 
-void mu0_datetime_localtime (mu0_calendar_date_t * date);
-void mu0_datetime_zulutime  (mu0_calendar_date_t * date);
-void mu0_datetime_formatting(
+const mu0_calendar_date_t * mu0_datetime_localtime (mu0_calendar_date_t * date);
+const mu0_calendar_date_t * mu0_datetime_zulutime  (mu0_calendar_date_t * date);
+const mu0_tchar8_t *        mu0_datetime_formatting(
 	  const      mu0_calendar_date_t * date
 	, const enum mu0_dateformat        format
 	,            mu0_locale_t        * locale   __mu0_nullable__

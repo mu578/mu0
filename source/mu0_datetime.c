@@ -17,23 +17,29 @@
 
 #include <mu0/mu0_datetime.h>
 
-void mu0_datetime_localtime (mu0_calendar_date_t * date)
+const mu0_calendar_date_t * mu0_datetime_localtime(mu0_calendar_date_t * date)
 {
+	const mu0_calendar_date_t * p = date;
 	__mu0_i18ndatetime_localtime__(date);
+	return p;
 }
 
-void mu0_datetime_zulutime  (mu0_calendar_date_t * date)
+const mu0_calendar_date_t * mu0_datetime_zulutime(mu0_calendar_date_t * date)
 {
+	const mu0_calendar_date_t * p = date;
 	__mu0_i18ndatetime_zulutime__(date);
+	return p;
 }
 
-void mu0_datetime_formatting(
+const mu0_tchar8_t * mu0_datetime_formatting(
 	  const      mu0_calendar_date_t * date
 	, const enum mu0_dateformat        format
 	,            mu0_locale_t *        locale   __mu0_nullable__
 	,            mu0_tchar8_t          dest[32]
 ) {
+	const mu0_tchar8_t * p = dest;
 	__mu0_i18ndatetime_formatting__(date, format, locale, dest);
+	return p;
 }
 
 /* EOF */
