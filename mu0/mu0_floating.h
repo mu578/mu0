@@ -157,7 +157,7 @@ typedef long double _Complex                           mu0_cfp128_t;
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; } mu0_cfp128_t;
 #	if MU0_HAVE_C11
-#	define mu0_cfp128(__re, __im)                {         __mu0_const_cast__(mu0_fp128_t, __re),         __mu0_const_cast__(mu0_fp128_t, __im) }
+#	define mu0_cfp128(__re, __im) (mu0_cfp128_t) {         __mu0_const_cast__(mu0_fp128_t, __re),         __mu0_const_cast__(mu0_fp128_t, __im) }
 #	else
 #	define mu0_cfp128(__re, __im) (mu0_cfp128_t) { .u_re = __mu0_const_cast__(mu0_fp128_t, __re), .u_im = __mu0_const_cast__(mu0_fp128_t, __im) }
 #	endif
@@ -201,7 +201,7 @@ typedef double _Complex                                mu0_cfp64_t;
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fp64_t u_re; mu0_fp64_t u_im; }   mu0_cfp64_t;
 #	if MU0_HAVE_C11
-#	define mu0_cfp64(__re, __im)               {         __mu0_const_cast__(mu0_fp64_t, __re),         __mu0_const_cast__(mu0_fp64_t, __im) }
+#	define mu0_cfp64(__re, __im) (mu0_cfp64_t) {         __mu0_const_cast__(mu0_fp64_t, __re),         __mu0_const_cast__(mu0_fp64_t, __im) }
 #	else
 #	define mu0_cfp64(__re, __im) (mu0_cfp64_t) { .u_re = __mu0_const_cast__(mu0_fp64_t, __re), .u_im = __mu0_const_cast__(mu0_fp64_t, __im) }
 #	endif
@@ -245,7 +245,7 @@ typedef float _Complex                                 mu0_cfp32_t;
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fp32_t u_re; mu0_fp32_t u_im; }   mu0_cfp32_t;
 #	if MU0_HAVE_C11
-#	define mu0_cfp32(__re, __im)               {         __mu0_const_cast__(mu0_fp32_t, __re),         __mu0_const_cast__(mu0_fp32_t, __im) }
+#	define mu0_cfp32(__re, __im) (mu0_cfp32_t) {         __mu0_const_cast__(mu0_fp32_t, __re),         __mu0_const_cast__(mu0_fp32_t, __im) }
 #	else
 #	define mu0_cfp32(__re, __im) (mu0_cfp32_t) { .u_re = __mu0_const_cast__(mu0_fp32_t, __re), .u_im = __mu0_const_cast__(mu0_fp32_t, __im) }
 #	endif
@@ -299,7 +299,7 @@ typedef float _Complex                                 mu0_cfp16_t;
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 #	if MU0_HAVE_C11
-#	define mu0_cfp16(__re, __im)               {         __mu0_const_cast__(mu0_fp16_t, __re),         __mu0_const_cast__(mu0_fp16_t, __im) }
+#	define mu0_cfp16(__re, __im) (mu0_cfp16_t) {         __mu0_const_cast__(mu0_fp16_t, __re),         __mu0_const_cast__(mu0_fp16_t, __im) }
 #	else
 #	define mu0_cfp16(__re, __im) (mu0_cfp16_t) { .u_re = __mu0_const_cast__(mu0_fp16_t, __re), .u_im = __mu0_const_cast__(mu0_fp16_t, __im) }
 #	endif
@@ -335,12 +335,25 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 		, mu0_fp16_t  : 1                                         \
 		, default     : 0                                         \
 	)
+#	define mu0_is_complex_number(__x) __mu0_generic__((__x)      \
+		, mu0_cfp128_t : 1                                        \
+		, mu0_cfp64_t  : 1                                        \
+		, mu0_cfp32_t  : 1                                        \
+		, mu0_cfp16_t  : 1                                        \
+		, default      : 0                                        \
+	)
 #	elif  MU0_HAVE_FLOAT128
 #	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
 		, mu0_fp128_t : 1                                         \
 		, mu0_fp64_t  : 1                                         \
 		, mu0_fp32_t  : 1                                         \
 		, default     : 0                                         \
+	)
+#	define mu0_is_complex_number(__x) __mu0_generic__((__x)      \
+		, mu0_cfp128_t : 1                                        \
+		, mu0_cfp64_t  : 1                                        \
+		, mu0_cfp32_t  : 1                                        \
+		, default      : 0                                        \
 	)
 #	elif  MU0_HAVE_FLOAT16
 #	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
@@ -350,6 +363,13 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 		, mu0_fp16_t : 1                                          \
 		, default    : 0                                          \
 	)
+#	define mu0_is_complex_number(__x) __mu0_generic__((__x)      \
+		, mu0_cfpex_t : 1                                         \
+		, mu0_cfp64_t : 1                                         \
+		, mu0_cfp32_t : 1                                         \
+		, mu0_cfp16_t : 1                                         \
+		, default    : 0                                          \
+	)
 #	else
 #	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
 		, mu0_fpex_t : 1                                          \
@@ -357,17 +377,31 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 		, mu0_fp32_t : 1                                          \
 		, default    : 0                                          \
 	)
+#	define mu0_is_complex_number(__x) __mu0_generic__((__x)      \
+		, mu0_cfpex_t : 1                                         \
+		, mu0_cfp64_t : 1                                         \
+		, mu0_cfp32_t : 1                                         \
+		, default     : 0                                         \
+	)
 #	endif
 #	elif MU0_HAVE_TYPEOF
-#	define mu0_is_floating_point(__x)        \
-	((                                       \
-		   __mu0_isofkind__(mu0_fp128_t, __x) \
-		|| __mu0_isofkind__(mu0_fp64_t , __x) \
-		|| __mu0_isofkind__(mu0_fp32_t , __x) \
-		|| __mu0_isofkind__(mu0_fp16_t , __x) \
+#	define mu0_is_floating_point(__x)         \
+	((                                        \
+		   __mu0_isofkind__(mu0_fp128_t, __x)  \
+		|| __mu0_isofkind__(mu0_fp64_t , __x)  \
+		|| __mu0_isofkind__(mu0_fp32_t , __x)  \
+		|| __mu0_isofkind__(mu0_fp16_t , __x)  \
+	) ? 1 : 0)
+#	define mu0_is_complex_number(__x)         \
+	((                                        \
+		   __mu0_isofkind__(mu0_cfp128_t, __x) \
+		|| __mu0_isofkind__(mu0_cfp64_t , __x) \
+		|| __mu0_isofkind__(mu0_cfp32_t , __x) \
+		|| __mu0_isofkind__(mu0_cfp16_t , __x) \
 	) ? 1 : 0)
 #	else
 #	define mu0_is_floating_point(__x) (1)
+#	define mu0_is_complex_number(__x) (1)
 #	endif
 
 #	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL || MU0_HAVE_CC_GNUC
