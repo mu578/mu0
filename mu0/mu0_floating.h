@@ -329,11 +329,11 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 #	if   MU0_HAVE_GENERIC
 #	if   MU0_HAVE_FLOAT128 && MU0_HAVE_FLOAT16
 #	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
-		, mu0_fp128_t : 1                                         \
-		, mu0_fp64_t  : 1                                         \
-		, mu0_fp32_t  : 1                                         \
-		, mu0_fp16_t  : 1                                         \
-		, default     : 0                                         \
+		, mu0_fp128_t  : 1                                        \
+		, mu0_fp64_t   : 1                                        \
+		, mu0_fp32_t   : 1                                        \
+		, mu0_fp16_t   : 1                                        \
+		, default      : 0                                        \
 	)
 #	define mu0_is_complex_number(__x) __mu0_generic__((__x)      \
 		, mu0_cfp128_t : 1                                        \
@@ -344,10 +344,10 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 	)
 #	elif  MU0_HAVE_FLOAT128
 #	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
-		, mu0_fp128_t : 1                                         \
-		, mu0_fp64_t  : 1                                         \
-		, mu0_fp32_t  : 1                                         \
-		, default     : 0                                         \
+		, mu0_fp128_t  : 1                                        \
+		, mu0_fp64_t   : 1                                        \
+		, mu0_fp32_t   : 1                                        \
+		, default      : 0                                        \
 	)
 #	define mu0_is_complex_number(__x) __mu0_generic__((__x)      \
 		, mu0_cfp128_t : 1                                        \
@@ -357,31 +357,31 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 	)
 #	elif  MU0_HAVE_FLOAT16
 #	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
-		, mu0_fpex_t : 1                                          \
-		, mu0_fp64_t : 1                                          \
-		, mu0_fp32_t : 1                                          \
-		, mu0_fp16_t : 1                                          \
-		, default    : 0                                          \
+		, mu0_fpex_t   : 1                                        \
+		, mu0_fp64_t   : 1                                        \
+		, mu0_fp32_t   : 1                                        \
+		, mu0_fp16_t   : 1                                        \
+		, default      : 0                                        \
 	)
 #	define mu0_is_complex_number(__x) __mu0_generic__((__x)      \
-		, mu0_cfpex_t : 1                                         \
-		, mu0_cfp64_t : 1                                         \
-		, mu0_cfp32_t : 1                                         \
-		, mu0_cfp16_t : 1                                         \
-		, default    : 0                                          \
+		, mu0_cfpex_t  : 1                                        \
+		, mu0_cfp64_t  : 1                                        \
+		, mu0_cfp32_t  : 1                                        \
+		, mu0_cfp16_t  : 1                                        \
+		, default      : 0                                        \
 	)
 #	else
 #	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
-		, mu0_fpex_t : 1                                          \
-		, mu0_fp64_t : 1                                          \
-		, mu0_fp32_t : 1                                          \
-		, default    : 0                                          \
+		, mu0_fpex_t   : 1                                        \
+		, mu0_fp64_t   : 1                                        \
+		, mu0_fp32_t   : 1                                        \
+		, default      : 0                                        \
 	)
 #	define mu0_is_complex_number(__x) __mu0_generic__((__x)      \
-		, mu0_cfpex_t : 1                                         \
-		, mu0_cfp64_t : 1                                         \
-		, mu0_cfp32_t : 1                                         \
-		, default     : 0                                         \
+		, mu0_cfpex_t  : 1                                        \
+		, mu0_cfp64_t  : 1                                        \
+		, mu0_cfp32_t  : 1                                        \
+		, default      : 0                                        \
 	)
 #	endif
 #	elif MU0_HAVE_TYPEOF
