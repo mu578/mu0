@@ -273,8 +273,9 @@ mu0_uint128_t mu0_ranged_random_u128(
 		lo = upper_bound < mu0_uint64_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	diff  = (hi - lo);
-	return diff != 0 ? ((mu0_random_u128() % diff) + lo) : lo;
+	diff  = hi - lo;
+	diff  = diff != 0 ? diff : 1;
+	return (mu0_random_u128() % diff) + lo;
 }
 
 mu0_uint64_t mu0_ranged_random_u64(
@@ -290,8 +291,9 @@ mu0_uint64_t mu0_ranged_random_u64(
 		lo = upper_bound < mu0_uint64_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	diff  = (hi - lo);
-	return diff != 0 ? ((mu0_random_u64() % diff) + lo) : lo;
+	diff  = hi - lo;
+	diff  = diff != 0 ? diff : 1;
+	return (mu0_random_u64() % diff) + lo;
 }
 
 mu0_uint32_t mu0_ranged_random_u32(
@@ -307,8 +309,9 @@ mu0_uint32_t mu0_ranged_random_u32(
 		lo = upper_bound < mu0_uint32_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	diff  = (hi - lo);
-	return diff != 0 ? ((mu0_random_u32() % diff) + lo) : lo;
+	diff  = hi - lo;
+	diff  = diff != 0 ? diff : 1;
+	return (mu0_random_u32() % diff) + lo;
 }
 
 mu0_uint16_t mu0_ranged_random_u16(
@@ -324,8 +327,9 @@ mu0_uint16_t mu0_ranged_random_u16(
 		lo = upper_bound < mu0_uint16_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	diff  = (hi - lo);
-	return diff != 0 ? ((mu0_random_u16() % diff) + lo) : lo;
+	diff  = hi - lo;
+	diff  = diff != 0 ? diff : 1;
+	return (mu0_random_u16() % diff) + lo;
 }
 
 mu0_sint128_t mu0_ranged_random_i128(
@@ -341,8 +345,9 @@ mu0_sint128_t mu0_ranged_random_i128(
 		lo = upper_bound < mu0_sint128_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	diff  = (hi - lo);
-	return diff != 0 ? ((mu0_random_i128() % diff) + lo) : lo;
+	diff  = hi - lo;
+	diff  = diff != 0 ? diff : 1;
+	return (mu0_random_i128() % diff) + lo;
 }
 
 mu0_sint64_t mu0_ranged_random_i64(
@@ -358,8 +363,9 @@ mu0_sint64_t mu0_ranged_random_i64(
 		lo = upper_bound < mu0_sint64_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	diff  = (hi - lo);
-	return diff != 0 ? ((mu0_random_i64() % diff) + lo) : lo;
+	diff  = hi - lo;
+	diff  = diff != 0 ? diff : 1;
+	return (mu0_random_i64() % diff) + lo;
 }
 
 mu0_sint32_t mu0_ranged_random_i32(
@@ -375,8 +381,9 @@ mu0_sint32_t mu0_ranged_random_i32(
 		lo = upper_bound < mu0_sint32_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	diff  = (hi - lo);
-	return diff != 0 ? ((mu0_random_i32() % diff) + lo) : lo;
+	diff  = hi - lo;
+	diff  = diff != 0 ? diff : 1;
+	return (mu0_random_i32() % diff) + lo;
 }
 
 mu0_sint16_t mu0_ranged_random_i16(
@@ -392,8 +399,9 @@ mu0_sint16_t mu0_ranged_random_i16(
 		lo = upper_bound < mu0_sint16_max ? upper_bound + 1 : upper_bound;
 		hi = lower_bound;
 	}
-	diff  = (hi - lo);
-	return diff != 0 ? ((mu0_random_i16() % diff) + lo) : lo;
+	diff  = hi - lo;
+	diff  = diff != 0 ? diff : 1;
+	return (mu0_random_i16() % diff) + lo;
 }
 
 mu0_fp128_t mu0_random_fp128(void)
