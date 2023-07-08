@@ -24,6 +24,14 @@
 #	undef  MU0_HAVE_I18NDATETIME
 #	define MU0_HAVE_I18NDATETIME 1
 
+#	undef  __mu0_dateformat_iso8601_full__
+#	undef  __mu0_dateformat_iso8601_long__
+#	undef  __mu0_dateformat_iso8601_zulu__
+
+#	undef  __mu0_dateformat_rfc3339_full__
+#	undef  __mu0_dateformat_rfc3339_long__
+#	undef  __mu0_dateformat_rfc3339_zulu__
+
 #	define __mu0_dateformat_iso8601_full__ 0
 #	define __mu0_dateformat_iso8601_long__ 1
 #	define __mu0_dateformat_iso8601_zulu__ 2
@@ -31,16 +39,6 @@
 #	define __mu0_dateformat_rfc3339_full__ 3
 #	define __mu0_dateformat_rfc3339_long__ 4
 #	define __mu0_dateformat_rfc3339_zulu__ 5
-
-__mu0_static__ const ___mu0_tint1_t___ * __g_mu0_dateformat__[6] =
-{
-	  "%Y-%m-%dT%H:%M:%OS%z"
-	, "%Y-%m-%dT%H:%M:%S%z"
-	, "%Y-%m-%dT%H:%M:%SZ"
-	, "%Y-%m-%d %H:%M:%OS%z"
-	, "%Y-%m-%d %H:%M:%S%z"
-	, "%Y-%m-%d %H:%M:%SZ"
-};
 
 typedef struct tm __mu0_calendar_date_t__;
 
@@ -73,28 +71,33 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 	,       __mu0_i18nlocale_t__    * __locale   __mu0_nullable__
 	,       ___mu0_tint1_t___         __dest[32]
 ) {
-	memset(__dest, 0, 32);
+	__mu0_static__ const ___mu0_tint1_t___ * s_dateformat[6] =
+	{
+		  "%Y-%m-%dT%H:%M:%OS%z"
+		, "%Y-%m-%dT%H:%M:%S%z"
+		, "%Y-%m-%dT%H:%M:%SZ"
+		, "%Y-%m-%d %H:%M:%OS%z"
+		, "%Y-%m-%d %H:%M:%S%z"
+		, "%Y-%m-%d %H:%M:%SZ"
+	};
+
+	memset(__dest, 0, __mu0_sizeof__(___mu0_tint1_t___) * 32U);
 	if (__mu0_is_nullptr__(__locale)) {
-		strftime(__dest, 32 - 1
-			, (__format >= 0 && __format < 6)
-				? __g_mu0_dateformat__[__format]
-				: __g_mu0_dateformat__[0]
+		strftime(__dest, __mu0_sizeof__(___mu0_tint1_t___) * 31U
+			, (__format >= 0 && __format < 6) ? s_dateformat[__format] : s_dateformat[0]
 			, __date
 		);
+		return 0;
 	}
 #	if MU0_HAVE_WINDOWS
-	_strftime_l(__dest, 32 - 1
-		, (__format >= 0 && __format < 6)
-			? __g_mu0_dateformat__[__format]
-			: __g_mu0_dateformat__[0]
+	_strftime_l(__dest, __mu0_sizeof__(___mu0_tint1_t___) * 31U
+		, (__format >= 0 && __format < 6U) ? s_dateformat[__format] : s_dateformat[0]
 		, __date
 		, __locale->u_lc
 	);
 #	else
-	strftime_l(__dest, 32 - 1
-		, (__format >= 0 && __format < 6)
-			? __g_mu0_dateformat__[__format]
-			: __g_mu0_dateformat__[0]
+	strftime_l(__dest, __mu0_sizeof__(___mu0_tint1_t___) * 31U
+		, (__format >= 0 && __format < 6U) ? s_dateformat[__format] : s_dateformat[0]
 		, __date
 		, __locale->u_lc
 	);
