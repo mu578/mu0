@@ -58,7 +58,7 @@ void __mu0_i18ndatetime_localtime__(__mu0_calendar_date_t__ * __date)
 #	if MU0_HAVE_WINDOWS
 	localtime_s(&__date->u_tm, &utc.tv_sec);
 #	else
-	memcpy(&__date->u_tm, localtime(&utc.tv_sec), __mu0_sizeof__(__mu0_calendar_date_t__));
+	memcpy(&__date->u_tm, localtime(&utc.tv_sec), __mu0_sizeof__(struct tm));
 #	endif
 	__date->u_us = utc.tv_usec;
 }
@@ -75,7 +75,7 @@ void __mu0_i18ndatetime_zulutime__(__mu0_calendar_date_t__ * __date)
 #	if MU0_HAVE_WINDOWS
 	gmtime_s(&__date->u_tm, &utc.tv_sec);
 #	else
-	memcpy(&__date->u_tm, gmtime(&utc.tv_sec)   , __mu0_sizeof__(__mu0_calendar_date_t__));
+	memcpy(&__date->u_tm, gmtime(&utc.tv_sec)   , __mu0_sizeof__(struct tm));
 #	endif
 	__date->u_us = utc.tv_usec;
 }
@@ -87,7 +87,7 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 	,       __mu0_i18nlocale_t__    * __locale   __mu0_nullable__
 	,       ___mu0_tint1_t___         __dest[32]
 ) {
-	___mu0_tint1_t___                        buf[4];
+	                     ___mu0_tint1_t___   buf[4];
 	__mu0_static__ const ___mu0_tint1_t___ * s_dateformat[6] =
 	{
 		  "%Y-%m-%dT%H:%M:%S.000%z"
@@ -97,7 +97,6 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 		, "%Y-%m-%d %H:%M:%S%z"
 		, "%Y-%m-%d %H:%M:%SZ"
 	};
-
 	memset(__dest, 0, __mu0_sizeof__(___mu0_tint1_t___) * 32U);
 	if (__mu0_is_nullptr__(__locale)) {
 		strftime(__dest, __mu0_sizeof__(___mu0_tint1_t___) * 31U
