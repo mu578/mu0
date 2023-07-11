@@ -26,11 +26,13 @@
 #	undef  __mu0_clocktime_abs__
 #	undef  __mu0_clocktime_act__
 #	undef  __mu0_clocktime_thr__
+#	undef  MU0_HAVE_GETTIMEOFDAY
 #	undef  MU0_HAVE_NANOTIME_ABS
 #	undef  MU0_HAVE_NANOTIME_UTC
 #	undef  MU0_HAVE_NANOTIME_ACT
 #	undef  MU0_HAVE_NANOTIME_THR
 #	undef  MU0_HAVE_NANOTIME_THR
+#	define MU0_HAVE_GETTIMEOFDAY 0
 #	define MU0_HAVE_NANOTIME_UTC 0
 #	define MU0_HAVE_NANOTIME_ABS 0
 #	define MU0_HAVE_NANOTIME_ACT 0
@@ -129,55 +131,57 @@
 
 #	endif
 
-#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#	if !MU0_HAVE_GETTIMEOFDAY
+#	if MU0_HAVE_POSIX1_2001
+#		undef  MU0_HAVE_GETTIMEOFDAY
+#		define MU0_HAVE_GETTIMEOFDAY 1
 
-struct ___mu0_timeval___
-{
-	time_t            tv_sec;
-	___mu0_sintx_t___ tv_usec;
-};
+#		define __mu0_timezone__ timezone
+#		define __mu0_timeval__  timeval
 
-struct ___mu0_timezone___
-{
-	___mu0_sint4_t___ tz_minuteswest;
-	___mu0_sint4_t___ tz_dsttime;
-};
+	__mu0_static_inline__
+	___mu0_sint4_t___ __mu0_gettimeofday__(struct __mu0_timeval__ * __tv, struct __mu0_timezone__ * __tz)
+	{ return gettimeofday(__tv, __tz); }
 
-__mu0_static_inline__
-___mu0_sint4_t___ ___mu0_gettimeofday___(struct ___mu0_timeval___ * __tv, struct ___mu0_timezone___ * __tz)
-{
-	TIME_ZONE_INFORMATION tz;
-	FILETIME              ft;
-	ULARGE_INTEGER        lv;
-	__int64               usec;
-	if (__mu0_not_nullptr__(__tv)) {
-#	if _WIN32_WINNT >= _WIN32_WINNT_WIN8
-		GetSystemTimePreciseAsFileTime(&ft);
-#	else
-		GetSystemTimeAsFileTime(&ft);
 #	endif
-		lv.LowPart    = ft.dwLowDateTime;
-		lv.HighPart   = ft.dwHighDateTime;
-		usec          = lv.QuadPart / 10Ui64 - 11644473600000000Ui64;
-		__tv->tv_sec  = __mu0_const_cast__(time_t, (usec / 1000000Ui64));
-		__tv->tv_usec = __mu0_const_cast__(___mu0_sintx_t___, (usec % 1000000Ui64));
+#	endif
+
+#	if !MU0_HAVE_GETTIMEOFDAY
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#		undef  MU0_HAVE_GETTIMEOFDAY
+#		define MU0_HAVE_GETTIMEOFDAY 1
+
+	struct __mu0_timeval__  { time_t            tv_sec;         ___mu0_sintx_t___ tv_usec;    };
+	struct __mu0_timezone__ { ___mu0_sint4_t___ tz_minuteswest; ___mu0_sint4_t___ tz_dsttime; };
+
+	__mu0_static_inline__
+	___mu0_sint4_t___ __mu0_gettimeofday__(struct __mu0_timeval__ * __tv, struct __mu0_timezone__ * __tz)
+	{
+		TIME_ZONE_INFORMATION tz;
+		FILETIME              ft;
+		ULARGE_INTEGER        lv;
+		__int64               usec;
+		if (__mu0_not_nullptr__(__tv)) {
+	#	if _WIN32_WINNT >= _WIN32_WINNT_WIN8
+			GetSystemTimePreciseAsFileTime(&ft);
+	#	else
+			GetSystemTimeAsFileTime(&ft);
+	#	endif
+			lv.LowPart    = ft.dwLowDateTime;
+			lv.HighPart   = ft.dwHighDateTime;
+			usec          = lv.QuadPart / 10Ui64 - 11644473600000000Ui64;
+			__tv->tv_sec  = __mu0_const_cast__(time_t, (usec / 1000000Ui64));
+			__tv->tv_usec = __mu0_const_cast__(___mu0_sintx_t___, (usec % 1000000Ui64));
+		}
+		if (__mu0_not_nullptr__(__tz)) {
+			GetTimeZoneInformation(&tz);
+			__tz->tz_minuteswest = tz.Bias;
+			__tz->tz_dsttime     = 0;
+		}
+		return 0;
 	}
-	if (__mu0_not_nullptr__(__tz)) {
-		GetTimeZoneInformation(&tz);
-		__tz->tz_minuteswest = tz.Bias;
-		__tz->tz_dsttime     = 0;
-	}
-	return 0;
-}
-# 	else
 
-#	define ___mu0_timezone___ timezone
-#	define ___mu0_timeval___  timeval
-
-__mu0_static_inline__
-___mu0_sint4_t___ ___mu0_gettimeofday___(struct ___mu0_timeval___ * __tv, struct ___mu0_timezone___ * __tz)
-{ return gettimeofday(__tv, __tz); }
-
+# 	endif
 #	endif
 
 #	if !MU0_HAVE_NANOTIME_ABS
@@ -584,7 +588,7 @@ ___mu0_sint4_t___ ___mu0_gettimeofday___(struct ___mu0_timeval___ * __tv, struct
 #	endif
 #	endif
 
-#	if MU0_HAVE_NANOTIME_ABS && MU0_HAVE_NANOTIME_UTC && MU0_HAVE_NANOTIME_ACT && MU0_HAVE_NANOTIME_THR
+#	if MU0_HAVE_GETTIMEOFDAY && MU0_HAVE_NANOTIME_ABS && MU0_HAVE_NANOTIME_UTC && MU0_HAVE_NANOTIME_ACT && MU0_HAVE_NANOTIME_THR
 #	undef  MU0_HAVE_CLOCKTIME
 #	define MU0_HAVE_CLOCKTIME    1
 #	define __mu0_clocktime_utc__ 1U

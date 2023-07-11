@@ -50,34 +50,34 @@ __mu0_static_inline__
 void __mu0_i18ndatetime_localtime__(__mu0_calendar_date_t__ * __date)
 {
 #	if 0
-	const time_t utc = time(NULL);
+	const time_t utc = time(__mu0_nullptr__);
 #	endif
-	struct ___mu0_timeval___ utc;
-	___mu0_gettimeofday___(&utc, NULL);
+	struct __mu0_timeval__ utc;
+	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
 	memset(__date, 0, sizeof(__mu0_calendar_date_t__));
 #	if MU0_HAVE_WINDOWS
 	localtime_s(&__date->u_tm, &utc.tv_sec);
 #	else
 	memcpy(&__date->u_tm, localtime(&utc.tv_sec), __mu0_sizeof__(__mu0_calendar_date_t__));
-	__date->u_us = utc.tv_usec;
 #	endif
+	__date->u_us = utc.tv_usec;
 }
 
 __mu0_static_inline__
 void __mu0_i18ndatetime_zulutime__(__mu0_calendar_date_t__ * __date)
 {
 #	if 0
-	const time_t utc = time(NULL);
+	const time_t utc = time(__mu0_nullptr__);
 #	endif
-	struct ___mu0_timeval___ utc;
-	___mu0_gettimeofday___(&utc, NULL);
+	struct __mu0_timeval__ utc;
+	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
 	memset(__date, 0, sizeof(__mu0_calendar_date_t__));
 #	if MU0_HAVE_WINDOWS
 	gmtime_s(&__date->u_tm, &utc.tv_sec);
 #	else
 	memcpy(&__date->u_tm, gmtime(&utc.tv_sec)   , __mu0_sizeof__(__mu0_calendar_date_t__));
-	__date->u_us = utc.tv_usec;
 #	endif
+	__date->u_us = utc.tv_usec;
 }
 
 __mu0_static_inline__
