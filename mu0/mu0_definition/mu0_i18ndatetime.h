@@ -52,8 +52,8 @@ void __mu0_i18ndatetime_localtime__(__mu0_calendar_date_t__ * __date)
 #	if 0
 	const time_t utc = time(NULL);
 #	endif
-	struct timeval utc;
-	gettimeofday(&utc, NULL);
+	struct ___mu0_timeval___ utc;
+	___mu0_gettimeofday___(&utc, NULL);
 	memset(__date, 0, sizeof(__mu0_calendar_date_t__));
 #	if MU0_HAVE_WINDOWS
 	localtime_s(&__date->u_tm, &utc.tv_sec);
@@ -69,8 +69,8 @@ void __mu0_i18ndatetime_zulutime__(__mu0_calendar_date_t__ * __date)
 #	if 0
 	const time_t utc = time(NULL);
 #	endif
-	struct timeval utc;
-	gettimeofday(&utc, NULL);
+	struct ___mu0_timeval___ utc;
+	___mu0_gettimeofday___(&utc, NULL);
 	memset(__date, 0, sizeof(__mu0_calendar_date_t__));
 #	if MU0_HAVE_WINDOWS
 	gmtime_s(&__date->u_tm, &utc.tv_sec);

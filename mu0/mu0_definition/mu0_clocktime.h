@@ -131,14 +131,20 @@
 
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 
-struct tz
+struct ___mu0_timezone___
 {
 	___mu0_sint4_t___ tz_minuteswest;
 	___mu0_sint4_t___ tz_dsttime;
 };
 
+struct ___mu0_timeval___
+{
+	time_t            tv_sec;
+	___mu0_sintx_t___ tv_usec;
+};
+
 __mu0_static_inline__
-___mu0_sint4_t___ gettimeofday(struct timeval * __tv, struct tz * __tz)
+___mu0_sint4_t___ ___mu0_gettimeofday___(struct ___mu0_timeval___ * __tv, struct ___mu0_timezone___ * __tz)
 {
 	TIME_ZONE_INFORMATION tz;
 	FILETIME              ft;
@@ -153,8 +159,8 @@ ___mu0_sint4_t___ gettimeofday(struct timeval * __tv, struct tz * __tz)
 		lv.LowPart    = ft.dwLowDateTime;
 		lv.HighPart   = ft.dwHighDateTime;
 		usec          = lv.QuadPart / 10Ui64 - 11644473600000000Ui64;
-		__tv->tv_sec  = __mu0_const_cast__(time_t, (usec / 1000000Ui6));
-		__tv->tv_usec = __mu0_const_cast__(___mu0_uintx_t___, (usec % 1000000Ui6));
+		__tv->tv_sec  = __mu0_const_cast__(time_t, (usec / 1000000Ui64));
+		__tv->tv_usec = __mu0_const_cast__(___mu0_sintx_t___, (usec % 1000000Ui64));
 	}
 	if (__mu0_not_nullptr__(__tz)) {
 		GetTimeZoneInformation(&tz);
@@ -163,6 +169,11 @@ ___mu0_sint4_t___ gettimeofday(struct timeval * __tv, struct tz * __tz)
 	}
 	return 0;
 }
+# 	else
+
+#	define ___mu0_timezone___     timezone
+#	define ___mu0_timeval___      timeval
+#	define ___mu0_gettimeofday___ gettimeofday
 
 #	endif
 
