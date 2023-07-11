@@ -40,27 +40,43 @@
 #	define __mu0_dateformat_rfc3339_long__ 4
 #	define __mu0_dateformat_rfc3339_zulu__ 5
 
-typedef struct tm __mu0_calendar_date_t__;
+typedef struct
+{
+	struct tm         u_tm;
+	___mu0_sintx_t___ u_us;
+} __mu0_calendar_date_t__;
 
 __mu0_static_inline__
 void __mu0_i18ndatetime_localtime__(__mu0_calendar_date_t__ * __date)
 {
+#	if 0
 	const time_t utc = time(NULL);
+#	endif
+	struct timeval utc;
+	gettimeofday(&utc, NULL);
+	memset(__date, 0, sizeof(__mu0_calendar_date_t__));
 #	if MU0_HAVE_WINDOWS
-	localtime_s(__date, &utc);
+	localtime_s(&__date->u_tm, &utc.tv_sec);
 #	else
-	memcpy(__date, localtime(&utc), __mu0_sizeof__(__mu0_calendar_date_t__));
+	memcpy(&__date->u_tm, localtime(&utc.tv_sec), __mu0_sizeof__(__mu0_calendar_date_t__));
+	__date->u_us = utc.tv_usec;
 #	endif
 }
 
 __mu0_static_inline__
 void __mu0_i18ndatetime_zulutime__(__mu0_calendar_date_t__ * __date)
 {
+#	if 0
 	const time_t utc = time(NULL);
+#	endif
+	struct timeval utc;
+	gettimeofday(&utc, NULL);
+	memset(__date, 0, sizeof(__mu0_calendar_date_t__));
 #	if MU0_HAVE_WINDOWS
-	gmtime_s(__date, &utc);
+	gmtime_s(&__date->u_tm, &utc.tv_sec);
 #	else
-	memcpy(__date, gmtime(&utc)  , __mu0_sizeof__(__mu0_calendar_date_t__));
+	memcpy(&__date->u_tm, gmtime(&utc.tv_sec)   , __mu0_sizeof__(__mu0_calendar_date_t__));
+	__date->u_us = utc.tv_usec;
 #	endif
 }
 
@@ -73,10 +89,10 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 ) {
 	__mu0_static__ const ___mu0_tint1_t___ * s_dateformat[6] =
 	{
-		  "%Y-%m-%dT%H:%M:%OS%z"
+		  "%Y-%m-%dT%H:%M:%S.000%z"
 		, "%Y-%m-%dT%H:%M:%S%z"
 		, "%Y-%m-%dT%H:%M:%SZ"
-		, "%Y-%m-%d %H:%M:%OS%z"
+		, "%Y-%m-%d %H:%M:%S.000%z"
 		, "%Y-%m-%d %H:%M:%S%z"
 		, "%Y-%m-%d %H:%M:%SZ"
 	};
@@ -85,20 +101,20 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 	if (__mu0_is_nullptr__(__locale)) {
 		strftime(__dest, __mu0_sizeof__(___mu0_tint1_t___) * 31U
 			, (__format >= 0 && __format < 6) ? s_dateformat[__format] : s_dateformat[0]
-			, __date
+			, &__date->u_tm
 		);
 		return 0;
 	}
 #	if MU0_HAVE_WINDOWS
 	_strftime_l(__dest, __mu0_sizeof__(___mu0_tint1_t___) * 31U
 		, (__format >= 0 && __format < 6U) ? s_dateformat[__format] : s_dateformat[0]
-		, __date
+		, &__date->u_tm
 		, __locale->u_lc
 	);
 #	else
 	strftime_l(__dest, __mu0_sizeof__(___mu0_tint1_t___) * 31U
 		, (__format >= 0 && __format < 6U) ? s_dateformat[__format] : s_dateformat[0]
-		, __date
+		, &__date->u_tm
 		, __locale->u_lc
 	);
 #	endif

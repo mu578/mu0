@@ -10,7 +10,7 @@
 //                                           | |                                                            //
 //                                           |_|                                                            //
 
-// string8-main.h
+// string8-main.c
 //
 // Copyright (C) 2023 mu578. All rights reserved.
 //

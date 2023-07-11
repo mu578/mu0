@@ -37,6 +37,9 @@
 #	define MU0_HAVE_NANOTIME_THR 0
 #	define MU0_HAVE_CLOCKTIME    0
 
+#	if MU0_HAVE_POSIX1_2001
+#	include <sys/time.h>
+#	endif
 #	include <time.h>
 
 #	if (MU0_HAVE_MACOSX && !MU0_HAVE_MACOSX12) || (MU0_HAVE_IOS && !MU0_HAVE_IOS10) && !defined(_POSIX_TIMERS)
@@ -123,6 +126,43 @@
 		}
 		return ret;
 	}
+
+#	endif
+
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+
+struct tz
+{
+	___mu0_sint4_t___ tz_minuteswest;
+	___mu0_sint4_t___ tz_dsttime;
+};
+
+__mu0_static_inline__
+___mu0_sint4_t___ gettimeofday(struct timeval * __tv, struct tz * __tz)
+{
+	TIME_ZONE_INFORMATION tz;
+	FILETIME              ft;
+	ULARGE_INTEGER        lv;
+	__int64               usec;
+	if (__mu0_not_nullptr__(__tv)) {
+#	if _WIN32_WINNT >= _WIN32_WINNT_WIN8
+		GetSystemTimePreciseAsFileTime(&ft);
+#	else
+		GetSystemTimeAsFileTime(&ft);
+#	endif
+		lv.LowPart    = ft.dwLowDateTime;
+		lv.HighPart   = ft.dwHighDateTime;
+		usec          = lv.QuadPart / 10Ui64 - 11644473600000000Ui64;
+		__tv->tv_sec  = __mu0_const_cast__(time_t, (usec / 1000000Ui6));
+		__tv->tv_usec = __mu0_const_cast__(___mu0_uintx_t___, (usec % 1000000Ui6));
+	}
+	if (__mu0_not_nullptr__(__tz)) {
+		GetTimeZoneInformation(&tz);
+		__tz->tz_minuteswest = tz.Bias;
+		__tz->tz_dsttime     = 0;
+	}
+	return 0;
+}
 
 #	endif
 

@@ -10,7 +10,7 @@
 //                                           | |                                                            //
 //                                           |_|                                                            //
 
-// random-main.h
+// random-main.c
 //
 // Copyright (C) 2023 mu578. All rights reserved.
 //

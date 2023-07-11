@@ -10,7 +10,7 @@
 //                                           | |                                                            //
 //                                           |_|                                                            //
 
-// locale-main.h
+// locale-main.c
 //
 // Copyright (C) 2023 mu578. All rights reserved.
 //
