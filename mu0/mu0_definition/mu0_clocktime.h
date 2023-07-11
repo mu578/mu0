@@ -131,16 +131,16 @@
 
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 
-struct ___mu0_timezone___
-{
-	___mu0_sint4_t___ tz_minuteswest;
-	___mu0_sint4_t___ tz_dsttime;
-};
-
 struct ___mu0_timeval___
 {
 	time_t            tv_sec;
 	___mu0_sintx_t___ tv_usec;
+};
+
+struct ___mu0_timezone___
+{
+	___mu0_sint4_t___ tz_minuteswest;
+	___mu0_sint4_t___ tz_dsttime;
 };
 
 __mu0_static_inline__
@@ -171,9 +171,12 @@ ___mu0_sint4_t___ ___mu0_gettimeofday___(struct ___mu0_timeval___ * __tv, struct
 }
 # 	else
 
-#	define ___mu0_timezone___     timezone
-#	define ___mu0_timeval___      timeval
-#	define ___mu0_gettimeofday___ gettimeofday
+#	define ___mu0_timezone___ timezone
+#	define ___mu0_timeval___  timeval
+
+__mu0_static_inline__
+___mu0_sint4_t___ ___mu0_gettimeofday___(struct ___mu0_timeval___ * __tv, struct ___mu0_timezone___ * __tz)
+{ return gettimeofday(__tv, __tz); }
 
 #	endif
 
