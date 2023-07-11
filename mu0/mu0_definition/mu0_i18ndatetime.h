@@ -117,8 +117,8 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 			, &__date->u_tm
 			, __locale->u_lc
 		);
-	}
 #	endif
+	}
 	if (__format == 0 || __format == 3) {
 		snprintf(buf, 4, "%03ld", __date->u_us / 1000); buf[3] = '\0';
 		__dest[20] = buf[0];
