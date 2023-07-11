@@ -87,6 +87,7 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 	,       __mu0_i18nlocale_t__    * __locale   __mu0_nullable__
 	,       ___mu0_tint1_t___         __dest[32]
 ) {
+	___mu0_tint1_t___                        buf[4];
 	__mu0_static__ const ___mu0_tint1_t___ * s_dateformat[6] =
 	{
 		  "%Y-%m-%dT%H:%M:%S.000%z"
@@ -103,21 +104,27 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 			, (__format >= 0 && __format < 6) ? s_dateformat[__format] : s_dateformat[0]
 			, &__date->u_tm
 		);
-		return 0;
-	}
+	} else {
 #	if MU0_HAVE_WINDOWS
-	_strftime_l(__dest, __mu0_sizeof__(___mu0_tint1_t___) * 31U
-		, (__format >= 0 && __format < 6U) ? s_dateformat[__format] : s_dateformat[0]
-		, &__date->u_tm
-		, __locale->u_lc
-	);
+		_strftime_l(__dest, __mu0_sizeof__(___mu0_tint1_t___) * 31U
+			, (__format >= 0 && __format < 6U) ? s_dateformat[__format] : s_dateformat[0]
+			, &__date->u_tm
+			, __locale->u_lc
+		);
 #	else
-	strftime_l(__dest, __mu0_sizeof__(___mu0_tint1_t___) * 31U
-		, (__format >= 0 && __format < 6U) ? s_dateformat[__format] : s_dateformat[0]
-		, &__date->u_tm
-		, __locale->u_lc
-	);
+		strftime_l(__dest, __mu0_sizeof__(___mu0_tint1_t___) * 31U
+			, (__format >= 0 && __format < 6U) ? s_dateformat[__format] : s_dateformat[0]
+			, &__date->u_tm
+			, __locale->u_lc
+		);
+	}
 #	endif
+	if (__format == 0 || __format == 3) {
+		snprintf(buf, 4, "%03ld", __date->u_us / 1000); buf[3] = '\0';
+		__dest[20] = buf[0];
+		__dest[21] = buf[1];
+		__dest[22] = buf[2];
+	}
 	return 0;
 }
 
