@@ -7,6 +7,9 @@ Getting current toolchain Mac-M2 host:
 >$ sudo port install clang_select
 >$ sudo port install libomp +universal
 >$ sudo port select --set clang mp-clang-16
+
+>$ sudo port install gcc12 +universal
+>$ sudo port select --set gcc mp-gcc-12
 ```
 
 Makefile platform variants on Mac-M2 host:
@@ -19,6 +22,7 @@ PLATFORM_VARIANT := macos_xcode.x86_64
 PLATFORM_VARIANT := macos_xcode.fat
 
 PLATFORM_VARIANT := macos_macport
+PLATFORM_VARIANT := macos_macport.gcc
 PLATFORM_VARIANT := macos_macport.arm64
 PLATFORM_VARIANT := macos_macport.x86_64
 PLATFORM_VARIANT := macos_macport.fat
