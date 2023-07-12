@@ -9,7 +9,7 @@ Getting current toolchain Mac-M2 host:
 >$ sudo port select --set clang mp-clang-16
 
 >$ sudo port install gcc12 +universal
->$ sudo port select --set gcc mp-gcc-12
+>$ sudo port select --set gcc mp-gcc12
 ```
 
 Makefile platform variants on Mac-M2 host:
