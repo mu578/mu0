@@ -506,7 +506,7 @@ __mu0_static_inline__ const ___mu0_sint4_t___ __mu0_clz_u1__(const ___mu0_uint1_
 			{ return (__x) ? __mu0_clz_u4__(__x) - (__mu0_bit_digits_u4__() - __mu0_bit_digits_u1__()) : __mu0_bit_digits_u1__(); }
 
 #		endif
-#	elif MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC
+#	elif MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC
 #		undef  MU0_HAVE_BITOPERATOR
 #		define MU0_HAVE_BITOPERATOR 1
 
@@ -658,7 +658,7 @@ __mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_u4__(const ___mu0_uint4_
 __mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_u2__(const ___mu0_uint2_t___ __x);
 __mu0_static_inline__ const ___mu0_sint4_t___ __mu0_ctz_u1__(const ___mu0_uint1_t___ __x);
 
-#	if MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC
+#	if MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC
 #		undef  MU0_HAVE_BITOPERATOR
 #		define MU0_HAVE_BITOPERATOR 1
 

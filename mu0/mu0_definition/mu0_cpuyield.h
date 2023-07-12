@@ -146,7 +146,7 @@
 #	endif
 
 #	if MU0_HAVE_C11 && !MU0_HAVE_THRYIELD
-#	if !defined(__STDC_NO_THREADS__) || (defined(__STDC_NO_THREADS__) && !__STDC_NO_THREADS__)
+#	if defined(__STDC_NO_THREADS) && __STDC_NO_THREADS__ == 0
 #		include <threads.h>
 #		undef  MU0_HAVE_THRYIELD
 #		define MU0_HAVE_THRYIELD 1

@@ -190,7 +190,7 @@ typedef   mu0_ptrdiff_t             mu0_distance_t;
 #	define mu0_is_uinteger(__x) (1)
 #	endif
 
-#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL || MU0_HAVE_CC_GNUC
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL || MU0_HAVE_CC_GNUCC
 #		define mu0_integral_constant(_Tp, _Vi, __v) __mu0_static__ const _Tp _Vi = { __v }
 #	else
 #		define mu0_integral_constant(_Tp, _Vi, __v) __mu0_static__ const _Tp _Vi = __v

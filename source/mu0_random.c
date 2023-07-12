@@ -407,9 +407,9 @@ mu0_sint16_t mu0_ranged_random_i16(
 mu0_fp128_t mu0_random_fp128(void)
 {
 #	if MU0_HAVE_FLOAT128
-#	error "mu0_random.c"
+	return mu0_fp128(mu0_random_fp64());
 #	else
-		return mu0_fpex(mu0_random_fp64());
+	return mu0_fpex(mu0_random_fp64());
 #	endif
 }
 

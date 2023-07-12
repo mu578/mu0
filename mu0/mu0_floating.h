@@ -49,7 +49,7 @@
 #	define MU0_USE_FLOAT16     1
 #	define MU0_HAVE_FLOAT16    0
 
-#	define MU0_USE_STDCOMPLEX  0
+#	define MU0_USE_STDCOMPLEX  1
 #	define MU0_HAVE_STDCOMPLEX 0
 
 #	if MU0_USE_FLOAT128 || MU0_USE_FLOAT64 || MU0_USE_FLOAT32 || MU0_USE_FLOAT16
@@ -141,6 +141,7 @@ typedef long double _Complex                           mu0_cpex_t;
 			__mu0_extension__
 			typedef _Float128                             mu0_fp128_t;
 #		if MU0_HAVE_STDCOMPLEX
+			__mu0_extension__
 			typedef _Float128 _Complex                    mu0_cfp128_t;
 #		endif
 #		endif
@@ -177,6 +178,7 @@ typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; } mu0_cfp128_t;
 			__mu0_extension__
 			typedef _Float64                              mu0_fp64_t;
 #			if MU0_HAVE_STDCOMPLEX
+			__mu0_extension__
 			typedef _Float64 _Complex                     mu0_cfp64_t;
 #			endif
 #		endif
@@ -186,6 +188,7 @@ typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; } mu0_cfp128_t;
 		__mu0_extension__
 		typedef _Float64                                 mu0_fp64_t;
 #		if MU0_HAVE_STDCOMPLEX
+		__mu0_extension__
 		typedef _Float64 _Complex                        mu0_cfp64_t;
 #		endif
 #	endif
@@ -221,6 +224,7 @@ typedef struct { mu0_fp64_t u_re; mu0_fp64_t u_im; }   mu0_cfp64_t;
 			__mu0_extension__
 			typedef _Float32                              mu0_fp32_t;
 #			if MU0_HAVE_STDCOMPLEX
+			__mu0_extension__
 			typedef _Float32 _Complex                     mu0_cfp32_t;
 #			endif
 #		endif
@@ -230,6 +234,7 @@ typedef struct { mu0_fp64_t u_re; mu0_fp64_t u_im; }   mu0_cfp64_t;
 		__mu0_extension__
 		typedef _Float32                                 mu0_fp32_t;
 #		if MU0_HAVE_STDCOMPLEX
+		__mu0_extension__
 		typedef _Float32 _Complex                        mu0_cfp32_t;
 #		endif
 #	endif
@@ -273,6 +278,7 @@ typedef struct { mu0_fp32_t u_re; mu0_fp32_t u_im; }   mu0_cfp32_t;
 			__mu0_extension__
 			typedef __fp16                                mu0_fp16_t;
 #		if MU0_HAVE_STDCOMPLEX
+			__mu0_extension__
 			typedef __fp16 _Complex                       mu0_cfp16_t;
 #		endif
 #		endif
@@ -283,6 +289,7 @@ typedef struct { mu0_fp32_t u_re; mu0_fp32_t u_im; }   mu0_cfp32_t;
 			__mu0_extension__
 			typedef _Float16                              mu0_fp16_t;
 #		if MU0_HAVE_STDCOMPLEX
+			__mu0_extension__
 			typedef _Float16 _Complex                     mu0_cfp16_t;
 #		endif
 #		endif
@@ -404,10 +411,10 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 #	define mu0_is_complex_number(__x) (1)
 #	endif
 
-#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL || MU0_HAVE_CC_GNUC
-#		define mu0_floating_point_constant(_F, _V, __v) __mu0_static__ const _F _V = { __v }
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL || MU0_HAVE_CC_GNUCC
+#		define mu0_floating_point_constant(_F, _V, __v) __mu0_extension__ __mu0_static__ const _F _V = { __v }
 #	else
-#		define mu0_floating_point_constant(_F, _V, __v) __mu0_static__ const _F _V = __v
+#		define mu0_floating_point_constant(_F, _V, __v)                   __mu0_static__ const _F _V = __v
 #	endif
 
 #	if MU0_HAVE_FLOAT128

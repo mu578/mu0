@@ -119,7 +119,7 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 #	endif
 	}
 	if (__format == 0 || __format == 3) {
-		snprintf(buf, 4, "%03ld", __date->u_us / 1000); buf[3] = '\0';
+		snprintf(buf, 4, "%03d", __mu0_cast__(___mu0_sint4_t___, __date->u_us / 1000)); buf[3] = '\0';
 		__dest[20] = buf[0];
 		__dest[21] = buf[1];
 		__dest[22] = buf[2];

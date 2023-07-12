@@ -59,6 +59,8 @@
 #	else
 #		define __mu0_atomic__(_Sc) __mu0_volatile__ _Sc
 #	endif
+#	else
+#		define __mu0_atomic__(_Sc) __mu0_volatile__ _Sc
 #	endif
 
 typedef __mu0_atomic__(___mu0_uint8_t___) __mu0_atomic_uint8_t___;
@@ -282,13 +284,13 @@ __mu0_scope_begin__                                                             
 	_Sc __mu0_atomic_bool_compare_and_swap__tmp__;                                                        \
 	__atomic_store_n(&__mu0_atomic_bool_compare_and_swap__tmp__, __oldval, __ATOMIC_SEQ_CST);             \
 	__result = __atomic_compare_exchange_n(__ptr                                                          \
-		, &__mu0_atomic_bool_compare_and_swap__tmp__                                                       \
+		, __mu0_cast__(void *, &__mu0_atomic_bool_compare_and_swap__tmp__)                                 \
 		, __newval                                                                                         \
 		, 0                                                                                                \
 		, __ATOMIC_SEQ_CST                                                                                 \
 		, __ATOMIC_SEQ_CST                                                                                 \
 	) ? 1 : 0;                                                                                            \
-__mu0_scope_end__           
+__mu0_scope_end__
 
 #	define __mu0_atomic_val_compare_and_swap__(_Sc, __ptr, __oldval, __newval, __result)                  \
 __mu0_scope_begin__                                                                                      \

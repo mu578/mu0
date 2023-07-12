@@ -68,7 +68,7 @@
 #	endif
 
 #	if !MU0_HAVE_BARRIER
-#	if MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUC || MU0_HAVE_CC_MSVCL
+#	if MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_MSVCL
 #		undef  MU0_HAVE_BARRIER
 #		define MU0_HAVE_BARRIER 1
 #		define __mu0_barrier_acquire__() __sync_synchronize()

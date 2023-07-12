@@ -75,7 +75,12 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 		OBJDUMP             := $(PORT_PATH)/objdump
 		OTOOL               := $(PORT_PATH)/otool
 		LIPO                := $(PORT_PATH)/lipo
-		ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
+
+		ifneq (,$(findstring .gcc, $(PLATFORM_VARIANT)))
+			CC               := $(PORT_PATH)/gcc
+			LOCAL_CFLAGS     += -Wno-format
+			PLATFORM_ARCH    := -arch $(ARCH)
+		else ifneq (,$(findstring .x86_64, $(PLATFORM_VARIANT)))
 			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
 			PLATFORM_ARCH    := -arch x86_64
 			ARCH             := x86_64
@@ -92,12 +97,23 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 				PLATFORM_ARCH := -arch $(ARCH)
 			endif
 		endif
-		LD                  :=       \
-			$(CC)                     \
-			$(PLATFORM_ARCH)          \
-			-fopenmp=libomp           \
-			-lm                       \
-			-mmacosx-version-min=13.0
+		ifneq (,$(findstring .gcc, $(PLATFORM_VARIANT)))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
+			PLATFORM_VARIANT := $(basename $(PLATFORM_VARIANT))
+			LD               :=          \
+				$(CC)                     \
+				$(PLATFORM_ARCH)          \
+				-fopenmp                  \
+				-lm                       \
+				-mmacosx-version-min=13.0
+		else
+			LD               :=          \
+				$(CC)                     \
+				$(PLATFORM_ARCH)          \
+				-fopenmp=libomp           \
+				-lm                       \
+				-mmacosx-version-min=13.0
+		endif
 
 		LOCAL_CFLAGS        +=       \
 			-x c                      \
