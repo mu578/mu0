@@ -45,9 +45,9 @@ void __mu0_i18ndatetime_localtime__(struct __mu0_tm__ * __date)
 	__mu0_gettimeofday__(&utc, &tz);
 	memset(__date, 0, sizeof(struct __mu0_tm__));
 	localtime_s(&__date->u_tm, &utc.tv_sec);
-	date->u_off = tz.tz_minuteswest * 3600;
-	memset(date->u_tz, 0, 6);
-	// memcpy(date->u_tz, ?, 6);
+	__date->u_off = tz.tz_minuteswest * 3600;
+	memset(__date->u_tz, 0, 6);
+	// memcpy(__date->u_tz, ?, 6);
 #	else
 	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
 	memcpy(&__date->u_tm, localtime(&utc.tv_sec), __mu0_sizeof__(struct tm));
@@ -67,9 +67,9 @@ void __mu0_i18ndatetime_zulutime__(struct __mu0_tm__ * __date)
 	__mu0_gettimeofday__(&utc, &tz);
 	memset(__date, 0, sizeof(struct __mu0_tm__));
 	gmtime_s(&__date->u_tm, &utc.tv_sec);
-	date->u_off = tz.tz_minuteswest * 3600;
-	memset(date->u_tz, 0, 6);
-	memcpy(date->u_tz, "UTC", 3);
+	__date->u_off = tz.tz_minuteswest * 3600;
+	memset(__date->u_tz, 0, 6);
+	memcpy(__date->u_tz, "UTC", 3);
 #	else
 	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
 	memset(__date, 0, sizeof(struct __mu0_tm__));
