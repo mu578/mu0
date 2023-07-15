@@ -1,6 +1,6 @@
 # mu0
 
-A cross-platform generalized Lib-c alike toolkit, carefully designed to target low power systems, truely type-strict, UTF-8, ISO, RFC, OpenMP and OpenACC driven, no-optional (To note: the main design borrows quite a lot of C++ conceptuals in term of polymorphism, sure re-adapted within a plain embedded-C context). The main ABI targets are ARM64 and RISC-V. The host APIs provider and build system for all mu* projects. What we want to target at term:
+A cross-platform generalized Lib-c alike toolkit, carefully designed to target low power systems, truely type-strict, UTF-8, ISO, RFC, OpenMP and OpenACC driven, no-optional (To note: the main design borrows quite a lot of C++ conceptuals in term of polymorphism, sure re-adapted within a plain embedded-C context: that's all the point). The main ABI targets are ARM64 and RISC-V. The host APIs provider and build system for all mu* projects. What we want to target at term:
 ```
 macos, ios, ubuntu, android, freebsd, windows, nuttx, zephyr, bare-metal
 + kernel space build + firmware, and anything that runs on SoC.
