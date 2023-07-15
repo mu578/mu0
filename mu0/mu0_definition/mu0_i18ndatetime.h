@@ -47,10 +47,11 @@ void __mu0_i18ndatetime_localtime__(struct __mu0_tm__ * __date)
 	memset(__date, 0, sizeof(struct __mu0_tm__));
 	localtime_s(&__date->u_tm, &utc.tv_sec);
 	__date->u_off = tz.tz_minuteswest * 3600;
+	memset(__date->u_tz, 0, 6);
 	if (__date->u_tm.tm_isdst == 1) {
-		memset(__date->u_tz, _tzname[1], strlen(_tzname[1]));
+		memcpy(__date->u_tz, _tzname[1], strlen(_tzname[1]));
 	} else {
-		memset(__date->u_tz, _tzname[0], strlen(_tzname[0]));
+		memcpy(__date->u_tz, _tzname[0], strlen(_tzname[0]));
 	}
 #	else
 	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
