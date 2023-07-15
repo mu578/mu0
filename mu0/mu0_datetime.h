@@ -65,6 +65,7 @@ mu0_sint32_t                mu0_datetime_timeofday (
 	, mu0_timezone_t * timezone __mu0_nullable__
 );
 
+const mu0_calendar_date_t * mu0_datetime_querytime (mu0_calendar_date_t * date, const mu0_bool_t zulu);
 const mu0_calendar_date_t * mu0_datetime_localtime (mu0_calendar_date_t * date);
 const mu0_calendar_date_t * mu0_datetime_zulutime  (mu0_calendar_date_t * date);
 

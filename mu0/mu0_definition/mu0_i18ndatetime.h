@@ -27,12 +27,30 @@
 struct __mu0_tm__
 {
 	struct tm         u_tm;
-	___mu0_sintx_t___ u_us;
+	___mu0_sintx_t___ u_usec;
 #	if MU0_HAVE_WINDOWS
-	___mu0_sintx_t___ u_off;
-	___mu0_sint1_t___ u_tz[6];
+	___mu0_sintx_t___ u_gmtoff;
+	___mu0_sint1_t___ u_zone[6];
 #	endif
 };
+
+# define __mu0_struct_tm_field_year__(__tm)   __tm.u_tm.tm_year
+# define __mu0_struct_tm_field_yday__(__tm)   __tm.u_tm.tm_yday
+# define __mu0_struct_tm_field_mon__(__tm)    __tm.u_tm.tm_mon
+# define __mu0_struct_tm_field_wday__(__tm)   __tm.u_tm.tm_wday
+# define __mu0_struct_tm_field_mday__(__tm)   __tm.u_tm.tm_mday
+# define __mu0_struct_tm_field_hour__(__tm)   __tm.u_tm.tm_hour
+# define __mu0_struct_tm_field_min__(__tm)    __tm.u_tm.tm_min
+# define __mu0_struct_tm_field_sec__(__tm)    __tm.u_tm.tm_min
+# define __mu0_struct_tm_field_usec__(__tm)   __tm.u_usec
+# define __mu0_struct_tm_field_isdst__(__tm)  __tm.u_tm.tm_isdst
+#	if MU0_HAVE_WINDOWS
+# define __mu0_struct_tm_field_gmtoff__(__tm) __tm.u_gmtoff
+# define __mu0_struct_tm_field_zone__(__tm)   __tm.u_zone
+#	else
+# define __mu0_struct_tm_field_gmtoff__(__tm) __tm.u_tm.tm_gmtoff
+# define __mu0_struct_tm_field_zone__(__tm)   __tm.u_tm.tm_zone
+#	endif
 
 __mu0_static_inline__
 void __mu0_i18ndatetime_localtime__(struct __mu0_tm__ * __date)
@@ -46,18 +64,18 @@ void __mu0_i18ndatetime_localtime__(struct __mu0_tm__ * __date)
 	__mu0_gettimeofday__(&utc, &tz);
 	memset(__date, 0, sizeof(struct __mu0_tm__));
 	localtime_s(&__date->u_tm, &utc.tv_sec);
-	__date->u_off = tz.tz_minuteswest * 3600;
-	memset(__date->u_tz, 0, 6);
+	__date->u_gmtoff = tz.tz_minuteswest * 3600;
+	memset(__date->u_zone, 0, 6);
 	if (__date->u_tm.tm_isdst == 1) {
-		memcpy(__date->u_tz, _tzname[1], strlen(_tzname[1]));
+		memcpy(__date->u_zone, _tzname[1], strlen(_tzname[1]));
 	} else {
-		memcpy(__date->u_tz, _tzname[0], strlen(_tzname[0]));
+		memcpy(__date->u_zone, _tzname[0], strlen(_tzname[0]));
 	}
 #	else
 	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
 	memcpy(&__date->u_tm, localtime(&utc.tv_sec), __mu0_sizeof__(struct tm));
 #	endif
-	__date->u_us = utc.tv_usec;
+	__date->u_usec = utc.tv_usec;
 }
 
 __mu0_static_inline__
@@ -72,15 +90,15 @@ void __mu0_i18ndatetime_zulutime__(struct __mu0_tm__ * __date)
 	__mu0_gettimeofday__(&utc, &tz);
 	memset(__date, 0, sizeof(struct __mu0_tm__));
 	gmtime_s(&__date->u_tm, &utc.tv_sec);
-	__date->u_off = tz.tz_minuteswest * 3600;
-	memset(__date->u_tz, 0, 6);
-	memcpy(__date->u_tz, "UTC", 3);
+	__date->u_gmtoff = tz.tz_minuteswest * 3600;
+	memset(__date->u_zone, 0, 6);
+	memcpy(__date->u_zone, "UTC", 3);
 #	else
 	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
 	memset(__date, 0, sizeof(struct __mu0_tm__));
 	memcpy(&__date->u_tm, gmtime(&utc.tv_sec)   , __mu0_sizeof__(struct tm));
 #	endif
-	__date->u_us = utc.tv_usec;
+	__date->u_usec = utc.tv_usec;
 }
 
 __mu0_static_inline__
@@ -122,12 +140,12 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 #	endif
 	}
 	if (__format == 0 || __format == 3) {
-		snprintf(buf, 4, "%03ld", __mu0_cast__(___mu0_sintx_t___, __date->u_us / 1000)); buf[3] = '\0';
+		snprintf(buf, 4, "%03ld", __mu0_cast__(___mu0_sintx_t___, __date->u_usec / 1000)); buf[3] = '\0';
 		__dest[20] = buf[0];
 		__dest[21] = buf[1];
 		__dest[22] = buf[2];
 #	if MU0_HAVE_WINDOWS
-		if (__date->u_off == 0) {
+		if (__date->u_gmtoff == 0) {
 			__dest[23] = '+';
 			__dest[24] = '0';
 			__dest[25] = '0';
@@ -145,7 +163,7 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 #	endif
 	} else if (__format == 1 || __format == 4) {
 #	if MU0_HAVE_WINDOWS
-		if (__date->u_off == 0) {
+		if (__date->u_gmtoff == 0) {
 			__dest[19] = '+';
 			__dest[20] = '0';
 			__dest[21] = '0';
