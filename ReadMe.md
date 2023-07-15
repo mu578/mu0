@@ -2,7 +2,7 @@
 
 A cross-platform generalized Lib-c alike toolkit, carefully designed to target low power systems, truely type-strict, UTF-8, ISO and RFC driven, no-optional. The host APIs provider and build system for all mu* projects. What we want to target at term:
 ```
-macos, ios, ubuntu, android, freebsd, windows, nuttx, zephyr, bare-metal + kernel space build, and anything that runs on SoC.
+macos, ios, ubuntu, android, freebsd, windows, nuttx, zephyr, bare-metal + kernel space build, firmware, and anything that runs on SoC.
 ```
 
 Getting current toolchain Mac-M2 host:
