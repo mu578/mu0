@@ -27,17 +27,25 @@
 #	undef  __mu0_clocktime_act__
 #	undef  __mu0_clocktime_thr__
 #	undef  MU0_HAVE_GETTIMEOFDAY
+#	undef  MU0_HAVE_MICROSLEEP
+#	undef  MU0_HAVE_NANOSLEEP
 #	undef  MU0_HAVE_NANOTIME_ABS
 #	undef  MU0_HAVE_NANOTIME_UTC
 #	undef  MU0_HAVE_NANOTIME_ACT
 #	undef  MU0_HAVE_NANOTIME_THR
 #	undef  MU0_HAVE_NANOTIME_THR
+#	define MU0_HAVE_MICROSLEEP   0
+#	define MU0_HAVE_NANOSLEEP    0
 #	define MU0_HAVE_GETTIMEOFDAY 0
 #	define MU0_HAVE_NANOTIME_UTC 0
 #	define MU0_HAVE_NANOTIME_ABS 0
 #	define MU0_HAVE_NANOTIME_ACT 0
 #	define MU0_HAVE_NANOTIME_THR 0
 #	define MU0_HAVE_CLOCKTIME    0
+
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#	include <errno.h>
+#	endif
 
 #	if MU0_HAVE_POSIX1_2001
 #	include <sys/time.h>
@@ -151,7 +159,7 @@
 #		undef  MU0_HAVE_GETTIMEOFDAY
 #		define MU0_HAVE_GETTIMEOFDAY 1
 
-	struct __mu0_timeval__  { time_t            tv_sec;         ___mu0_sintx_t___ tv_usec;    };
+	struct __mu0_timeval__  { ___mu0_sint8_t___ tv_sec;         ___mu0_sintx_t___ tv_usec;    };
 	struct __mu0_timezone__ { ___mu0_sint4_t___ tz_minuteswest; ___mu0_sint4_t___ tz_dsttime; };
 
 	__mu0_static_inline__
@@ -179,6 +187,92 @@
 			__tz->tz_dsttime     = 0;
 		}
 		return 0;
+	}
+
+# 	endif
+#	endif
+
+#	if !MU0_HAVE_MICROSLEEP
+#	if MU0_HAVE_POSIX1_2001
+#		undef  MU0_HAVE_MICROSLEEP
+#		define MU0_HAVE_MICROSLEEP 1
+
+#		define __mu0_useconds_t__ useconds_t
+
+	__mu0_static_inline__
+	___mu0_sint4_t___ __mu0_usleep__(__mu0_useconds_t__ __us)
+	{ return usleep(__us); }
+
+# 	endif
+#	endif
+
+#	if !MU0_HAVE_MICROSLEEP
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#		undef  MU0_HAVE_MICROSLEEP
+#		define MU0_HAVE_MICROSLEEP 1
+
+#		define __mu0_useconds_t__ ___mu0_uint8_t___
+
+	__mu0_static_inline__
+	___mu0_sint4_t___ __mu0_usleep__(__mu0_useconds_t__ __us)
+	{
+		___mu0_sint4_t___ ret = -1;
+		HANDLE            tm;
+		LARGE_INTEGER     ft;
+		ft.QuadPart           = __mu0_const_cast__(___mu0_sint8_t___, (10Ui64 * __us));
+		ft.QuadPart           = -ft.QuadPart;
+		if ((tm = CreateWaitableTimer(__mu0_nullptr__, TRUE, __mu0_nullptr__))) {
+			if (SetWaitableTimer(tm, &ft, 0, __mu0_nullptr__, __mu0_nullptr__, FALSE)) {
+				if (WAIT_OBJECT_0 == WaitForSingleObject(tm, INFINITE)) {
+					ret = 0;
+				} else {
+					_set_errno(EINTR);
+				}
+			}
+			CloseHandle(tm);
+		}
+		return ret;
+	}
+
+# 	endif
+#	endif
+
+#	if !MU0_HAVE_NANOSLEEP
+#	if MU0_HAVE_POSIX1_2001
+#		undef  MU0_HAVE_NANOSLEEP
+#		define MU0_HAVE_NANOSLEEP 1
+
+	__mu0_static_inline__
+	___mu0_sint4_t___ __mu0_nanosleep__(const struct timespec * __rqtp, struct timespec * __rmtp)
+	{ return nanosleep(__rqtp, __rmtp); }
+
+# 	endif
+#	endif
+
+#	if !MU0_HAVE_NANOSLEEP
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#		undef  MU0_HAVE_NANOSLEEP
+#		define MU0_HAVE_NANOSLEEP 1
+
+	__mu0_static_inline__
+	___mu0_sint4_t___ __mu0_nanosleep__(const struct timespec * __rqtp, struct timespec * __rmtp)
+	{
+		___mu0_sint4_t___ ret = -1;
+		___mu0_sint8_t___ ns  = 1000 * 1000 * 1000 * __rqtp.tv_sec + __rqtp.tv_nsec;
+		__rmtp->tv_sec        = __rqtp->tv_sec;
+		__rmtp->tv_nsec       = __rqtp->tv_nsec;
+		if (ns > 0 && ns < 999999999) {
+			ret = __mu0_usleep__(__mu0_const_cast__(___mu0_uint8_t___, (ns / 1000U)));
+			if (ret == 0) {
+				__rmtp->tv_sec  = 0;
+				__rmtp->tv_nsec = 0;
+			} else {
+				_set_errno(EINTR);
+			}
+		} else {
+			_set_errno(EINVAL);
+		}
+		return ret;
 	}
 
 # 	endif

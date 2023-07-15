@@ -23,6 +23,8 @@
 
 MU0_BEGIN_CDECL
 
+typedef __mu0_i18nlocale_t__ mu0_locale_t;
+
 mu0_locale_t *       mu0_locale_create(
 	  const mu0_tchar8_t * language
 	, const mu0_tchar8_t * territory
