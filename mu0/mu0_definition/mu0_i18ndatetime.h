@@ -24,8 +24,9 @@
 #	undef  MU0_HAVE_I18NDATETIME
 #	define MU0_HAVE_I18NDATETIME 1
 
-struct __mu0_tm__ {
-	struct tm u_tm;
+struct __mu0_tm__
+{
+	struct tm         u_tm;
 	___mu0_sintx_t___ u_us;
 #	if MU0_HAVE_WINDOWS
 	___mu0_sintx_t___ u_off;
@@ -46,8 +47,11 @@ void __mu0_i18ndatetime_localtime__(struct __mu0_tm__ * __date)
 	memset(__date, 0, sizeof(struct __mu0_tm__));
 	localtime_s(&__date->u_tm, &utc.tv_sec);
 	__date->u_off = tz.tz_minuteswest * 3600;
-	memset(__date->u_tz, 0, 6);
-	// memcpy(__date->u_tz, ?, 6);
+	if (tm_isdst == 1) {
+		memset(__date->u_tz, _tzname[1], strlen(_tzname[1]));
+	} else {
+		memset(__date->u_tz, _tzname[0], strlen(_tzname[0]));
+	}
 #	else
 	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
 	memcpy(&__date->u_tm, localtime(&utc.tv_sec), __mu0_sizeof__(struct tm));

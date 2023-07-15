@@ -141,8 +141,6 @@ const mu0_tchar8_t * mu0_datetime_formatting(
 	tm.u_tm.tm_gmtoff = date->u_offset;
 #	endif
 
-	//memset(&tm, 0, __mu0_sizeof__(struct __mu0_tm__));
-	//__mu0_i18ndatetime_zulutime__(&tm);
 	__mu0_i18ndatetime_formatting__(&tm, format, locale, dest);
 	return p;
 }
