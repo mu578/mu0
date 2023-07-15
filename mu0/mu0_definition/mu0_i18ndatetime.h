@@ -30,7 +30,7 @@ struct __mu0_tm__
 	___mu0_sintx_t___ u_usec;
 #	if MU0_HAVE_WINDOWS
 	___mu0_sintx_t___ u_gmtoff;
-	___mu0_sint1_t___ u_zone[6];
+	___mu0_tchar1_t___ u_zone[6];
 #	endif
 };
 
