@@ -24,7 +24,14 @@
 #	undef  MU0_HAVE_I18NDATETIME
 #	define MU0_HAVE_I18NDATETIME 1
 
-struct __mu0_tm__ { struct tm u_tm; ___mu0_sintx_t___ u_us; };
+struct __mu0_tm__ {
+	struct tm u_tm;
+	___mu0_sintx_t___ u_us;
+#	if MU0_HAVE_WINDOWS
+	___mu0_sintx_t___ u_off;
+	___mu0_sint1_t___ u_tz[6];
+#	endif
+};
 
 __mu0_static_inline__
 void __mu0_i18ndatetime_localtime__(struct __mu0_tm__ * __date)
@@ -32,12 +39,17 @@ void __mu0_i18ndatetime_localtime__(struct __mu0_tm__ * __date)
 #	if 0
 	const time_t utc = time(__mu0_nullptr__);
 #	endif
-	struct __mu0_timeval__ utc;
-	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
-	memset(__date, 0, sizeof(struct __mu0_tm__));
+	struct __mu0_timeval__  utc;
 #	if MU0_HAVE_WINDOWS
+	struct __mu0_timezone__ tz;
+	__mu0_gettimeofday__(&utc, &tz);
+	memset(__date, 0, sizeof(struct __mu0_tm__));
 	localtime_s(&__date->u_tm, &utc.tv_sec);
+	date->u_off = tz.tz_minuteswest * 3600;
+	memset(date->u_tz, 0, 6);
+	// memcpy(date->u_tz, ?, 6);
 #	else
+	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
 	memcpy(&__date->u_tm, localtime(&utc.tv_sec), __mu0_sizeof__(struct tm));
 #	endif
 	__date->u_us = utc.tv_usec;
@@ -49,12 +61,18 @@ void __mu0_i18ndatetime_zulutime__(struct __mu0_tm__ * __date)
 #	if 0
 	const time_t utc = time(__mu0_nullptr__);
 #	endif
-	struct __mu0_timeval__ utc;
+	struct __mu0_timeval__  utc;
+#	if MU0_HAVE_WINDOWS
+	struct __mu0_timezone__ tz;
+	__mu0_gettimeofday__(&utc, &tz);
+	memset(__date, 0, sizeof(struct __mu0_tm__));
+	gmtime_s(&__date->u_tm, &utc.tv_sec);
+	date->u_off = tz.tz_minuteswest * 3600;
+	memset(date->u_tz, 0, 6);
+	memcpy(date->u_tz, "UTC", 3);
+#	else
 	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
 	memset(__date, 0, sizeof(struct __mu0_tm__));
-#	if MU0_HAVE_WINDOWS
-	gmtime_s(&__date->u_tm, &utc.tv_sec);
-#	else
 	memcpy(&__date->u_tm, gmtime(&utc.tv_sec)   , __mu0_sizeof__(struct tm));
 #	endif
 	__date->u_us = utc.tv_usec;
@@ -103,6 +121,23 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 		__dest[20] = buf[0];
 		__dest[21] = buf[1];
 		__dest[22] = buf[2];
+#	if MU0_HAVE_WINDOWS
+		if (__date->u_off == 0) {
+			__dest[23] = '+';
+			__dest[24] = '0';
+			__dest[25] = '0';
+			__dest[26] = '0';
+			__dest[27] = '0';
+		}
+#	else
+		if (__date->u_tm.tm_gmtoff == 0) {
+			__dest[23] = '+';
+			__dest[24] = '0';
+			__dest[25] = '0';
+			__dest[26] = '0';
+			__dest[27] = '0';
+		}
+#	endif
 	}
 	return 0;
 }

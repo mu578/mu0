@@ -15,9 +15,10 @@
 # Copyright (C) 2023 mu578. All rights reserved.
 #
 
-LOCAL_MODULE      := mu0
-LOCAL_MODULE_PATH := ../../$(LOCAL_MODULE)
-MU0_ROOT_PATH     := $(LOCAL_MODULE_PATH)
+LOCAL_MODULE         := mu0
+LOCAL_MODULE_PATH    := ../../$(LOCAL_MODULE)
+LOCAL_MODULE_VERSION := 1.0.0
+MU0_ROOT_PATH        := $(LOCAL_MODULE_PATH)
 
 # PLATFORM_VARIANT := macos_xcode
 # PLATFORM_VARIANT := macos_xcode.arm64

@@ -63,6 +63,18 @@ const mu0_calendar_date_t * mu0_datetime_localtime(mu0_calendar_date_t * date)
 	date->u_microseconds = mu0_const_cast(mu0_uint32_t,  tm.u_us);
 	date->u_daylight     = mu0_const_cast(mu0_sint16_t,  tm.u_tm.tm_isdst);
 
+#	if MU0_HAVE_WINDOWS
+	date->u_offset       = mu0_const_cast(mu0_sint16_t,  tm.u_off);
+	memset(date->u_timezone, 0, 6);
+	memcpy(date->u_timezone, tm.u_tz, 6);
+#	else
+	date->u_offset       = mu0_const_cast(mu0_sint16_t,  tm.u_tm.tm_gmtoff);
+	memset(date->u_timezone, 0, 6);
+	if (mu0_not_nullptr(tm.u_tm.tm_zone)) {
+		memcpy(date->u_timezone, tm.u_tm.tm_zone, strlen(tm.u_tm.tm_zone));
+	}
+#	endif
+
 	return p;
 }
 
@@ -84,6 +96,18 @@ const mu0_calendar_date_t * mu0_datetime_zulutime(mu0_calendar_date_t * date)
 	date->u_microseconds = mu0_const_cast(mu0_uint32_t,  tm.u_us);
 	date->u_daylight     = mu0_const_cast(mu0_sint16_t,  tm.u_tm.tm_isdst);
 
+#	if MU0_HAVE_WINDOWS
+	date->u_offset       = mu0_const_cast(mu0_sint16_t,  tm.u_off);
+	memset(date->u_timezone, 0, 6);
+	memcpy(date->u_timezone, tm.u_tz, 6);
+#	else
+	date->u_offset       = mu0_const_cast(mu0_sint16_t,  tm.u_tm.tm_gmtoff);
+	memset(date->u_timezone, 0, 6);
+	if (mu0_not_nullptr(tm.u_tm.tm_zone)) {
+		memcpy(date->u_timezone, tm.u_tm.tm_zone, strlen(tm.u_tm.tm_zone));
+	}
+#	endif
+
 	return p;
 }
 
@@ -96,17 +120,29 @@ const mu0_tchar8_t * mu0_datetime_formatting(
 	const mu0_tchar8_t * p = dest;
 
 	struct __mu0_tm__ tm;
-	tm.u_tm.tm_sec   = date->u_seconds;
-	tm.u_tm.tm_min   = date->u_minutes;
-	tm.u_tm.tm_hour  = date->u_hours;
-	tm.u_tm.tm_mday  = date->u_day;
-	tm.u_tm.tm_mon   = date->u_month;
-	tm.u_tm.tm_year  = date->u_year - 1900U;
-	tm.u_tm.tm_wday  = date->u_weekday;
-	tm.u_tm.tm_yday  = date->u_dayofyear;
-	tm.u_tm.tm_isdst = date->u_daylight;
-	tm.u_us          = date->u_microseconds;
+	memset(&tm, 0, __mu0_sizeof__(struct __mu0_tm__));
 
+	tm.u_tm.tm_sec    = date->u_seconds;
+	tm.u_tm.tm_min    = date->u_minutes;
+	tm.u_tm.tm_hour   = date->u_hours;
+	tm.u_tm.tm_mday   = date->u_day;
+	tm.u_tm.tm_mon    = date->u_month;
+	tm.u_tm.tm_year   = date->u_year - 1900U;
+	tm.u_tm.tm_wday   = date->u_weekday;
+	tm.u_tm.tm_yday   = date->u_dayofyear;
+	tm.u_tm.tm_isdst  = date->u_daylight;
+	tm.u_us           = date->u_microseconds;
+
+#	if MU0_HAVE_WINDOWS
+	tm.u_off          = date->u_offset;
+	memset(tm.u_tz, 0, 6);
+	memcpy(tm.u_tz, date->u_timezone, 6);
+#	else
+	tm.u_tm.tm_gmtoff = date->u_offset;
+#	endif
+
+	//memset(&tm, 0, __mu0_sizeof__(struct __mu0_tm__));
+	//__mu0_i18ndatetime_zulutime__(&tm);
 	__mu0_i18ndatetime_formatting__(&tm, format, locale, dest);
 	return p;
 }

@@ -166,6 +166,7 @@
 	___mu0_sint4_t___ __mu0_gettimeofday__(struct __mu0_timeval__ * __tv, struct __mu0_timezone__ * __tz)
 	{
 		TIME_ZONE_INFORMATION tz;
+		DWORD                 tzi;
 		FILETIME              ft;
 		ULARGE_INTEGER        lv;
 		__int64               usec;
@@ -182,9 +183,14 @@
 			__tv->tv_usec = __mu0_const_cast__(___mu0_sintx_t___, (usec % 1000000Ui64));
 		}
 		if (__mu0_not_nullptr__(__tz)) {
-			GetTimeZoneInformation(&tz);
-			__tz->tz_minuteswest = tz.Bias;
-			__tz->tz_dsttime     = 0;
+			tzi = GetTimeZoneInformation(&tz);
+			if (tzi != TIME_ZONE_ID_INVALID) {
+				__tz->tz_minuteswest = tz.Bias;
+				__tz->tz_dsttime     = tzi == TIME_ZONE_ID_DAYLIGHT ? 1 : 0;
+			} else {
+				__tz->tz_minuteswest = 0;
+				__tz->tz_dsttime     = -1;
+			}
 		}
 		return 0;
 	}

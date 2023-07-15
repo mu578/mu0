@@ -16,7 +16,6 @@
 //
 
 #include <mu0/mu0_locale.h>
-#include <mu0/mu0_integer.h>
 
 #ifndef MU0_DATETIME_H
 #define MU0_DATETIME_H 1
@@ -47,6 +46,8 @@ typedef struct
 	mu0_uint16_t u_seconds;
 	mu0_uint32_t u_microseconds;
 	mu0_sint16_t u_daylight;
+	mu0_sint16_t u_offset;
+	mu0_tchar8_t u_timezone[6];
 } mu0_calendar_date_t;
 
 enum mu0_dateformat
