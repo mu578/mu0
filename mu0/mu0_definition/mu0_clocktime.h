@@ -258,7 +258,7 @@
 	___mu0_sint4_t___ __mu0_nanosleep__(const struct timespec * __rqtp, struct timespec * __rmtp)
 	{
 		___mu0_sint4_t___ ret = -1;
-		___mu0_sint8_t___ ns  = 1000 * 1000 * 1000 * __rqtp.tv_sec + __rqtp.tv_nsec;
+		___mu0_sint8_t___ ns  = 1000 * 1000 * 1000 * __rqtp->tv_sec + __rqtp->tv_nsec;
 		__rmtp->tv_sec        = __rqtp->tv_sec;
 		__rmtp->tv_nsec       = __rqtp->tv_nsec;
 		if (ns > 0 && ns < 999999999) {
