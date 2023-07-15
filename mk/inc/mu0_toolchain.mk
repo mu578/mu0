@@ -356,6 +356,7 @@ else ifneq (,$(findstring mingw, $(PLATFORM)))
 		-Wno-unused-function           \
 		-Wno-newline-eof               \
 		-Wno-language-extension-token  \
+		-Wno-deprecated-declarations   \
 		-pedantic
 
 else
