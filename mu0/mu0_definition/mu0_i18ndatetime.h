@@ -142,6 +142,24 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_formatting__(
 			__dest[27] = '0';
 		}
 #	endif
+	} else if (__format == 1 || __format == 4) {
+#	if MU0_HAVE_WINDOWS
+		if (__date->u_off == 0) {
+			__dest[19] = '+';
+			__dest[20] = '0';
+			__dest[21] = '0';
+			__dest[22] = '0';
+			__dest[23] = '0';
+		}
+#	else
+		if (__date->u_tm.tm_gmtoff == 0) {
+			__dest[19] = '+';
+			__dest[20] = '0';
+			__dest[21] = '0';
+			__dest[22] = '0';
+			__dest[23] = '0';
+		}
+#	endif
 	}
 	return 0;
 }
