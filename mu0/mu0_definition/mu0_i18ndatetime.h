@@ -26,10 +26,10 @@
 
 struct __mu0_tm__
 {
-	struct tm         u_tm;
-	___mu0_sintx_t___ u_usec;
+	struct tm          u_tm;
+	___mu0_sintx_t___  u_usec;
 #	if MU0_HAVE_WINDOWS
-	___mu0_sintx_t___ u_gmtoff;
+	___mu0_sintx_t___  u_gmtoff;
 	___mu0_tchar1_t___ u_zone[6];
 #	endif
 };
