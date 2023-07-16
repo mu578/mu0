@@ -195,7 +195,7 @@
 		return 0;
 	}
 
-# 	endif
+#	endif
 #	endif
 
 #	if !MU0_HAVE_MICROSLEEP
@@ -209,7 +209,7 @@
 	___mu0_sint4_t___ __mu0_usleep__(__mu0_useconds_t__ __us)
 	{ return usleep(__us); }
 
-# 	endif
+#	endif
 #	endif
 
 #	if !MU0_HAVE_MICROSLEEP
@@ -240,7 +240,7 @@
 		return ret;
 	}
 
-# 	endif
+#	endif
 #	endif
 
 #	if !MU0_HAVE_NANOSLEEP
@@ -252,7 +252,7 @@
 	___mu0_sint4_t___ __mu0_nanosleep__(const struct timespec * __rqtp, struct timespec * __rmtp)
 	{ return nanosleep(__rqtp, __rmtp); }
 
-# 	endif
+#	endif
 #	endif
 
 #	if !MU0_HAVE_NANOSLEEP
@@ -281,7 +281,7 @@
 		return ret;
 	}
 
-# 	endif
+#	endif
 #	endif
 
 #	if !MU0_HAVE_NANOTIME_ABS

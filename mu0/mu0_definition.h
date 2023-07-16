@@ -32,6 +32,7 @@
 #	include <mu0/mu0_definition/mu0_i18ndatetime.h>
 #	include <mu0/mu0_definition/mu0_i18nlocale.h>
 #	include <mu0/mu0_definition/mu0_language.h>
+#	include <mu0/mu0_definition/mu0_memory.h>
 #	include <mu0/mu0_definition/mu0_barrier.h>
 #	include <mu0/mu0_definition/mu0_numeral.h>
 #	include <mu0/mu0_definition/mu0_parallelize.h>

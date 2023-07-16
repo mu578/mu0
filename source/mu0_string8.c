@@ -133,7 +133,7 @@ const mu0_tchar8_t * mu0_string8_reverse(
 ) {
 	mu0_tchar8_t * __first, * __last;
 	if (src != dest) {
-		memcpy(dest, src, strlen(src) + __mu0_sizeof__(mu0_tchar8_t));
+		__mu0_memcpy__(dest, src, strlen(src) + __mu0_sizeof__(mu0_tchar8_t));
 	}
 	__first = dest;
 	__last  = dest;

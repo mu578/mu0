@@ -18,6 +18,7 @@
 #include <mu0/mu0_definition/mu0_attribute.h>
 #include <mu0/mu0_definition/mu0_language.h>
 #include <mu0/mu0_definition/mu0_numeral.h>
+#include <mu0/mu0_definition/mu0_memory.h>
 
 #ifndef MU0_I18NLOCALE_H
 #define MU0_I18NLOCALE_H 1
@@ -76,9 +77,9 @@
 			__mu0_unused__(__mask);
 			__mu0_unused__(__base);
 			if (__mu0_not_nullptr__(locale)) {
-				memset(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+				__mu0_memset__(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
 				len                        = __mu0_const_cast__(___mu0_uint8_t___, strlen(__locale));
-				memcpy(locale->u_id, __locale, len);
+				__mu0_memcpy__(locale->u_id, __locale, len);
 				locale->u_ct               = LC_ALL;
 				locale->u_lc               = _create_locale(locale->u_ct, __locale);
 				if (__mu0_is_nullptr__(locale->u_lc)) {
@@ -133,20 +134,20 @@
 			__mu0_static__ ___mu0_tint1_t___ s_id[12];
 			               WCHAR             buff[LOCALE_NAME_MAX_LENGTH] = { 0 };
 			if (0 != GetUserDefaultLocaleName(buff, LOCALE_NAME_MAX_LENGTH)) {
-				memset(s_id, 0, sizeof(s_id));
+				__mu0_memset__(s_id, 0, sizeof(s_id));
 				WideCharToMultiByte(CP_UTF8, 0, buff, 5, s_id, 12, __mu0_nullptr__, __mu0_nullptr__);
 				if (s_id[2] == '_' || s_id[2] == '-') {
 					_configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
 					___mu0_tint1_t___ id[48]     = { 0 };
-					s_id[2]                      = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
+					s_id[2]                      = '_'; __mu0_memcpy__(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
 					___mu0_tint1_t___ * s        = setlocale(LC_ALL, "");
 					if (__mu0_not_nullptr__(s)) {
-						memcpy(id, s, sizeof(id));
+						__mu0_memcpy__(id, s, sizeof(id));
 					} else {
 #						if MU0_HAVE_POSIX1_2001
-						memcpy(id, "C.UTF-8"    ,  7); id[7]  = '\0';
+						__mu0_memcpy__(id, "C.UTF-8"    ,  7); id[7]  = '\0';
 #						else
-						memcpy(id, "en_US.UTF-8", 11); id[11] = '\0';
+						__mu0_memcpy__(id, "en_US.UTF-8", 11); id[11] = '\0';
 #						endif
 					}
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
@@ -154,29 +155,29 @@
 						return s_id;
 					}
 					___mu0_tint1_t___ wk[12]     = { 0 };
-					memcpy(wk, s_id, sizeof(s_id));
+					__mu0_memcpy__(wk, s_id, sizeof(s_id));
 					wk[3] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[0]));
 					wk[4] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[1]));
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
-						memcpy(s_id, wk, sizeof(wk));
+						__mu0_memcpy__(s_id, wk, sizeof(wk));
 						return s_id;
 					}
-					memcpy(wk, s_id, sizeof(s_id));
+					__mu0_memcpy__(wk, s_id, sizeof(s_id));
 					wk[0] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[3]));
 					wk[1] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[4]));
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
-						memcpy(s_id, wk, sizeof(wk));
+						__mu0_memcpy__(s_id, wk, sizeof(wk));
 						return s_id;
 					}
 					setlocale(LC_ALL, id);
 				}
 			}
 #			if MU0_HAVE_POSIX1_2001
-			memcpy(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
+			__mu0_memcpy__(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
 #			else
-			memcpy(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
+			__mu0_memcpy__(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
 #			endif
 			return s_id;
 		}
@@ -252,12 +253,12 @@
 			___mu0_tint1_t___ * a, * b;
 			if (need_a) {
 				a      = alloca(__n + 1);
-				memcpy(a, __lhs, __n);
+				__mu0_memcpy__(a, __lhs, __n);
 				a[__n] = '\0';
 			}
 			if (need_b) {
 				b      = alloca(__n + 1);
-				memcpy(b, __rhs, __n);
+				__mu0_memcpy__(b, __rhs, __n);
 				b[__n] = '\0';
 			}
 			return (__mu0_not_nullptr__(__locale)
@@ -281,7 +282,7 @@
 		{
 			__mu0_i18nlocale_t__ * locale = malloc(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
 			if (__mu0_not_nullptr__(locale)) {
-				memset(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+				__mu0_memset__(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
 				locale->u_lc               = newlocale(__mask, __locale, __mu0_not_nullptr__(__base) ? __base->u_lc : __mu0_nullptr__);
 				if (__mu0_is_nullptr__(locale->u_lc)) {
 					free(locale);
@@ -442,20 +443,20 @@
 			__mu0_static__ ___mu0_tint1_t___ s_id[12];
 			               FILE *            fp;
 			if ((fp = popen("defaults read .GlobalPreferences AppleLocale", "r"))) {
-				memset(s_id, 0, sizeof(s_id));
+				__mu0_memset__(s_id, 0, sizeof(s_id));
 				fgets(s_id, sizeof(s_id) - 1U, fp);
 				if (s_id[2] == '_' || s_id[2] == '-') {
 					pclose(fp);
 					___mu0_tint1_t___ id[48] = { 0 };
-					s_id[2]                  = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
+					s_id[2]                  = '_'; __mu0_memcpy__(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
 					___mu0_tint1_t___ * s    = setlocale(LC_ALL, "");
 					if (__mu0_not_nullptr__(s)) {
-						memcpy(id, s, sizeof(id));
+						__mu0_memcpy__(id, s, sizeof(id));
 					} else {
 #						if MU0_HAVE_POSIX1_2001
-						memcpy(id, "C.UTF-8"    ,  7); id[7]  = '\0';
+						__mu0_memcpy__(id, "C.UTF-8"    ,  7); id[7]  = '\0';
 #						else
-						memcpy(id, "en_US.UTF-8", 11); id[11] = '\0';
+						__mu0_memcpy__(id, "en_US.UTF-8", 11); id[11] = '\0';
 #						endif
 					}
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
@@ -463,20 +464,20 @@
 						return s_id;
 					}
 					___mu0_tint1_t___ wk[12] = { 0 };
-					memcpy(wk, s_id, sizeof(s_id));
+					__mu0_memcpy__(wk, s_id, sizeof(s_id));
 					wk[3] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[0]));
 					wk[4] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[1]));
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
-						memcpy(s_id, wk, sizeof(wk));
+						__mu0_memcpy__(s_id, wk, sizeof(wk));
 						return s_id;
 					}
-					memcpy(wk, s_id, sizeof(s_id));
+					__mu0_memcpy__(wk, s_id, sizeof(s_id));
 					wk[0] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[3]));
 					wk[1] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[4]));
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
-						memcpy(s_id, wk, sizeof(wk));
+						__mu0_memcpy__(s_id, wk, sizeof(wk));
 						return s_id;
 					}
 					setlocale(LC_ALL, id);
@@ -484,9 +485,9 @@
 				pclose(fp);
 			}
 #			if MU0_HAVE_POSIX1_2001
-			memcpy(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
+			__mu0_memcpy__(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
 #			else
-			memcpy(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
+			__mu0_memcpy__(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
 #			endif
 			return s_id;
 		}
@@ -498,19 +499,19 @@
 		{
 			__mu0_static__ ___mu0_tint1_t___ s_id[12];
 
-			memset(s_id, 0, sizeof(s_id));
+			__mu0_memset__(s_id, 0, sizeof(s_id));
 			if (CFStringGetCString(CFLocaleGetValue(CFLocaleCopyCurrent(), kCFLocaleIdentifier), s_id, sizeof(s_id) - 1U, kCFStringEncodingUTF8)) {
 				if (s_id[2] == '_' || s_id[2] == '-') {
 					___mu0_tint1_t___ id[48] = { 0 };
-					s_id[2]                  = '_'; memcpy(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
+					s_id[2]                  = '_'; __mu0_memcpy__(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
 					___mu0_tint1_t___ * s    = setlocale(LC_ALL, "");
 					if (__mu0_not_nullptr__(s)) {
-						memcpy(id, s, sizeof(id));
+						__mu0_memcpy__(id, s, sizeof(id));
 					} else {
 #						if MU0_HAVE_POSIX1_2001
-						memcpy(id, "C.UTF-8"    ,  7); id[7]  = '\0';
+						__mu0_memcpy__(id, "C.UTF-8"    ,  7); id[7]  = '\0';
 #						else
-						memcpy(id, "en_US.UTF-8", 11); id[11] = '\0';
+						__mu0_memcpy__(id, "en_US.UTF-8", 11); id[11] = '\0';
 #						endif
 					}
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
@@ -518,29 +519,29 @@
 						return s_id;
 					}
 					___mu0_tint1_t___ wk[12] = { 0 };
-					memcpy(wk, s_id, sizeof(s_id));
+					__mu0_memcpy__(wk, s_id, sizeof(s_id));
 					wk[3] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[0]));
 					wk[4] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[1]));
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
-						memcpy(s_id, wk, sizeof(wk));
+						__mu0_memcpy__(s_id, wk, sizeof(wk));
 						return s_id;
 					}
-					memcpy(wk, s_id, sizeof(s_id));
+					__mu0_memcpy__(wk, s_id, sizeof(s_id));
 					wk[0] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[3]));
 					wk[1] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[4]));
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
-						memcpy(s_id, wk, sizeof(wk));
+						__mu0_memcpy__(s_id, wk, sizeof(wk));
 						return s_id;
 					}
 					setlocale(LC_ALL, id);
 				}
 			}
 #			if MU0_HAVE_POSIX1_2001
-			memcpy(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
+			__mu0_memcpy__(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
 #			else
-			memcpy(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
+			__mu0_memcpy__(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
 #			endif
 			return s_id;
 		}
@@ -717,24 +718,24 @@ const ___mu0_tint1_t___ * __mu0_i18nlocale_id__(const ___mu0_tint1_t___ * __lg, 
 	___mu0_uint8_t___   k, l, p   = 0;
 
 	//#! XPG syntax:[language[territory[.codeset]][@modifier[+variant]]
-	memset(s_name, 0, __mu0_sizeof__(s_name));
+	__mu0_memset__(s_name, 0, __mu0_sizeof__(s_name));
 	if (__mu0_not_nullptr__(__lg)) {
 		k = strlen(__lg);
 		if (k > 0) {
 			l  = k;
-			memcpy(s_name + p, __lg, l);
+			__mu0_memcpy__(s_name + p, __lg, l);
 			p += l;
 			if (__mu0_not_nullptr__(__cn)) {
 				k  = strlen(__cn);
 				if (k > 0) {
 					l  = __mu0_sizeof__(___mu0_tint1_t___);
-					memcpy(s_name + p, "_", __mu0_min__(6, l));
+					__mu0_memcpy__(s_name + p, "_", __mu0_min__(6, l));
 					p += l;
 					l  = k;
-					memcpy(s_name + p, __cn, __mu0_min__(16, l));
+					__mu0_memcpy__(s_name + p, __cn, __mu0_min__(16, l));
 					p += l;
 					l  =  __mu0_sizeof__(___mu0_tint1_t___) * 6;
-					memcpy(s_name + p, ".UTF-8", l);
+					__mu0_memcpy__(s_name + p, ".UTF-8", l);
 					have_name = 1;
 				}
 				if (__mu0_not_nullptr__(__md)) {
@@ -747,10 +748,10 @@ const ___mu0_tint1_t___ * __mu0_i18nlocale_id__(const ___mu0_tint1_t___ * __lg, 
 					if (k > 0) {
 						p += l;
 						l  = __mu0_sizeof__(___mu0_tint1_t___);
-						memcpy(s_name + p, "@", l);
+						__mu0_memcpy__(s_name + p, "@", l);
 						p += l;
 						l  = k ;
-						memcpy(s_name + p, __md, __mu0_min__(16, l));
+						__mu0_memcpy__(s_name + p, __md, __mu0_min__(16, l));
 					}
 				}
 			}

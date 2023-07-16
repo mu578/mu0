@@ -51,31 +51,27 @@ const mu0_calendar_date_t * mu0_datetime_querytime(mu0_calendar_date_t * date, c
 
 	struct __mu0_tm__ tm;
 	if (zulu == mu0_false) {
-		__mu0_i18ndatetime_localtime__(&tm);
+		__mu0_localtime__(&tm);
 	} else {
-		__mu0_i18ndatetime_zulutime__ (&tm);
+		__mu0_zulutime__ (&tm);
 	}
 
-	date->u_year         = mu0_const_cast(mu0_uint32_t, (__mu0_struct_tm_field_year__   (tm) + 1900));
-	date->u_dayofyear    = mu0_const_cast(mu0_uint16_t,  __mu0_struct_tm_field_yday__   (tm));
-	date->u_month        = mu0_const_cast(mu0_uint16_t,  __mu0_struct_tm_field_mon__    (tm));
-	date->u_weekday      = mu0_const_cast(mu0_uint16_t,  __mu0_struct_tm_field_wday__   (tm));
-	date->u_day          = mu0_const_cast(mu0_uint16_t,  __mu0_struct_tm_field_mday__   (tm));
-	date->u_hours        = mu0_const_cast(mu0_uint16_t,  __mu0_struct_tm_field_hour__   (tm));
-	date->u_minutes      = mu0_const_cast(mu0_uint16_t,  __mu0_struct_tm_field_min__    (tm));
-	date->u_seconds      = mu0_const_cast(mu0_uint16_t,  __mu0_struct_tm_field_sec__    (tm));
-	date->u_microseconds = mu0_const_cast(mu0_uint32_t,  __mu0_struct_tm_field_usec__   (tm));
-	date->u_daylight     = mu0_const_cast(mu0_sint16_t,  __mu0_struct_tm_field_isdst__  (tm));
-	date->u_offset       = mu0_const_cast(mu0_sint16_t,  __mu0_struct_tm_field_gmtoff__ (tm));
-	memset(date->u_timezone, 0, 6);
-	memcpy(
-		  date->u_timezone
-		,        __mu0_struct_tm_field_zone__(tm)
-		, strlen(__mu0_struct_tm_field_zone__(tm))
+	date->u_year         = mu0_const_cast(mu0_sint32_t, (__mu0_tm_year__   (tm) + 1900));
+	date->u_dayofyear    = mu0_const_cast(mu0_uint16_t,  __mu0_tm_yday__   (tm));
+	date->u_month        = mu0_const_cast(mu0_uint16_t,  __mu0_tm_mon__    (tm));
+	date->u_weekday      = mu0_const_cast(mu0_uint16_t,  __mu0_tm_wday__   (tm));
+	date->u_day          = mu0_const_cast(mu0_uint16_t,  __mu0_tm_mday__   (tm));
+	date->u_hours        = mu0_const_cast(mu0_uint16_t,  __mu0_tm_hour__   (tm));
+	date->u_minutes      = mu0_const_cast(mu0_uint16_t,  __mu0_tm_min__    (tm));
+	date->u_seconds      = mu0_const_cast(mu0_uint16_t,  __mu0_tm_sec__    (tm));
+	date->u_microseconds = mu0_const_cast(mu0_uint32_t,  __mu0_tm_usec__   (tm));
+	date->u_daylight     = mu0_const_cast(mu0_sint16_t,  __mu0_tm_isdst__  (tm));
+	date->u_offset       = mu0_const_cast(mu0_sint16_t,  __mu0_tm_gmtoff__ (tm));
+	__mu0_memset__(date->u_timezone, 0, 6);
+	__mu0_memcpy__(date->u_timezone, __mu0_tm_zone__(tm), strlen(__mu0_tm_zone__(tm))
 	);
 
 	return p;
-
 }
 
 const mu0_calendar_date_t * mu0_datetime_localtime(mu0_calendar_date_t * date)
@@ -93,21 +89,20 @@ const mu0_tchar8_t * mu0_datetime_formatting(
 	const mu0_tchar8_t * p = dest;
 
 	struct __mu0_tm__ tm;
-	memset(&tm, 0, __mu0_sizeof__(struct __mu0_tm__));
+	__mu0_memset__(&tm, 0, __mu0_sizeof__(struct __mu0_tm__));
+	__mu0_tm_year__   (tm) = date->u_year - 1900U;
+	__mu0_tm_yday__   (tm) = date->u_dayofyear;
+	__mu0_tm_mon__    (tm) = date->u_month;
+	__mu0_tm_wday__   (tm) = date->u_weekday;
+	__mu0_tm_mday__   (tm) = date->u_day;
+	__mu0_tm_hour__   (tm) = date->u_hours;
+	__mu0_tm_min__    (tm) = date->u_minutes;
+	__mu0_tm_sec__    (tm) = date->u_seconds;
+	__mu0_tm_usec__   (tm) = date->u_microseconds;
+	__mu0_tm_isdst__  (tm) = date->u_daylight;
+	__mu0_tm_gmtoff__ (tm) = date->u_offset;
 
-	__mu0_struct_tm_field_year__   (tm) = date->u_year - 1900U;
-	__mu0_struct_tm_field_yday__   (tm) = date->u_dayofyear;
-	__mu0_struct_tm_field_mon__    (tm) = date->u_month;
-	__mu0_struct_tm_field_wday__   (tm) = date->u_weekday;
-	__mu0_struct_tm_field_mday__   (tm) = date->u_day;
-	__mu0_struct_tm_field_hour__   (tm) = date->u_hours;
-	__mu0_struct_tm_field_min__    (tm) = date->u_minutes;
-	__mu0_struct_tm_field_sec__    (tm) = date->u_seconds;
-	__mu0_struct_tm_field_usec__   (tm) = date->u_microseconds;
-	__mu0_struct_tm_field_isdst__  (tm) = date->u_daylight;
-	__mu0_struct_tm_field_gmtoff__ (tm) = date->u_offset;
-
-	__mu0_i18ndatetime_formatting__(&tm, format, locale, dest);
+	__mu0_dateformat__(&tm, format, locale, dest);
 
 	return p;
 }
