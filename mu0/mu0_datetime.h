@@ -36,7 +36,7 @@ typedef struct
 
 typedef struct
 {
-	mu0_uint32_t u_year;
+	mu0_sint64_t u_year;
 	mu0_uint16_t u_dayofyear;
 	mu0_uint16_t u_month;
 	mu0_uint16_t u_weekday;
