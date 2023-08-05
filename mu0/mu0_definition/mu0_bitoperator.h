@@ -189,12 +189,12 @@ const ___mu0_sint4_t___ __mu0_cntlz_u8__(const ___mu0_uint8_t___ __x)
 	const ___mu0_sint4_t___ d = __mu0_bit_digits_u4__();
 #	if MU0_HAVE_C99 || MU0_HAVE_CPP11
 	return ((__x & 0xFFFFFFFF00000000ULL)
-		?     __mu0_cntlz_u4__(__x >> d)
+		?     __mu0_cntlz_u4__(__mu0_const_cast__(___mu0_uint4_t___, (__x >> d)))
 		: d + __mu0_cntlz_u4__(__x & 0xFFFFFFFFULL)
 	);
 #	else
 	return ((__x & 0xFFFFFFFF00000000UL)
-		?     __mu0_cntlz_u4__(__x >> d)
+		?     __mu0_cntlz_u4__(__mu0_const_cast__(___mu0_uint4_t___, (__x >> d)))
 		: d + __mu0_cntlz_u4__(__x & 0xFFFFFFFFUL)
 	);
 #	endif
@@ -311,12 +311,12 @@ const ___mu0_sint4_t___ __mu0_cnttz_u8__(const ___mu0_uint8_t___ __x)
 #	if MU0_HAVE_C99 || MU0_HAVE_CPP11
 	return ((__x & 0x00000000FFFFFFFFULL)
 		?     __mu0_cnttz_u4__(__x & 0xFFFFFFFFULL)
-		: d + __mu0_cnttz_u4__(__x >> d)
+		: d + __mu0_cnttz_u4__(__mu0_const_cast__(___mu0_uint4_t___, (__x >> d)))
 	);
 #	else
 	return ((__x & 0x00000000FFFFFFFFUL)
 		?     __mu0_cnttz_u4__(__x & 0xFFFFFFFFUL)
-		: d + __mu0_cnttz_u4__(__x >> d)
+		: d + __mu0_cnttz_u4__(__mu0_const_cast__(___mu0_uint4_t___, (__x >> d)))
 	);
 #	endif
 }

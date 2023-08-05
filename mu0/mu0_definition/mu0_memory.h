@@ -15,7 +15,7 @@
 // Copyright (C) 2023 mu578. All rights reserved.
 //
 
-#include <mu0/mu0_definition/mu0_platform.h>
+#include <mu0/mu0_definition/mu0_language.h>
 
 #ifndef MU0_MEMORY_H
 #define MU0_MEMORY_H 1
@@ -33,12 +33,19 @@
 #		else
 #			define __mu0_memcpy__ memcpy
 #		endif
+#		if __has_builtin(__builtin_strlen)
+#			define __mu0_memlen__ __builtin_strlen
+#		else
+#			define __mu0_memlen__ strlen
+#		endif
 #	elif MU0_HAVE_CC_GNUCC
 #		define __mu0_memset__ __builtin_memset
 #		define __mu0_memcpy__ __builtin_memcpy
+#		define __mu0_memlen__ __builtin_strlen
 #	else
 #		define __mu0_memset__ memset
 #		define __mu0_memcpy__ memcpy
+#		define __mu0_memcpy__ strlen
 #	endif
 
 #endif /* !MU0_MEMORY_H */

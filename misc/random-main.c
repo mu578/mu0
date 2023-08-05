@@ -24,7 +24,7 @@ int main(int argc, const char * argv[])
 
 	mu0_uinteger_t i, k = 0;
 
-	mu0_srandom(20, 2);
+	mu0_random_seed(20, 2);
 	mu0_console_log("\n");
 
 	for (; k < 8; ++k) {
@@ -36,7 +36,7 @@ int main(int argc, const char * argv[])
 		mu0_console_log("\n");
 		i = 0;
 		for (; i < 8; ++i) {
-			mu0_console_log("%06u ", mu0_bounded_random_u32(8));
+			mu0_console_log("%06u ", mu0_random_bounded_u32(8));
 		}
 
 		mu0_console_log("\n");
@@ -47,7 +47,7 @@ int main(int argc, const char * argv[])
 		mu0_console_log("\n\n");
 	}
 
-	mu0_ssrandom();
+	mu0_random_init();
 	mu0_console_log("\n");
 
 	k = 0;
@@ -60,7 +60,7 @@ int main(int argc, const char * argv[])
 		mu0_console_log("\n");
 		i = 0;
 		for (; i < 8; ++i) {
-			mu0_console_log("%06u ", mu0_bounded_random_u32(32));
+			mu0_console_log("%06u ", mu0_random_bounded_u32(32));
 		}
 
 		mu0_console_log("\n");

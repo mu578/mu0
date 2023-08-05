@@ -419,7 +419,7 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 
 #	if MU0_HAVE_FLOAT128
 
-#	define __mu0_fp128_const__(__c) __c
+#	define __mu0_fp128_const__(__c) __mu0_extension__ __c ## f128
 
 mu0_floating_point_constant(mu0_fp128_t, mu0_fp128_max_exp, FLT128_MAX_EXP);
 mu0_floating_point_constant(mu0_fp128_t, mu0_fp128_log_max, __mu0_fp128_const__(11356.0));
@@ -481,7 +481,7 @@ mu0_floating_point_constant(mu0_fp32_t , mu0_fp32_ten     , __mu0_fp32_const__(1
 
 #	if MU0_HAVE_FLOAT16
 
-#	define __mu0_fp16_const__(__c) __c ## f
+#	define __mu0_fp16_const__(__c) __mu0_extension__ __c ## f16
 
 mu0_floating_point_constant(mu0_fp16_t , mu0_fp16_max_exp , FLT16_MAX_EXP);
 mu0_floating_point_constant(mu0_fp16_t , mu0_fp16_log_max , __mu0_fp16_const__(11.0));

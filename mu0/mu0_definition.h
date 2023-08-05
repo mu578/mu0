@@ -43,16 +43,16 @@ MU0_BEGIN_CDECL
 
 enum mu0_endian
 {
-	  mu0_endian_little           = __mu0_order_leen__
-	, mu0_endian_big              = __mu0_order_been__
-	, mu0_endian_native           = __mu0_byte_order__
+	  mu0_endian_little    = __mu0_order_leen__
+	, mu0_endian_big       = __mu0_order_been__
+	, mu0_endian_native    = __mu0_byte_order__
 };
 
 enum mu0_ordering
 {
-	  mu0_ordering_less           = -1
-	, mu0_ordering_equal          =  0
-	, mu0_ordering_greater        =  1
+	  mu0_ordering_less    = -1
+	, mu0_ordering_equal   =  0
+	, mu0_ordering_greater =  1
 };
 
 #	define mu0_min(__a, __b)           __mu0_inline_min__(__a, __b)

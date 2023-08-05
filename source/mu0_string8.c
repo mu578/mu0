@@ -47,12 +47,12 @@ mu0_tchar8_t * mu0_string8_reverse_codepoint(mu0_tchar8_t * src)
 
 mu0_usize_t mu0_string8_length(const mu0_tchar8_t * src)
 {
-	return strlen(src);
+	return __mu0_memlen__(src);
 }
 
 mu0_usize_t mu0_string8_width(const mu0_tchar8_t * src)
 {
-	return strlen(src) + 1U;
+	return __mu0_memlen__(src) + 1U;
 }
 
 mu0_usize_t mu0_string8_count(const mu0_tchar8_t * src)
@@ -133,7 +133,7 @@ const mu0_tchar8_t * mu0_string8_reverse(
 ) {
 	mu0_tchar8_t * __first, * __last;
 	if (src != dest) {
-		__mu0_memcpy__(dest, src, strlen(src) + __mu0_sizeof__(mu0_tchar8_t));
+		__mu0_memcpy__(dest, src, __mu0_memlen__(src) + __mu0_sizeof__(mu0_tchar8_t));
 	}
 	__first = dest;
 	__last  = dest;

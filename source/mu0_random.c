@@ -27,10 +27,10 @@ typedef struct
 	{ __mu0_uint64_const__(9600629759793949339), __mu0_uint64_const__(15726070495360670683) }
 
 __mu0_static__
-mu0_random_context_t g_mu0_pcg32_context = mu0_pcg32_initializer;
+mu0_random_context_t g_mu0_pcg32_context     = mu0_pcg32_initializer;
 
 __mu0_static__ __mu0_volatile__
-mu0_uint32_t         g_mu0_pcg32_default = 0U;
+mu0_uint32_t         __mu0_permutedcg_init__ = 0U;
 
 __mu0_static_inline__
 void mu0_pcg32_context_seed_build(mu0_uint64_t * seed, mu0_uint64_t * incr)
@@ -50,7 +50,7 @@ mu0_uint32_t mu0_pcg32_random_r(mu0_random_context_t * ctx)
 }
 
 __mu0_static_inline__
-mu0_uint32_t mu0_pcg32_bounded_random_r(mu0_random_context_t * ctx, const mu0_uint32_t bound)
+mu0_uint32_t mu0_pcg32_random_bounded_r(mu0_random_context_t * ctx, const mu0_uint32_t bound)
 {
 	const mu0_uint32_t t = -bound % bound;
 	mu0_uint32_t r;
@@ -72,11 +72,11 @@ mu0_uint64_t mu0_pcg32_64_random_r(mu0_random_context_t * ctx)
 __mu0_static_inline__
 mu0_uint16_t mu0_pcg32_16_random_r(mu0_random_context_t * ctx)
 {
-	return mu0_uint16(mu0_pcg32_bounded_random_r(ctx, mu0_uint32(mu0_uint16_max)));
+	return mu0_uint16(mu0_pcg32_random_bounded_r(ctx, mu0_uint32(mu0_uint16_max)));
 }
 
 __mu0_static_inline__
-mu0_uint64_t mu0_pcg32_64_bounded_random_r(mu0_random_context_t * ctx, const mu0_uint64_t bound)
+mu0_uint64_t mu0_pcg32_64_random_bounded_r(mu0_random_context_t * ctx, const mu0_uint64_t bound)
 {
 	const mu0_uint64_t t = -bound % bound;
 	mu0_uint64_t r;
@@ -88,9 +88,9 @@ mu0_uint64_t mu0_pcg32_64_bounded_random_r(mu0_random_context_t * ctx, const mu0
 }
 
 __mu0_static_inline__
-mu0_uint16_t mu0_pcg32_16_bounded_random_r(mu0_random_context_t * ctx, const mu0_uint16_t bound)
+mu0_uint16_t mu0_pcg32_16_random_bounded_r(mu0_random_context_t * ctx, const mu0_uint16_t bound)
 {
-	return mu0_uint16(mu0_pcg32_bounded_random_r(ctx, mu0_uint32(bound)));
+	return mu0_uint16(mu0_pcg32_random_bounded_r(ctx, mu0_uint32(bound)));
 }
 
 __mu0_static_inline__
@@ -116,11 +116,11 @@ __mu0_static_inline__
 void mu0_pcg32_ssrandom_r(mu0_random_context_t * ctx)
 {
 	mu0_uint64_t seed, incr;
-	if (g_mu0_pcg32_default == 0U) {
+	if (__mu0_permutedcg_init__ == 0U) {
 		__mu0_barrier_acquire__();
 		mu0_pcg32_context_seed_build(&seed, &incr);
 		mu0_pcg32_srandom_r(ctx, seed, incr);
-		g_mu0_pcg32_default = 1U;
+		__mu0_permutedcg_init__ = 1U;
 		__mu0_barrier_release__();
 	}
 }
@@ -148,29 +148,29 @@ mu0_uint16_t mu0_pcg32_16_random(void)
 }
 
 __mu0_static_inline__
-mu0_uint32_t mu0_pcg32_bounded_random(const mu0_uint32_t bound)
+mu0_uint32_t mu0_pcg32_random_bounded(const mu0_uint32_t bound)
 {
-	return mu0_pcg32_bounded_random_r(&g_mu0_pcg32_context, bound);
+	return mu0_pcg32_random_bounded_r(&g_mu0_pcg32_context, bound);
 }
 
 __mu0_static_inline__
-mu0_uint64_t mu0_pcg32_64_bounded_random(const mu0_uint64_t bound)
+mu0_uint64_t mu0_pcg32_64_random_bounded(const mu0_uint64_t bound)
 {
-	return mu0_pcg32_64_bounded_random_r(&g_mu0_pcg32_context, bound);
+	return mu0_pcg32_64_random_bounded_r(&g_mu0_pcg32_context, bound);
 }
 
 __mu0_static_inline__
-mu0_uint16_t mu0_pcg32_16_bounded_random(const mu0_uint16_t bound)
+mu0_uint16_t mu0_pcg32_16_random_bounded(const mu0_uint16_t bound)
 {
-	return mu0_pcg32_16_bounded_random_r(&g_mu0_pcg32_context, bound);
+	return mu0_pcg32_16_random_bounded_r(&g_mu0_pcg32_context, bound);
 }
 
-void mu0_srandom(const mu0_uint16_t seed, const mu0_uint16_t incr)
+void mu0_random_seed(const mu0_uint16_t seed, const mu0_uint16_t incr)
 {
 	mu0_pcg32_srandom_r(&g_mu0_pcg32_context, seed, incr);
 }
 
-void mu0_ssrandom(void)
+void mu0_random_init(void)
 {
 	mu0_pcg32_ssrandom_r(&g_mu0_pcg32_context);
 }
@@ -210,57 +210,57 @@ mu0_sint128_t mu0_random_i128(void)
 #	error "mu0_random.c"
 #	else
 	mu0_pcg32_ssrandom();
-	return mu0_uint128(mu0_pcg32_64_bounded_random(mu0_sint128_max));
+	return mu0_uint128(mu0_pcg32_64_random_bounded(mu0_sint128_max));
 #	endif
 
 }
 mu0_sint64_t mu0_random_i64 (void)
 {
 	mu0_pcg32_ssrandom();
-	return mu0_pcg32_64_bounded_random(mu0_sint64_max);
+	return mu0_pcg32_64_random_bounded(mu0_sint64_max);
 }
 
 mu0_sint32_t mu0_random_i32 (void)
 {
 	mu0_pcg32_ssrandom();
-	return mu0_pcg32_bounded_random(mu0_sint32_max);
+	return mu0_pcg32_random_bounded(mu0_sint32_max);
 }
 
 mu0_sint16_t mu0_random_i16 (void)
 {
 	mu0_pcg32_ssrandom();
-	return mu0_pcg32_16_bounded_random(mu0_sint16_max);
+	return mu0_pcg32_16_random_bounded(mu0_sint16_max);
 }
 
-mu0_uint128_t mu0_bounded_random_u128(const mu0_uint128_t upper_bound)
+mu0_uint128_t mu0_random_bounded_u128(const mu0_uint128_t upper_bound)
 {
 #	if MU0_HAVE_INT128
 #	error "mu0_random.c"
 #	else
 	mu0_pcg32_ssrandom();
-	return mu0_pcg32_64_bounded_random(upper_bound);
+	return mu0_pcg32_64_random_bounded(upper_bound);
 #	endif
 }
 
-mu0_uint64_t mu0_bounded_random_u64(const mu0_uint64_t upper_bound)
+mu0_uint64_t mu0_random_bounded_u64(const mu0_uint64_t upper_bound)
 {
 	mu0_pcg32_ssrandom();
-	return mu0_pcg32_64_bounded_random(upper_bound);
+	return mu0_pcg32_64_random_bounded(upper_bound);
 }
 
-mu0_uint32_t mu0_bounded_random_u32(const mu0_uint32_t upper_bound)
+mu0_uint32_t mu0_random_bounded_u32(const mu0_uint32_t upper_bound)
 {
 	mu0_pcg32_ssrandom();
-	return mu0_pcg32_bounded_random(upper_bound);
+	return mu0_pcg32_random_bounded(upper_bound);
 }
 
-mu0_uint16_t mu0_bounded_random_u16(const mu0_uint16_t upper_bound)
+mu0_uint16_t mu0_random_bounded_u16(const mu0_uint16_t upper_bound)
 {
 	mu0_pcg32_ssrandom();
-	return mu0_pcg32_16_bounded_random(upper_bound);
+	return mu0_pcg32_16_random_bounded(upper_bound);
 }
 
-mu0_uint128_t mu0_ranged_random_u128(
+mu0_uint128_t mu0_random_ranged_u128(
 	  const mu0_uint128_t lower_bound
 	, const mu0_uint128_t upper_bound
 ) {
@@ -278,7 +278,7 @@ mu0_uint128_t mu0_ranged_random_u128(
 	return (mu0_random_u128() % diff) + lo;
 }
 
-mu0_uint64_t mu0_ranged_random_u64(
+mu0_uint64_t mu0_random_ranged_u64(
 	  const mu0_uint64_t  lower_bound
 	, const mu0_uint64_t  upper_bound
 ) {
@@ -296,7 +296,7 @@ mu0_uint64_t mu0_ranged_random_u64(
 	return (mu0_random_u64() % diff) + lo;
 }
 
-mu0_uint32_t mu0_ranged_random_u32(
+mu0_uint32_t mu0_random_ranged_u32(
 	  const mu0_uint32_t  lower_bound
 	, const mu0_uint32_t  upper_bound
 ) {
@@ -314,7 +314,7 @@ mu0_uint32_t mu0_ranged_random_u32(
 	return (mu0_random_u32() % diff) + lo;
 }
 
-mu0_uint16_t mu0_ranged_random_u16(
+mu0_uint16_t mu0_random_ranged_u16(
 	  const mu0_uint16_t  lower_bound
 	, const mu0_uint16_t  upper_bound
 ) {
@@ -332,7 +332,7 @@ mu0_uint16_t mu0_ranged_random_u16(
 	return (mu0_random_u16() % diff) + lo;
 }
 
-mu0_sint128_t mu0_ranged_random_i128(
+mu0_sint128_t mu0_random_ranged_i128(
 	  const mu0_sint128_t lower_bound
 	, const mu0_sint128_t upper_bound
 ) {
@@ -350,7 +350,7 @@ mu0_sint128_t mu0_ranged_random_i128(
 	return (mu0_random_i128() % diff) + lo;
 }
 
-mu0_sint64_t mu0_ranged_random_i64(
+mu0_sint64_t mu0_random_ranged_i64(
 	  const mu0_sint64_t  lower_bound
 	, const mu0_sint64_t  upper_bound
 ) {
@@ -368,7 +368,7 @@ mu0_sint64_t mu0_ranged_random_i64(
 	return (mu0_random_i64() % diff) + lo;
 }
 
-mu0_sint32_t mu0_ranged_random_i32(
+mu0_sint32_t mu0_random_ranged_i32(
 	  const mu0_sint32_t  lower_bound
 	, const mu0_sint32_t  upper_bound
 ) {
@@ -386,7 +386,7 @@ mu0_sint32_t mu0_ranged_random_i32(
 	return (mu0_random_i32() % diff) + lo;
 }
 
-mu0_sint16_t mu0_ranged_random_i16(
+mu0_sint16_t mu0_random_ranged_i16(
 	  const mu0_sint16_t  lower_bound
 	, const mu0_sint16_t  upper_bound
 ) {
@@ -434,7 +434,7 @@ mu0_fp16_t mu0_random_fp16(void)
 	return (mu0_fp16(a) / mu0_fp16(k));
 }
 
-mu0_fp128_t mu0_ranged_random_fp128(
+mu0_fp128_t mu0_random_ranged_fp128(
 	  const mu0_fp128_t lower_bound
 	, const mu0_fp128_t upper_bound
 ) {
@@ -443,7 +443,7 @@ mu0_fp128_t mu0_ranged_random_fp128(
 	return d;
 }
 
-mu0_fp64_t mu0_ranged_random_fp64(
+mu0_fp64_t mu0_random_ranged_fp64(
 	  const mu0_fp64_t  lower_bound
 	, const mu0_fp64_t  upper_bound
 ) {
@@ -452,7 +452,7 @@ mu0_fp64_t mu0_ranged_random_fp64(
 	return d;
 }
 
-mu0_fp32_t mu0_ranged_random_fp32(
+mu0_fp32_t mu0_random_ranged_fp32(
 	  const mu0_fp32_t  lower_bound
 	, const mu0_fp32_t  upper_bound
 ) {
@@ -461,7 +461,7 @@ mu0_fp32_t mu0_ranged_random_fp32(
 	return d;
 }
 
-mu0_fp16_t mu0_ranged_random_fp16(
+mu0_fp16_t mu0_random_ranged_fp16(
 	  const mu0_fp16_t  lower_bound
 	, const mu0_fp16_t  upper_bound
 ) {

@@ -23,7 +23,7 @@ const mu0_tchar8_t * mu0_locale_name(
 	, const mu0_tchar8_t * territory
 	, const mu0_tchar8_t * modifier  __mu0_nullable__
 ) {
-	return __mu0_i18nlocale_id__(language, territory, modifier);
+	return __mu0_i18nlocale_make__(language, territory, modifier);
 }
 
 mu0_locale_t * mu0_locale_create(
