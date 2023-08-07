@@ -491,7 +491,11 @@
 			FILETIME       ft;
 			ULARGE_INTEGER lv;
 			__int64 tm, ssec, nsec;
+	#	if _WIN32_WINNT >= _WIN32_WINNT_WIN8
+			GetSystemTimePreciseAsFileTime(&ft);
+	#	else
 			GetSystemTimeAsFileTime(&ft);
+	#	endif
 			lv.LowPart  = ft.dwLowDateTime;
 			lv.HighPart = ft.dwHighDateTime;
 			tm          = __mu0_const_cast__(__int64, (lv.QuadPart - 116444736000000000Ui64));
