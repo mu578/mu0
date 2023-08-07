@@ -158,6 +158,7 @@
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #		undef  MU0_HAVE_GETTIMEOFDAY
 #		define MU0_HAVE_GETTIMEOFDAY 1
+#		include <sysinfoapi.h>
 
 	struct __mu0_timeval__  { ___mu0_sint8_t___ tv_sec;         ___mu0_sintx_t___ tv_usec;    };
 	struct __mu0_timezone__ { ___mu0_sint4_t___ tz_minuteswest; ___mu0_sint4_t___ tz_dsttime; };
@@ -216,6 +217,7 @@
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #		undef  MU0_HAVE_MICROSLEEP
 #		define MU0_HAVE_MICROSLEEP 1
+#		include <synchapi.h>
 
 #		define __mu0_useconds_t__ ___mu0_uint8_t___
 
