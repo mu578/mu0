@@ -29,9 +29,9 @@ enum mu0_localegroup
 {
 	  mu0_localegroup_complete = 0
 	, mu0_localegroup_collator = 1
-	, mu0_localegroup_monetary = 3
-	, mu0_localegroup_numerics = 4
-	, mu0_localegroup_datetime = 5
+	, mu0_localegroup_monetary = 2
+	, mu0_localegroup_numerics = 3
+	, mu0_localegroup_datetime = 4
 };
 
 mu0_locale_t *       mu0_locale_create(
