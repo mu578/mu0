@@ -183,25 +183,48 @@
 
 #	if !MU0_HAVE_CPUCLICK
 #	if MU0_HAVE_CC_ITLCC
+#	if MU0_HAVE_X64 && !MU0_HAVE_IA64
 #		undef  MU0_HAVE_CPUCLICK
 #		define MU0_HAVE_CPUCLICK 1
 		__mu0_static_inline__
 		const ___mu0_uint8_t___ ___mu0_cpuclick___(void)
 		{
-			unsigned __int64 rv = 0UL;
+			unsigned __int64 rv = 0Ui64;
 			_rdrand64_step(&rv);
 			return __mu0_const_cast__(___mu0_uint8_t___, rv);
 		}
 #		define __mu0_cpuclick__() ___mu0_cpuclick___()
 #	endif
 #	endif
+#	endif
 
 #	if !MU0_HAVE_CPUCLICK
-#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
-#	if __has_builtin(__builtin_readcyclecounter_BUG)
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_MSVCL
+#	if MU0_HAVE_X64
+#	if __has_builtin(__builtin_ia32_rdrand64_step)
+#		undef  MU0_HAVE_CPUCLICK
+#		define MU0_HAVE_CPUCLICK 1
+		__mu0_static_inline__
+		const ___mu0_uint8_t___ ___mu0_cpuclick___(void)
+		{
+			___mu0_uint8_t___ rv = 0U;
+			__builtin_ia32_rdrand64_step(&rv);
+			return rv;
+		}
+#		define __mu0_cpuclick__() ___mu0_cpuclick___()
+#	endif
+#	endif
+#	endif
+#	endif
+
+#	if !MU0_HAVE_CPUCLICK
+#	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC
+#	if !MU0_HAVE_ARM64
+#	if __has_builtin(__builtin_readcyclecounter)
 #		undef  MU0_HAVE_CPUCLICK
 #		define MU0_HAVE_CPUCLICK 1
 #		define __mu0_cpuclick__() __builtin_readcyclecounter()
+#	endif
 #	endif
 #	endif
 #	endif

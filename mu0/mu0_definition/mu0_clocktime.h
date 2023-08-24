@@ -22,10 +22,6 @@
 #define MU0_CLOCKTIME_H 1
 
 #	undef  MU0_HAVE_CLOCKTIME
-#	undef  __mu0_clocktime_utc__
-#	undef  __mu0_clocktime_abs__
-#	undef  __mu0_clocktime_act__
-#	undef  __mu0_clocktime_thr__
 #	undef  MU0_HAVE_GETTIMEOFDAY
 #	undef  MU0_HAVE_MICROSLEEP
 #	undef  MU0_HAVE_NANOSLEEP

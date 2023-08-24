@@ -25,24 +25,33 @@ MU0_BEGIN_CDECL
 
 typedef __mu0_i18nlocale_t__ mu0_locale_t;
 
+enum mu0_localegroup
+{
+	  mu0_localegroup_complete = 0
+	, mu0_localegroup_collator = 1
+	, mu0_localegroup_monetary = 3
+	, mu0_localegroup_numerics = 4
+	, mu0_localegroup_datetime = 5
+};
+
 mu0_locale_t *       mu0_locale_create(
-	  const mu0_tchar8_t * language
-	, const mu0_tchar8_t * territory
-	, const mu0_tchar8_t * modifier  __mu0_nullable__
-	, const mu0_bool_t     collator
+	  const      mu0_tchar8_t *  language
+	, const      mu0_tchar8_t *  territory
+	, const      mu0_tchar8_t *  modifier  __mu0_nullable__
+	, const enum mu0_localegroup grouping
 );
 
 mu0_sint32_t         mu0_locale_global(
-	  const mu0_tchar8_t * language
-	, const mu0_tchar8_t * territory
-	, const mu0_tchar8_t * modifier  __mu0_nullable__
-	, const mu0_bool_t     collator
+	  const      mu0_tchar8_t *  language
+	, const      mu0_tchar8_t *  territory
+	, const      mu0_tchar8_t *  modifier  __mu0_nullable__
+	, const enum mu0_localegroup grouping
 );
 
 const mu0_tchar8_t * mu0_locale_interface (void);
 const mu0_tchar8_t * mu0_locale_identifier(
-	  const mu0_bool_t     collator
-	, const mu0_locale_t * locale   __mu0_nullable__
+	  const enum mu0_localegroup grouping
+	, const      mu0_locale_t *  locale   __mu0_nullable__
 );
 
 mu0_sint32_t         mu0_locale_delete(

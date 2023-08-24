@@ -27,17 +27,43 @@ const mu0_tchar8_t * mu0_locale_name(
 }
 
 mu0_locale_t * mu0_locale_create(
-	  const mu0_tchar8_t * language
-	, const mu0_tchar8_t * territory
-	, const mu0_tchar8_t * modifier  __mu0_nullable__
-	, const mu0_bool_t     collator
+	  const      mu0_tchar8_t *  language
+	, const      mu0_tchar8_t *  territory
+	, const      mu0_tchar8_t *  modifier  __mu0_nullable__
+	, const enum mu0_localegroup grouping
 ) {
-	const mu0_sint32_t   mask = ((collator == mu0_true) ? LC_COLLATE_MASK : LC_ALL_MASK);
+	      mu0_sint32_t   mask = LC_ALL_MASK;
 	const mu0_tchar8_t * name = mu0_locale_name(
 		  language
 		, territory
 		, modifier
 	);
+	switch (grouping)
+	{
+		case mu0_localegroup_collator :
+		{
+			mask = LC_COLLATE_MASK;
+		}
+		break;
+		case mu0_localegroup_monetary :
+		{
+			mask = LC_MONETARY_MASK;
+		}
+		break;
+		case mu0_localegroup_numerics :
+		{
+			mask = LC_NUMERIC_MASK;
+		}
+		break;
+		case mu0_localegroup_datetime :
+		{
+			mask = LC_TIME_MASK;
+		}
+		break;
+		default:
+		{ /***/ }
+		break;
+	}
 	if (__mu0_not_nullptr__(name)) {
 		return __mu0_i18nlocale_new__(mask, name, __mu0_nullptr__);
 	}
@@ -45,17 +71,43 @@ mu0_locale_t * mu0_locale_create(
 }
 
 mu0_sint32_t mu0_locale_global(
-	  const mu0_tchar8_t * language
-	, const mu0_tchar8_t * territory
-	, const mu0_tchar8_t * modifier  __mu0_nullable__
-	, const mu0_bool_t     collator
+	  const      mu0_tchar8_t *  language
+	, const      mu0_tchar8_t *  territory
+	, const      mu0_tchar8_t *  modifier  __mu0_nullable__
+	, const enum mu0_localegroup grouping
 ) {
-	const mu0_sint32_t   category = ((collator == mu0_true) ? LC_COLLATE : LC_ALL);
+	      mu0_sint32_t   category = LC_ALL;
 	const mu0_tchar8_t * name     = mu0_locale_name(
 		  language
 		, territory
 		, modifier
 	);
+	switch (grouping)
+	{
+		case mu0_localegroup_collator :
+		{
+			category = LC_COLLATE;
+		}
+		break;
+		case mu0_localegroup_monetary :
+		{
+			category = LC_MONETARY;
+		}
+		break;
+		case mu0_localegroup_numerics :
+		{
+			category = LC_NUMERIC;
+		}
+		break;
+		case mu0_localegroup_datetime :
+		{
+			category = LC_TIME;
+		}
+		break;
+		default:
+		{ /***/ }
+		break;
+	}
 	if (__mu0_not_nullptr__(name)) {
 		if (__mu0_not_nullptr__(__mu0_i18nlocale_set__(category, name))) {
 			return 0;
@@ -70,10 +122,36 @@ const mu0_tchar8_t * mu0_locale_interface(void)
 }
 
 const mu0_tchar8_t * mu0_locale_identifier(
-	  const mu0_bool_t     collator
-	, const mu0_locale_t * locale   __mu0_nullable__
+	  const enum mu0_localegroup grouping
+	, const      mu0_locale_t *  locale   __mu0_nullable__
 ) {
-	const mu0_sint32_t category = ((collator == mu0_true) ? LC_COLLATE : LC_ALL);
+	mu0_sint32_t category = LC_ALL;
+	switch (grouping)
+	{
+		case mu0_localegroup_collator :
+		{
+			category = LC_COLLATE;
+		}
+		break;
+		case mu0_localegroup_monetary :
+		{
+			category = LC_MONETARY;
+		}
+		break;
+		case mu0_localegroup_numerics :
+		{
+			category = LC_NUMERIC;
+		}
+		break;
+		case mu0_localegroup_datetime :
+		{
+			category = LC_TIME;
+		}
+		break;
+		default:
+		{ /***/ }
+		break;
+	}
 	return __mu0_i18nlocale_get__(category, locale);
 }
 
