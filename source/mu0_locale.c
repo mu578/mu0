@@ -116,9 +116,11 @@ mu0_sint32_t mu0_locale_global(
 	return -1;
 }
 
-const mu0_tchar8_t * mu0_locale_interface(void)
-{
-	return __mu0_i18nlocale_user__();
+const mu0_tchar8_t * mu0_locale_interface (
+	  mu0_tchar8_t language[3]  __mu0_nullable__
+	, mu0_tchar8_t territory[3] __mu0_nullable__
+) {
+	return __mu0_i18nlocale_user__(language, territory);
 }
 
 const mu0_tchar8_t * mu0_locale_identifier(

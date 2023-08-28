@@ -59,7 +59,7 @@ int main(int argc, const char * argv[])
 	mu0_console_log("%02d s4 <> s3\n", mu0_locale_compare(s4, s3, mu0_nullptr));
 
 	mu0_console_log("\n");
-	mu0_console_log("%s \n", mu0_locale_interface());
+	mu0_console_log("%s \n", mu0_locale_interface(mu0_nullptr, mu0_nullptr));
 	mu0_console_log("\n");
 
 	return 0;

@@ -201,7 +201,7 @@
 #	if !MU0_HAVE_CPUCLICK
 #	if MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_MSVCL
 #	if MU0_HAVE_X64
-#	if __has_builtin(__builtin_ia32_rdrand64_step)
+#	if __has_builtin(__builtin_ia32_rdrand64_step) && defined(__RDRND__)
 #		undef  MU0_HAVE_CPUCLICK
 #		define MU0_HAVE_CPUCLICK 1
 		__mu0_static_inline__

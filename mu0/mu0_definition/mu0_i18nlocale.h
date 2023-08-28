@@ -128,10 +128,16 @@
 		}
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(void)
-		{
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(
+			  ___mu0_tint1_t___ __language[3]  __mu0_nullable__
+			, ___mu0_tint1_t___ __territory[3] __mu0_nullable__
+		) {
+			const ___mu0_uint4_t___ have_language  = __mu0_not_nullptr__(__language);
+			const ___mu0_uint4_t___ have_territory = __mu0_not_nullptr__(__territory);
+
 			__mu0_static__ ___mu0_tint1_t___ s_id[12];
-			               WCHAR             buff[LOCALE_NAME_MAX_LENGTH] = { 0 };
+			 WCHAR buff[LOCALE_NAME_MAX_LENGTH] = { 0 };
+
 			if (0 != GetUserDefaultLocaleName(buff, LOCALE_NAME_MAX_LENGTH)) {
 				__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
 				WideCharToMultiByte(CP_UTF8, 0, buff, 5, s_id, 12, __mu0_nullptr__, __mu0_nullptr__);
@@ -151,6 +157,20 @@
 					}
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
 						setlocale(LC_ALL, id);
+						if (have_language) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
+							} else {
+								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
+							}
+						}
+						if (have_territory) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
+							} else {
+								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
+							}
+						}
 						return s_id;
 					}
 					___mu0_tint1_t___ wk[12]     = { 0 };
@@ -160,6 +180,20 @@
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
 						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
+						if (have_language) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
+							} else {
+								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
+							}
+						}
+						if (have_territory) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
+							} else {
+								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
+							}
+						}
 						return s_id;
 					}
 					__mu0_memcpy__(wk, s_id, __mu0_sizeof__(s_id));
@@ -168,6 +202,20 @@
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
 						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
+						if (have_language) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
+							} else {
+								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
+							}
+						}
+						if (have_territory) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
+							} else {
+								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
+							}
+						}
 						return s_id;
 					}
 					setlocale(LC_ALL, id);
@@ -437,10 +485,16 @@
 #	if MU0_HAVE_MACOSX
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(void)
-		{
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(
+			  ___mu0_tint1_t___ __language[3]  __mu0_nullable__
+			, ___mu0_tint1_t___ __territory[3] __mu0_nullable__
+		) {
+			const ___mu0_uint4_t___ have_language  = __mu0_not_nullptr__(__language);
+			const ___mu0_uint4_t___ have_territory = __mu0_not_nullptr__(__territory);
+
 			__mu0_static__ ___mu0_tint1_t___ s_id[12];
-			               FILE *            fp;
+			FILE * fp;
+
 			if ((fp = popen("defaults read .GlobalPreferences AppleLocale", "r"))) {
 				__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
 				fgets(s_id, __mu0_sizeof__(s_id) - 1U, fp);
@@ -460,6 +514,20 @@
 					}
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
 						setlocale(LC_ALL, id);
+						if (have_language) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
+							} else {
+								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
+							}
+						}
+						if (have_territory) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
+							} else {
+								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
+							}
+						}
 						return s_id;
 					}
 					___mu0_tint1_t___ wk[12] = { 0 };
@@ -469,6 +537,20 @@
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
 						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
+						if (have_language) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
+							} else {
+								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
+							}
+						}
+						if (have_territory) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
+							} else {
+								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
+							}
+						}
 						return s_id;
 					}
 					__mu0_memcpy__(wk, s_id, __mu0_sizeof__(s_id));
@@ -477,6 +559,20 @@
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
 						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
+						if (have_language) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
+							} else {
+								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
+							}
+						}
+						if (have_territory) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
+							} else {
+								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
+							}
+						}
 						return s_id;
 					}
 					setlocale(LC_ALL, id);
@@ -485,8 +581,20 @@
 			}
 #			if MU0_HAVE_POSIX1_2001
 			__mu0_memcpy__(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
+			if (have_language) {
+				__language[0]  = 'C'; __language[1]  = '\0'; __language[2]  = '\0';
+			}
+			if (have_territory) {
+				__territory[0] = 'C'; __territory[1] = '\0'; __territory[2] = '\0';
+			}
 #			else
 			__mu0_memcpy__(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
+			if (have_language) {
+				__language[0]  = 'e'; __language[1]  = 'n'; __language[2]  = '\0';
+			}
+			if (have_territory) {
+				__territory[0] = 'U'; __territory[1] = 'S'; __territory[2] = '\0';
+			}
 #			endif
 			return s_id;
 		}
@@ -494,11 +602,16 @@
 #	elif MU0_HAVE_IOS
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(void)
-		{
-			__mu0_static__ ___mu0_tint1_t___ s_id[12];
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(
+			  ___mu0_tint1_t___ __language[3]  __mu0_nullable__
+			, ___mu0_tint1_t___ __territory[3] __mu0_nullable__
+		) {
+			const ___mu0_uint4_t___ have_language  = __mu0_not_nullptr__(__language);
+			const ___mu0_uint4_t___ have_territory = __mu0_not_nullptr__(__territory);
 
+			__mu0_static__ ___mu0_tint1_t___ s_id[12];
 			__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
+
 			if (CFStringGetCString(CFLocaleGetValue(CFLocaleCopyCurrent(), kCFLocaleIdentifier), s_id, __mu0_sizeof__(s_id) - 1U, kCFStringEncodingUTF8)) {
 				if (s_id[2] == '_' || s_id[2] == '-') {
 					___mu0_tint1_t___ id[48] = { 0 };
@@ -515,6 +628,20 @@
 					}
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
 						setlocale(LC_ALL, id);
+						if (have_language) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
+							} else {
+								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
+							}
+						}
+						if (have_territory) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
+							} else {
+								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
+							}
+						}
 						return s_id;
 					}
 					___mu0_tint1_t___ wk[12] = { 0 };
@@ -524,6 +651,20 @@
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
 						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
+						if (have_language) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
+							} else {
+								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
+							}
+						}
+						if (have_territory) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
+							} else {
+								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
+							}
+						}
 						return s_id;
 					}
 					__mu0_memcpy__(wk, s_id, __mu0_sizeof__(s_id));
@@ -532,6 +673,20 @@
 					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
 						setlocale(LC_ALL, id);
 						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
+						if (have_language) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
+							} else {
+								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
+							}
+						}
+						if (have_territory) {
+							if (s_id[0] == 'C' || s_id[0] == 'P') {
+								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
+							} else {
+								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
+							}
+						}
 						return s_id;
 					}
 					setlocale(LC_ALL, id);
@@ -539,8 +694,20 @@
 			}
 #			if MU0_HAVE_POSIX1_2001
 			__mu0_memcpy__(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
+			if (have_language) {
+				__language[0]  = 'C'; __language[1]  = '\0'; __language[2]  = '\0';
+			}
+			if (have_territory) {
+				__territory[0] = 'C'; __territory[1] = '\0'; __territory[2] = '\0';
+			}
 #			else
 			__mu0_memcpy__(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
+			if (have_language) {
+				__language[0]  = 'e'; __language[1]  = 'n'; __language[2]  = '\0';
+			}
+			if (have_territory) {
+				__territory[0] = 'U'; __territory[1] = 'S'; __territory[2] = '\0';
+			}
 #			endif
 			return s_id;
 		}
@@ -548,9 +715,48 @@
 #	else
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(void)
-		{
-			return __mu0_i18nlocale_get__(LC_ALL, __mu0_nullptr__);
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(
+			  ___mu0_tint1_t___ __language[3]  __mu0_nullable__
+			, ___mu0_tint1_t___ __territory[3] __mu0_nullable__
+		) {
+			const ___mu0_uint4_t___ have_language  = __mu0_not_nullptr__(__language);
+			const ___mu0_uint4_t___ have_territory = __mu0_not_nullptr__(__territory);
+			const ___mu0_tint1_t___ * id           = __mu0_i18nlocale_get__(LC_ALL, __mu0_nullptr__);
+
+			if (__mu0_not_nullptr__(id)) {
+				if (have_language) {
+					if (id[0] == 'C' || id[0] == 'P') {
+						__language[0]  = 'C';    __language[1]  = '\0';   __language[2]  = '\0';
+					} else {
+						__language[0]  = id[0]; __language[1]  = id[1]; __language[2]  = '\0';
+					}
+				}
+				if (have_territory) {
+					if (id[0] == 'C' || id[0] == 'P') {
+						__territory[0] = 'C';    __territory[1] = '\0';   __territory[2] = '\0';
+					} else {
+						__territory[0] = id[3]; __territory[1] = id[4]; __territory[2] = '\0';
+					}
+				}
+				return id;
+			}
+#			if MU0_HAVE_POSIX1_2001
+			if (have_language) {
+				__language[0]  = 'C'; __language[1]  = '\0'; __language[2]  = '\0';
+			}
+			if (have_territory) {
+				__territory[0] = 'C'; __territory[1] = '\0'; __territory[2] = '\0';
+			}
+			return "C.UTF-8";
+#			else
+			if (have_language) {
+				__language[0]  = 'e'; __language[1]  = 'n'; __language[2]  = '\0';
+			}
+			if (have_territory) {
+				__territory[0] = 'U'; __territory[1] = 'S'; __territory[2] = '\0';
+			}
+			return "en_US.UTF-8";
+#			endif
 		}
 
 #	endif
@@ -661,13 +867,31 @@
 		}
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(void)
-		{
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(
+			  ___mu0_tint1_t___ __language[3]  __mu0_nullable__
+			, ___mu0_tint1_t___ __territory[3] __mu0_nullable__
+		) {
+			const ___mu0_uint4_t___ have_language  = __mu0_not_nullptr__(__language);
+			const ___mu0_uint4_t___ have_territory = __mu0_not_nullptr__(__territory);
+
 			__mu0_unused__(__category);
 			__mu0_unused__(__locale);
+
 #			if MU0_HAVE_POSIX1_2001
+			if (have_language) {
+				__language[0]  = 'C'; __language[1]  = '\0'; __language[2]  = '\0';
+			}
+			if (have_territory) {
+				__territory[0] = 'C'; __territory[1] = '\0'; __territory[2] = '\0';
+			}
 			return "C.UTF-8";
 #			else
+			if (have_language) {
+				__language[0]  = 'e'; __language[1]  = 'n'; __language[2]  = '\0';
+			}
+			if (have_territory) {
+				__territory[0] = 'U'; __territory[1] = 'S'; __territory[2] = '\0';
+			}
 			return "en_US.UTF-8";
 #			endif
 		}
