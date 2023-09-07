@@ -25,8 +25,8 @@
 #	define MU0_HAVE_SPINLOCK 1
 
 #	define __mu0_spinlock_initializer__ { 0 }
-        struct __mu0_spinlock__        { __mu0_atomic_uint4_t___ u_r0; };
-typedef struct __mu0_spinlock__        __mu0_spinlock_t__;
+        struct __mu0_spinlock__ { __mu0_atomic_uint4_t___ u_r0; };
+typedef struct __mu0_spinlock__ __mu0_spinlock_t__;
 
 __mu0_static_inline__
 void __mu0_spinlock_init__(__mu0_spinlock_t__ * __s)
@@ -60,9 +60,7 @@ const ___mu0_sint4_t___ __mu0_spinlock_lock__(__mu0_spinlock_t__ * __s)
 
 __mu0_static_inline__
 void __mu0_spinlock_unlock__(__mu0_spinlock_t__ * __s)
-{
-	__mu0_atomic_store__(__mu0_atomic_uint4_t___, &__s->u_r0, 0U);
-}
+{ __mu0_atomic_store__(__mu0_atomic_uint4_t___, &__s->u_r0, 0U); }
 
 #	if !MU0_HAVE_SPINLOCK
 #		error mu0_spinlock.h

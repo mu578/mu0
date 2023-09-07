@@ -22,42 +22,42 @@
 
 MU0_BEGIN_CDECL
 
-typedef ___mu0_uchar4_t___                        mu0_uchar32_t;
-typedef ___mu0_schar4_t___                        mu0_schar32_t;
-typedef ___mu0_tchar4_t___                        mu0_tchar32_t;
+typedef ___mu0_uchar4_t___       mu0_uchar32_t;
+typedef ___mu0_schar4_t___       mu0_schar32_t;
+typedef ___mu0_tchar4_t___       mu0_tchar32_t;
 
-typedef ___mu0_uchar2_t___                        mu0_uchar16_t;
-typedef ___mu0_schar2_t___                        mu0_schar16_t;
-typedef ___mu0_tchar2_t___                        mu0_tchar16_t;
+typedef ___mu0_uchar2_t___       mu0_uchar16_t;
+typedef ___mu0_schar2_t___       mu0_schar16_t;
+typedef ___mu0_tchar2_t___       mu0_tchar16_t;
 
-typedef ___mu0_uchar1_t___                        mu0_uchar8_t;
-typedef ___mu0_uchar1_t___                        mu0_schar8_t;
-typedef ___mu0_tchar1_t___                        mu0_tchar8_t;
+typedef ___mu0_uchar1_t___       mu0_uchar8_t;
+typedef ___mu0_uchar1_t___       mu0_schar8_t;
+typedef ___mu0_tchar1_t___       mu0_tchar8_t;
 
-#	define mu0_uchar32(__x)                        __mu0_cast__(mu0_uchar32_t, __x)
-#	define mu0_const_uchar32(__x)                  __mu0_const_cast__(mu0_uchar32_t, __x)
-#	define mu0_schar32(__x)                        __mu0_cast__(mu0_schar32_t, __x)
-#	define mu0_const_schar32(__x)                  __mu0_const_cast__(mu0_schar32_t, __x)
-#	define mu0_tchar32(__x)                        __mu0_cast__(mu0_tchar32_t, __x)
-#	define mu0_const_tchar32(__x)                  __mu0_const_cast__(mu0_tchar32_t, __x)
+#	define mu0_uchar32(__x)       __mu0_cast__(mu0_uchar32_t, __x)
+#	define mu0_const_uchar32(__x) __mu0_const_cast__(mu0_uchar32_t, __x)
+#	define mu0_schar32(__x)       __mu0_cast__(mu0_schar32_t, __x)
+#	define mu0_const_schar32(__x) __mu0_const_cast__(mu0_schar32_t, __x)
+#	define mu0_tchar32(__x)       __mu0_cast__(mu0_tchar32_t, __x)
+#	define mu0_const_tchar32(__x) __mu0_const_cast__(mu0_tchar32_t, __x)
 
-#	define mu0_uchar16(__x)                        __mu0_cast__(mu0_uchar16_t, __x)
-#	define mu0_const_uchar16(__x)                  __mu0_const_cast__(mu0_uchar16_t, __x)
-#	define mu0_schar16(__x)                        __mu0_cast__(mu0_schar16_t, __x)
-#	define mu0_const_schar16(__x)                  __mu0_const_cast__(mu0_schar16_t, __x)
-#	define mu0_tchar16(__x)                        __mu0_cast__(mu0_tchar16_t, __x)
-#	define mu0_const_tchar16(__x)                  __mu0_const_cast__(mu0_tchar16_t, __x)
+#	define mu0_uchar16(__x)       __mu0_cast__(mu0_uchar16_t, __x)
+#	define mu0_const_uchar16(__x) __mu0_const_cast__(mu0_uchar16_t, __x)
+#	define mu0_schar16(__x)       __mu0_cast__(mu0_schar16_t, __x)
+#	define mu0_const_schar16(__x) __mu0_const_cast__(mu0_schar16_t, __x)
+#	define mu0_tchar16(__x)       __mu0_cast__(mu0_tchar16_t, __x)
+#	define mu0_const_tchar16(__x) __mu0_const_cast__(mu0_tchar16_t, __x)
 
-#	define mu0_uchar8(__x)                         __mu0_cast__(mu0_uchar8_t, __x)
-#	define mu0_const_uchar8(__x)                   __mu0_const_cast__(mu0_uchar8_t, __x)
-#	define mu0_schar8(__x)                         __mu0_cast__(mu0_schar8_t, __x)
-#	define mu0_const_schar8(__x)                   __mu0_const_cast__(mu0_schar8_t, __x)
-#	define mu0_tchar8(__x)                         __mu0_cast__(mu0_tchar8_t, __x)
-#	define mu0_const_tchar8(__x)                   __mu0_const_cast__(mu0_tchar8_t, __x)
+#	define mu0_uchar8(__x)        __mu0_cast__(mu0_uchar8_t, __x)
+#	define mu0_const_uchar8(__x)  __mu0_const_cast__(mu0_uchar8_t, __x)
+#	define mu0_schar8(__x)        __mu0_cast__(mu0_schar8_t, __x)
+#	define mu0_const_schar8(__x)  __mu0_const_cast__(mu0_schar8_t, __x)
+#	define mu0_tchar8(__x)        __mu0_cast__(mu0_tchar8_t, __x)
+#	define mu0_const_tchar8(__x)  __mu0_const_cast__(mu0_tchar8_t, __x)
 
-#	define mu0_utf8_const(__s)                     __mu0_literal_utf8__(__s)
-#	define mu0_utf16_const(__s)                    __mu0_literal_utf16__(__s)
-#	define mu0_utf32_const(__s)                    __mu0_literal_utf32__(__s)
+#	define mu0_utf8_const(__s)    __mu0_literal_utf8__(__s)
+#	define mu0_utf16_const(__s)   __mu0_literal_utf16__(__s)
+#	define mu0_utf32_const(__s)   __mu0_literal_utf32__(__s)
 
 #	define mu0_string_length(_CharT, __src, __len) \
 	__mu0_slength__(_CharT, __src, __len)
