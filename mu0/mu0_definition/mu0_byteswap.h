@@ -171,7 +171,7 @@
 #		if   MU0_HAVE_ARM32 && !MU0_HAVE_CC_MSVCC && !MU0_HAVE_CC_ITLCC && !MU0_HAVE_ANDROID
 		__asm__ ("rev %0, %0" : "+r"(y));
 		return y;
-#		elif MU0_HAVE_ARM64 && !MU0_HAVE_CC_MSVCC
+#		elif MU0_HAVE_ARM64 && !MU0_HAVE_CC_MSVCC && !MU0_HAVE_CC_ITLCC
 		__asm__ ("rev32 %x0, %x0" : "+r"(y));
 		return y;
 #		else
