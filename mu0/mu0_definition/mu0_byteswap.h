@@ -156,27 +156,43 @@
 	const ___mu0_sint2_t___ ___mu0_const_bswap16_const___(const ___mu0_sint2_t___ __x)
 	{
 		___mu0_sint2_t___ y = __x;
+#		if MU0_HAVE_ARM64 && !MU0_HAVE_CC_MSVCC && !MU0_HAVE_CC_ITLCC
+		__asm__ ("rev16 %w0, %w0" : "+r"(y));
+		return y;
+#		else
 		return ((y << 8U) & 0xFF00U) | ((y >> 8U) & 0x00FFU);
+#		endif
 	}
 
 	__mu0_static_inline__
 	const ___mu0_sint4_t___ ___mu0_const_bswap32_const___(const ___mu0_uint4_t___ __x)
 	{
 		___mu0_uint4_t___ y = __x;
+#		if   MU0_HAVE_ARM32 && !MU0_HAVE_CC_MSVCC && !MU0_HAVE_CC_ITLCC && !MU0_HAVE_ANDROID
+		__asm__ ("rev %0, %0" : "+r"(y));
+		return y;
+#		elif MU0_HAVE_ARM64 && !MU0_HAVE_CC_MSVCC
+		__asm__ ("rev32 %x0, %x0" : "+r"(y));
+		return y;
+#		else
 		return (
 			  ((y << 24U) & 0xFF000000U)
 			| ((y <<  8U) & 0x00FF0000U)
 			| ((y >>  8U) & 0x0000FF00U)
 			| ((y >> 24U) & 0X000000FFU)
 		);
+#	endif
 	}
 
 	__mu0_static_inline__
 	const ___mu0_sint8_t___ ___mu0_const_bswap64_const___(const ___mu0_sint8_t___ __x)
 	{
 		___mu0_sint8_t___ y = __x;
-#		if MU0_HAVE_LP64
-#		if MU0_HAVE_C99 || MU0_HAVE_CPP11
+#		if   MU0_HAVE_ARM64 && !MU0_HAVE_CC_MSVCC && !MU0_HAVE_CC_ITLCC
+			__asm__ ("rev %0, %0" : "+r"(y));
+			return y;
+#		elif MU0_HAVE_LP64
+#		if   MU0_HAVE_C99 || MU0_HAVE_CPP11
 		return (
 			  ((y << 56U) & 0xFF00000000000000ULL)
 			| ((y << 40U) & 0x00FF000000000000ULL)
@@ -200,7 +216,7 @@
 		);
 #		endif
 #		else
-#		if MU0_HAVE_C99 || MU0_HAVE_CPP11
+#		if   MU0_HAVE_C99 || MU0_HAVE_CPP11
 		const ___mu0_sint4_t___ hi = ___mu0_const_bswap32_const___(__mu0_const_cast__(___mu0_sint4_t___, ( y         & 0x00000000FFFFFFFFULL)));
 		const ___mu0_sint4_t___ lo = ___mu0_const_bswap32_const___(__mu0_const_cast__(___mu0_sint4_t___, ((y >> 32U) & 0X00000000FFFFFFFFULL)));
 #		else
