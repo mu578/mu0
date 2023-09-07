@@ -153,14 +153,14 @@
 #	if !MU0_HAVE_BYTESWAP
 
 	__mu0_static_inline__
-	const ___mu0_sint2_t___ __mu0_const_bswap16_const__(const ___mu0_sint2_t___ __x)
+	const ___mu0_sint2_t___ ___mu0_const_bswap16_const___(const ___mu0_sint2_t___ __x)
 	{
 		___mu0_sint2_t___ y = __x;
 		return ((y << 8U) & 0xFF00U) | ((y >> 8U) & 0x00FFU);
 	}
 
 	__mu0_static_inline__
-	const ___mu0_sint4_t___ __mu0_const_bswap32_const__(const ___mu0_uint4_t___ __x)
+	const ___mu0_sint4_t___ ___mu0_const_bswap32_const___(const ___mu0_uint4_t___ __x)
 	{
 		___mu0_uint4_t___ y = __x;
 		return (
@@ -172,7 +172,7 @@
 	}
 
 	__mu0_static_inline__
-	const ___mu0_sint8_t___ __mu0_const_bswap64_const__(const ___mu0_sint8_t___ __x)
+	const ___mu0_sint8_t___ ___mu0_const_bswap64_const___(const ___mu0_sint8_t___ __x)
 	{
 		___mu0_sint8_t___ y = __x;
 #		if MU0_HAVE_LP64
@@ -201,11 +201,11 @@
 #		endif
 #		else
 #		if MU0_HAVE_C99 || MU0_HAVE_CPP11
-		const ___mu0_sint4_t___ hi = __mu0_const_bswap32_const__(__mu0_const_cast__(___mu0_sint4_t___, ( y         & 0x00000000FFFFFFFFULL)));
-		const ___mu0_sint4_t___ lo = __mu0_const_bswap32_const__(__mu0_const_cast__(___mu0_sint4_t___, ((y >> 32U) & 0X00000000FFFFFFFFULL)));
+		const ___mu0_sint4_t___ hi = ___mu0_const_bswap32_const___(__mu0_const_cast__(___mu0_sint4_t___, ( y         & 0x00000000FFFFFFFFULL)));
+		const ___mu0_sint4_t___ lo = ___mu0_const_bswap32_const___(__mu0_const_cast__(___mu0_sint4_t___, ((y >> 32U) & 0X00000000FFFFFFFFULL)));
 #		else
-		const ___mu0_sint4_t___ hi = __mu0_const_bswap32_const__(__mu0_const_cast__(___mu0_sint4_t___, ( y         & 0x00000000FFFFFFFFUL )));
-		const ___mu0_sint4_t___ lo = __mu0_const_bswap32_const__(__mu0_const_cast__(___mu0_sint4_t___, ((y >> 32U) & 0X00000000FFFFFFFFUL )));
+		const ___mu0_sint4_t___ hi = ___mu0_const_bswap32_const___(__mu0_const_cast__(___mu0_sint4_t___, ( y         & 0x00000000FFFFFFFFUL )));
+		const ___mu0_sint4_t___ lo = ___mu0_const_bswap32_const___(__mu0_const_cast__(___mu0_sint4_t___, ((y >> 32U) & 0X00000000FFFFFFFFUL )));
 #		endif
 		return (__mu0_const_cast__(___mu0_sint8_t___, hi) << 32U) | lo;
 #		endif
@@ -213,9 +213,9 @@
 
 #	undef  MU0_HAVE_BYTESWAP
 #	define MU0_HAVE_BYTESWAP        1
-#	define __mu0_bswap_16__(__x)    __mu0_const_bswap16_const__(__x)
-#	define __mu0_bswap_32__(__x)    __mu0_const_bswap32_const__(__x)
-#	define __mu0_bswap_64__(__x)    __mu0_const_bswap64_const__(__x)
+#	define __mu0_bswap_16__(__x)    ___mu0_const_bswap16_const___(__x)
+#	define __mu0_bswap_32__(__x)    ___mu0_const_bswap32_const___(__x)
+#	define __mu0_bswap_64__(__x)    ___mu0_const_bswap64_const___(__x)
 #	endif
 
 #	if MU0_HAVE_BYTESWAP
