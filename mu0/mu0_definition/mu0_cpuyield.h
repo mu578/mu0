@@ -89,23 +89,23 @@
 #	elif MU0_HAVE_X86 || MU0_HAVE_X64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpuyield__()       __asm__ __volatile__("pause\n")
+#		define __mu0_cpuyield__()       __asm__ __volatile__ ("pause\n")
 #	elif MU0_HAVE_ARM32 || MU0_HAVE_ARM64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		if MU0_HAVE_ARM64
-#			define __mu0_cpuyield__()    __asm__ __volatile__("yield;" ::: "memory")
+#			define __mu0_cpuyield__()    __asm__ __volatile__ ("yield;" ::: "memory")
 #		else
 #			if __mu0_byte_order__ == __mu0_order_leen__
-#				define __mu0_cpuyield__() __asm__ __volatile__("yield");
+#				define __mu0_cpuyield__() __asm__ __volatile__ ("yield");
 #			else
-#				define __mu0_cpuyield__() __asm__ __volatile__("or 27, 27, 27" ::: "memory")
+#				define __mu0_cpuyield__() __asm__ __volatile__ ("or 27, 27, 27" ::: "memory")
 #			endif
 #		endif
 #	elif defined(__ppc__) || defined(__powerpc64__) || defined(__mips__)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpuyield__()       __asm__ __volatile__("sync" ::: "memory");
+#		define __mu0_cpuyield__()       __asm__ __volatile__ ("sync" ::: "memory");
 #	endif
 #	endif
 
@@ -121,27 +121,27 @@
 #	elif MU0_HAVE_X86 || MU0_HAVE_X64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpuyield__()       __asm__ __volatile__("pause\n")
+#		define __mu0_cpuyield__()       __asm__ __volatile__ ("pause\n")
 #	elif MU0_HAVE_ARM32 || MU0_HAVE_ARM64
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
 #		if MU0_HAVE_ARM64
-#			define __mu0_cpuyield__()    __asm__ __volatile__("yield;" ::: "memory")
+#			define __mu0_cpuyield__()    __asm__ __volatile__ ("yield;" ::: "memory")
 #		else
 #			if __mu0_byte_order__ == __mu0_order_leen__
-#				define __mu0_cpuyield__() __asm__ __volatile__("yield");
+#				define __mu0_cpuyield__() __asm__ __volatile__ ("yield");
 #			else
-#				define __mu0_cpuyield__() __asm__ __volatile__("or 27, 27, 27" ::: "memory")
+#				define __mu0_cpuyield__() __asm__ __volatile__ ("or 27, 27, 27" ::: "memory")
 #			endif
 #		endif
 #	elif defined(__mips64)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpuyield__()       __asm__ __volatile__("pause")
+#		define __mu0_cpuyield__()       __asm__ __volatile__ ("pause")
 #	elif defined(__ppc__) || defined(__powerpc64__) || defined(__mips__) || defined(__mips)
 #		undef  MU0_HAVE_CPUYIELD
 #		define MU0_HAVE_CPUYIELD 1
-#		define __mu0_cpuyield__()       __asm__ __volatile__("sync" ::: "memory");
+#		define __mu0_cpuyield__()       __asm__ __volatile__ ("sync" ::: "memory");
 #	endif
 #	endif
 
