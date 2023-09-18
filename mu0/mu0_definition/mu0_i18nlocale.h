@@ -55,23 +55,6 @@
 #	endif
 #	include <ctype.h>
 
-__mu0_static__ struct
-{
-	const ___mu0_tint1_t___ * u_language;
-	const ___mu0_tint1_t___ * u_territory;
-} const __mu0_i18nlocale_default__[] = {
-	  { "af" , "ZA" } , { "am" , "ET" } , { "be" , "BY" } , { "bg" , "BG" } , { "ca" , "ES" } , { "cs" , "CZ" }
-	, { "da" , "DK" } , { "de" , "DE" } , { "de" , "AT" } , { "de" , "CH" } , { "el" , "GR" } , { "en" , "GB" }
-	, { "en" , "US" } , { "en" , "AU" } , { "en" , "CA" } , { "en" , "IE" } , { "en" , "NZ" } , { "en" , "US" }
-	, { "es" , "ES" } , { "et" , "EE" } , { "eu" , "ES" } , { "fi" , "FI" } , { "fr" , "FR" } , { "fr" , "BE" }
-	, { "fr" , "CA" } , { "fr" , "CH" } , { "he" , "IL" } , { "hr" , "HR" } , { "hu" , "HU" } , { "hy" , "AM" }
-	, { "is" , "IS" } , { "it" , "IT" } , { "it" , "CH" } , { "ja" , "JP" } , { "kk" , "KZ" } , { "ko" , "KR" }
-	, { "lt" , "LT" } , { "nl" , "NL" } , { "nl" , "BE" } , { "no" , "NO" } , { "pl" , "PL" } , { "pt" , "PT" }
-	, { "pt" , "BR" } , { "ro" , "RO" } , { "ru" , "RU" } , { "sk" , "SK" } , { "sl" , "SI" } , { "sr" , "YU" }
-	, { "sv" , "SE" } , { "tr" , "TR" } , { "uk" , "UA" } , { "zh" , "CN" } , { "zh" , "TW" } , { "zh" , "HK" }
-	, { __mu0_nullptr__ , __mu0_nullptr__ }
-};
-
 __mu0_static_inline__
 const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 	  const ___mu0_tint1_t___   __language            [ 2]
@@ -79,6 +62,32 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 	,       ___mu0_tint1_t___   __identifier_language [12]
 	,       ___mu0_tint1_t___   __identifier_territory[12] __mu0_nullable__
 ) {
+	__mu0_static__ struct { const ___mu0_tint1_t___ * u_language; const ___mu0_tint1_t___ * u_territory; } const s_lookup[] =
+	{
+		  { "af" , "ZA" } , { "ar" , "SA" } , { "ar" , "AE" } , { "ar" , "BH" } , { "ar" , "DZ" } , { "ar" , "EG" }
+		, { "ar" , "IQ" } , { "ar" , "JO" } , { "ar" , "KW" } , { "ar" , "LY" } , { "ar" , "MA" } , { "ar" , "OM" }
+		, { "ar" , "QA" } , { "ar" , "TN" } , { "ar" , "YE" } , { "as" , "IN" } , { "az" , "AZ" } , { "be" , "BY" }
+		, { "bg" , "BG" } , { "bn" , "IN" } , { "bs" , "BA" } , { "ca" , "ES" } , { "cs" , "CZ" } , { "da" , "DK" }
+		, { "de" , "DE" } , { "de" , "AT" } , { "de" , "BE" } , { "de" , "CH" } , { "de" , "LI" } , { "de" , "LU" }
+		, { "el" , "GR" } , { "el" , "CY" } , { "en" , "GB" } , { "en" , "AU" } , { "en" , "BW" } , { "en" , "CA" }
+		, { "en" , "HK" } , { "en" , "IE" } , { "en" , "IN" } , { "en" , "MT" } , { "en" , "NZ" } , { "en" , "PH" }
+		, { "en" , "SG" } , { "en" , "US" } , { "en" , "ZW" } , { "es" , "ES" } , { "es" , "AR" } , { "es" , "BO" }
+		, { "es" , "CL" } , { "es" , "CO" } , { "es" , "CR" } , { "es" , "DO" } , { "es" , "EC" } , { "es" , "GT" }
+		, { "es" , "HN" } , { "es" , "MX" } , { "es" , "NI" } , { "es" , "PA" } , { "es" , "PE" } , { "es" , "PR" }
+		, { "es" , "PY" } , { "es" , "SV" } , { "es" , "US" } , { "es" , "UY" } , { "es" , "VE" } , { "et" , "EE" }
+		, { "fi" , "FI" } , { "fr" , "FR" } , { "fr" , "BE" } , { "fr" , "CA" } , { "fr" , "CH" } , { "fr" , "LU" }
+		, { "gu" , "IN" } , { "he" , "IL" } , { "hi" , "IN" } , { "hr" , "HR" } , { "hu" , "HU" } , { "hy" , "AM" }
+		, { "id" , "ID" } , { "is" , "IS" } , { "it" , "IT" } , { "it" , "CH" } , { "ja" , "JP" } , { "ka" , "GE" }
+		, { "kk" , "KZ" } , { "kn" , "IN" } , { "ko" , "KR" } , { "ks" , "IN" } , { "ku" , "TR" } , { "ky" , "KG" }
+		, { "lt" , "LT" } , { "lv" , "LV" } , { "mk" , "MK" } , { "ml" , "IN" } , { "mr" , "IN" } , { "ms" , "MY" }
+		, { "mt" , "MT" } , { "nb" , "NO" } , { "nl" , "NL" } , { "nl" , "BE" } , { "nn" , "NO" } , { "or" , "IN" }
+		, { "pa" , "IN" } , { "pl" , "PL" } , { "pt" , "PT" } , { "pt" , "BR" } , { "ro" , "RO" } , { "ru" , "RU" }
+		, { "ru" , "UA" } , { "sa" , "IN" } , { "sk" , "SK" } , { "sl" , "SI" } , { "sq" , "AL" } , { "sr" , "RS" }
+		, { "sr" , "ME" } , { "sv" , "SE" } , { "ta" , "IN" } , { "te" , "IN" } , { "th" , "TH" } , { "tr" , "TR" }
+		, { "uk" , "UA" } , { "vi" , "VN" } , { "zh" , "CN" } , { "zh" , "HK" } , { "zh" , "SG" } , { "zh" , "TW" }
+		, { __mu0_nullptr__ , __mu0_nullptr__ }
+	};
+
 	___mu0_sint4_t___   have_language  = 0;
 	___mu0_sint4_t___   have_territory = 0;
 	___mu0_tint1_t___   id[24]         = { 0 };
@@ -110,18 +119,18 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		if (!have_language) {
 			i = 0;
 			do {
-				if (__mu0_i18nlocale_default__[i].u_language[0] == __language[0] && __mu0_i18nlocale_default__[i].u_language[1] == __language[1]) {
-					__identifier_language[0] = __mu0_i18nlocale_default__[i].u_language[0];
-					__identifier_language[1] = __mu0_i18nlocale_default__[i].u_language[1];
+				if (s_lookup[i].u_language[0] == __language[0] && s_lookup[i].u_language[1] == __language[1]) {
+					__identifier_language[0] = s_lookup[i].u_language[0];
+					__identifier_language[1] = s_lookup[i].u_language[1];
 					__identifier_language[2] = '_';
-					__identifier_language[3] = __mu0_i18nlocale_default__[i].u_territory[0];
-					__identifier_language[4] = __mu0_i18nlocale_default__[i].u_territory[1];
+					__identifier_language[3] = s_lookup[i].u_territory[0];
+					__identifier_language[4] = s_lookup[i].u_territory[1];
 					__mu0_memcpy__(__identifier_language + 5, ".UTF-8\0", 7);
 					have_language = 1;
 					break;
 				}
 				++i;
-			} while (__mu0_not_nullptr__(__mu0_i18nlocale_default__[i].u_language));
+			} while (__mu0_not_nullptr__(s_lookup[i].u_language));
 			if (0 == have_language) {
 				have_language = 0;
 				if (__mu0_not_nullptr__(setlocale(LC_MESSAGES, __identifier_language))) {
@@ -133,18 +142,18 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			if (__mu0_not_nullptr__(__identifier_territory)) {
 				i = 0;
 				do {
-					if (__mu0_i18nlocale_default__[i].u_territory[0] == __territory[0] && __mu0_i18nlocale_default__[i].u_territory[1] == __territory[1]) {
-						__identifier_territory[0] = __mu0_i18nlocale_default__[i].u_language[0];
-						__identifier_territory[1] = __mu0_i18nlocale_default__[i].u_language[1];
+					if (s_lookup[i].u_territory[0] == __territory[0] && s_lookup[i].u_territory[1] == __territory[1]) {
+						__identifier_territory[0] = s_lookup[i].u_language[0];
+						__identifier_territory[1] = s_lookup[i].u_language[1];
 						__identifier_territory[2] = '_';
-						__identifier_territory[3] = __mu0_i18nlocale_default__[i].u_territory[0];
-						__identifier_territory[4] = __mu0_i18nlocale_default__[i].u_territory[1];
+						__identifier_territory[3] = s_lookup[i].u_territory[0];
+						__identifier_territory[4] = s_lookup[i].u_territory[1];
 						__mu0_memcpy__(__identifier_territory + 5, ".UTF-8\0", 7);
 						have_territory = 1;
 						break;
 					}
 					++i;
-				} while (__mu0_not_nullptr__(__mu0_i18nlocale_default__[i].u_territory));
+				} while (__mu0_not_nullptr__(s_lookup[i].u_territory));
 				if (have_territory) {
 					have_territory = 0;
 					if (__mu0_not_nullptr__(setlocale(LC_MESSAGES, __identifier_territory))) {
