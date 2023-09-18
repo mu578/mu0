@@ -250,14 +250,12 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			, ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
 		) {
 			__mu0_static__ ___mu0_tint1_t___ s_id[12];
-			WCHAR                            buff[LOCALE_NAME_MAX_LENGTH] = { 0 };
+			               WCHAR             buff[LOCALE_NAME_MAX_LENGTH] = { 0 };
 			if (0 != GetUserDefaultLocaleName(buff, LOCALE_NAME_MAX_LENGTH)) {
 				__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
-				WideCharToMultiByte(CP_UTF8, 0, buff, __mu0_sizeof__(s_id) - 1U, s_id, __mu0_sizeof__(s_id), __mu0_nullptr__, __mu0_nullptr__);
-				if (s_id[2] == '_' || s_id[2] == '-') {
-					_configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
-					return __mu0_i18nlocale_find__(s_id + 0, s_id + 3, __identifier_language, __identifier_territory);
-				}
+				WideCharToMultiByte(CP_UTF8, 0, buff, __mu0_sizeof__(s_id) - __mu0_sizeof__(___mu0_tint1_t___), s_id, __mu0_sizeof__(s_id), __mu0_nullptr__, __mu0_nullptr__);
+				_configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
+				return __mu0_i18nlocale_find__(s_id + 0U, s_id + 3U, __identifier_language, __identifier_territory);
 			}
 			return -1;
 		}
@@ -523,14 +521,12 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			, ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
 		) {
 			__mu0_static__ ___mu0_tint1_t___ s_id[12];
-			FILE *            fp;
+			               FILE *            fp;
 			if ((fp = popen("defaults read .GlobalPreferences AppleLocale" , "r"))) {
 				__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
-				fgets(s_id, 11U, fp);
+				fgets(s_id, __mu0_sizeof__(s_id) - __mu0_sizeof__(___mu0_tint1_t___), fp);
 				pclose(fp);
-				if (s_id[2] == '_' || s_id[2] == '-') {
-					return __mu0_i18nlocale_find__(s_id + 0, s_id + 3, __identifier_language, __identifier_territory);
-				}
+				return __mu0_i18nlocale_find__(s_id + 0U, s_id + 3U, __identifier_language, __identifier_territory);
 			}
 			return -1;
 		}
@@ -544,10 +540,8 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		) {
 			__mu0_static__ ___mu0_tint1_t___ s_id[12];
 			__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
-			if (CFStringGetCString(CFLocaleGetValue(CFLocaleCopyCurrent(), kCFLocaleIdentifier), s_id, 11U, kCFStringEncodingUTF8)) {
-				if (s_id[2] == '_' || s_id[2] == '-') {
-					return __mu0_i18nlocale_find__(s_id + 0, s_id + 3, __identifier_language, __identifier_territory);
-				}
+			if (CFStringGetCString(CFLocaleGetValue(CFLocaleCopyCurrent(), kCFLocaleIdentifier), s_id, __mu0_sizeof__(s_id) - __mu0_sizeof__(___mu0_tint1_t___), kCFStringEncodingUTF8)) {
+				return __mu0_i18nlocale_find__(s_id + 0U, s_id + 3U, __identifier_language, __identifier_territory);
 			}
 			return -1;
 		}
