@@ -20,7 +20,7 @@
 int main(int argc, const char * argv[])
 {
 	mu0_calendar_date_t calendar_date;
-	mu0_locale_t * locale = mu0_nullptr;
+	mu0_locale_t *      locale = mu0_nullptr;
 	mu0_tchar8_t        date_string[32];
 
 	mu0_unused(argc);

@@ -23,7 +23,7 @@
 
 MU0_BEGIN_CDECL
 
-void          mu0_random_seed         (const mu0_uint16_t seed, const mu0_uint16_t incr);
+void          mu0_random_seed         (const mu0_uint32_t seed, const mu0_uint32_t incr);
 void          mu0_random_init         (void);
 
 mu0_uint128_t mu0_random_u128         (void);

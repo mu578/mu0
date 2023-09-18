@@ -169,7 +169,7 @@ mu0_uint16_t mu0_pcg32_16_random_bounded(const mu0_uint16_t bound)
 	return mu0_pcg32_16_random_bounded_r(&g_mu0_pcg32_context, bound);
 }
 
-void mu0_random_seed(const mu0_uint16_t seed, const mu0_uint16_t incr)
+void mu0_random_seed(const mu0_uint32_t seed, const mu0_uint32_t incr)
 {
 	mu0_pcg32_srandom_r(&g_mu0_pcg32_context, seed, incr);
 }

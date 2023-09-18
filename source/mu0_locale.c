@@ -84,26 +84,40 @@ mu0_sint32_t mu0_locale_global(
 	);
 	switch (grouping)
 	{
-		case mu0_localegroup_collator :
+		case mu0_localegroup_collator  :
 		{
 			category = LC_COLLATE;
 		}
 		break;
-		case mu0_localegroup_monetary :
+		case mu0_localegroup_monetary  :
 		{
 			category = LC_MONETARY;
 		}
 		break;
-		case mu0_localegroup_numerics :
+		case mu0_localegroup_numerics  :
 		{
 			category = LC_NUMERIC;
 		}
 		break;
-		case mu0_localegroup_datetime :
+		case mu0_localegroup_datetime  :
 		{
 			category = LC_TIME;
 		}
 		break;
+#	if defined(LC_TELEPHONE)
+		case mu0_localegroup_telephone :
+		{
+			category = LC_TELEPHONE;
+		}
+		break;
+#	endif
+#	if defined(LC_ADDRESS)
+		case mu0_localegroup_addresses :
+		{
+			category = LC_ADDRESS;
+		}
+		break;
+#	endif
 		default:
 		{ /***/ }
 		break;
@@ -117,10 +131,13 @@ mu0_sint32_t mu0_locale_global(
 }
 
 const mu0_tchar8_t * mu0_locale_interface (
-	  mu0_tchar8_t language[3]  __mu0_nullable__
-	, mu0_tchar8_t territory[3] __mu0_nullable__
+	  mu0_tchar8_t language_identifier [12]
+	, mu0_tchar8_t territory_identifier[12] __mu0_nullable__
 ) {
-	return __mu0_i18nlocale_user__(language, territory);
+	if (0 == __mu0_i18nlocale_user__(language_identifier, territory_identifier)) {
+		return language_identifier;
+	}
+	return mu0_nullptr;
 }
 
 const mu0_tchar8_t * mu0_locale_identifier(

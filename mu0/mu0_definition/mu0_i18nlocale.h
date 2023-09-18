@@ -45,6 +45,123 @@
 #	endif
 #	include <ctype.h>
 
+__mu0_static__ struct
+{
+	const ___mu0_tint1_t___ * u_language;
+	const ___mu0_tint1_t___ * u_territory;
+} const __mu0_i18nlocale_default__[] = {
+	  { "af" , "ZA" } , { "am" , "ET" } , { "be" , "BY" } , { "bg" , "BG" } , { "ca" , "ES" } , { "cs" , "CZ" }
+	, { "da" , "DK" } , { "de" , "DE" } , { "de" , "AT" } , { "de" , "CH" } , { "el" , "GR" } , { "en" , "GB" }
+	, { "en" , "US" } , { "en" , "AU" } , { "en" , "CA" } , { "en" , "IE" } , { "en" , "NZ" } , { "en" , "US" }
+	, { "es" , "ES" } , { "et" , "EE" } , { "eu" , "ES" } , { "fi" , "FI" } , { "fr" , "FR" } , { "fr" , "BE" }
+	, { "fr" , "CA" } , { "fr" , "CH" } , { "he" , "IL" } , { "hr" , "HR" } , { "hu" , "HU" } , { "hy" , "AM" }
+	, { "is" , "IS" } , { "it" , "IT" } , { "it" , "CH" } , { "ja" , "JP" } , { "kk" , "KZ" } , { "ko" , "KR" }
+	, { "lt" , "LT" } , { "nl" , "NL" } , { "nl" , "BE" } , { "no" , "NO" } , { "pl" , "PL" } , { "pt" , "PT" }
+	, { "pt" , "BR" } , { "ro" , "RO" } , { "ru" , "RU" } , { "sk" , "SK" } , { "sl" , "SI" } , { "sr" , "YU" }
+	, { "sv" , "SE" } , { "tr" , "TR" } , { "uk" , "UA" } , { "zh" , "CN" } , { "zh" , "TW" } , { "zh" , "HK" }
+	, { __mu0_nullptr__ , __mu0_nullptr__ }
+};
+
+__mu0_static_inline__
+const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
+	  const ___mu0_tint1_t___   __language            [ 2]
+	, const ___mu0_tint1_t___   __territory           [ 2]
+	,       ___mu0_tint1_t___   __identifier_language [12]
+	,       ___mu0_tint1_t___   __identifier_territory[12] __mu0_nullable__
+) {
+	___mu0_sint4_t___   have_language  = 0;
+	___mu0_sint4_t___   have_territory = 0;
+	___mu0_tint1_t___   id[24]         = { 0 };
+	___mu0_tint1_t___ * loc;
+	___mu0_uint4_t___   i;
+	__mu0_memset__(__identifier_language, 0, 12);
+	if (__mu0_not_nullptr__(__identifier_territory)) {
+		__mu0_memset__(__identifier_territory, 0, 12);
+	}
+	//#! Saving current locale.
+	if (__mu0_not_nullptr__((loc = setlocale(LC_MESSAGES, "")))) {
+		__mu0_memcpy__(id, loc, __mu0_sizeof__(id));
+		//#! Building locale identifier for the given pair.
+		__identifier_language[0] = __language[0];
+		__identifier_language[1] = __language[1];
+		__identifier_language[2] = '_';
+		__identifier_language[3] = __territory[0];
+		__identifier_language[4] = __territory[1];
+		__mu0_memcpy__(__identifier_language + 5 , ".UTF-8\0" , 7);
+		//#! Testing if pair is a valid locale identifier.
+		if (__mu0_not_nullptr__(setlocale(LC_MESSAGES, __identifier_language))) {
+			//#! There is no mismatch so filling with same identifier.
+			if (__mu0_not_nullptr__(__identifier_territory)) {
+				__mu0_memcpy__(__identifier_territory, __identifier_language, 12);
+				have_territory = 1;
+			}
+			have_language = 1;
+		}
+		if (!have_language) {
+			i = 0;
+			do {
+				if (__mu0_i18nlocale_default__[i].u_language[0] == __language[0] && __mu0_i18nlocale_default__[i].u_language[1] == __language[1]) {
+					__identifier_language[0] = __mu0_i18nlocale_default__[i].u_language[0];
+					__identifier_language[1] = __mu0_i18nlocale_default__[i].u_language[1];
+					__identifier_language[2] = '_';
+					__identifier_language[3] = __mu0_i18nlocale_default__[i].u_territory[0];
+					__identifier_language[4] = __mu0_i18nlocale_default__[i].u_territory[1];
+					__mu0_memcpy__(__identifier_language + 5, ".UTF-8\0", 7);
+					have_language = 1;
+					break;
+				}
+				++i;
+			} while (__mu0_not_nullptr__(__mu0_i18nlocale_default__[i].u_language));
+			if (0 == have_language) {
+				have_language = 0;
+				if (__mu0_not_nullptr__(setlocale(LC_MESSAGES, __identifier_language))) {
+					have_language = 1;
+				}
+			}
+		}
+		if (!have_territory) {
+			if (__mu0_not_nullptr__(__identifier_territory)) {
+				i = 0;
+				do {
+					if (__mu0_i18nlocale_default__[i].u_territory[0] == __territory[0] && __mu0_i18nlocale_default__[i].u_territory[1] == __territory[1]) {
+						__identifier_territory[0] = __mu0_i18nlocale_default__[i].u_language[0];
+						__identifier_territory[1] = __mu0_i18nlocale_default__[i].u_language[1];
+						__identifier_territory[2] = '_';
+						__identifier_territory[3] = __mu0_i18nlocale_default__[i].u_territory[0];
+						__identifier_territory[4] = __mu0_i18nlocale_default__[i].u_territory[1];
+						__mu0_memcpy__(__identifier_territory + 5, ".UTF-8\0", 7);
+						have_territory = 1;
+						break;
+					}
+					++i;
+				} while (__mu0_not_nullptr__(__mu0_i18nlocale_default__[i].u_territory));
+				if (have_territory) {
+					have_territory = 0;
+					if (__mu0_not_nullptr__(setlocale(LC_MESSAGES, __identifier_territory))) {
+						have_territory = 1;
+					}
+				}
+			}
+		}
+		//#! Restoring current locale.
+		setlocale(LC_MESSAGES, id);
+	}
+	if (!have_language) {
+#		if MU0_HAVE_POSIX1_2001
+		__mu0_memcpy__(__identifier_territory, "C.UTF-8\0"    ,  8);
+#		else
+		__mu0_memcpy__(__identifier_territory, "en_US.UTF-8\0", 12);
+#		endif
+	}
+	if (__mu0_not_nullptr__(__identifier_territory)) {
+		if (!have_language || (have_language && !have_territory)) {
+			__mu0_memcpy__(__identifier_territory, __identifier_language, 12);
+		}
+		return have_language && have_territory ? 0 : -1;
+	}
+	return have_language ? 0 : -1;
+}
+
 #	if !MU0_HAVE_I18NLOCALE
 #	if MU0_HAVE_WINDOWS
 #		undef  MU0_HAVE_I18NLOCALE
@@ -128,105 +245,20 @@
 		}
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(
-			  ___mu0_tint1_t___ __language[3]  __mu0_nullable__
-			, ___mu0_tint1_t___ __territory[3] __mu0_nullable__
+		const ___mu0_sint4_t___ __mu0_i18nlocale_user__(
+			  ___mu0_tint1_t___ __identifier_language [12]
+			, ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
 		) {
-			const ___mu0_uint4_t___ have_language  = __mu0_not_nullptr__(__language);
-			const ___mu0_uint4_t___ have_territory = __mu0_not_nullptr__(__territory);
-
-			__mu0_static__ ___mu0_tint1_t___ s_id[12];
-			 WCHAR buff[LOCALE_NAME_MAX_LENGTH] = { 0 };
-
-			if (0 != GetUserDefaultLocaleName(buff, LOCALE_NAME_MAX_LENGTH)) {
-				__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
-				WideCharToMultiByte(CP_UTF8, 0, buff, 5, s_id, 12, __mu0_nullptr__, __mu0_nullptr__);
+			___mu0_tint1_t___ id[12]                     = { 0 };
+			WCHAR             wb[LOCALE_NAME_MAX_LENGTH] = { 0 };
+			if (0 != GetUserDefaultLocaleName(wb, LOCALE_NAME_MAX_LENGTH)) {
+				WideCharToMultiByte(CP_UTF8, 0, wb, 11, id, 12, __mu0_nullptr__, __mu0_nullptr__);
 				if (s_id[2] == '_' || s_id[2] == '-') {
 					_configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
-					___mu0_tint1_t___ id[48]     = { 0 };
-					s_id[2]                      = '_'; __mu0_memcpy__(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
-					___mu0_tint1_t___ * s        = setlocale(LC_ALL, "");
-					if (__mu0_not_nullptr__(s)) {
-						__mu0_memcpy__(id, s, __mu0_sizeof__(id));
-					} else {
-#						if MU0_HAVE_POSIX1_2001
-						__mu0_memcpy__(id, "C.UTF-8"    ,  7); id[7]  = '\0';
-#						else
-						__mu0_memcpy__(id, "en_US.UTF-8", 11); id[11] = '\0';
-#						endif
-					}
-					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
-						setlocale(LC_ALL, id);
-						if (have_language) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
-							} else {
-								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
-							}
-						}
-						if (have_territory) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
-							} else {
-								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
-							}
-						}
-						return s_id;
-					}
-					___mu0_tint1_t___ wk[12]     = { 0 };
-					__mu0_memcpy__(wk, s_id, __mu0_sizeof__(s_id));
-					wk[3] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[0]));
-					wk[4] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[1]));
-					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
-						setlocale(LC_ALL, id);
-						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
-						if (have_language) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
-							} else {
-								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
-							}
-						}
-						if (have_territory) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
-							} else {
-								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
-							}
-						}
-						return s_id;
-					}
-					__mu0_memcpy__(wk, s_id, __mu0_sizeof__(s_id));
-					wk[0] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[3]));
-					wk[1] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[4]));
-					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
-						setlocale(LC_ALL, id);
-						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
-						if (have_language) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
-							} else {
-								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
-							}
-						}
-						if (have_territory) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
-							} else {
-								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
-							}
-						}
-						return s_id;
-					}
-					setlocale(LC_ALL, id);
+					return __mu0_i18nlocale_find__(s_id + 0, s_id + 3, __identifier_language, __identifier_territory);
 				}
 			}
-#			if MU0_HAVE_POSIX1_2001
-			__mu0_memcpy__(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
-#			else
-			__mu0_memcpy__(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
-#			endif
-			return s_id;
+			return -1;
 		}
 
 		__mu0_static_inline__
@@ -485,278 +517,54 @@
 #	if MU0_HAVE_MACOSX
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(
-			  ___mu0_tint1_t___ __language[3]  __mu0_nullable__
-			, ___mu0_tint1_t___ __territory[3] __mu0_nullable__
+		const ___mu0_sint4_t___ __mu0_i18nlocale_user__(
+			  ___mu0_tint1_t___ __identifier_language [12]
+			, ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
 		) {
-			const ___mu0_uint4_t___ have_language  = __mu0_not_nullptr__(__language);
-			const ___mu0_uint4_t___ have_territory = __mu0_not_nullptr__(__territory);
-
-			__mu0_static__ ___mu0_tint1_t___ s_id[12];
-			FILE * fp;
-
-			if ((fp = popen("defaults read .GlobalPreferences AppleLocale", "r"))) {
-				__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
-				fgets(s_id, __mu0_sizeof__(s_id) - 1U, fp);
-				if (s_id[2] == '_' || s_id[2] == '-') {
-					pclose(fp);
-					___mu0_tint1_t___ id[48] = { 0 };
-					s_id[2]                  = '_'; __mu0_memcpy__(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
-					___mu0_tint1_t___ * s    = setlocale(LC_ALL, "");
-					if (__mu0_not_nullptr__(s)) {
-						__mu0_memcpy__(id, s, __mu0_sizeof__(id));
-					} else {
-#						if MU0_HAVE_POSIX1_2001
-						__mu0_memcpy__(id, "C.UTF-8"    ,  7); id[7]  = '\0';
-#						else
-						__mu0_memcpy__(id, "en_US.UTF-8", 11); id[11] = '\0';
-#						endif
-					}
-					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
-						setlocale(LC_ALL, id);
-						if (have_language) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
-							} else {
-								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
-							}
-						}
-						if (have_territory) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
-							} else {
-								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
-							}
-						}
-						return s_id;
-					}
-					___mu0_tint1_t___ wk[12] = { 0 };
-					__mu0_memcpy__(wk, s_id, __mu0_sizeof__(s_id));
-					wk[3] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[0]));
-					wk[4] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[1]));
-					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
-						setlocale(LC_ALL, id);
-						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
-						if (have_language) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
-							} else {
-								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
-							}
-						}
-						if (have_territory) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
-							} else {
-								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
-							}
-						}
-						return s_id;
-					}
-					__mu0_memcpy__(wk, s_id, __mu0_sizeof__(s_id));
-					wk[0] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[3]));
-					wk[1] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[4]));
-					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
-						setlocale(LC_ALL, id);
-						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
-						if (have_language) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
-							} else {
-								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
-							}
-						}
-						if (have_territory) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
-							} else {
-								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
-							}
-						}
-						return s_id;
-					}
-					setlocale(LC_ALL, id);
-				}
+			___mu0_tint1_t___ s_id[12] = { 0 };
+			FILE *            fp;
+			if ((fp = popen("defaults read .GlobalPreferences AppleLocale" , "r"))) {
+				fgets(s_id, 11U, fp);
 				pclose(fp);
+				if (s_id[2] == '_' || s_id[2] == '-') {
+					return __mu0_i18nlocale_find__(s_id + 0, s_id + 3, __identifier_language, __identifier_territory);
+				}
 			}
-#			if MU0_HAVE_POSIX1_2001
-			__mu0_memcpy__(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
-			if (have_language) {
-				__language[0]  = 'C'; __language[1]  = '\0'; __language[2]  = '\0';
-			}
-			if (have_territory) {
-				__territory[0] = 'C'; __territory[1] = '\0'; __territory[2] = '\0';
-			}
-#			else
-			__mu0_memcpy__(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
-			if (have_language) {
-				__language[0]  = 'e'; __language[1]  = 'n'; __language[2]  = '\0';
-			}
-			if (have_territory) {
-				__territory[0] = 'U'; __territory[1] = 'S'; __territory[2] = '\0';
-			}
-#			endif
-			return s_id;
+			return -1;
 		}
 
 #	elif MU0_HAVE_IOS
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(
-			  ___mu0_tint1_t___ __language[3]  __mu0_nullable__
-			, ___mu0_tint1_t___ __territory[3] __mu0_nullable__
+		const ___mu0_sint4_t___ __mu0_i18nlocale_user__(
+			  ___mu0_tint1_t___ __identifier_language [12]
+			, ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
 		) {
-			const ___mu0_uint4_t___ have_language  = __mu0_not_nullptr__(__language);
-			const ___mu0_uint4_t___ have_territory = __mu0_not_nullptr__(__territory);
-
-			__mu0_static__ ___mu0_tint1_t___ s_id[12];
-			__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
-
-			if (CFStringGetCString(CFLocaleGetValue(CFLocaleCopyCurrent(), kCFLocaleIdentifier), s_id, __mu0_sizeof__(s_id) - 1U, kCFStringEncodingUTF8)) {
+			___mu0_tint1_t___ s_id[12] = { 0 };
+			if (CFStringGetCString(CFLocaleGetValue(CFLocaleCopyCurrent(), kCFLocaleIdentifier), s_id, 11U, kCFStringEncodingUTF8)) {
 				if (s_id[2] == '_' || s_id[2] == '-') {
-					___mu0_tint1_t___ id[48] = { 0 };
-					s_id[2]                  = '_'; __mu0_memcpy__(s_id + 5, ".UTF-8", 6); s_id[11] = '\0';
-					___mu0_tint1_t___ * s    = setlocale(LC_ALL, "");
-					if (__mu0_not_nullptr__(s)) {
-						__mu0_memcpy__(id, s, __mu0_sizeof__(id));
-					} else {
-#						if MU0_HAVE_POSIX1_2001
-						__mu0_memcpy__(id, "C.UTF-8"    ,  7); id[7]  = '\0';
-#						else
-						__mu0_memcpy__(id, "en_US.UTF-8", 11); id[11] = '\0';
-#						endif
-					}
-					if (__mu0_not_nullptr__(setlocale(LC_ALL, s_id))) {
-						setlocale(LC_ALL, id);
-						if (have_language) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
-							} else {
-								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
-							}
-						}
-						if (have_territory) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
-							} else {
-								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
-							}
-						}
-						return s_id;
-					}
-					___mu0_tint1_t___ wk[12] = { 0 };
-					__mu0_memcpy__(wk, s_id, __mu0_sizeof__(s_id));
-					wk[3] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[0]));
-					wk[4] = toupper(__mu0_const_cast__(___mu0_uint1_t___, wk[1]));
-					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
-						setlocale(LC_ALL, id);
-						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
-						if (have_language) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
-							} else {
-								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
-							}
-						}
-						if (have_territory) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
-							} else {
-								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
-							}
-						}
-						return s_id;
-					}
-					__mu0_memcpy__(wk, s_id, __mu0_sizeof__(s_id));
-					wk[0] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[3]));
-					wk[1] = tolower(__mu0_const_cast__(___mu0_uint1_t___, wk[4]));
-					if (__mu0_not_nullptr__(setlocale(LC_ALL, wk))) {
-						setlocale(LC_ALL, id);
-						__mu0_memcpy__(s_id, wk, __mu0_sizeof__(wk));
-						if (have_language) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__language[0]  = 'C';     __language[1]  = '\0';    __language[2]  = '\0';
-							} else {
-								__language[0]  = s_id[0]; __language[1]  = s_id[1]; __language[2]  = '\0';
-							}
-						}
-						if (have_territory) {
-							if (s_id[0] == 'C' || s_id[0] == 'P') {
-								__territory[0] = 'C';     __territory[1] = '\0';    __territory[2] = '\0';
-							} else {
-								__territory[0] = s_id[3]; __territory[1] = s_id[4]; __territory[2] = '\0';
-							}
-						}
-						return s_id;
-					}
-					setlocale(LC_ALL, id);
+					return __mu0_i18nlocale_find__(s_id + 0, s_id + 3, __identifier_language, __identifier_territory);
 				}
 			}
-#			if MU0_HAVE_POSIX1_2001
-			__mu0_memcpy__(s_id, "C.UTF-8"    ,  7); s_id[7]  = '\0';
-			if (have_language) {
-				__language[0]  = 'C'; __language[1]  = '\0'; __language[2]  = '\0';
-			}
-			if (have_territory) {
-				__territory[0] = 'C'; __territory[1] = '\0'; __territory[2] = '\0';
-			}
-#			else
-			__mu0_memcpy__(s_id, "en_US.UTF-8", 11); s_id[11] = '\0';
-			if (have_language) {
-				__language[0]  = 'e'; __language[1]  = 'n'; __language[2]  = '\0';
-			}
-			if (have_territory) {
-				__territory[0] = 'U'; __territory[1] = 'S'; __territory[2] = '\0';
-			}
-#			endif
-			return s_id;
+			return -1;
 		}
 
 #	else
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(
-			  ___mu0_tint1_t___ __language[3]  __mu0_nullable__
-			, ___mu0_tint1_t___ __territory[3] __mu0_nullable__
+		const ___mu0_sint4_t___ __mu0_i18nlocale_user__(
+			  ___mu0_tint1_t___ __identifier_language [12]
+			, ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
 		) {
-			const ___mu0_uint4_t___ have_language  = __mu0_not_nullptr__(__language);
-			const ___mu0_uint4_t___ have_territory = __mu0_not_nullptr__(__territory);
-			const ___mu0_tint1_t___ * id           = __mu0_i18nlocale_get__(LC_ALL, __mu0_nullptr__);
-
-			if (__mu0_not_nullptr__(id)) {
-				if (have_language) {
-					if (id[0] == 'C' || id[0] == 'P') {
-						__language[0]  = 'C';    __language[1]  = '\0';   __language[2]  = '\0';
-					} else {
-						__language[0]  = id[0]; __language[1]  = id[1]; __language[2]  = '\0';
-					}
-				}
-				if (have_territory) {
-					if (id[0] == 'C' || id[0] == 'P') {
-						__territory[0] = 'C';    __territory[1] = '\0';   __territory[2] = '\0';
-					} else {
-						__territory[0] = id[3]; __territory[1] = id[4]; __territory[2] = '\0';
-					}
-				}
-				return id;
-			}
 #			if MU0_HAVE_POSIX1_2001
-			if (have_language) {
-				__language[0]  = 'C'; __language[1]  = '\0'; __language[2]  = '\0';
-			}
-			if (have_territory) {
-				__territory[0] = 'C'; __territory[1] = '\0'; __territory[2] = '\0';
-			}
-			return "C.UTF-8";
+				__mu0_memcpy__(__identifier_language, "C.UTF-8\0"    ,  8);
 #			else
-			if (have_language) {
-				__language[0]  = 'e'; __language[1]  = 'n'; __language[2]  = '\0';
-			}
-			if (have_territory) {
-				__territory[0] = 'U'; __territory[1] = 'S'; __territory[2] = '\0';
-			}
-			return "en_US.UTF-8";
+				__mu0_memcpy__(__identifier_language, "en_US.UTF-8\0", 12);
 #			endif
+			if (__mu0_not_nullptr__(__identifier_territory)) {
+				__mu0_memcpy__(__identifier_territory, __identifier_language, 12);
+			}
+			return 0;
 		}
 
 #	endif
@@ -867,33 +675,18 @@
 		}
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_user__(
-			  ___mu0_tint1_t___ __language[3]  __mu0_nullable__
-			, ___mu0_tint1_t___ __territory[3] __mu0_nullable__
+		const ___mu0_sint4_t___ __mu0_i18nlocale_user__(
+			  ___mu0_tint1_t___ __identifier_language [12]
+			, ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
 		) {
-			const ___mu0_uint4_t___ have_language  = __mu0_not_nullptr__(__language);
-			const ___mu0_uint4_t___ have_territory = __mu0_not_nullptr__(__territory);
-
-			__mu0_unused__(__category);
-			__mu0_unused__(__locale);
-
 #			if MU0_HAVE_POSIX1_2001
-			if (have_language) {
-				__language[0]  = 'C'; __language[1]  = '\0'; __language[2]  = '\0';
-			}
-			if (have_territory) {
-				__territory[0] = 'C'; __territory[1] = '\0'; __territory[2] = '\0';
-			}
-			return "C.UTF-8";
+				__mu0_memcpy__(__identifier_language, "C.UTF-8\0"    ,  8);
 #			else
-			if (have_language) {
-				__language[0]  = 'e'; __language[1]  = 'n'; __language[2]  = '\0';
-			}
-			if (have_territory) {
-				__territory[0] = 'U'; __territory[1] = 'S'; __territory[2] = '\0';
-			}
-			return "en_US.UTF-8";
+				__mu0_memcpy__(__identifier_language, "en_US.UTF-8\0", 12);
 #			endif
+			if (__mu0_not_nullptr__(__identifier_territory)) {
+				__mu0_memcpy__(__identifier_territory, __identifier_language, 12);
+			}
 		}
 
 		__mu0_static_inline__

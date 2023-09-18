@@ -45,7 +45,7 @@
 #	else
 #		define __mu0_memset__ memset
 #		define __mu0_memcpy__ memcpy
-#		define __mu0_memcpy__ strlen
+#		define __mu0_memlen__ strlen
 #	endif
 
 #endif /* !MU0_MEMORY_H */

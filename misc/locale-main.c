@@ -19,13 +19,16 @@
 
 int main(int argc, const char * argv[])
 {
-	const mu0_tchar8_t * s1 = mu0_utf8_const("éducation");
-	const mu0_tchar8_t * s2 = mu0_utf8_const("Education");
+	const mu0_tchar8_t * s1           = mu0_utf8_const("éducation");
+	const mu0_tchar8_t * s2           = mu0_utf8_const("Education");
 
-	const mu0_tchar8_t * s3 = mu0_utf8_const("érudition");
-	const mu0_tchar8_t * s4 = mu0_utf8_const("Érudition");
+	const mu0_tchar8_t * s3           = mu0_utf8_const("érudition");
+	const mu0_tchar8_t * s4           = mu0_utf8_const("Érudition");
 
-	mu0_locale_t * locale;
+	      mu0_tchar8_t language  [12] = { 0 };
+	      mu0_tchar8_t territory [12] = { 0 };
+
+	      mu0_locale_t * locale;
 
 	mu0_unused(argc);
 	mu0_unused(argv);
@@ -59,7 +62,8 @@ int main(int argc, const char * argv[])
 	mu0_console_log("%02d s4 <> s3\n", mu0_locale_compare(s4, s3, mu0_nullptr));
 
 	mu0_console_log("\n");
-	mu0_console_log("%s \n", mu0_locale_interface(mu0_nullptr, mu0_nullptr));
+	mu0_console_log("%s \n", mu0_locale_interface(language, territory));
+	mu0_console_log("%s, %s\n", language, territory);
 	mu0_console_log("\n");
 
 	return 0;

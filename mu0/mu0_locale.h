@@ -33,6 +33,7 @@ enum mu0_localegroup
 	, mu0_localegroup_numerics  = 3
 	, mu0_localegroup_datetime  = 4
 	, mu0_localegroup_telephone = 5
+	, mu0_localegroup_addresses = 6
 };
 
 mu0_locale_t *       mu0_locale_create(
@@ -50,9 +51,10 @@ mu0_sint32_t         mu0_locale_global(
 );
 
 const mu0_tchar8_t * mu0_locale_interface (
-	  mu0_tchar8_t language[3]  __mu0_nullable__
-	, mu0_tchar8_t territory[3] __mu0_nullable__
+	  mu0_tchar8_t language_identifier [12]
+	, mu0_tchar8_t territory_identifier[12] __mu0_nullable__
 );
+
 const mu0_tchar8_t * mu0_locale_identifier(
 	  const enum mu0_localegroup grouping
 	, const      mu0_locale_t *  locale   __mu0_nullable__
