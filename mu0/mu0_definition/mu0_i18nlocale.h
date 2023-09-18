@@ -249,10 +249,11 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			  ___mu0_tint1_t___ __identifier_language [12]
 			, ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
 		) {
-			___mu0_tint1_t___ id[12]                     = { 0 };
-			WCHAR             wb[LOCALE_NAME_MAX_LENGTH] = { 0 };
-			if (0 != GetUserDefaultLocaleName(wb, LOCALE_NAME_MAX_LENGTH)) {
-				WideCharToMultiByte(CP_UTF8, 0, wb, 11, id, 12, __mu0_nullptr__, __mu0_nullptr__);
+			__mu0_static__ ___mu0_tint1_t___ s_id[12];
+			WCHAR                            buff[LOCALE_NAME_MAX_LENGTH] = { 0 };
+			if (0 != GetUserDefaultLocaleName(buff, LOCALE_NAME_MAX_LENGTH)) {
+				__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
+				WideCharToMultiByte(CP_UTF8, 0, buff, 11, id, s_id, __mu0_nullptr__, __mu0_nullptr__);
 				if (s_id[2] == '_' || s_id[2] == '-') {
 					_configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
 					return __mu0_i18nlocale_find__(s_id + 0, s_id + 3, __identifier_language, __identifier_territory);
@@ -521,9 +522,10 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			  ___mu0_tint1_t___ __identifier_language [12]
 			, ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
 		) {
-			___mu0_tint1_t___ s_id[12] = { 0 };
+			__mu0_static__ ___mu0_tint1_t___ s_id[12];
 			FILE *            fp;
 			if ((fp = popen("defaults read .GlobalPreferences AppleLocale" , "r"))) {
+				__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
 				fgets(s_id, 11U, fp);
 				pclose(fp);
 				if (s_id[2] == '_' || s_id[2] == '-') {
@@ -540,7 +542,8 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			  ___mu0_tint1_t___ __identifier_language [12]
 			, ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
 		) {
-			___mu0_tint1_t___ s_id[12] = { 0 };
+			__mu0_static__ ___mu0_tint1_t___ s_id[12];
+			__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
 			if (CFStringGetCString(CFLocaleGetValue(CFLocaleCopyCurrent(), kCFLocaleIdentifier), s_id, 11U, kCFStringEncodingUTF8)) {
 				if (s_id[2] == '_' || s_id[2] == '-') {
 					return __mu0_i18nlocale_find__(s_id + 0, s_id + 3, __identifier_language, __identifier_territory);
@@ -727,11 +730,10 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 __mu0_static_inline__
 const ___mu0_tint1_t___ * __mu0_i18nlocale_make__(const ___mu0_tint1_t___ * __lg, const ___mu0_tint1_t___ * __cn, const ___mu0_tint1_t___ * __md __mu0_nullable__)
 {
-	__mu0_static__
-	___mu0_tint1_t___   s_id[48];
-	___mu0_tint1_t___ * variant;
-	___mu0_uint4_t___   have_name = 0;
-	___mu0_uint8_t___   k, l, p   = 0;
+	__mu0_static__ ___mu0_tint1_t___   s_id[48];
+	               ___mu0_tint1_t___ * variant;
+	               ___mu0_uint4_t___   have_name = 0;
+	               ___mu0_uint8_t___   k, l, p   = 0;
 
 	//#! XPG syntax:[language[territory[.codeset]][@modifier[+variant]]
 	__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
