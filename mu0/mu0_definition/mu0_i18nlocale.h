@@ -39,6 +39,16 @@
 #	endif
 #	if MU0_HAVE_POSIX1_2001 || MU0_HAVE_WINDOWS
 #	include <locale.h>
+#	if MU0_HAVE_WINDOWS
+#		define LC_MESSAGES      LC_ALL
+#		define LC_ALL_MASK      0
+#		define LC_COLLATE_MASK  0
+#		define LC_CTYPE_MASK    0
+#		define LC_MESSAGES_MASK 0
+#		define LC_MONETARY_MASK 0
+#		define LC_NUMERIC_MASK  0
+#		define LC_TIME_MASK     0
+#	endif
 #	endif
 #	if !MU0_HAVE_WINDOWS
 #	include <stdlib.h>
@@ -174,16 +184,6 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			_locale_t         u_lc;
 		};
 		typedef struct ___mu0_i18nlocale_t___ __mu0_i18nlocale_t__;
-
-#		define LC_MESSAGES      LC_ALL
-
-#		define LC_ALL_MASK      0
-#		define LC_COLLATE_MASK  0
-#		define LC_CTYPE_MASK    0
-#		define LC_MESSAGES_MASK 0
-#		define LC_MONETARY_MASK 0
-#		define LC_NUMERIC_MASK  0
-#		define LC_TIME_MASK     0
 
 		__mu0_static_inline__
 		__mu0_i18nlocale_t__ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, const __mu0_i18nlocale_t__ * __base __mu0_nullable__)
