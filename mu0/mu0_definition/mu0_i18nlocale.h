@@ -39,15 +39,15 @@
 #	endif
 #	if MU0_HAVE_POSIX1_2001 || MU0_HAVE_WINDOWS
 #	include <locale.h>
-#	if MU0_HAVE_WINDOWS
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #		define LC_MESSAGES      LC_ALL
-#		define LC_ALL_MASK      0
-#		define LC_COLLATE_MASK  0
-#		define LC_CTYPE_MASK    0
-#		define LC_MESSAGES_MASK 0
-#		define LC_MONETARY_MASK 0
-#		define LC_NUMERIC_MASK  0
-#		define LC_TIME_MASK     0
+#		define LC_ALL_MASK      LC_ALL
+#		define LC_COLLATE_MASK  LC_COLLATE
+#		define LC_CTYPE_MASK    LC_CTYPE
+#		define LC_MESSAGES_MASK LC_MESSAGES
+#		define LC_MONETARY_MASK LC_MONETARY
+#		define LC_NUMERIC_MASK  LC_NUMERIC
+#		define LC_TIME_MASK     LC_TIME
 #	endif
 #	endif
 #	if !MU0_HAVE_WINDOWS
@@ -173,7 +173,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 }
 
 #	if !MU0_HAVE_I18NLOCALE
-#	if MU0_HAVE_WINDOWS
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
 
@@ -188,7 +188,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		__mu0_static_inline__
 		__mu0_i18nlocale_t__ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, const __mu0_i18nlocale_t__ * __base __mu0_nullable__)
 		{
-			__mu0_i18nlocale_t__ * locale = malloc(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+			__mu0_i18nlocale_t__ * locale = __mu0_doalloc__(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
 			___mu0_uint8_t___      len;
 			__mu0_unused__(__mask);
 			__mu0_unused__(__base);
@@ -199,7 +199,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 				locale->u_ct               = LC_ALL;
 				locale->u_lc               = _create_locale(locale->u_ct, __locale);
 				if (__mu0_is_nullptr__(locale->u_lc)) {
-					free(locale);
+					__mu0_dealloc__(locale);
 					locale                  = __mu0_nullptr__;
 				}
 			}
@@ -274,7 +274,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 				if (__mu0_not_nullptr__(__locale->u_lc)) {
 					_free_locale(__locale->u_lc);
 				}
-				free(__locale);
+				__mu0_dealloc__(__locale);
 				__locale = __mu0_nullptr__;
 				return 0;
 			}
@@ -358,12 +358,12 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		__mu0_static_inline__
 		__mu0_i18nlocale_t__ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ * __base __mu0_nullable__)
 		{
-			__mu0_i18nlocale_t__ * locale = malloc(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+			__mu0_i18nlocale_t__ * locale = __mu0_doalloc__(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
 			if (__mu0_not_nullptr__(locale)) {
 				__mu0_memset__(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
 				locale->u_lc               = newlocale(__mask, __locale, __mu0_not_nullptr__(__base) ? __base->u_lc : __mu0_nullptr__);
 				if (__mu0_is_nullptr__(locale->u_lc)) {
-					free(locale);
+					__mu0_dealloc__(locale);
 					locale                  = __mu0_nullptr__;
 				}
 			}
@@ -376,11 +376,11 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			__mu0_i18nlocale_t__ * locale = __mu0_nullptr__;
 			if (__mu0_not_nullptr__(__locale)) {
 				if (__mu0_not_nullptr__(__locale->u_lc)) {
-					locale = malloc(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+					locale = __mu0_doalloc__(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
 					if (__mu0_not_nullptr__(locale)) {
 						locale->u_lc         = duplocale(uselocale(__locale->u_lc));
 						if (__mu0_is_nullptr__(locale->u_lc)) {
-							free(locale);
+							__mu0_dealloc__(locale);
 							locale            = __mu0_nullptr__;
 						}
 					}

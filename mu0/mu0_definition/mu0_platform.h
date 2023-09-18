@@ -98,6 +98,10 @@
 #	elif defined(_WIN32) || defined(_WIN64)
 #		undef  MU0_HAVE_WINDOWS
 #		define MU0_HAVE_WINDOWS      1
+#		if defined(__MINGW32__) || defined(__MINGW64__)
+#			undef  MU0_HAVE_MINGW
+#			define MU0_HAVE_MINGW     1
+#		endif
 #	elif defined(__MINGW32__) || defined(__MINGW64__)
 #		undef  MU0_HAVE_MINGW
 #		define MU0_HAVE_MINGW        1

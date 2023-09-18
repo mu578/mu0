@@ -30,7 +30,7 @@
 #	define MU0_HAVE_DATEFORMAT   0
 #	define MU0_HAVE_I18NDATETIME 0
 
-#	if MU0_HAVE_WINDOWS
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 
 	struct __mu0_tm__
 	{
@@ -69,7 +69,7 @@
 #	define __mu0_tm_isdst__(__tm)  (__tm)->u_tm.tm_isdst
 
 #	if !MU0_HAVE_LOCALTIME
-#	if MU0_HAVE_WINDOWS
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #	undef  MU0_HAVE_LOCALTIME
 #	define MU0_HAVE_LOCALTIME 1
 
@@ -112,7 +112,7 @@ void __mu0_i18ndatetime_local__(struct __mu0_tm__ * __date)
 #	endif
 
 #	if !MU0_HAVE_ZULUTIME
-#	if MU0_HAVE_WINDOWS
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #	undef  MU0_HAVE_ZULUTIME
 #	define MU0_HAVE_ZULUTIME 1
 
@@ -152,7 +152,7 @@ void __mu0_i18ndatetime_zulu__(struct __mu0_tm__ * __date)
 #	endif
 
 #	if !MU0_HAVE_DATEFORMAT
-#	if MU0_HAVE_WINDOWS
+#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 #	undef  MU0_HAVE_DATEFORMAT
 #	define MU0_HAVE_DATEFORMAT 1
 
