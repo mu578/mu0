@@ -253,7 +253,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			WCHAR                            buff[LOCALE_NAME_MAX_LENGTH] = { 0 };
 			if (0 != GetUserDefaultLocaleName(buff, LOCALE_NAME_MAX_LENGTH)) {
 				__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
-				WideCharToMultiByte(CP_UTF8, 0, buff, 11, id, s_id, __mu0_nullptr__, __mu0_nullptr__);
+				WideCharToMultiByte(CP_UTF8, 0, buff, 11, s_id, 12, __mu0_nullptr__, __mu0_nullptr__);
 				if (s_id[2] == '_' || s_id[2] == '-') {
 					_configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
 					return __mu0_i18nlocale_find__(s_id + 0, s_id + 3, __identifier_language, __identifier_territory);
