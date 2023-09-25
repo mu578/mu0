@@ -57,10 +57,10 @@
 
 __mu0_static_inline__
 const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
-	  const ___mu0_tint1_t___   __language            [ 2]
-	, const ___mu0_tint1_t___   __territory           [ 2]
-	,       ___mu0_tint1_t___   __identifier_language [12]
-	,       ___mu0_tint1_t___   __identifier_territory[12] __mu0_nullable__
+	  const ___mu0_tint1_t___ __language            [ 2]
+	, const ___mu0_tint1_t___ __territory           [ 2]
+	,       ___mu0_tint1_t___ __identifier_language [12]
+	,       ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
 ) {
 	__mu0_static__ struct { const ___mu0_tint1_t___ * u_language; const ___mu0_tint1_t___ * u_territory; } const s_lookup[] =
 	{
@@ -182,7 +182,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 }
 
 #	if !MU0_HAVE_I18NLOCALE
-#	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
+#	if MU0_HAVE_WINDOWS
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
 
@@ -555,7 +555,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			return -1;
 		}
 
-#	else
+#	elif MU0_HAVE_ANDROID
 
 		__mu0_static_inline__
 		const ___mu0_sint4_t___ __mu0_i18nlocale_user__(
@@ -570,7 +570,24 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			if (__mu0_not_nullptr__(__identifier_territory)) {
 				__mu0_memcpy__(__identifier_territory, __identifier_language, 12);
 			}
-			return 0;
+			return -1;
+		}
+
+#	else
+
+		__mu0_static_inline__
+		const ___mu0_sint4_t___ __mu0_i18nlocale_user__(
+			  ___mu0_tint1_t___ __identifier_language [12]
+			, ___mu0_tint1_t___ __identifier_territory[12] __mu0_nullable__
+		) {
+			__mu0_static__ ___mu0_tint1_t___ s_id[12];
+			___mu0_tint1_t___ * loc;
+			__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
+			if (__mu0_not_nullptr__((loc = setlocale(LC_MESSAGES, "")))) {
+				__mu0_memcpy__(id, loc, __mu0_sizeof__(id));
+				return __mu0_i18nlocale_find__(s_id + 0U, s_id + 3U, __identifier_language, __identifier_territory);
+			}
+			return -1;
 		}
 
 #	endif

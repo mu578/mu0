@@ -108,7 +108,7 @@ typedef long double _Complex                           mu0_cpex_t;
 #	endif
 
 #	if MU0_USE_FLOAT128
-#	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC
+#	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
 #		if   !__is_identifier(_Float128) && defined(__FLT128_MAX__) && __clang_major__ >= 16
 #			undef  MU0_HAVE_FLOAT128
 #			define MU0_HAVE_FLOAT128 1

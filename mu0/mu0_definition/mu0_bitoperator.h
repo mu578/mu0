@@ -939,12 +939,12 @@ const ___mu0_uint1_t___ __mu0_bit_floor_u1__(const ___mu0_uint1_t___ __x)
 #			define __mu0_bit_cast__(__a, __b) \
 			(__a) = __builtin_bit_cast(__mu0_typeof__((__mu0_typeof__(__x))(__x)), __b)
 #		else
-#			define __mu0_bit_cast__(__a, __b)                                              \
+#			define __mu0_bit_cast__(__a, __b)                                                      \
 			__mu0_memset__(__mu0_addressof__(__b), 0                     , __mu0_sizeof__((__b))); \
 			__mu0_memset__(__mu0_addressof__(__b), __mu0_addressof__(__a), __mu0_sizeof__((__b)))
 #		endif
 #	else
-#	define __mu0_bit_cast__(__a, __b)                                              \
+#	define __mu0_bit_cast__(__a, __b)                                                      \
 	__mu0_memset__(__mu0_addressof__(__b), 0                     , __mu0_sizeof__((__b))); \
 	__mu0_memset__(__mu0_addressof__(__b), __mu0_addressof__(__a), __mu0_sizeof__((__b)))
 #	endif

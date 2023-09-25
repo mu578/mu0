@@ -127,7 +127,7 @@ void __mu0_i18ndatetime_local__(struct __mu0_tm__ * __date)
 		__date->u_gmtoff = tz.tz_minuteswest * 3600;
 		__mu0_memset__(__date->u_zone, 0, 6);
 		__mu0_memcpy__(__date->u_zone, "UTC", 3);
-		__date->u_usec = utc.tv_usec;
+		__date->u_usec   = utc.tv_usec;
 	}
 
 #	endif
@@ -158,10 +158,10 @@ void __mu0_i18ndatetime_zulu__(struct __mu0_tm__ * __date)
 
 __mu0_static_inline__
 const ___mu0_sint4_t___ __mu0_i18ndatetime_format__(
-	  const struct __mu0_tm__ *    __date
-	, const ___mu0_uint4_t___      __format
-	,       __mu0_i18nlocale_t__ * __locale   __mu0_nullable__
-	,       ___mu0_tint1_t___      __dest[32]
+	  const struct __mu0_tm__ *           __date
+	, const        ___mu0_uint4_t___      __format
+	,              __mu0_i18nlocale_t__ * __locale   __mu0_nullable__
+	,             ___mu0_tint1_t___       __dest[32]
 ) {
 	                     ___mu0_tint1_t___   buf[4];
 	__mu0_static__ const ___mu0_tint1_t___ * fmt[6] =
