@@ -40,11 +40,11 @@
 #		define __mu0_pragma__(__m)
 #	endif
 
-#	undef  MU0_HAVE_NAKED
-#	define MU0_HAVE_NAKED 0
+#	undef  MU0_HAVE_NAKED_FUNCTION
+#	define MU0_HAVE_NAKED_FUNCTION 0
 #	if 1
-#		undef  MU0_HAVE_NAKED
-#		define MU0_HAVE_NAKED 1
+#		undef  MU0_HAVE_NAKED_FUNCTION
+#		define MU0_HAVE_NAKED_FUNCTION 1
 #		if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_MSVCL
 #			undef  __mu0_naked_function__
 #			define __mu0_naked_function__ __attribute__((naked))
@@ -56,8 +56,8 @@
 #			define __mu0_naked_function__
 #	endif
 #	else
-#			undef  __mu0_naked_function__
-#			define __mu0_naked_function__
+#		undef  __mu0_naked_function__
+#		define __mu0_naked_function__
 #	endif
 
 #	undef  MU0_HAVE_VOLATILE
@@ -79,7 +79,7 @@
 #		define MU0_HAVE_STATIC   1
 #		define __mu0_static__    static
 #	else
-#		define __mu0_static__ 
+#		define __mu0_static__
 #	endif
 
 #	undef  MU0_HAVE_INLINE

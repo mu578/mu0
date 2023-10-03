@@ -26,11 +26,9 @@ typedef struct
 #	define mu0_pcg32_initializer \
 	{ __mu0_uint64_const__(9600629759793949339), __mu0_uint64_const__(15726070495360670683) }
 
-__mu0_static__
-mu0_random_context_t g_mu0_pcg32_context     = mu0_pcg32_initializer;
-
-__mu0_static__ __mu0_volatile__
-mu0_uint32_t         __mu0_permutedcg_init__ = 0U;
+__mu0_static__                  mu0_random_context_t __mu0_random_ctx__ = mu0_pcg32_initializer;
+__mu0_static__ __mu0_volatile__ mu0_uint32_t         __mu0_random_ini__ = 0U;
+__mu0_static__                  __mu0_spinlock_t__   __mu0_random_lck__ = __mu0_spinlock_initializer__;
 
 __mu0_static_inline__
 void mu0_pcg32_context_seed_build(mu0_uint64_t * seed, mu0_uint64_t * incr)
@@ -114,69 +112,69 @@ __mu0_static_inline__
 void mu0_pcg32_srandom(
 	  const mu0_uint64_t seed
 	, const mu0_uint64_t incr
-) { mu0_pcg32_srandom_r(&g_mu0_pcg32_context, seed, incr); }
+) { mu0_pcg32_srandom_r(&__mu0_random_ctx__, seed, incr); }
 
 __mu0_static_inline__
 void mu0_pcg32_ssrandom_r(mu0_random_context_t * ctx)
 {
 	mu0_uint64_t seed, incr;
-	if (__mu0_permutedcg_init__ == 0U) {
-		__mu0_barrier_acquire__();
+	__mu0_spinlock_lock__(&__mu0_random_lck__);
+	if (__mu0_random_ini__ == 0U) {
 		mu0_pcg32_context_seed_build(&seed, &incr);
 		mu0_pcg32_srandom_r(ctx, seed, incr);
-		__mu0_permutedcg_init__ = 1U;
-		__mu0_barrier_release__();
+		__mu0_random_ini__ = 1U;
 	}
+	__mu0_spinlock_unlock__(&__mu0_random_lck__);
 }
 
 __mu0_static_inline__
 void mu0_pcg32_ssrandom(void)
-{ mu0_pcg32_ssrandom_r(&g_mu0_pcg32_context); }
+{ mu0_pcg32_ssrandom_r(&__mu0_random_ctx__); }
 
 __mu0_static_inline__
 mu0_uint32_t mu0_pcg32_random(void)
 {
-	return mu0_pcg32_random_r(&g_mu0_pcg32_context);
+	return mu0_pcg32_random_r(&__mu0_random_ctx__);
 }
 
 __mu0_static_inline__
 mu0_uint64_t mu0_pcg32_64_random(void)
 {
-	return mu0_pcg32_64_random_r(&g_mu0_pcg32_context);
+	return mu0_pcg32_64_random_r(&__mu0_random_ctx__);
 }
 
 __mu0_static_inline__
 mu0_uint16_t mu0_pcg32_16_random(void)
 {
-	return mu0_pcg32_16_random_r(&g_mu0_pcg32_context);
+	return mu0_pcg32_16_random_r(&__mu0_random_ctx__);
 }
 
 __mu0_static_inline__
 mu0_uint32_t mu0_pcg32_random_bounded(const mu0_uint32_t bound)
 {
-	return mu0_pcg32_random_bounded_r(&g_mu0_pcg32_context, bound);
+	return mu0_pcg32_random_bounded_r(&__mu0_random_ctx__, bound);
 }
 
 __mu0_static_inline__
 mu0_uint64_t mu0_pcg32_64_random_bounded(const mu0_uint64_t bound)
 {
-	return mu0_pcg32_64_random_bounded_r(&g_mu0_pcg32_context, bound);
+	return mu0_pcg32_64_random_bounded_r(&__mu0_random_ctx__, bound);
 }
 
 __mu0_static_inline__
 mu0_uint16_t mu0_pcg32_16_random_bounded(const mu0_uint16_t bound)
 {
-	return mu0_pcg32_16_random_bounded_r(&g_mu0_pcg32_context, bound);
+	return mu0_pcg32_16_random_bounded_r(&__mu0_random_ctx__, bound);
 }
 
 void mu0_random_seed(const mu0_uint32_t seed, const mu0_uint32_t incr)
 {
-	mu0_pcg32_srandom_r(&g_mu0_pcg32_context, seed, incr);
+	mu0_pcg32_srandom_r(&__mu0_random_ctx__, seed, incr);
 }
 
 void mu0_random_init(void)
 {
-	mu0_pcg32_ssrandom_r(&g_mu0_pcg32_context);
+	mu0_pcg32_ssrandom_r(&__mu0_random_ctx__);
 }
 
 mu0_uint128_t mu0_random_u128(void)
