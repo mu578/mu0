@@ -10,7 +10,7 @@
 //                                           | |                                                            //
 //                                           |_|                                                            //
 
-// mu0_locale.h
+// mu0_locale-v2.h
 //
 // Copyright (C) 2023 mu578. All rights reserved.
 //
@@ -18,12 +18,17 @@
 #include <mu0/mu0_integer.h>
 #include <mu0/mu0_string.h>
 
-#ifndef MU0_LOCALE_H
-#define MU0_LOCALE_H 1
+#ifndef MU0_LOCALE_V2_H
+#define MU0_LOCALE_V2_H 1
 
 MU0_BEGIN_CDECL
 
-typedef __mu0_i18nlocale_t__ mu0_locale_t;
+#	define __mu0_i18nlocale_group_collator__  (1U << 1U)
+#	define __mu0_i18nlocale_group_monetary__  (1U << 2U)
+#	define __mu0_i18nlocale_group_numerics__  (1U << 3U)
+#	define __mu0_i18nlocale_group_datetime__  (1U << 4U)
+#	define __mu0_i18nlocale_group_telephone__ (1U << 5U)
+#	define __mu0_i18nlocale_group_addresses__ (1U << 6U)
 
 enum mu0_locale_group
 {
@@ -35,24 +40,29 @@ enum mu0_locale_group
 	, mu0_locale_group_addresses = __mu0_i18nlocale_group_addresses__
 };
 
-#	define mu0_locale_grouping_language               \
-	mu0_const_uint32((                                \
-		  mu0_const_uint32(mu0_locale_group_collator)  \
-		| mu0_const_uint32(mu0_locale_group_numerics)  \
-	))
-
-#	define mu0_locale_grouping_territory              \
-	mu0_const_uint32((                                \
-		  mu0_const_uint32(u0_locale_group_monetary)   \
-		| mu0_const_uint32(mu0_locale_group_datetime)  \
-		| mu0_const_uint32(mu0_locale_group_telephone) \
-		| mu0_const_uint32(mu0_locale_group_addresses) \
-	))
-
-#	define mu0_locale_grouping_complete               \
-	(mu0_locale_grouping_language | mu0_locale_grouping_territory)
-
 typedef mu0_uint32_t         mu0_locale_grouping_t;
+typedef __mu0_i18nlocale_t__ mu0_locale_t;
+
+mu0_integral_constant(mu0_locale_grouping_t , mu0_locale_grouping_language
+	, ( mu0_locale_group_collator
+	  | mu0_locale_group_numerics
+));
+
+mu0_integral_constant(mu0_locale_grouping_t , mu0_locale_grouping_territory
+	, ( mu0_locale_group_monetary
+	  | mu0_locale_group_datetime
+	  | mu0_locale_group_telephone
+	  | mu0_locale_group_addresses
+));
+
+mu0_integral_constant(mu0_locale_grouping_t , mu0_locale_grouping_complete
+	, ( mu0_locale_group_collator
+	  | mu0_locale_group_numerics
+	  | mu0_locale_group_monetary
+	  | mu0_locale_group_datetime
+	  | mu0_locale_group_telephone
+	  | mu0_locale_group_addresses
+));
 
 mu0_locale_t *       mu0_locale_create     (
 	  const mu0_tchar8_t *        language
@@ -71,8 +81,8 @@ mu0_sint32_t         mu0_locale_interface  (
 );
 
 const mu0_tchar8_t * mu0_locale_identifier (
-	  const enum mu0_locale_group_t group
-	, const      mu0_locale_t *     locale __mu0_nullable__
+	  const enum mu0_locale_group group
+	, const      mu0_locale_t *   locale __mu0_nullable__
 );
 
 mu0_sint32_t         mu0_locale_delete     (
@@ -94,6 +104,6 @@ enum mu0_ordering    mu0_locale_compare_n  (
 
 MU0_END_CDECL
 
-#endif /* !MU0_LOCALE_H */
+#endif /* !MU0_LOCALE_V2_H */
 
 /* EOF */
