@@ -23,56 +23,28 @@
 
 MU0_BEGIN_CDECL
 
-#	define __mu0_i18nlocale_group_collator__  (1U << 1U)
-#	define __mu0_i18nlocale_group_monetary__  (1U << 2U)
-#	define __mu0_i18nlocale_group_numerics__  (1U << 3U)
-#	define __mu0_i18nlocale_group_datetime__  (1U << 4U)
-#	define __mu0_i18nlocale_group_telephone__ (1U << 5U)
-#	define __mu0_i18nlocale_group_addresses__ (1U << 6U)
+typedef void * mu0_locale_t;
 
-enum mu0_locale_group
+enum mu0_localegroup
 {
-	  mu0_locale_group_collator  = __mu0_i18nlocale_group_collator__
-	, mu0_locale_group_monetary  = __mu0_i18nlocale_group_monetary__
-	, mu0_locale_group_numerics  = __mu0_i18nlocale_group_numerics__
-	, mu0_locale_group_datetime  = __mu0_i18nlocale_group_datetime__
-	, mu0_locale_group_telephone = __mu0_i18nlocale_group_telephone__
-	, mu0_locale_group_addresses = __mu0_i18nlocale_group_addresses__
+	  mu0_localegroup_complete = (1 << 0)
+	, mu0_localegroup_collator = (1 << 1)
+	, mu0_localegroup_datetime = (1 << 2)
+	, mu0_localegroup_messages = (1 << 3)
+	, mu0_localegroup_monetary = (1 << 4)
+	, mu0_localegroup_numerics = (1 << 5)
 };
 
-typedef mu0_uint32_t         mu0_locale_grouping_t;
-typedef __mu0_i18nlocale_t__ mu0_locale_t;
-
-mu0_integral_constant(mu0_locale_grouping_t , mu0_locale_grouping_language
-	, ( mu0_locale_group_collator
-	  | mu0_locale_group_numerics
-));
-
-mu0_integral_constant(mu0_locale_grouping_t , mu0_locale_grouping_territory
-	, ( mu0_locale_group_monetary
-	  | mu0_locale_group_datetime
-	  | mu0_locale_group_telephone
-	  | mu0_locale_group_addresses
-));
-
-mu0_integral_constant(mu0_locale_grouping_t , mu0_locale_grouping_complete
-	, ( mu0_locale_group_collator
-	  | mu0_locale_group_numerics
-	  | mu0_locale_group_monetary
-	  | mu0_locale_group_datetime
-	  | mu0_locale_group_telephone
-	  | mu0_locale_group_addresses
-));
-
 mu0_locale_t *       mu0_locale_create     (
-	  const mu0_tchar8_t *        language
-	, const mu0_tchar8_t *        territory
-	, const mu0_tchar8_t *        modifier  __mu0_nullable__
-	, const mu0_locale_grouping_t grouping
+	  const mu0_uint32_t   mask
+	, const mu0_tchar8_t * language
+	, const mu0_tchar8_t * territory
+	, const mu0_tchar8_t * modifier  __mu0_nullable__
 );
 
 mu0_sint32_t         mu0_locale_global     (
-	  const mu0_locale_t * locale __mu0_nullable__
+	, const mu0_uint32_t   mask
+	, const mu0_locale_t * locale __mu0_nullable__
 );
 
 mu0_sint32_t         mu0_locale_interface  (
@@ -81,8 +53,8 @@ mu0_sint32_t         mu0_locale_interface  (
 );
 
 const mu0_tchar8_t * mu0_locale_identifier (
-	  const enum mu0_locale_group group
-	, const      mu0_locale_t *   locale __mu0_nullable__
+	  const enum mu0_localegroup group
+	, const      mu0_locale_t *  locale __mu0_nullable__
 );
 
 mu0_sint32_t         mu0_locale_delete     (
