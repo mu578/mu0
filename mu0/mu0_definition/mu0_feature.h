@@ -49,6 +49,7 @@
 #	undef  __mu0_isofkind__
 #	undef  __mu0_issame__
 #	undef  __mu0_issafe__
+#	undef  __mu0_isuint__
 #	define MU0_HAVE_TYPEOF 0
 
 #	if   MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_MSVCL
@@ -104,7 +105,6 @@
 #		define __mu0_kindof__(__x)        __mu0_typeof__((__mu0_typeof__(__x))(__x))
 #		define __mu0_isoftype__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
 #		define __mu0_isofkind__(_Tp, x)   __mu0_generic__((__x), _Tp : 1, default: 0)
-#		define ___mu0_issame___(_Tp, _Up) __mu0_generic__(((_Tp){0} ), _Up: 1, default: 0)
 #		define __mu0_issame__(_Tp, _Up)   (__mu0_generic__(((_Tp){0}), _Up: 1, default: 0) && __mu0_generic__(((_Up){0}), _Tp: 1, default: 0))
 # 		define __mu0_decay__(__x)         __mu0_kindof__(__x)
 #	endif
@@ -121,7 +121,34 @@
 # 		define __mu0_decay__(__x)         __mu0_kindof__(__x)
 #	endif
 
+#	if MU0_HAVE_TYPEOF 
 #	define __mu0_issafe__(__a, __b)      (sizeof(__mu0_typeof__(__a)) == sizeof(__mu0_typeof__(_b))  && __mu0_issame__(__mu0_typeof__(__a), __mu0_typeof__(_b)))
+#	else
+#	define __mu0_issafe__(__a, __b)      (sizeof(__a) == sizeof(_b))
+#	endif
+
+#	if MU0_HAVE_CHAR_UNSIGNED
+#	define __mu0_isuint__(__x)                         \
+(                                                     \
+	  __mu0_isofkind__(___mu0_uint8_t___, __x) ? 1 : 0 \
+	: __mu0_isofkind__(___mu0_uintx_t___, __x) ? 1 : 0 \
+	: __mu0_isofkind__(___mu0_uint4_t___, __x) ? 1 : 0 \
+	: __mu0_isofkind__(___mu0_uint2_t___, __x) ? 1 : 0 \
+	: __mu0_isofkind__(___mu0_uint1_t___, __x) ? 1 : 0 \
+	: __mu0_isofkind__(___mu0_tint1_t___, __x) ? 1 : 0 \
+	: 0                                                \
+)
+#	else
+#	define __mu0_isuint__(__x)                         \
+(                                                     \
+	  __mu0_isofkind__(___mu0_uint8_t___, __x) ? 1 : 0 \
+	: __mu0_isofkind__(___mu0_uintx_t___, __x) ? 1 : 0 \
+	: __mu0_isofkind__(___mu0_uint4_t___, __x) ? 1 : 0 \
+	: __mu0_isofkind__(___mu0_uint2_t___, __x) ? 1 : 0 \
+	: __mu0_isofkind__(___mu0_uint1_t___, __x) ? 1 : 0 \
+	: 0                                                \
+)
+#	endif
 
 #	if MU0_HAVE_TYPEOF
 #	define __mu0_infer__(__x) __mu0_decay__(__x)
