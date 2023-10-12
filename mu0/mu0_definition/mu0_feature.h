@@ -123,9 +123,9 @@
 #	endif
 
 #	if   MU0_HAVE_TYPEOF && MU0_HAVE_CPP11
-#		define __mu0_issafe__(__a, __b)   ((std::is_convertible<decltype(__a), decltype(__b)>::value == true) ? 1 : 0)
-#		define __mu0_isuint__(__x)        ((std::is_unsigned   <decltype(__x)>::value == true) ? 1 : 0)
-#		define __mu0_isuint__(__x)        ((std::is_signed     <decltype(__x)>::value == true) ? 1 : 0)
+#		define __mu0_issafe__(__a, __b)   ((::std::is_convertible<decltype(__a), decltype(__b)>::value == true) ? 1 : 0)
+#		define __mu0_isuint__(__x)        ((::std::is_unsigned   <decltype(__x)>::value == true) ? 1 : 0)
+#		define __mu0_isuint__(__x)        ((::std::is_signed     <decltype(__x)>::value == true) ? 1 : 0)
 #	elif MU0_HAVE_TYPEOF
 #		define __mu0_issafe__(__a, __b)   (sizeof(__mu0_typeof__(__a)) == sizeof(__mu0_typeof__(__b))  && __mu0_issame__(__mu0_typeof__(__a), __mu0_typeof__(__b)))
 #		if MU0_HAVE_CHAR_UNSIGNED
