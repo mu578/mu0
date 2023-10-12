@@ -110,7 +110,7 @@
 # 		define __mu0_decay__(__x)         __mu0_kindof__(__x)
 #	endif
 
-#	if !MU0_HAVE_TYPEOF && MU0_HAVE_CPP11
+#	if   MU0_HAVE_CPP11 && !MU0_HAVE_TYPEOF
 #		include <type_traits>
 #		undef  MU0_HAVE_TYPEOF
 #		define MU0_HAVE_TYPEOF            1
@@ -120,9 +120,6 @@
 #		define __mu0_isofkind__(_Tp, x)   ((::std::is_same<_Tp , __mu0_typeof__(__x)>::value == true || ::std::is_same<_Tp , __mu0_kindof__(__x) >::value == true) ? 1 : 0)
 #		define __mu0_issame__(_Tp, _Up)   ((::std::is_same<__Tp , _Up>::value == true) ? 1 : 0)
 # 		define __mu0_decay__(__x)         __mu0_kindof__(__x)
-#	endif
-
-#	if   MU0_HAVE_TYPEOF && MU0_HAVE_CPP11
 #		define __mu0_issafe__(__a, __b)   ((::std::is_convertible<decltype(__a), decltype(__b)>::value == true) ? 1 : 0)
 #		define __mu0_isuint__(__x)        ((::std::is_unsigned   <decltype(__x)>::value == true) ? 1 : 0)
 #		define __mu0_isuint__(__x)        ((::std::is_signed     <decltype(__x)>::value == true) ? 1 : 0)
