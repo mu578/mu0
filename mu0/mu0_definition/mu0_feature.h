@@ -50,6 +50,7 @@
 #	undef  __mu0_issame__
 #	undef  __mu0_issafe__
 #	undef  __mu0_isuint__
+#	undef  __mu0_issint__
 #	define MU0_HAVE_TYPEOF 0
 
 #	if   MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_MSVCL
@@ -121,33 +122,55 @@
 # 		define __mu0_decay__(__x)         __mu0_kindof__(__x)
 #	endif
 
-#	if MU0_HAVE_TYPEOF 
-#	define __mu0_issafe__(__a, __b)      (sizeof(__mu0_typeof__(__a)) == sizeof(__mu0_typeof__(_b))  && __mu0_issame__(__mu0_typeof__(__a), __mu0_typeof__(_b)))
-#	else
-#	define __mu0_issafe__(__a, __b)      (sizeof(__a) == sizeof(_b))
-#	endif
+#	if MU0_HAVE_TYPEOF
+#		define __mu0_issafe__(__a, __b)   (sizeof(__mu0_typeof__(__a)) == sizeof(__mu0_typeof__(__b))  && __mu0_issame__(__mu0_typeof__(__a), __mu0_typeof__(__b)))
+#		if MU0_HAVE_CHAR_UNSIGNED
+#			define __mu0_isuint__(__x)                            \
+			(                                                     \
+				  __mu0_isofkind__(___mu0_uint8_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_uintx_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_uint4_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_uint2_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_uint1_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_tint1_t___, __x) ? 1 : 0 \
+				: 0                                                \
+			)
 
-#	if MU0_HAVE_CHAR_UNSIGNED
-#	define __mu0_isuint__(__x)                         \
-(                                                     \
-	  __mu0_isofkind__(___mu0_uint8_t___, __x) ? 1 : 0 \
-	: __mu0_isofkind__(___mu0_uintx_t___, __x) ? 1 : 0 \
-	: __mu0_isofkind__(___mu0_uint4_t___, __x) ? 1 : 0 \
-	: __mu0_isofkind__(___mu0_uint2_t___, __x) ? 1 : 0 \
-	: __mu0_isofkind__(___mu0_uint1_t___, __x) ? 1 : 0 \
-	: __mu0_isofkind__(___mu0_tint1_t___, __x) ? 1 : 0 \
-	: 0                                                \
-)
+#			define __mu0_issint__(__x)                            \
+			(                                                     \
+				  __mu0_isofkind__(___mu0_sint8_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_sintx_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_sint4_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_sint2_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_sint1_t___, __x) ? 1 : 0 \
+				: 0                                                \
+			)
+#		else
+#			define __mu0_isuint__(__x)                            \
+			(                                                     \
+				  __mu0_isofkind__(___mu0_uint8_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_uintx_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_uint4_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_uint2_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_uint1_t___, __x) ? 1 : 0 \
+				: 0                                                \
+			)
+
+#			define __mu0_issint__(__x)                            \
+			(                                                     \
+				  __mu0_isofkind__(___mu0_sint8_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_sintx_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_sint4_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_sint2_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_sint1_t___, __x) ? 1 : 0 \
+				: __mu0_isofkind__(___mu0_tint1_t___, __x) ? 1 : 0 \
+				: 0                                                \
+			)
+#		endif
 #	else
-#	define __mu0_isuint__(__x)                         \
-(                                                     \
-	  __mu0_isofkind__(___mu0_uint8_t___, __x) ? 1 : 0 \
-	: __mu0_isofkind__(___mu0_uintx_t___, __x) ? 1 : 0 \
-	: __mu0_isofkind__(___mu0_uint4_t___, __x) ? 1 : 0 \
-	: __mu0_isofkind__(___mu0_uint2_t___, __x) ? 1 : 0 \
-	: __mu0_isofkind__(___mu0_uint1_t___, __x) ? 1 : 0 \
-	: 0                                                \
-)
+#		define __mu0_issafe__(__a, __b) (sizeof(__a) == sizeof(__b))
+#		define __mu0_isuint__(__x)      (0)
+#		define __mu0_issint__(__x)      (0)
 #	endif
 
 #	if MU0_HAVE_TYPEOF
