@@ -186,23 +186,22 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
 
-		struct ___mu0_i18nlocale_t___
+		struct ___mu0_i18nlocale___
 		{
 			___mu0_tint1_t___ u_id[48];
 			___mu0_sint4_t___ u_ct;
 			_locale_t         u_lc;
 		};
-		typedef struct ___mu0_i18nlocale_t___ __mu0_i18nlocale_t__;
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, const __mu0_i18nlocale_t__ * __base __mu0_nullable__)
+		struct ___mu0_i18nlocale___ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, const struct ___mu0_i18nlocale___ * __base __mu0_nullable__)
 		{
-			__mu0_i18nlocale_t__ * locale = __mu0_doalloc__(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+			struct ___mu0_i18nlocale___ * locale = __mu0_doalloc__(__mu0_sizeof__(struct ___mu0_i18nlocale___));
 			___mu0_uint8_t___      len;
 			__mu0_unused__(__mask);
 			__mu0_unused__(__base);
 			if (__mu0_not_nullptr__(locale)) {
-				__mu0_memset__(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+				__mu0_memset__(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale___));
 				len                        = __mu0_const_cast__(___mu0_uint8_t___, __mu0_memlen__(__locale));
 				__mu0_memcpy__(locale->u_id, __locale, len);
 				locale->u_ct               = LC_ALL;
@@ -216,9 +215,9 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		}
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ * __mu0_i18nlocale_usecopy__(const __mu0_i18nlocale_t__ * __locale)
+		struct ___mu0_i18nlocale___ * __mu0_i18nlocale_usecopy__(const struct ___mu0_i18nlocale___ * __locale)
 		{
-			__mu0_i18nlocale_t__ * locale = __mu0_i18nlocale_new__(
+			struct ___mu0_i18nlocale___ * locale = __mu0_i18nlocale_new__(
 				  LC_ALL_MASK
 				, setlocale(LC_ALL, "")
 				, __mu0_nullptr__
@@ -244,7 +243,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		}
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const struct ___mu0_i18nlocale___ * __locale)
 		{
 			__mu0_unused__(__category);
 			if (__mu0_is_nullptr__(__locale)) {
@@ -277,7 +276,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ * __locale)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(struct ___mu0_i18nlocale___ * __locale)
 		{
 			if (__mu0_not_nullptr__(__locale)) {
 				if (__mu0_not_nullptr__(__locale->u_lc)) {
@@ -291,7 +290,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const struct ___mu0_i18nlocale___ * __locale __mu0_nullable__)
 		{
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
@@ -305,7 +304,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const struct ___mu0_i18nlocale___ * __locale __mu0_nullable__)
 		{
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
@@ -326,14 +325,13 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 #		undef  MU0_HAVE_I18NLOCALE
 #		define MU0_HAVE_I18NLOCALE 1
 
-		struct ___mu0_i18nlocale_t___
+		struct ___mu0_i18nlocale___
 		{
 			locale_t u_lc;
 		};
-		typedef struct ___mu0_i18nlocale_t___ __mu0_i18nlocale_t__;
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_strncoll_l__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_strncoll_l__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const struct ___mu0_i18nlocale___ * __locale __mu0_nullable__)
 		{
 			const ___mu0_uint4_t___ need_a = (__lhs[__n] != '\0') ? 1 : 0;
 			const ___mu0_uint4_t___ need_b = (__rhs[__n] != '\0') ? 1 : 0;
@@ -365,11 +363,11 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		}
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, __mu0_i18nlocale_t__ * __base __mu0_nullable__)
+		struct ___mu0_i18nlocale___ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, struct ___mu0_i18nlocale___ * __base __mu0_nullable__)
 		{
-			__mu0_i18nlocale_t__ * locale = __mu0_doalloc__(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+			struct ___mu0_i18nlocale___ * locale = __mu0_doalloc__(__mu0_sizeof__(struct ___mu0_i18nlocale___));
 			if (__mu0_not_nullptr__(locale)) {
-				__mu0_memset__(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+				__mu0_memset__(locale, 0, __mu0_sizeof__(struct ___mu0_i18nlocale___));
 				locale->u_lc               = newlocale(__mask, __locale, __mu0_not_nullptr__(__base) ? __base->u_lc : __mu0_nullptr__);
 				if (__mu0_is_nullptr__(locale->u_lc)) {
 					__mu0_dealloc__(locale);
@@ -380,12 +378,12 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		}
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ * __mu0_i18nlocale_usecopy__(const __mu0_i18nlocale_t__ * __locale)
+		struct ___mu0_i18nlocale___ * __mu0_i18nlocale_usecopy__(const struct ___mu0_i18nlocale___ * __locale)
 		{
-			__mu0_i18nlocale_t__ * locale = __mu0_nullptr__;
+			struct ___mu0_i18nlocale___ * locale = __mu0_nullptr__;
 			if (__mu0_not_nullptr__(__locale)) {
 				if (__mu0_not_nullptr__(__locale->u_lc)) {
-					locale = __mu0_doalloc__(__mu0_sizeof__(struct ___mu0_i18nlocale_t___));
+					locale = __mu0_doalloc__(__mu0_sizeof__(struct ___mu0_i18nlocale___));
 					if (__mu0_not_nullptr__(locale)) {
 						locale->u_lc         = duplocale(uselocale(__locale->u_lc));
 						if (__mu0_is_nullptr__(locale->u_lc)) {
@@ -413,7 +411,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 #		if !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX && !MU0_HAVE_MINGW
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category,  const __mu0_i18nlocale_t__ * __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category,  const struct ___mu0_i18nlocale___ * __locale)
 		{
 			___mu0_sint4_t___ mask;
 			if (__mu0_is_nullptr__(__locale)) {
@@ -466,7 +464,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 #		elif !MU0_HAVE_MINGW && defined(NL_LOCALE_NAME)
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const struct ___mu0_i18nlocale___ * __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
 				return setlocale(__category, "");
@@ -480,7 +478,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 #		elif !MU0_HAVE_MINGW && defined(_NL_LOCALE_NAME)
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const struct ___mu0_i18nlocale___ * __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
 				return setlocale(__category, "");
@@ -494,7 +492,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 #		elif !MU0_HAVE_MINGW && defined(_NL_ITEM) && defined(_NL_ITEM_INDEX)
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const struct ___mu0_i18nlocale___ * __locale)
 		{
 			if (__mu0_is_nullptr__(__locale)) {
 				return setlocale(__category, "");
@@ -508,7 +506,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 #		else
 
 		__mu0_static_inline__
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const struct ___mu0_i18nlocale___ * __locale)
 		{
 			__mu0_unused__(__category);
 			__mu0_unused__(__locale);
@@ -601,7 +599,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 #		if !MU0_HAVE_ANDROID && !MU0_HAVE_LINUX && !MU0_HAVE_NUTTX && !MU0_HAVE_MINGW
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ * __locale)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(struct ___mu0_i18nlocale___ * __locale)
 		{
 			if (__mu0_not_nullptr__(__locale)) {
 				if (__mu0_not_nullptr__(__locale->u_lc)) {
@@ -614,7 +612,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 #		else
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ * __locale)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(struct ___mu0_i18nlocale___ * __locale)
 		{
 			if (__mu0_not_nullptr__(__locale)) {
 				if (__mu0_not_nullptr__(__locale->u_lc)) {
@@ -628,7 +626,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 #		endif
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const struct ___mu0_i18nlocale___ * __locale __mu0_nullable__)
 		{
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
@@ -642,7 +640,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const struct ___mu0_i18nlocale___ * __locale __mu0_nullable__)
 		{
 			const ___mu0_sint4_t___ r = (__mu0_not_nullptr__(__locale)
 				? (
@@ -660,10 +658,10 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 
 #	if !MU0_HAVE_I18NLOCALE
 
-		typedef void * __mu0_i18nlocale_t__;
+		typedef void * struct ___mu0_i18nlocale___;
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, const __mu0_i18nlocale_t__ * __base __mu0_nullable__)
+		struct ___mu0_i18nlocale___ * __mu0_i18nlocale_new__(const ___mu0_sint4_t___ __mask, const ___mu0_tint1_t___ * __locale, const struct ___mu0_i18nlocale___ * __base __mu0_nullable__)
 		{
 			__mu0_unused__(__mask);
 			__mu0_unused__(__locale);
@@ -672,7 +670,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		}
 
 		__mu0_static_inline__
-		__mu0_i18nlocale_t__ * __mu0_i18nlocale_usecopy__(const __mu0_i18nlocale_t__ * __locale)
+		struct ___mu0_i18nlocale___ * __mu0_i18nlocale_usecopy__(const struct ___mu0_i18nlocale___ * __locale)
 		{
 			__mu0_unused__(__locale);
 			return __mu0_nullptr__;
@@ -685,7 +683,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			return -1;
 		}
 
-		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const __mu0_i18nlocale_t__ * __locale)
+		const ___mu0_tint1_t___ * __mu0_i18nlocale_get__(const ___mu0_sint4_t___ __category, const struct ___mu0_i18nlocale___ * __locale)
 		{
 			__mu0_unused__(__category);
 			__mu0_unused__(__locale);
@@ -723,14 +721,14 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(__mu0_i18nlocale_t__ * __locale)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_free__(struct ___mu0_i18nlocale___ * __locale)
 		{
 			__mu0_unused__(__locale);
 			return 0;
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const struct ___mu0_i18nlocale___ * __locale __mu0_nullable__)
 		{
 			__mu0_unused__(__locale);
 			const ___mu0_sint4_t___ r = strcmp (__lhs, __rhs);
@@ -738,7 +736,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 		}
 
 		__mu0_static_inline__
-		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const __mu0_i18nlocale_t__ * __locale __mu0_nullable__)
+		const ___mu0_sint4_t___ __mu0_i18nlocale_compare_n__(const ___mu0_tint1_t___ * __lhs, const ___mu0_tint1_t___ * __rhs, const ___mu0_uint4_t___ __n, const struct ___mu0_i18nlocale___ * __locale __mu0_nullable__)
 		{
 			__mu0_unused__(__locale);
 			const ___mu0_sint4_t___ r = strncmp (__lhs, __rhs, __n);

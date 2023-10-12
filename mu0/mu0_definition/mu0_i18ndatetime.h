@@ -32,7 +32,7 @@
 
 #	if MU0_HAVE_WINDOWS && !MU0_HAVE_MINGW
 
-	struct __mu0_tm__
+	struct ___mu0_tm___
 	{
 		struct tm          u_tm;
 		___mu0_sintx_t___  u_usec;
@@ -46,7 +46,7 @@
 
 #	else
 
-	struct __mu0_tm__
+	struct ___mu0_tm___
 	{
 		struct tm         u_tm;
 		___mu0_sintx_t___ u_usec;
@@ -74,12 +74,12 @@
 #	define MU0_HAVE_LOCALTIME 1
 
 	__mu0_static_inline__
-	void __mu0_i18ndatetime_local__(struct __mu0_tm__ * __date)
+	void __mu0_i18ndatetime_local__(struct ___mu0_tm___ * __date)
 	{
 		struct __mu0_timeval__  utc;
 		struct __mu0_timezone__ tz;
 		__mu0_gettimeofday__(&utc, &tz);
-		__mu0_memset__(__date, 0, __mu0_sizeof__(struct __mu0_tm__));
+		__mu0_memset__(__date, 0, __mu0_sizeof__(struct ___mu0_tm___));
 		localtime_s(&__date->u_tm, &utc.tv_sec);
 		__date->u_gmtoff = tz.tz_minuteswest * 3600;
 		__mu0_memset__(__date->u_zone, 0, 6);
@@ -100,7 +100,7 @@
 #	define MU0_HAVE_LOCALTIME 1
 
 __mu0_static_inline__
-void __mu0_i18ndatetime_local__(struct __mu0_tm__ * __date)
+void __mu0_i18ndatetime_local__(struct ___mu0_tm___ * __date)
 {
 	struct __mu0_timeval__  utc;
 	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
@@ -117,12 +117,12 @@ void __mu0_i18ndatetime_local__(struct __mu0_tm__ * __date)
 #	define MU0_HAVE_ZULUTIME 1
 
 	__mu0_static_inline__
-	void __mu0_i18ndatetime_zulu__(struct __mu0_tm__ * __date)
+	void __mu0_i18ndatetime_zulu__(struct ___mu0_tm___ * __date)
 	{
 		struct __mu0_timeval__  utc;
 		struct __mu0_timezone__ tz;
 		__mu0_gettimeofday__(&utc, &tz);
-		__mu0_memset__(__date, 0, __mu0_sizeof__(struct __mu0_tm__));
+		__mu0_memset__(__date, 0, __mu0_sizeof__(struct ___mu0_tm___));
 		gmtime_s(&__date->u_tm, &utc.tv_sec);
 		__date->u_gmtoff = tz.tz_minuteswest * 3600;
 		__mu0_memset__(__date->u_zone, 0, 6);
@@ -139,11 +139,11 @@ void __mu0_i18ndatetime_local__(struct __mu0_tm__ * __date)
 #	define MU0_HAVE_ZULUTIME 1
 
 __mu0_static_inline__
-void __mu0_i18ndatetime_zulu__(struct __mu0_tm__ * __date)
+void __mu0_i18ndatetime_zulu__(struct ___mu0_tm___ * __date)
 {
 	struct __mu0_timeval__  utc;
 	__mu0_gettimeofday__(&utc, __mu0_nullptr__);
-	__mu0_memset__(__date, 0, __mu0_sizeof__(struct __mu0_tm__));
+	__mu0_memset__(__date, 0, __mu0_sizeof__(struct ___mu0_tm___));
 	__mu0_memcpy__(&__date->u_tm, gmtime(&utc.tv_sec)   , __mu0_sizeof__(struct tm));
 	__date->u_usec = utc.tv_usec;
 }
@@ -158,10 +158,10 @@ void __mu0_i18ndatetime_zulu__(struct __mu0_tm__ * __date)
 
 __mu0_static_inline__
 const ___mu0_sint4_t___ __mu0_i18ndatetime_format__(
-	  const struct __mu0_tm__ *           __date
+	  const struct ___mu0_tm___ *         __date
 	, const        ___mu0_uint4_t___      __format
-	,              __mu0_i18nlocale_t__ * __locale   __mu0_nullable__
-	,             ___mu0_tint1_t___       __dest[32]
+	,       struct ___mu0_i18nlocale___ * __locale   __mu0_nullable__
+	,              ___mu0_tint1_t___      __dest[32]
 ) {
 	                     ___mu0_tint1_t___   buf[4];
 	__mu0_static__ const ___mu0_tint1_t___ * fmt[6] =
@@ -220,10 +220,10 @@ const ___mu0_sint4_t___ __mu0_i18ndatetime_format__(
 
 __mu0_static_inline__
 const ___mu0_sint4_t___ __mu0_i18ndatetime_format__(
-	  const struct __mu0_tm__ *    __date
-	, const ___mu0_uint4_t___      __format
-	,       __mu0_i18nlocale_t__ * __locale   __mu0_nullable__
-	,       ___mu0_tint1_t___      __dest[32]
+	  const struct ___mu0_tm___ *        __date
+	, const ___mu0_uint4_t___            __format
+	,      struct ___mu0_i18nlocale___ * __locale   __mu0_nullable__
+	,       ___mu0_tint1_t___            __dest[32]
 ) {
 	      ___mu0_tint1_t___   buf[4];
 	const ___mu0_tint1_t___ * fmt[6] =

@@ -48,6 +48,7 @@
 #	undef  __mu0_isoftype__
 #	undef  __mu0_isofkind__
 #	undef  __mu0_issame__
+#	undef  __mu0_issafe__
 #	define MU0_HAVE_TYPEOF 0
 
 #	if   MU0_HAVE_CC_ARMCC || MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_GNUCC || MU0_HAVE_CC_MSVCL
@@ -119,6 +120,8 @@
 #		define __mu0_issame__(_Tp, _Up)   ((::std::is_same<__Tp , _Up>::value == true) ? 1 : 0)
 # 		define __mu0_decay__(__x)         __mu0_kindof__(__x)
 #	endif
+
+#	define __mu0_issafe__(__a, __b)      (sizeof(__mu0_typeof__(__a)) == sizeof(__mu0_typeof__(_b))  && __mu0_issame__(__mu0_typeof__(__a), __mu0_typeof__(_b)))
 
 #	if MU0_HAVE_TYPEOF
 #	define __mu0_infer__(__x) __mu0_decay__(__x)

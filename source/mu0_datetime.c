@@ -49,7 +49,7 @@ const mu0_calendar_date_t * mu0_datetime_querytime(mu0_calendar_date_t * date, c
 {
 	const mu0_calendar_date_t * p = date;
 
-	struct __mu0_tm__ tm;
+	struct ___mu0_tm___ tm;
 	if (zulu == mu0_false) {
 		__mu0_i18ndatetime_local__(&tm);
 	} else {
@@ -87,8 +87,8 @@ const mu0_tchar8_t * mu0_datetime_formatting(
 ) {
 	const mu0_tchar8_t * p = dest;
 
-	struct __mu0_tm__ tm;
-	__mu0_memset__(&tm, 0, __mu0_sizeof__(struct __mu0_tm__));
+	struct ___mu0_tm___ tm;
+	__mu0_memset__(&tm, 0, __mu0_sizeof__(struct ___mu0_tm___));
 	__mu0_tm_year__   (&tm) = mu0_const_cast(___mu0_sint4_t___, date->u_year - 1900);
 	__mu0_tm_yday__   (&tm) = mu0_const_cast(___mu0_sint4_t___, date->u_dayofyear);
 	__mu0_tm_mon__    (&tm) = mu0_const_cast(___mu0_sint4_t___, date->u_month - 1);

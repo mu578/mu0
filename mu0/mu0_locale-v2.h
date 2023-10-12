@@ -23,7 +23,7 @@
 
 MU0_BEGIN_CDECL
 
-typedef void * mu0_locale_t;
+typedef struct ___mu0_i18nlocale___ mu0_locale_t;
 
 enum mu0_localegroup
 {
