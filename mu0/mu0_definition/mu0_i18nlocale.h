@@ -582,7 +582,7 @@ const ___mu0_sint4_t___ __mu0_i18nlocale_find__(
 			___mu0_tint1_t___ * loc;
 			__mu0_memset__(s_id, 0, __mu0_sizeof__(s_id));
 			if (__mu0_not_nullptr__((loc = setlocale(LC_MESSAGES, "")))) {
-				__mu0_memcpy__(id, loc, __mu0_sizeof__(s_id));
+				__mu0_memcpy__(s_id, loc, __mu0_sizeof__(s_id));
 				return __mu0_i18nlocale_find__(s_id + 0U, s_id + 3U, __identifier_language, __identifier_territory);
 			}
 			return -1;
