@@ -303,6 +303,10 @@ typedef float _Complex                                 mu0_cfp16_t;
 #	endif
 #	endif
 
+#	if !MU0_HAVE_FLOAT16
+typedef mu0_cfp32_t mu0_cfp16_t;
+#	define mu0_cfp16(__re, __im) mu0_cfp32(__re, __im)
+#	else
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 #	if MU0_HAVE_C11
@@ -315,6 +319,7 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 #	define mu0_cfp16(__re, __im) (__mu0_cast__(mu0_cfp16_t, (__mu0_const_cast__(mu0_fp16_t, __re) + _Imaginary_I * __mu0_const_cast__(mu0_fp16_t, __im))))
 #	else
 #	define mu0_cfp16(__re, __im) (__mu0_cast__(mu0_cfp16_t, (__mu0_const_cast__(mu0_fp16_t, __re) + _Complex_I   * __mu0_const_cast__(mu0_fp16_t, __im))))
+#	endif
 #	endif
 #	endif
 
