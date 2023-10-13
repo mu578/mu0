@@ -304,8 +304,8 @@ typedef float _Complex                                 mu0_cfp16_t;
 #	endif
 
 #	if !MU0_HAVE_FLOAT16
-#	define mu0_cfp16_t mu0_cfp32_t
-#	define mu0_cfp16   mu0_cfp32
+typedef mu0_cfp32_t                                    mu0_cfp16_t;
+#	define mu0_cfp16(__re, __im) mu0_cfp32(__re, __im)
 #	else
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
