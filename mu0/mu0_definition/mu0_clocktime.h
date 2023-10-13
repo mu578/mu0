@@ -48,11 +48,14 @@
 #	endif
 #	include <time.h>
 
-#	if (MU0_HAVE_MACOSX && !MU0_HAVE_MACOSX12) || (MU0_HAVE_IOS && !MU0_HAVE_IOS10) && !defined(_POSIX_TIMERS)
+#	if (((MU0_HAVE_MACOSX && !MU0_HAVE_MACOSX12) || (MU0_HAVE_IOS && !MU0_HAVE_IOS10)) && !defined(_POSIX_TIMERS))
+#		warning MU0_HAVE_MACOSX12
+#		warning MU0_HAVE_IOS10
 #		include <mach/clock.h>
 #		include <mach/mach.h>
 #		include <mach/mach_time.h>
 #		include <sched.h>
+#		include <errno.h>
 
 #		ifndef CLOCK_REALTIME
 #			define CLOCK_REALTIME           0
