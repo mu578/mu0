@@ -49,7 +49,7 @@
 #	define MU0_USE_FLOAT16     1
 #	define MU0_HAVE_FLOAT16    0
 
-#	define MU0_USE_STDCOMPLEX  1
+#	define MU0_USE_STDCOMPLEX  0
 #	define MU0_HAVE_STDCOMPLEX 0
 
 #	if MU0_USE_FLOAT128 || MU0_USE_FLOAT64 || MU0_USE_FLOAT32 || MU0_USE_FLOAT16
@@ -107,6 +107,21 @@ typedef long double                                    mu0_fpex_t;
 typedef long double _Complex                           mu0_cpex_t;
 #	endif
 
+#	if !MU0_HAVE_STDCOMPLEX
+typedef struct { mu0_fpex_t u_re; mu0_fpex_t u_im; } mu0_cpex_t;
+#	if MU0_HAVE_C11
+#	define mu0_cpex(__re, __im) (mu0_cpex_t) {         __mu0_const_cast__(mu0_fpex_t, __re),         __mu0_const_cast__(mu0_fpex_t, __im) }
+#	else
+#	define mu0_cpex(__re, __im) (mu0_cpex_t) { .u_re = __mu0_const_cast__(mu0_fpex_t, __re), .u_im = __mu0_const_cast__(mu0_fpex_t, __im) }
+#	endif
+#	else
+#	if __STDC_IEC_559_COMPLEX__
+#	define mu0_cpex(__re, __im) (__mu0_cast__(mu0_cpex_t, (__mu0_const_cast__(mu0_fpex_t, __re) + _Imaginary_I * __mu0_const_cast__(mu0_fpex_t, __im))))
+#	else
+#	define mu0_cpex(__re, __im) (__mu0_cast__(mu0_cpex_t, (__mu0_const_cast__(mu0_fpex_t, __re) + _Complex_I   * __mu0_const_cast__(mu0_fpex_t, __im))))
+#	endif
+#	endif
+
 #	if MU0_USE_FLOAT128
 #	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
 #		if   !__is_identifier(_Float128) && defined(__FLT128_MAX__) && __clang_major__ >= 16
@@ -155,6 +170,12 @@ typedef long double _Complex                           mu0_cfp128_t;
 #	endif
 #	endif
 
+#	if !MU0_HAVE_FLOAT128
+#	if !MU0_HAVE_STDCOMPLEX
+typedef mu0_cpex_t                                     mu0_cfp128_t;
+#	endif
+#	define mu0_cfp128(__re, __im) mu0_cpex(__re, __im)
+#	else
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; } mu0_cfp128_t;
 #	if MU0_HAVE_C11
@@ -167,6 +188,7 @@ typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; } mu0_cfp128_t;
 #	define mu0_cfp128(__re, __im) (__mu0_cast__(mu0_cfp128_t, (__mu0_const_cast__(mu0_fp128_t, __re) + _Imaginary_I * __mu0_const_cast__(mu0_fp128_t, __im))))
 #	else
 #	define mu0_cfp128(__re, __im) (__mu0_cast__(mu0_cfp128_t, (__mu0_const_cast__(mu0_fp128_t, __re) + _Complex_I   * __mu0_const_cast__(mu0_fp128_t, __im))))
+#	endif
 #	endif
 #	endif
 
@@ -304,7 +326,9 @@ typedef float _Complex                                 mu0_cfp16_t;
 #	endif
 
 #	if !MU0_HAVE_FLOAT16
+#	if !MU0_HAVE_STDCOMPLEX
 typedef mu0_cfp32_t                                    mu0_cfp16_t;
+#	endif
 #	define mu0_cfp16(__re, __im) mu0_cfp32(__re, __im)
 #	else
 #	if !MU0_HAVE_STDCOMPLEX
