@@ -486,6 +486,20 @@ mu0_floating_point_constant(mu0_fp128_t, mu0_fp128_ten    , __mu0_fp128_const__(
 
 #	endif
 
+#	define __mu0_fpex_const__(__c) __c ## L
+
+mu0_floating_point_constant(mu0_fpex_t , mu0_fpex_max_exp , LDBL_MAX_EXP);
+mu0_floating_point_constant(mu0_fpex_t , mu0_fpex_log_max , __mu0_fpex_const__(11356.0));
+mu0_floating_point_constant(mu0_fpex_t , mu0_fpex_max     , LDBL_MAX);
+mu0_floating_point_constant(mu0_fpex_t , mu0_fpex_min     , LDBL_MIN);
+mu0_floating_point_constant(mu0_fpex_t , mu0_fpex_nan     , NAN);
+mu0_floating_point_constant(mu0_fpex_t , mu0_fpex_inf     , INFINITY);
+mu0_floating_point_constant(mu0_fpex_t , mu0_fpex_zero    , __mu0_fpex_const__(0.0));
+mu0_floating_point_constant(mu0_fpex_t , mu0_fpex_half    , __mu0_fpex_const__(0.5));
+mu0_floating_point_constant(mu0_fpex_t , mu0_fpex_one     , __mu0_fpex_const__(1.0));
+mu0_floating_point_constant(mu0_fpex_t , mu0_fpex_two     , __mu0_fpex_const__(2.0));
+mu0_floating_point_constant(mu0_fpex_t , mu0_fpex_ten     , __mu0_fpex_const__(10.0));
+
 #	define __mu0_fp64_const__(__c) __c
 
 mu0_floating_point_constant(mu0_fp64_t , mu0_fp64_max_exp , DBL_MAX_EXP);
