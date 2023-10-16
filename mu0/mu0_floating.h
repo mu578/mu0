@@ -347,26 +347,26 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 #	endif
 #	endif
 
-#	define mu0_cfp128_v(__re)   mu0_cfp128(__re, 0)
-#	define mu0_cfpex_v(__re)    mu0_cfpex(__re, 0)
-#	define mu0_cfp64_v(__re)    mu0_cfp64(__re, 0)
-#	define mu0_cfp32_v(__re)    mu0_cfp32(__re, 0)
-#	define mu0_cfp16_v(__re)    mu0_cfp16(__re, 0)
+#	define mu0_const_cfp128(__re, __im) mu0_cfp128 (__re, __im)
+#	define mu0_const_cfpex(__re, __im)  mu0_cfpex  (__re, __im)
+#	define mu0_const_cfp64(__re, __im)  mu0_cfp64  (__re, __im)
+#	define mu0_const_cfp32(__re, __im)  mu0_cfp32  (__re, __im)
+#	define mu0_const_cfp16(__re, __im)  mu0_cfp16  (__re, __im)
 
-#	define mu0_fpex(__x)        __mu0_cast__(mu0_fpex_t, __x)
-#	define mu0_const_fpex(__x)  __mu0_const_cast__(mu0_fpex_t, __x)
+#	define mu0_fpex(__x)                __mu0_cast__(mu0_fpex_t, __x)
+#	define mu0_const_fpex(__x)          __mu0_const_cast__(mu0_fpex_t, __x)
 
-#	define mu0_fp128(__x)       __mu0_cast__(mu0_fp128_t, __x)
-#	define mu0_const_fp128(__x) __mu0_const_cast__(mu0_fp128_t, __x)
+#	define mu0_fp128(__x)               __mu0_cast__(mu0_fp128_t, __x)
+#	define mu0_const_fp128(__x)         __mu0_const_cast__(mu0_fp128_t, __x)
+ 
+#	define mu0_fp64(__x)                __mu0_cast__(mu0_fp64_t, __x)
+#	define mu0_const_fp64(__x)          __mu0_const_cast__(mu0_fp64_t, __x)
 
-#	define mu0_fp64(__x)        __mu0_cast__(mu0_fp64_t, __x)
-#	define mu0_const_fp64(__x)  __mu0_const_cast__(mu0_fp64_t, __x)
+#	define mu0_fp32(__x)                __mu0_cast__(mu0_fp32_t, __x)
+#	define mu0_const_fp32(__x)          __mu0_const_cast__(mu0_fp32_t, __x)
 
-#	define mu0_fp32(__x)        __mu0_cast__(mu0_fp32_t, __x)
-#	define mu0_const_fp32(__x)  __mu0_const_cast__(mu0_fp32_t, __x)
-
-#	define mu0_fp16(__x)        __mu0_cast__(mu0_fp16_t, __x)
-#	define mu0_const_fp16(__x)  __mu0_const_cast__(mu0_fp16_t, __x)
+#	define mu0_fp16(__x)                __mu0_cast__(mu0_fp16_t, __x)
+#	define mu0_const_fp16(__x)          __mu0_const_cast__(mu0_fp16_t, __x)
 
 #	if   MU0_HAVE_GENERIC
 #	if   MU0_HAVE_FLOAT128 && MU0_HAVE_FLOAT16
