@@ -103,16 +103,17 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			LD               :=          \
 				$(CC)                     \
 				$(PLATFORM_ARCH)          \
+				-Wl,-ld_classic           \
 				-fopenmp                  \
 				-lm                       \
-				-mmacosx-version-min=13.0
+				-mmacosx-version-min=14.0
 		else
 			LD               :=          \
 				$(CC)                     \
 				$(PLATFORM_ARCH)          \
 				-fopenmp=libomp           \
 				-lm                       \
-				-mmacosx-version-min=13.0
+				-mmacosx-version-min=14.0
 		endif
 
 		LOCAL_CFLAGS        +=       \
@@ -121,7 +122,7 @@ ifneq (,$(findstring darwin, $(PLATFORM)))
 			-O3                       \
 			-fopenmp                  \
 			$(PLATFORM_ARCH)          \
-			-mmacosx-version-min=13.0 \
+			-mmacosx-version-min=14.0 \
 			-Wall                     \
 			-Wno-unused-function      \
 			-Wno-newline-eof          \

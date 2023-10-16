@@ -14,8 +14,8 @@ Getting current toolchain Mac-M2 host:
 >$ sudo port install libomp +universal
 >$ sudo port select --set clang mp-clang-16
 
->$ sudo port install gcc12 +universal
->$ sudo port select --set gcc mp-gcc12
+>$ sudo port install gcc13 +universal
+>$ sudo port select --set gcc mp-gcc13
 ```
 
 Makefile platform variants on Mac-M2 host:

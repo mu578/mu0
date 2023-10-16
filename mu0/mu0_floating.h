@@ -110,15 +110,15 @@ typedef long double _Complex                           mu0_cfpex_t;
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fpex_t u_re; mu0_fpex_t u_im; } mu0_cfpex_t;
 #	if MU0_HAVE_C11
-#	define mu0_cpex(__re, __im) (mu0_cfpex_t) {         __mu0_const_cast__(mu0_fpex_t, __re),         __mu0_const_cast__(mu0_fpex_t, __im) }
+#	define mu0_cfpex(__re, __im) (mu0_cfpex_t) {         __mu0_const_cast__(mu0_fpex_t, __re),         __mu0_const_cast__(mu0_fpex_t, __im) }
 #	else
-#	define mu0_cpex(__re, __im) (mu0_cfpex_t) { .u_re = __mu0_const_cast__(mu0_fpex_t, __re), .u_im = __mu0_const_cast__(mu0_fpex_t, __im) }
+#	define mu0_cfpex(__re, __im) (mu0_cfpex_t) { .u_re = __mu0_const_cast__(mu0_fpex_t, __re), .u_im = __mu0_const_cast__(mu0_fpex_t, __im) }
 #	endif
 #	else
 #	if __STDC_IEC_559_COMPLEX__
-#	define mu0_cpex(__re, __im) (__mu0_cast__(mu0_cfpex_t, (__mu0_const_cast__(mu0_fpex_t, __re) + _Imaginary_I * __mu0_const_cast__(mu0_fpex_t, __im))))
+#	define mu0_cfpex(__re, __im) (__mu0_cast__(mu0_cfpex_t, (__mu0_const_cast__(mu0_fpex_t, __re) + _Imaginary_I * __mu0_const_cast__(mu0_fpex_t, __im))))
 #	else
-#	define mu0_cpex(__re, __im) (__mu0_cast__(mu0_cfpex_t, (__mu0_const_cast__(mu0_fpex_t, __re) + _Complex_I   * __mu0_const_cast__(mu0_fpex_t, __im))))
+#	define mu0_cfpex(__re, __im) (__mu0_cast__(mu0_cfpex_t, (__mu0_const_cast__(mu0_fpex_t, __re) + _Complex_I   * __mu0_const_cast__(mu0_fpex_t, __im))))
 #	endif
 #	endif
 
@@ -174,7 +174,7 @@ typedef long double _Complex                           mu0_cfp128_t;
 #	if !MU0_HAVE_STDCOMPLEX
 typedef mu0_cfpex_t                                     mu0_cfp128_t;
 #	endif
-#	define mu0_cfp128(__re, __im) mu0_cpex(__re, __im)
+#	define mu0_cfp128(__re, __im) mu0_cfpex(__re, __im)
 #	else
 #	if !MU0_HAVE_STDCOMPLEX
 typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; } mu0_cfp128_t;
@@ -347,11 +347,11 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 #	endif
 #	endif
 
-#	define mu0_cfp128_v(__re) mu0_cfp128(__re, 0)
-#	define mu0_cfpex_v(__re)  mu0_cfpex (__re, 0)
-#	define mu0_cfp64_v(__re)  mu0_cfp64 (__re, 0)
-#	define mu0_cfp32_v(__re)  mu0_cfp32 (__re, 0)
-#	define mu0_cfp16_v(__re)  mu0_cfp16 (__re, 0)
+#	define mu0_cfp128_v(__re)   mu0_cfp128(__re, 0)
+#	define mu0_cfpex_v(__re)    mu0_cfpex(__re, 0)
+#	define mu0_cfp64_v(__re)    mu0_cfp64(__re, 0)
+#	define mu0_cfp32_v(__re)    mu0_cfp32(__re, 0)
+#	define mu0_cfp16_v(__re)    mu0_cfp16(__re, 0)
 
 #	define mu0_fpex(__x)        __mu0_cast__(mu0_fpex_t, __x)
 #	define mu0_const_fpex(__x)  __mu0_const_cast__(mu0_fpex_t, __x)
