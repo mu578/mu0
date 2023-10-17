@@ -369,9 +369,10 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 #	define mu0_const_fp16(__x)          __mu0_const_cast__(mu0_fp16_t, __x)
 
 #	if   MU0_HAVE_GENERIC
-#	if   MU0_HAVE_FLOAT128 && MU0_HAVE_FLOAT16
+#	if   MU0_HAVE_FLOAT128 && MU0_HAVE_FLOAT16 || MU0_HAVE_CC_GNUC
 #	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
 		, mu0_fp128_t  : 1                                        \
+		, mu0_fp1ex_t  : 1                                        \
 		, mu0_fp64_t   : 1                                        \
 		, mu0_fp32_t   : 1                                        \
 		, mu0_fp16_t   : 1                                        \
@@ -379,6 +380,7 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 	)
 #	define mu0_is_complex_number(__x) __mu0_generic__((__x)      \
 		, mu0_cfp128_t : 1                                        \
+		, mu0_cfpex_t  : 1                                        \
 		, mu0_cfp64_t  : 1                                        \
 		, mu0_cfp32_t  : 1                                        \
 		, mu0_cfp16_t  : 1                                        \

@@ -133,7 +133,7 @@ typedef   mu0_ptrdiff_t             mu0_distance_t;
 #	define mu0_const_distance(__x)   __mu0_const_cast__(mu0_distance_t, __x)
 
 #	if   MU0_HAVE_GENERIC
-#	if   MU0_HAVE_INT128
+#	if   MU0_HAVE_INT128  || MU0_HAVE_CC_GNUC
 #	define mu0_is_sinteger(__x) __mu0_generic__((__x) + 0 \
 		, mu0_sint128_t : 1                                \
 		, mu0_sint64_t  : 1                                \
