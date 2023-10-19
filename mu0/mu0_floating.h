@@ -122,6 +122,16 @@ typedef struct { mu0_fpex_t u_re; mu0_fpex_t u_im; } mu0_cfpex_t;
 #	endif
 #	endif
 
+typedef struct { mu0_fpex_t  u_x; mu0_fpex_t  u_y;                  } mu0_v2fpex_t;
+typedef struct { mu0_fpex_t  u_x; mu0_fpex_t  u_y; mu0_fpex_t  u_z; } mu0_v3fpex_t;
+#	if MU0_HAVE_C11
+#	define mu0_v2fpex(__x, __y)        (mu0_v2fpex_t)  {        __mu0_const_cast__(mu0_fpex_t , __x),        __mu0_const_cast__(mu0_fpex_t , __y)                                              }
+#	define mu0_v3fpex(__x, __y, __z)   (mu0_v3fpex_t)  {        __mu0_const_cast__(mu0_fpex_t , __x),        __mu0_const_cast__(mu0_fpex_t , __y),        __mu0_const_cast__(mu0_fpex_t , __z) }
+#	else
+#	define mu0_v2fpex(__x, __y)        (mu0_v2fpex_t)  { .u_x = __mu0_const_cast__(mu0_fpex_t , __x), .u_y = __mu0_const_cast__(mu0_fpex_t , __y)                                              }
+#	define mu0_v3fpex(__x, __y, __z)   (mu0_v3fpex_t)  { .u_x = __mu0_const_cast__(mu0_fpex_t , __x), .u_y = __mu0_const_cast__(mu0_fpex_t , __y), .u_z = __mu0_const_cast__(mu0_fpex_t , __z) }
+#	endif
+
 #	if MU0_USE_FLOAT128
 #	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC || MU0_HAVE_CC_MSVCL
 #		if   !__is_identifier(_Float128) && defined(__FLT128_MAX__) && __clang_major__ >= 16
@@ -192,6 +202,16 @@ typedef struct { mu0_fp128_t u_re; mu0_fp128_t u_im; } mu0_cfp128_t;
 #	endif
 #	endif
 
+typedef struct { mu0_fp128_t u_x; mu0_fp128_t u_y;                  } mu0_v2fp128_t;
+typedef struct { mu0_fp128_t u_x; mu0_fp128_t u_y; mu0_fp128_t u_z; } mu0_v3fp128_t;
+#	if MU0_HAVE_C11
+#	define mu0_v2fp128(__x, __y)       (mu0_v2fp128_t) {        __mu0_const_cast__(mu0_fp128_t, __x),        __mu0_const_cast__(mu0_fp128_t, __y)                                              }
+#	define mu0_v3fp128(__x, __y, __z)  (mu0_v2fp128_t) {        __mu0_const_cast__(mu0_fp128_t, __x),        __mu0_const_cast__(mu0_fp128_t, __y),        __mu0_const_cast__(mu0_fp128_t, __z) }
+#	else
+#	define mu0_v2fp128(__x, __y)       (mu0_v2fp128_t) { .u_x = __mu0_const_cast__(mu0_fp128_t, __x), .u_y = __mu0_const_cast__(mu0_fp128_t, __y)                                              }
+#	define mu0_v3fp128(__x, __y, __z)  (mu0_v2fp128_t) { .u_x = __mu0_const_cast__(mu0_fp128_t, __x), .u_y = __mu0_const_cast__(mu0_fp128_t, __y), .u_z = __mu0_const_cast__(mu0_fp128_t, __z) }
+#	endif
+
 #	if MU0_USE_FLOAT64
 #	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC
 #		if !__is_identifier(_Float64)
@@ -238,6 +258,16 @@ typedef struct { mu0_fp64_t u_re; mu0_fp64_t u_im; }   mu0_cfp64_t;
 #	endif
 #	endif
 
+typedef struct { mu0_fp64_t  u_x; mu0_fp64_t  u_y;                  } mu0_v2fp64_t;
+typedef struct { mu0_fp64_t  u_x; mu0_fp64_t  u_y; mu0_fp64_t  u_z; } mu0_v3fp64_t;
+#	if MU0_HAVE_C11
+#	define mu0_v2fp64(__x, __y)        (mu0_v2fp64_t)  {        __mu0_const_cast__(mu0_fp64_t , __x),        __mu0_const_cast__(mu0_fp64_t , __y)                                              }
+#	define mu0_v3fp64(__x, __y, __z)   (mu0_v3fp64_t)  {        __mu0_const_cast__(mu0_fp64_t , __x),        __mu0_const_cast__(mu0_fp64_t , __y),        __mu0_const_cast__(mu0_fp64_t , __z) }
+#	else
+#	define mu0_v2fp64(__x, __y)        (mu0_v2fp64_t)  { .u_x = __mu0_const_cast__(mu0_fp64_t , __x), .u_y = __mu0_const_cast__(mu0_fp64_t , __y)                                              }
+#	define mu0_v3fp64(__x, __y, __z)   (mu0_v3fp64_t)  { .u_x = __mu0_const_cast__(mu0_fp64_t , __x), .u_y = __mu0_const_cast__(mu0_fp64_t , __y), .u_z = __mu0_const_cast__(mu0_fp64_t , __z) }
+#	endif
+
 #	if MU0_USE_FLOAT32
 #	if   MU0_HAVE_CC_APLCC || MU0_HAVE_CC_CLANG || MU0_HAVE_CC_ARMCCC
 #		if !__is_identifier(_Float32)
@@ -282,6 +312,16 @@ typedef struct { mu0_fp32_t u_re; mu0_fp32_t u_im; }   mu0_cfp32_t;
 #	else
 #	define mu0_cfp32(__re, __im) (__mu0_cast__(mu0_cfp32_t, (__mu0_const_cast__(mu0_fp32_t, __re) + _Complex_I   * __mu0_const_cast__(mu0_fp32_t, __im))))
 #	endif
+#	endif
+
+typedef struct { mu0_fp32_t  u_x; mu0_fp32_t  u_y;                  } mu0_v2fp32_t;
+typedef struct { mu0_fp32_t  u_x; mu0_fp32_t  u_y; mu0_fp32_t  u_z; } mu0_v3fp32_t;
+#	if MU0_HAVE_C11
+#	define mu0_v2fp32(__x, __y)        (mu0_v2fp32_t)  {        __mu0_const_cast__(mu0_fp32_t , __x),        __mu0_const_cast__(mu0_fp32_t , __y)                                              }
+#	define mu0_v3fp32(__x, __y, __z)   (mu0_v3fp32_t)  {        __mu0_const_cast__(mu0_fp32_t , __x),        __mu0_const_cast__(mu0_fp32_t , __y),        __mu0_const_cast__(mu0_fp32_t , __z) }
+#	else
+#	define mu0_v2fp32(__x, __y)        (mu0_v2fp32_t)  { .u_x = __mu0_const_cast__(mu0_fp32_t , __x), .u_y = __mu0_const_cast__(mu0_fp32_t , __y)                                              }
+#	define mu0_v3fp32(__x, __y, __z)   (mu0_v3fp32_t)  { .u_x = __mu0_const_cast__(mu0_fp32_t , __x), .u_y = __mu0_const_cast__(mu0_fp32_t , __y), .u_z = __mu0_const_cast__(mu0_fp32_t , __z) }
 #	endif
 
 #	if MU0_USE_FLOAT16
@@ -347,32 +387,53 @@ typedef struct { mu0_fp16_t u_re; mu0_fp16_t u_im; }   mu0_cfp16_t;
 #	endif
 #	endif
 
-#	define mu0_const_cfp128(__re, __im) mu0_cfp128 (__re, __im)
-#	define mu0_const_cfpex(__re, __im)  mu0_cfpex  (__re, __im)
-#	define mu0_const_cfp64(__re, __im)  mu0_cfp64  (__re, __im)
-#	define mu0_const_cfp32(__re, __im)  mu0_cfp32  (__re, __im)
-#	define mu0_const_cfp16(__re, __im)  mu0_cfp16  (__re, __im)
+typedef struct { mu0_fp16_t  u_x; mu0_fp16_t  u_y;                  } mu0_v2fp16_t;
+typedef struct { mu0_fp16_t  u_x; mu0_fp16_t  u_y; mu0_fp16_t  u_z; } mu0_v3fp16_t;
+#	if MU0_HAVE_C11
+#	define mu0_v2fp16(__x, __y)        (mu0_v2fp16_t)  {        __mu0_const_cast__(mu0_fp16_t , __x),        __mu0_const_cast__(mu0_fp16_t , __y)                                              }
+#	define mu0_v3fp16(__x, __y, __z)   (mu0_v3fp16_t)  {        __mu0_const_cast__(mu0_fp16_t , __x),        __mu0_const_cast__(mu0_fp16_t , __y),        __mu0_const_cast__(mu0_fp16_t , __z) }
+#	else
+#	define mu0_v2fp16(__x, __y)        (mu0_v2fp16_t)  { .u_x = __mu0_const_cast__(mu0_fp16_t , __x), .u_y = __mu0_const_cast__(mu0_fp16_t , __y)                                              }
+#	define mu0_v3fp16(__x, __y, __z)   (mu0_v3fp16_t)  { .u_x = __mu0_const_cast__(mu0_fp16_t , __x), .u_y = __mu0_const_cast__(mu0_fp16_t , __y), .u_z = __mu0_const_cast__(mu0_fp16_t , __z) }
+#	endif
 
-#	define mu0_fpex(__x)                __mu0_cast__(mu0_fpex_t, __x)
-#	define mu0_const_fpex(__x)          __mu0_const_cast__(mu0_fpex_t, __x)
+#	define mu0_const_cfp128(__re, __im)      mu0_cfp128 (__re, __im)
+#	define mu0_const_cfpex(__re, __im)       mu0_cfpex  (__re, __im)
+#	define mu0_const_cfp64(__re, __im)       mu0_cfp64  (__re, __im)
+#	define mu0_const_cfp32(__re, __im)       mu0_cfp32  (__re, __im)
+#	define mu0_const_cfp16(__re, __im)       mu0_cfp16  (__re, __im)
 
-#	define mu0_fp128(__x)               __mu0_cast__(mu0_fp128_t, __x)
-#	define mu0_const_fp128(__x)         __mu0_const_cast__(mu0_fp128_t, __x)
+#	define mu0_const_v2fp128(__x, __y)       mu0_v2fp128 (__x, __y)
+#	define mu0_const_v3fp128(__x, __y ,__z)  mu0_v2fp128 (__x, __y, __z)
+#	define mu0_const_v2fpex(__x, __y)        mu0_v2fpex  (__x, __y)
+#	define mu0_const_v3fpex(__x, __y, __z)   mu0_v3fpex  (__x, __y, __z)
+#	define mu0_const_v2fp64(__x, __y)        mu0_v2fp64  (__x, __y)
+#	define mu0_const_v3fp64(__x, __y, __z)   mu0_v3fp64  (__x, __y, __z)
+#	define mu0_const_v2fp32(__x, __y)        mu0_v2fp32  (__x, __y)
+#	define mu0_const_v3fp32(__x, __y, __z)   mu0_v3fp32  (__x, __y, __z)
+#	define mu0_const_v2fp16(__x, __y)        mu0_v2fp16  (__x, __y)
+#	define mu0_const_v3fp16(__x, __y, __z)   mu0_v3fp16  (__x, __y, __z)
+
+#	define mu0_fp128(__x)                    __mu0_cast__(mu0_fp128_t, __x)
+#	define mu0_const_fp128(__x)              __mu0_const_cast__(mu0_fp128_t, __x)
  
-#	define mu0_fp64(__x)                __mu0_cast__(mu0_fp64_t, __x)
-#	define mu0_const_fp64(__x)          __mu0_const_cast__(mu0_fp64_t, __x)
+#	define mu0_fpex(__x)                     __mu0_cast__(mu0_fpex_t, __x)
+#	define mu0_const_fpex(__x)               __mu0_const_cast__(mu0_fpex_t, __x)
 
-#	define mu0_fp32(__x)                __mu0_cast__(mu0_fp32_t, __x)
-#	define mu0_const_fp32(__x)          __mu0_const_cast__(mu0_fp32_t, __x)
+#	define mu0_fp64(__x)                     __mu0_cast__(mu0_fp64_t, __x)
+#	define mu0_const_fp64(__x)               __mu0_const_cast__(mu0_fp64_t, __x)
 
-#	define mu0_fp16(__x)                __mu0_cast__(mu0_fp16_t, __x)
-#	define mu0_const_fp16(__x)          __mu0_const_cast__(mu0_fp16_t, __x)
+#	define mu0_fp32(__x)                     __mu0_cast__(mu0_fp32_t, __x)
+#	define mu0_const_fp32(__x)               __mu0_const_cast__(mu0_fp32_t, __x)
+
+#	define mu0_fp16(__x)                     __mu0_cast__(mu0_fp16_t, __x)
+#	define mu0_const_fp16(__x)               __mu0_const_cast__(mu0_fp16_t, __x)
 
 #	if   MU0_HAVE_GENERIC
 #	if   MU0_HAVE_FLOAT128 && MU0_HAVE_FLOAT16 || MU0_HAVE_CC_GNUC
 #	define mu0_is_floating_point(__x) __mu0_generic__((__x) + 0U \
 		, mu0_fp128_t  : 1                                        \
-		, mu0_fp1ex_t  : 1                                        \
+		, mu0_fpex_t   : 1                                        \
 		, mu0_fp64_t   : 1                                        \
 		, mu0_fp32_t   : 1                                        \
 		, mu0_fp16_t   : 1                                        \
