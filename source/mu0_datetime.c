@@ -17,7 +17,7 @@
 
 #include <mu0/mu0_datetime.h>
 
-mu0_sint32_t                mu0_datetime_timeofday (
+mu0_sint32_t mu0_datetime_timeofday(
 	  mu0_interval_t * interval
 	, mu0_timezone_t * timezone __mu0_nullable__
 ) {

@@ -25,23 +25,23 @@
 #	define MU0_HAVE_SPINLOCK 1
 
 #	define __mu0_spinlock_initializer__ { 0 }
-        struct __mu0_spinlock__ { __mu0_atomic_uint4_t___ u_r0; };
+        struct __mu0_spinlock__ { ___mu0_atomic_uint4_t___ u_r0; };
 typedef struct __mu0_spinlock__ __mu0_spinlock_t__;
 
 __mu0_static_inline__
 void __mu0_spinlock_init__(__mu0_spinlock_t__ * __s)
-{ __mu0_atomic_init__(__mu0_atomic_uint4_t___, &__s->u_r0, 0U); }
+{ __mu0_atomic_init__(___mu0_atomic_uint4_t___, &__s->u_r0, 0U); }
 
 __mu0_static_inline__
 ___mu0_uint4_t___ __mu0_spinlock_trylock__(__mu0_spinlock_t__ * __s)
 {
 	___mu0_uint4_t___ r0;
 	/* Presumingly already locked on that CPU, check it smooth. */
-	__mu0_atomic_read__(__mu0_atomic_uint4_t___, &__s->u_r0, r0);
+	__mu0_atomic_read__(___mu0_atomic_uint4_t___, &__s->u_r0, r0);
 	if (r0 == 1U) {
 		return !r0;
 	}
-	__mu0_atomic_bool_compare_and_swap__(__mu0_atomic_uint4_t___, &__s->u_r0, 0U, 1U, r0);
+	__mu0_atomic_bool_compare_and_swap__(___mu0_atomic_uint4_t___, &__s->u_r0, 0U, 1U, r0);
 	return r0;
 }
 
@@ -54,13 +54,13 @@ const ___mu0_sint4_t___ __mu0_spinlock_lock__(__mu0_spinlock_t__ * __s)
 		return 0;
 	}
 	/* Presumingly deadlocking on that CPU, let it go smooth. */
-	__mu0_atomic_write__(__mu0_atomic_uint4_t___, &__s->u_r0, 0U);
+	__mu0_atomic_write__(___mu0_atomic_uint4_t___, &__s->u_r0, 0U);
 	return -1;
 }
 
 __mu0_static_inline__
 void __mu0_spinlock_unlock__(__mu0_spinlock_t__ * __s)
-{ __mu0_atomic_store__(__mu0_atomic_uint4_t___, &__s->u_r0, 0U); }
+{ __mu0_atomic_store__(___mu0_atomic_uint4_t___, &__s->u_r0, 0U); }
 
 #	if !MU0_HAVE_SPINLOCK
 #		error mu0_spinlock.h
