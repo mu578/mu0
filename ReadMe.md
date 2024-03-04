@@ -1,11 +1,10 @@
 # mu0
 
-In the realm of mu0, where tech meets friendliness, we're all about those cool C++ vibes. Imagine this: we're making things super smooth with seamless support for UTF-8 encoding and a rock-solid commitment to recognized specifications. But that's not all – we're adding a dash of OpenMP and OpenACC wizardry to level up our parallel processing game while keeping it cozy with standard C and those modern C++ twists.
+In the realm of `mu0`, where tech meets friendliness, we're all about those cool C++ vibes. Imagine this: we're making things super smooth with seamless support for UTF-8 encoding and a rock-solid commitment to recognized specifications. But that's not all – we're adding a dash of OpenMP and OpenACC wizardry to level up our parallel processing game while keeping it cozy with standard C and those modern C++ twists.
 
-Here's the scoop: mu0 is not just your typical project; it's your trusty plain C library. We're mingling seamlessly with ARM64 and RISC-V architectures, making mu0 the flexible sidekick for all your computing devices. And get this – behind the scenes for embedded C projects, mu0 isn't just doing the job; it's building a laid-back ecosystem. Forget those usual toolkit boundaries; we're simplifying things, sprinkling C++ modern vibes into good ol' C, creating a tech universe that's not just smart but approachable. mu0 is not just tech; it's a friendly face in the world of computing.
+Here's the scoop: `mu0` is not just your typical project; it's your trusty plain C library. We're mingling seamlessly with ARM64 and RISC-V architectures, making `mu0` the flexible sidekick for all your computing devices. And get this – behind the scenes for embedded C projects, `mu0` isn't just doing the job; it's building a laid-back ecosystem. Forget those usual toolkit boundaries; we're simplifying things, sprinkling C++ modern vibes into good ol' C, creating a tech universe that's not just smart but approachable. `mu0` is not just tech; it's a friendly face in the world of computing.
 
-**IN SHORT**<br />
-**---------------------------------------------**
+## brief
 
 A cross-platform generalized Lib-c alike toolkit, carefully designed to target low power systems, truly type-strict, UTF-8, ISO, RFC, OpenMP, and OpenACC driven, no-optional (To note: the main design borrows quite a lot of C++ conceptual in terms of polymorphism, sure re-adapted within a plain embedded-C context: that's all the point).
 
