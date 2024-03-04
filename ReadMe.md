@@ -39,7 +39,11 @@ In summary, this paradigm, enriched by its support for `UTF-8`, adherence to `IS
 **IN SHORT**<br />
 **---------------------------------------------**
 
-A cross-platform generalized Lib-c alike toolkit, carefully designed to target low power systems, truly type-strict, UTF-8, ISO, RFC, OpenMP, and OpenACC driven, no-optional (To note: the main design borrows quite a lot of C++ conceptual in terms of polymorphism, sure re-adapted within a plain embedded-C context: that's all the point). The main ABI targets are ARM64 and RISC-V. Also, the host API provider and build system for all mu* projects. What we want to target at term:
+A cross-platform generalized Lib-c alike toolkit, carefully designed to target low power systems, truly type-strict, UTF-8, ISO, RFC, OpenMP, and OpenACC driven, no-optional (To note: the main design borrows quite a lot of C++ conceptual in terms of polymorphism, sure re-adapted within a plain embedded-C context: that's all the point).
+
+Meanwhile, let's delve a bit into the enduring significance of OOP principles. Picture this – the foundational concepts of encapsulation, inheritance, polymorphism, and abstraction, `transcending the boundaries` of programming languages. Beyond the intricacies of coding, these principles serve as a lingua franca, fostering collaboration among developers.
+
+The main ABI targets are ARM64 and RISC-V. Also, the host API provider and build system for all mu* projects. What we want to target at term:
 ```
 macos, ios, ubuntu, android, freebsd, windows, nuttx, zephyr, bare-metal
 + kernel space build + firmware, and anything that runs on SoC.
