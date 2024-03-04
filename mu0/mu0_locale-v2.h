@@ -25,6 +25,16 @@ MU0_BEGIN_CDECL
 
 typedef struct ___mu0_i18nlocale___ mu0_locale_t;
 
+/*
+	struct ___mu0_i18nlocale___
+	{
+		___mu0_tint1_t___ u_id[24];
+		___mu0_uint4_t___ u_mask;
+		void *            u_handle;
+	};
+
+*/
+
 enum mu0_localegroup
 {
 	  mu0_localegroup_complete = (1 << 0)
