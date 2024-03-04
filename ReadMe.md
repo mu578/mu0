@@ -36,6 +36,15 @@ This paradigm serves as the backend for all `mu` embedded C projects, contributi
 **BEYOND A TOOLKIT - A RAD TRANSCENDENT PHILOSOPHY**<br />
 In summary, this paradigm, enriched by its support for `UTF-8`, adherence to `ISO` standards, `RFC` compliance, strategic integration of `OpenMP`, `OpenACC`, and modern C++ paradigms in standard C, stands as a versatile and forward-looking solution. It's not just about addressing the unique challenges of low-power systems; it's about introducing a paradigm that goes beyond the language itself—a philosophy that transcends traditional boundaries to reimagine and reintroduce powerful concepts into the fabric of computing.
 
+** IN SHORT**<br />
+**---------------------------------------------**
+
+A cross-platform generalized Lib-c alike toolkit, carefully designed to target low power systems, truly type-strict, UTF-8, ISO, RFC, OpenMP, and OpenACC driven, no-optional (To note: the main design borrows quite a lot of C++ conceptual in terms of polymorphism, sure re-adapted within a plain embedded-C context: that's all the point). The main ABI targets are ARM64 and RISC-V. Also, the host API provider and build system for all mu* projects. What we want to target at term:
+```
+macos, ios, ubuntu, android, freebsd, windows, nuttx, zephyr, bare-metal
++ kernel space build + firmware, and anything that runs on SoC.
+```
+
 Getting current toolchain Mac-M2 host:
 
 ```
